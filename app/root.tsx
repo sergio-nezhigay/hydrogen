@@ -71,7 +71,6 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader(args: LoaderFunctionArgs) {
-  console.log('loader -root');
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
@@ -104,19 +103,7 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
   const seo = seoPayload.root({shop: layout.shop, url: request.url});
 
   const {storefront, env} = context;
-  console.log(
-    'env.PUBLIC_CUSTOMER_ACCOUNT_API_URL=',
-    env.PUBLIC_CUSTOMER_ACCOUNT_API_URL,
-  );
-  console.log('env.SESSION_SECRET=', env.SESSION_SECRET);
-  console.log('env.PUBLIC_STOREFRONT_ID=', env.PUBLIC_STOREFRONT_ID);
-  console.log('env.PUBLIC_STORE_DOMAIN=', env.PUBLIC_STORE_DOMAIN);
-  console.log('env.PUBLIC_STOREFRONT_ID=', env.PUBLIC_STOREFRONT_ID);
-  console.log('env.PUBLIC_CHECKOUT_DOMAIN=', env.PUBLIC_CHECKOUT_DOMAIN);
-  console.log(
-    'env.PUBLIC_STOREFRONT_API_TOKEN=',
-    env.PUBLIC_STOREFRONT_API_TOKEN,
-  );
+
   return {
     layout,
     seo,
@@ -151,13 +138,11 @@ export const meta = ({data}: MetaArgs<typeof loader>) => {
 };
 
 function Layout({children}: {children?: React.ReactNode}) {
-  console.log('Layout -root');
   const nonce = useNonce();
-  console.log('🚀 ~ nonce:', nonce);
+
   const data = useRouteLoaderData<typeof loader>('root');
-  console.log('🚀 ~ data:', JSON.stringify(data));
+
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
-  console.log('🚀 ~ locale:', locale);
 
   return (
     <html lang={locale.language}>
@@ -201,11 +186,9 @@ export default function App() {
 }
 
 export function ErrorBoundary({error}: {error: Error}) {
-  console.log('🚀 ~ ErrorBoundary:', error);
   const routeError = useRouteError();
-  console.log('🚀 ~ routeError:', routeError);
+
   const isRouteError = isRouteErrorResponse(routeError);
-  console.log('🚀 ~ isRouteError:', isRouteError);
 
   let title = 'Error';
   let pageType = 'page';
