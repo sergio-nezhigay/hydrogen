@@ -170,18 +170,18 @@ function Layout({children}: {children?: React.ReactNode}) {
       </head>
       <body>
         {data ? (
-          <Analytics.Provider
-            cart={data.cart}
-            shop={data.shop}
-            consent={data.consent}
-          >
-            <PageLayout
-              key={`${locale.language}-${locale.country}`}
-              layout={data.layout}
-            >
+        //  <Analytics.Provider
+        //    cart={data.cart}
+        //    shop={data.shop}
+        //    consent={data.consent}
+        //  >
+        //    <PageLayout
+        //      key={`${locale.language}-${locale.country}`}
+        //      layout={data.layout}
+        //    >
               {children}
-            </PageLayout>
-          </Analytics.Provider>
+            {/*</PageLayout>
+          </Analytics.Provider>*/}
         ) : (
           children
         )}
