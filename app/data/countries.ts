@@ -2,11 +2,35 @@ import type {Localizations} from '~/lib/type';
 
 export const countries: Localizations = {
   default: {
-    label: 'United States (USD $)',
-    language: 'EN',
-    country: 'US',
-    currency: 'USD',
+    label: 'Ukraine',
+    language: 'UK',
+    country: 'UA',
+    currency: '₴',
   },
+  '/ru-ua': {
+    label: 'Russi',
+    language: 'RU',
+    country: 'UA',
+    currency: '₴',
+  },
+  '/en-ua': {
+    label: 'En-Ukraine',
+    language: 'EN',
+    country: 'UA',
+    currency: '₴',
+  },
+  '/uk-ua': {
+    label: 'Uk-Ukraine',
+    language: 'UK',
+    country: 'UA',
+    currency: '₴',
+  },
+  //  default: {
+  //    label: 'United States (USD $)',
+  //    language: 'EN',
+  //    country: 'US',
+  //    currency: 'USD',
+  //  },
   '/en-ad': {
     label: 'Andorra (EUR €)',
     language: 'EN',
