@@ -141,8 +141,11 @@ export const meta = ({data}: MetaArgs<typeof loader>) => {
 function Layout({children}: {children?: React.ReactNode}) {
   console.log('Layout -root');
   const nonce = useNonce();
+  console.log('🚀 ~ nonce:', nonce);
   const data = useRouteLoaderData<typeof loader>('root');
+  console.log('🚀 ~ data:', data);
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
+  console.log('🚀 ~ locale:', locale);
 
   return (
     <html lang={locale.language}>
