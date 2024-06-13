@@ -71,7 +71,7 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader(args: LoaderFunctionArgs) {
-  console.error('loader -root');
+  console.log('loader -root');
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
@@ -139,7 +139,7 @@ export const meta = ({data}: MetaArgs<typeof loader>) => {
 };
 
 function Layout({children}: {children?: React.ReactNode}) {
-  console.error('Layout -root');
+  console.log('Layout -root');
   const nonce = useNonce();
   const data = useRouteLoaderData<typeof loader>('root');
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
@@ -186,6 +186,7 @@ export default function App() {
 }
 
 export function ErrorBoundary({error}: {error: Error}) {
+  console.log('🚀 ~ ErrorBoundary:', error);
   const routeError = useRouteError();
   const isRouteError = isRouteErrorResponse(routeError);
 
