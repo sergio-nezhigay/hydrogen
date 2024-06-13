@@ -126,7 +126,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
     });
 
   return {
-    featuredProducts,
+    featuredProducts: [],
     secondaryHero,
     featuredCollections,
     tertiaryHero,
