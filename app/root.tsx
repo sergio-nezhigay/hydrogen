@@ -188,7 +188,9 @@ export default function App() {
 export function ErrorBoundary({error}: {error: Error}) {
   console.log('🚀 ~ ErrorBoundary:', error);
   const routeError = useRouteError();
+  console.log('🚀 ~ routeError:', routeError);
   const isRouteError = isRouteErrorResponse(routeError);
+  console.log('🚀 ~ isRouteError:', isRouteError);
 
   let title = 'Error';
   let pageType = 'page';
