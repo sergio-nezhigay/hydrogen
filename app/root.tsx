@@ -71,6 +71,7 @@ export const links: LinksFunction = () => {
 };
 
 export async function loader(args: LoaderFunctionArgs) {
+  console.log('loader -root');
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 

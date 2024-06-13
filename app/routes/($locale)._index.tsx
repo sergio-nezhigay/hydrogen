@@ -18,6 +18,7 @@ import {routeHeaders} from '~/data/cache';
 export const headers = routeHeaders;
 
 export async function loader(args: LoaderFunctionArgs) {
+  console.log('loader -index');
   const {params, context} = args;
   const {language, country} = context.storefront.i18n;
 
