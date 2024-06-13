@@ -155,7 +155,7 @@ function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   console.log('🚀 ~ nonce:', nonce);
   const data = useRouteLoaderData<typeof loader>('root');
-  console.log('🚀 ~ data:', data);
+  console.log('🚀 ~ data:', JSON.stringify(data));
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
   console.log('🚀 ~ locale:', locale);
 
@@ -170,18 +170,18 @@ function Layout({children}: {children?: React.ReactNode}) {
       </head>
       <body>
         {data ? (
-        //  <Analytics.Provider
-        //    cart={data.cart}
-        //    shop={data.shop}
-        //    consent={data.consent}
-        //  >
-        //    <PageLayout
-        //      key={`${locale.language}-${locale.country}`}
-        //      layout={data.layout}
-        //    >
+          <Analytics.Provider
+            cart={data.cart}
+            shop={data.shop}
+            consent={data.consent}
+          >
+            <PageLayout
+              key={`${locale.language}-${locale.country}`}
+              layout={data.layout}
+            >
               {children}
-            {/*</PageLayout>
-          </Analytics.Provider>*/}
+            </PageLayout>
+          </Analytics.Provider>
         ) : (
           children
         )}
