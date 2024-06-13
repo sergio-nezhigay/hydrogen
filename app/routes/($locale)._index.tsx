@@ -66,23 +66,23 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
 function loadDeferredData({context}: LoaderFunctionArgs) {
   const {language, country} = context.storefront.i18n;
 
-  //  const featuredProducts = context.storefront
-  //    .query(HOMEPAGE_FEATURED_PRODUCTS_QUERY, {
-  //      variables: {
-  //        /**
-  //         * Country and language properties are automatically injected
-  //         * into all queries. Passing them is unnecessary unless you
-  //         * want to override them from the following default:
-  //         */
-  //        country,
-  //        language,
-  //      },
-  //    })
-  //    .catch((error) => {
-  //      // Log query errors, but don't throw them so the page can still render
-  //      console.error(error);
-  //      return null;
-  //    });
+  const featuredProducts = context.storefront
+    .query(HOMEPAGE_FEATURED_PRODUCTS_QUERY, {
+      variables: {
+        /**
+         * Country and language properties are automatically injected
+         * into all queries. Passing them is unnecessary unless you
+         * want to override them from the following default:
+         */
+        country,
+        language,
+      },
+    })
+    .catch((error) => {
+      // Log query errors, but don't throw them so the page can still render
+      console.error(error);
+      return null;
+    });
 
   const secondaryHero = context.storefront
     .query(COLLECTION_HERO_QUERY, {
@@ -126,7 +126,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
     });
 
   return {
-    featuredProducts: [],
+    featuredProducts,
     secondaryHero,
     featuredCollections,
     tertiaryHero,
