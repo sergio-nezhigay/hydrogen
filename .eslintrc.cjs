@@ -43,5 +43,11 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
 };
