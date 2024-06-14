@@ -11,6 +11,15 @@ export default async function handleRequest(
   remixContext: EntryContext,
   context: AppLoadContext,
 ) {
+  console.log(
+    'context.env.PUBLIC_CHECKOUT_DOMAIN',
+    context.env.PUBLIC_CHECKOUT_DOMAIN,
+  );
+  console.log(
+    'context.env.PUBLIC_STORE_DOMAIN',
+    context.env.PUBLIC_STORE_DOMAIN,
+  );
+  console.error('entry -server==============');
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
