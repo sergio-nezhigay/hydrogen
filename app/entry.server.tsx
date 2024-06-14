@@ -11,11 +11,11 @@ export default async function handleRequest(
   remixContext: EntryContext,
   context: AppLoadContext,
 ) {
-  console.log(
+  console.error(
     'context.env.PUBLIC_CHECKOUT_DOMAIN',
     context.env.PUBLIC_CHECKOUT_DOMAIN,
   );
-  console.log(
+  console.error(
     'context.env.PUBLIC_STORE_DOMAIN',
     context.env.PUBLIC_STORE_DOMAIN,
   );
