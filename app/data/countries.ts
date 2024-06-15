@@ -7,7 +7,7 @@ export const countries: Localizations = {
     country: 'UA',
     currency: 'UAH',
   },
-  '/ru-ua': {
+  '/ru': {
     label: 'Russi',
     language: 'RU',
     country: 'UA',
@@ -19,10 +19,10 @@ export const countries: Localizations = {
   //    country: 'UA',
   //    currency: 'UAH',
   //  },
-  '/uk-ua': {
-    label: 'Uk-Ukraine',
-    language: 'UK',
-    country: 'UA',
-    currency: 'UAH',
-  },
+  //  '/uk-ua': {
+  //    label: 'Uk-Ukraine',
+  //    language: 'UK',
+  //    country: 'UA',
+  //    currency: 'UAH',
+  //  },
 };
