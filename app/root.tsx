@@ -181,7 +181,6 @@ function Layout({children}: {children?: React.ReactNode}) {
         )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
-        {data && <GoogleGTM id={data.googleGtmID} />}
       </body>
     </html>
   );

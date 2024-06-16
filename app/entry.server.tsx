@@ -16,6 +16,8 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    connectSrc: ['https://*.google-analytics.com:*'],
+    defaultSrc: ['https://www.googletagmanager.com'],
   });
 
   const body = await renderToReadableStream(
