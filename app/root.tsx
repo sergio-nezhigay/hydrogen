@@ -24,6 +24,7 @@ import {
   type SeoConfig,
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
+import {useJudgeme} from '@judgeme/shopify-hydrogen';
 
 import {PageLayout} from '~/components/PageLayout';
 import {GenericError} from '~/components/GenericError';
@@ -32,6 +33,7 @@ import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import styles from '~/styles/app.css?url';
 
+import {GoogleGTM} from './components/GoogleGTM';
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
 export type RootLoader = typeof loader;
@@ -116,6 +118,13 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
     },
     selectedLocale: storefront.i18n,
+    judgeme: {
+      shopDomain: env.JUDGEME_SHOP_DOMAIN,
+      publicToken: env.JUDGEME_PUBLIC_TOKEN,
+      cdnHost: env.JUDGEME_CDN_HOST,
+      delay: 500, // optional parameter, default to 500ms
+    },
+    googleGtmID: context.env.PUBLIC_GOOGLE_GTM_ID,
   };
 }
 
@@ -125,7 +134,7 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
-  const {cart, customerAccount} = context;
+  const {cart, customerAccount, env} = context;
 
   return {
     isLoggedIn: customerAccount.isLoggedIn(),
@@ -141,7 +150,7 @@ function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
 
   const data = useRouteLoaderData<typeof loader>('root');
-
+  //  useJudgeme(data?.judgeme);
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
 
   return (
@@ -172,6 +181,7 @@ function Layout({children}: {children?: React.ReactNode}) {
         )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        {data && <GoogleGTM id={data.googleGtmID} />}
       </body>
     </html>
   );

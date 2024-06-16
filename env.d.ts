@@ -28,6 +28,10 @@ declare global {
     PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID: string;
     PUBLIC_CUSTOMER_ACCOUNT_API_URL: string;
     PUBLIC_CHECKOUT_DOMAIN: string;
+    JUDGEME_SHOP_DOMAIN: string;
+    JUDGEME_PUBLIC_TOKEN: string;
+    JUDGEME_CDN_HOST: string;
+    PUBLIC_GOOGLE_GTM_ID: string;
   }
 }
 
