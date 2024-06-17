@@ -33,7 +33,6 @@ import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import styles from '~/styles/app.css?url';
 
-import {GoogleGTM} from './components/GoogleGTM';
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
 export type RootLoader = typeof loader;
@@ -150,7 +149,8 @@ function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
 
   const data = useRouteLoaderData<typeof loader>('root');
-  //  useJudgeme(data?.judgeme);
+
+  useJudgeme(data?.judgeme);
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
 
   return (
