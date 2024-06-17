@@ -68,10 +68,6 @@ export const links: LinksFunction = () => {
       href: 'https://shop.app',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
-    {
-      rel: 'manifest',
-      href: '/manifest.json',
-    },
   ];
 };
 
@@ -163,10 +159,7 @@ function Layout({children}: {children?: React.ReactNode}) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="msvalidate.01" content="A352E6A0AF9A652267361BBB572B8468" />
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="default-src gap://ready file://* *; style-src 'self' http://* https://* 'unsafe-inline'; script-src 'self' http://* https://* 'unsafe-inline' 'unsafe-eval'"
-        />
+
         <Meta />
         <Links />
       </head>
