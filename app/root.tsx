@@ -21,6 +21,7 @@ import {
   Analytics,
   getShopAnalytics,
   getSeoMeta,
+  Script,
   type SeoConfig,
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
@@ -32,6 +33,7 @@ import {NotFound} from '~/components/NotFound';
 import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import styles from '~/styles/app.css?url';
+import {GoogleTagManager} from '~/components/GoogleTagManager';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
@@ -116,14 +118,8 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
       checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
       storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
     },
+    publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     selectedLocale: storefront.i18n,
-    judgeme: {
-      shopDomain: env.JUDGEME_SHOP_DOMAIN,
-      publicToken: env.JUDGEME_PUBLIC_TOKEN,
-      cdnHost: env.JUDGEME_CDN_HOST,
-      delay: 500, // optional parameter, default to 500ms
-    },
-    googleGtmID: context.env.PUBLIC_GOOGLE_GTM_ID,
   };
 }
 
@@ -150,7 +146,6 @@ function Layout({children}: {children?: React.ReactNode}) {
 
   const data = useRouteLoaderData<typeof loader>('root');
 
-  useJudgeme(data?.judgeme);
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
 
   return (
@@ -162,8 +157,29 @@ function Layout({children}: {children?: React.ReactNode}) {
 
         <Meta />
         <Links />
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-WRQRP5RF');`,
+          }}
+        ></Script>
       </head>
       <body>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WRQRP5RF"
+            height="0"
+            width="0"
+            style={{
+              display: 'none',
+              visibility: 'hidden',
+            }}
+            title="Google Tag Manager"
+          ></iframe>
+        </noscript>
         {data ? (
           <Analytics.Provider
             cart={data.cart}
@@ -176,6 +192,7 @@ function Layout({children}: {children?: React.ReactNode}) {
             >
               {children}
             </PageLayout>
+            <GoogleTagManager />
           </Analytics.Provider>
         ) : (
           children

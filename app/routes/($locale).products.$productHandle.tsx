@@ -17,16 +17,6 @@ import {
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
 import clsx from 'clsx';
-import {
-  JudgemeMedals,
-  JudgemeCarousel,
-  JudgemeReviewsTab,
-  JudgemePreviewBadge,
-  JudgemeReviewWidget,
-  JudgemeVerifiedBadge,
-  JudgemeAllReviewsCount,
-  JudgemeAllReviewsRating,
-} from '@judgeme/shopify-hydrogen';
 
 import type {
   ProductQuery,
@@ -173,9 +163,6 @@ export default function Product() {
 
   return (
     <>
-      <h1>hello!</h1>
-      {/*<JudgemeAllReviewsCount />*/}
-      {/*<JudgemeVerifiedBadge id={product.id} />*/}
       <Section className="px-0 md:px-8 lg:px-12">
         <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
           <ProductGallery
