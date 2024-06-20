@@ -176,7 +176,6 @@ function Layout({children}: {children?: React.ReactNode}) {
               display: 'none',
               visibility: 'hidden',
             }}
-            title="Google Tag Manager"
           ></iframe>
         </noscript>
         {data ? (
