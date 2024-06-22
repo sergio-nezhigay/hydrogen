@@ -24,6 +24,8 @@ import {IconRemove} from '~/components/Icon';
 import {FeaturedProducts} from '~/components/FeaturedProducts';
 import {getInputStyleClasses} from '~/lib/utils';
 
+import HryvniaMoney from './HryvniaMoney';
+
 type Layouts = 'page' | 'drawer';
 
 export function Cart({
@@ -92,7 +94,7 @@ function CartDiscounts({
       {/* Have existing discount, display it with a remove option */}
       <dl className={codes && codes.length !== 0 ? 'grid' : 'hidden'}>
         <div className="flex items-center justify-between font-medium">
-          <Text as="dt">Discount(s)</Text>
+          <Text as="dt">Купон знижки</Text>
           <div className="flex items-center justify-between">
             <UpdateDiscountForm>
               <button>
@@ -119,10 +121,10 @@ function CartDiscounts({
             className={getInputStyleClasses()}
             type="text"
             name="discountCode"
-            placeholder="Discount code"
+            placeholder="Код знижки"
           />
           <button className="flex justify-end font-medium whitespace-nowrap">
-            Apply Discount
+            Використати знижку
           </button>
         </div>
       </UpdateDiscountForm>
@@ -190,7 +192,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
     <div className="flex flex-col mt-2">
       <a href={checkoutUrl} target="_self">
         <Button as="span" width="full">
-          Continue to Checkout
+          Оформити замовлення
         </Button>
       </a>
       {/* @todo: <CartShopPayButton cart={cart} /> */}
@@ -215,14 +217,14 @@ function CartSummary({
   return (
     <section aria-labelledby="summary-heading" className={summary[layout]}>
       <h2 id="summary-heading" className="sr-only">
-        Order summary
+        Підсумок замовлення
       </h2>
       <dl className="grid">
         <div className="flex items-center justify-between font-medium">
-          <Text as="dt">Subtotal</Text>
+          <Text as="dt">Підсума</Text>
           <Text as="dd" data-test="subtotal">
             {cost?.subtotalAmount?.amount ? (
-              <Money data={cost?.subtotalAmount} />
+              <HryvniaMoney data={cost?.subtotalAmount} />
             ) : (
               '-'
             )}
@@ -423,7 +425,8 @@ function CartLinePrice({
     return null;
   }
 
-  return <Money withoutTrailingZeros {...passthroughProps} data={moneyV2} />;
+  return <HryvniaMoney data={moneyV2} />;
+  //  return <Money withoutTrailingZeros {...passthroughProps} data={moneyV2} />;
 }
 
 export function CartEmpty({

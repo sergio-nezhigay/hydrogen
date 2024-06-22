@@ -35,6 +35,7 @@ import {seoPayload} from '~/lib/seo.server';
 import type {Storefront} from '~/lib/type';
 import {routeHeaders} from '~/data/cache';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
+import HryvniaMoney from '~/components/HryvniaMoney';
 
 export const headers = routeHeaders;
 
@@ -400,13 +401,8 @@ export function ProductForm({
                   as="span"
                   className="flex items-center justify-center gap-2"
                 >
-                  <span>Add to Cart</span> <span>·</span>{' '}
-                  <Money
-                    withoutTrailingZeros
-                    data={selectedVariant?.price!}
-                    as="span"
-                    data-test="price"
-                  />
+                  <span>Додати до кошика</span> <span>·</span>{' '}
+                  <HryvniaMoney data={selectedVariant?.price!} />
                   {isOnSale && (
                     <Money
                       withoutTrailingZeros
