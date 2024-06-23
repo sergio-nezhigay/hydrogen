@@ -29,6 +29,8 @@ import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
 
+import LangSelector from './custom/LangSelector';
+
 type LayoutProps = {
   children: React.ReactNode;
   layout?: LayoutQuery & {
@@ -219,7 +221,7 @@ function MobileHeader({
             }
             type="search"
             variant="minisearch"
-            placeholder="Search"
+            placeholder="Пошук"
             name="q"
           />
         </Form>
@@ -304,7 +306,7 @@ function DesktopHeader({
             }
             type="search"
             variant="minisearch"
-            placeholder="Search"
+            placeholder="Пошук"
             name="q"
           />
           <button
@@ -314,6 +316,7 @@ function DesktopHeader({
             <IconSearch />
           </button>
         </Form>
+        <LangSelector />
         <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
