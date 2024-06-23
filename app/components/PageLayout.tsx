@@ -316,7 +316,7 @@ function DesktopHeader({
             <IconSearch />
           </button>
         </Form>
-        <LangSelector />
+        {/*<LangSelector />*/}
         <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>

@@ -1,4 +1,5 @@
 import {
+  Link,
   useLocation,
   useRouteLoaderData,
   useSearchParams,
@@ -12,15 +13,17 @@ function LangSelector() {
   const location = useLocation();
   console.log('🚀 ~ location:', location);
   const currentPath = location.pathname + location.search;
+  const replacedPath = currentPath.replace('/ru/', '/');
+  console.log('🚀 ~ replacedPath:', replacedPath);
   console.log('🚀 ~ currentPath:', currentPath);
   const rootData = useRouteLoaderData<RootLoader>('root');
   const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
   const isUkrActive = selectedLocale.language === 'UK';
   const isRuActive = selectedLocale.language === 'RU';
-  console.log('🚀 ~ selectedLocale:', selectedLocale, isUkrActive);
+  console.log('🚀 ~ selectedLocale, isUkrActive:', selectedLocale, isUkrActive);
   return (
     <ul className="flex">
-      <li>
+      {/*<li>
         <span
           className={clsx('flex', {
             'text-gray-400': isUkrActive,
@@ -40,16 +43,22 @@ function LangSelector() {
           </svg>
           UA
         </span>
-      </li>
-      <li className="border-l px-2">
-        <span
-          className={clsx({
-            'text-gray-400': !isUkrActive,
-          })}
-        >
-          RU
-        </span>
-      </li>
+      </li>*/}
+      {/*<li className="border-l px-2">
+        {isUkrActive ? (
+          <a
+            href="https://staging1.fun/ru/"
+            //href={'staging1.fun/ru' + currentPath}
+            className={clsx({
+              'text-gray-400': !isUkrActive,
+            })}
+          >
+            RU
+          </a>
+        ) : (
+          <span>RU</span>
+        )}
+      </li>*/}
     </ul>
   );
 }
