@@ -3,8 +3,8 @@ import {
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {Suspense} from 'react';
-import {Await, useLoaderData} from '@remix-run/react';
+import {Suspense, useEffect} from 'react';
+import {Await, useLoaderData, useLocation} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
 
 import {Hero} from '~/components/Hero';
@@ -151,6 +151,8 @@ export default function Homepage() {
 
   return (
     <>
+      <h1>testtttttt</h1>
+      <TrackPageView />
       {primaryHero && (
         <Hero {...primaryHero} height="full" top loading="eager" />
       )}
@@ -317,3 +319,16 @@ export const FEATURED_COLLECTIONS_QUERY = `#graphql
     }
   }
 ` as const;
+
+function TrackPageView() {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.gtag('event', 'page_view', {
+      path: location.pathname,
+      title: document.title,
+    });
+  }, []);
+
+  return <pre>pageView event tracked</pre>;
+}
