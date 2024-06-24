@@ -1,3 +1,4 @@
+import {Partytown} from '@builder.io/partytown/react';
 import {
   defer,
   type LinksFunction,
@@ -33,6 +34,9 @@ import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import styles from '~/styles/app.css?url';
 import {GoogleTagManager} from '~/components/GoogleTagManager';
+import {partytownAtomicHeaders} from '~/utils/partytown/partytownAtomicHeaders';
+import {maybeProxyRequest} from '~/utils/partytown/maybeProxyRequest';
+import {PartytownGoogleTagManager} from '~/components/PartytownGoogleTagManager';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
@@ -85,9 +89,10 @@ export async function loader(args: LoaderFunctionArgs) {
       ...criticalData,
     },
     {
-      headers: {
-        'Set-Cookie': await args.context.session.commit(),
-      },
+      //  headers: {
+      //    'Set-Cookie': await args.context.session.commit(),
+      //  },
+      headers: partytownAtomicHeaders(),
     },
   );
 }
@@ -108,6 +113,7 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
 
   return {
     layout,
+    gtmContainerId: env.GTM_CONTAINER_ID,
     seo,
     shop: getShopAnalytics({
       storefront,
@@ -146,6 +152,7 @@ function Layout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<typeof loader>('root');
 
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
+  const gtmContainerId = data?.gtmContainerId ?? 'GTM-WRQRP5RF';
 
   return (
     <html lang={locale.language}>
@@ -156,29 +163,8 @@ function Layout({children}: {children?: React.ReactNode}) {
 
         <Meta />
         <Links />
-        <Script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-WHH5JTBZ');`,
-          }}
-        ></Script>
       </head>
       <body>
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WHH5JTBZ"
-            height="0"
-            width="0"
-            style={{
-              display: 'none',
-              visibility: 'hidden',
-            }}
-            title="gtm"
-          ></iframe>
-        </noscript>
         {data ? (
           <Analytics.Provider
             cart={data.cart}
@@ -191,13 +177,38 @@ function Layout({children}: {children?: React.ReactNode}) {
             >
               {children}
             </PageLayout>
-            <GoogleTagManager />
           </Analytics.Provider>
         ) : (
           children
         )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        {/* 2. Initialize the GTM dataLayer container */}
+        <Script
+          type="text/partytown"
+          dangerouslySetInnerHTML={{
+            __html: `
+              dataLayer = window.dataLayer || [];
+
+              window.gtag = function () {
+                dataLayer.push(arguments);
+              };
+
+              window.gtag('js', new Date());
+              window.gtag('config', "${gtmContainerId}");
+            `,
+          }}
+        />
+
+        {/* 3. Include the GTM component */}
+        <PartytownGoogleTagManager gtmContainerId={gtmContainerId} />
+
+        {/* 4. Initialize PartyTown */}
+        <Partytown
+          nonce={nonce}
+          forward={['dataLayer.push', 'gtag']}
+          resolveUrl={maybeProxyRequest}
+        />
       </body>
     </html>
   );
