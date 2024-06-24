@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "shopify hydrogen dev --codegen",
-    "build": "shopify hydrogen build --codegen",
+    "partytown": "partytown copylib public/~partytown",
+    "build": "npm run partytown && shopify hydrogen build --codegen",
     "preview": "npm run build && shopify hydrogen preview",
     "e2e": "npx playwright test",
     "e2e:ui": "npx playwright test --ui",
@@ -20,6 +21,7 @@
   ],
   "prettier": "@shopify/prettier-config",
   "dependencies": {
+    "@builder.io/partytown": "^0.10.2",
     "@headlessui/react": "^1.7.2",
     "@remix-run/node": "^2.9.2",
     "@remix-run/react": "^2.9.2",
