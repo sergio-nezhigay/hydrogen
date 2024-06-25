@@ -89,10 +89,9 @@ export async function loader(args: LoaderFunctionArgs) {
       ...criticalData,
     },
     {
-      //  headers: {
-      //    'Set-Cookie': await args.context.session.commit(),
-      //  },
-      headers: partytownAtomicHeaders(),
+      headers: {
+        'Set-Cookie': await args.context.session.commit(),
+      },
     },
   );
 }
@@ -113,7 +112,6 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
 
   return {
     layout,
-    gtmContainerId: env.GTM_CONTAINER_ID,
     seo,
     shop: getShopAnalytics({
       storefront,
@@ -183,32 +181,6 @@ function Layout({children}: {children?: React.ReactNode}) {
         )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
-        {/* 2. Initialize the GTM dataLayer container */}
-        <Script
-          type="text/partytown"
-          dangerouslySetInnerHTML={{
-            __html: `
-              dataLayer = window.dataLayer || [];
-
-              window.gtag = function () {
-                dataLayer.push(arguments);
-              };
-
-              window.gtag('js', new Date());
-              window.gtag('config', "${gtmContainerId}");
-            `,
-          }}
-        />
-
-        {/* 3. Include the GTM component */}
-        <PartytownGoogleTagManager gtmContainerId={gtmContainerId} />
-
-        {/* 4. Initialize PartyTown */}
-        <Partytown
-          nonce={nonce}
-          forward={['dataLayer.push', 'gtag']}
-          resolveUrl={maybeProxyRequest}
-        />
       </body>
     </html>
   );
