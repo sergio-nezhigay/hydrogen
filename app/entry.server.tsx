@@ -18,6 +18,7 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
       'https://www.googletagmanager.com',
       'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com/',
     ],
     imgSrc: [
       "'self'",
@@ -38,6 +39,7 @@ export default async function handleRequest(
       'https://stats.g.doubleclick.net',
       'https://www.googletagmanager.com',
       'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com/',
     ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
