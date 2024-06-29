@@ -16,6 +16,7 @@ export function CustomAnalytics() {
     // Standard events
     subscribe('page_viewed', (data) => {
       console.log('CustomAnalytics - Page viewed:', data);
+      initializeDataLayer();
       window.dataLayer.push({
         event: 'shopify_page_view',
         page: data.url,
@@ -24,6 +25,7 @@ export function CustomAnalytics() {
 
     subscribe('product_viewed', (data) => {
       console.log('CustomAnalytics - Product viewed:', data);
+      initializeDataLayer();
       if (data.products && data.products.length > 0) {
         const product = data.products[0];
         window.dataLayer.push({
@@ -44,22 +46,28 @@ export function CustomAnalytics() {
         });
       }
     });
-    subscribe('collection_viewed', (data) => {
-      console.log('CustomAnalytics - Collection viewed:', data);
-    });
-    subscribe('cart_viewed', (data) => {
-      console.log('CustomAnalytics - Cart viewed:', data);
-    });
-    subscribe('cart_updated', (data) => {
-      console.log('CustomAnalytics - Cart updated:', data);
-    });
+    // subscribe('collection_viewed', (data) => {
+    //   console.log('CustomAnalytics - Collection viewed:', data);
+    // });
+    // subscribe('cart_viewed', (data) => {
+    //   console.log('CustomAnalytics - Cart viewed:', data);
+    // });
+    // subscribe('cart_updated', (data) => {
+    //   console.log('CustomAnalytics - Cart updated:', data);
+    // });
 
-    // Custom events
-    subscribe('custom_sidecart_viewed', (data) => {
-      console.log('CustomAnalytics - Custom sidecart opened:', data);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // // Custom events
+    // subscribe('custom_sidecart_viewed', (data) => {
+    //   console.log('CustomAnalytics - Custom sidecart opened:', data);
+    // });
+
   }, []);
+
+  const initializeDataLayer = () => {
+    if (!window.dataLayer) {
+      window.dataLayer = [];
+    }
+  };
 
   const id = data.googleGtmID;
   if (!id) {
@@ -81,13 +89,13 @@ export function CustomAnalytics() {
 
               gtag('js', new Date());
               gtag({'gtm.start': new Date().getTime(),event:'gtm.js'})
-              gtag('config', "${id}");
+              gtag('config', "GTM-WHH5JTBZ");
           `,
         }}
       />
 
       {/* Load GTM script */}
-      <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
+      <Script async src={`https://www.googletagmanager.com/gtm.js?id=GTM-WHH5JTBZ`} />
     </>
   );
 }

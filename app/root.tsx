@@ -39,6 +39,7 @@ import {GoogleTagManager} from '~/modules/GoogleTagManager';
 //import {PartytownGoogleTagManager} from '~/components/PartytownGoogleTagManager';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
+import { CustomAnalytics } from './modules/CustomAnalytics';
 
 export type RootLoader = typeof loader;
 
@@ -123,6 +124,7 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
     },
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     selectedLocale: storefront.i18n,
+    googleGtmID: env.PUBLIC_GOOGLE_GTM_ID
   };
 }
 
@@ -162,7 +164,7 @@ function Layout({children}: {children?: React.ReactNode}) {
         <Links />
         {/***********************************************/
         /**********  EXAMPLE UPDATE STARTS  ************/}
-        <Script
+        {/* <Script
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -171,14 +173,14 @@ function Layout({children}: {children?: React.ReactNode}) {
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-WHH5JTBZ');`,
           }}
-        ></Script>
+        ></Script> */}
         {/**********   EXAMPLE UPDATE END   ************/
         /***********************************************/}
       </head>
       <body>
         {/***********************************************/
         /**********  EXAMPLE UPDATE STARTS  ************/}
-        <noscript>
+        {/* <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WHH5JTBZ"
             height="0"
@@ -189,7 +191,7 @@ function Layout({children}: {children?: React.ReactNode}) {
             }}
             title="Googletag Manager"
           ></iframe>
-        </noscript>
+        </noscript> */}
         {/**********   EXAMPLE UPDATE END   ************/
         /***********************************************/}
         {data ? (
@@ -207,7 +209,8 @@ function Layout({children}: {children?: React.ReactNode}) {
             {/*<CustomAnalytics />*/}
             {/***********************************************/
             /**********  EXAMPLE UPDATE STARTS  ************/}
-            <GoogleTagManager />
+            {/* <GoogleTagManager /> */}
+            <CustomAnalytics />
             {/**********   EXAMPLE UPDATE END   ************/
             /***********************************************/}
           </Analytics.Provider>
