@@ -51,6 +51,21 @@ export function GoogleTagManager() {
       }
     });
 
+    subscribe('collection_viewed', (data) => {
+      console.log('CustomAnalytics - Collection viewed:', data);
+      console.log(
+        'CustomAnalytics - CollectionCollection  viewed:',
+        data.collection,
+      );
+      window.dataLayer.push({
+        event: 'view_collection',
+        collection: {
+          id: data.collection.id,
+          handle: data.collection.handle,
+        },
+      });
+    });
+
     ready();
   }, []);
 
