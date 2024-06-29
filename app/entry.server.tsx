@@ -29,6 +29,7 @@ export default async function handleRequest(
       'https://*.analytics.google.com',
       'https://*.googletagmanager.com',
       'https://analytics.google.com',
+      'https://stats.g.doubleclick.net',
     ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
