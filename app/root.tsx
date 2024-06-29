@@ -163,6 +163,7 @@ function Layout({children}: {children?: React.ReactNode}) {
         {/***********************************************/
         /**********  EXAMPLE UPDATE STARTS  ************/}
         <Script
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -186,6 +187,7 @@ function Layout({children}: {children?: React.ReactNode}) {
               display: 'none',
               visibility: 'hidden',
             }}
+            title="Googletag Manager"
           ></iframe>
         </noscript>
         {/**********   EXAMPLE UPDATE END   ************/

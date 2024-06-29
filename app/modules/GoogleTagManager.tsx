@@ -14,7 +14,6 @@ export function GoogleTagManager() {
   const {subscribe, register, canTrack} = useAnalytics();
 
   const {ready} = register('Google Tag Manager');
-  console.log('Google Tag Manager');
   useEffect(() => {
     setTimeout(() => {
       const isTrackingAllowed = canTrack();
