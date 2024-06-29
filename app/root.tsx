@@ -33,10 +33,10 @@ import {NotFound} from '~/components/NotFound';
 import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import styles from '~/styles/app.css?url';
-import {GoogleTagManager} from '~/components/GoogleTagManager';
-import {partytownAtomicHeaders} from '~/utils/partytown/partytownAtomicHeaders';
-import {maybeProxyRequest} from '~/utils/partytown/maybeProxyRequest';
-import {PartytownGoogleTagManager} from '~/components/PartytownGoogleTagManager';
+import {GoogleTagManager} from '~/modules/GoogleTagManager';
+//import {partytownAtomicHeaders} from '~/utils/partytown/partytownAtomicHeaders';
+//import {maybeProxyRequest} from '~/utils/partytown/maybeProxyRequest';
+//import {PartytownGoogleTagManager} from '~/components/PartytownGoogleTagManager';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 
@@ -150,7 +150,6 @@ function Layout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<typeof loader>('root');
 
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
-  const gtmContainerId = data?.gtmContainerId ?? 'GTM-WRQRP5RF';
 
   return (
     <html lang={locale.language}>

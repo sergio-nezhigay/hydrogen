@@ -1,5 +1,8 @@
 import {useAnalytics} from '@shopify/hydrogen';
 import {useEffect} from 'react';
+import {useLoaderData} from '@remix-run/react';
+
+import type {loader} from '~/root';
 
 declare global {
   interface Window {
@@ -9,8 +12,9 @@ declare global {
 
 export function GoogleTagManager() {
   const {subscribe, register, canTrack} = useAnalytics();
-  const {ready} = register('Google Tag Manager');
 
+  const {ready} = register('Google Tag Manager');
+  console.log('Google Tag Manager');
   useEffect(() => {
     setTimeout(() => {
       const isTrackingAllowed = canTrack();
