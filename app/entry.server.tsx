@@ -16,6 +16,8 @@ export default async function handleRequest(
       "'self'",
       'https://cdn.shopify.com',
       'https://*.googletagmanager.com',
+      'https://www.googletagmanager.com',
+      'https://fonts.googleapis.com',
     ],
     imgSrc: [
       "'self'",
@@ -23,6 +25,8 @@ export default async function handleRequest(
       'https://*.google-analytics.com',
       'https://*.googletagmanager.com',
       'https://www.google.com.ua',
+      'https://www.googletagmanager.com',
+      'https://fonts.googleapis.com',
     ],
     connectSrc: [
       "'self'",
@@ -31,6 +35,8 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
       'https://analytics.google.com',
       'https://stats.g.doubleclick.net',
+      'https://www.googletagmanager.com',
+      'https://fonts.googleapis.com',
     ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
