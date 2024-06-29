@@ -89,13 +89,13 @@ export function CustomAnalytics() {
 
               gtag('js', new Date());
               gtag({'gtm.start': new Date().getTime(),event:'gtm.js'})
-              gtag('config', "GTM-WHH5JTBZ");
+              gtag('config', "${id}");
           `,
         }}
       />
 
       {/* Load GTM script */}
-      <Script async src={`https://www.googletagmanager.com/gtm.js?id=GTM-WHH5JTBZ`} />
+      <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
     </>
   );
 }
