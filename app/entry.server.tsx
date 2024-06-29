@@ -22,6 +22,7 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://*.google-analytics.com',
       'https://*.googletagmanager.com',
+      'https://www.google.com.ua',
     ],
     connectSrc: [
       "'self'",
