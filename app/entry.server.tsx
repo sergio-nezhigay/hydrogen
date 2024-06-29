@@ -27,6 +27,7 @@ export default async function handleRequest(
       'https://www.google.com.ua',
       'https://www.googletagmanager.com',
       'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com/',
     ],
     connectSrc: [
       "'self'",
