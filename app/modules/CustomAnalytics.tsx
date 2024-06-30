@@ -69,7 +69,7 @@ export function CustomAnalytics() {
     }
   };
 
-  const id = data.googleGtmID;
+  const id = data?.googleGtmID;
   if (!id) {
     return null;
   }

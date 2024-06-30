@@ -29,7 +29,7 @@ import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
 
-import LangSelector from './custom/LangSelector';
+import LangSelector from '../modules/LangSelector';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -316,7 +316,7 @@ function DesktopHeader({
             <IconSearch />
           </button>
         </Form>
-        {/*<LangSelector />*/}
+        <LangSelector />
         <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>

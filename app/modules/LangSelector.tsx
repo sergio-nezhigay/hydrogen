@@ -3,6 +3,7 @@ import {
   useLocation,
   useRouteLoaderData,
   useSearchParams,
+  useHref 
 } from '@remix-run/react';
 import clsx from 'clsx';
 
@@ -13,8 +14,11 @@ function LangSelector() {
   const location = useLocation();
   console.log('🚀 ~ location:', location);
   const currentPath = location.pathname + location.search;
-  const replacedPath = currentPath.replace('/ru/', '/');
-  console.log('🚀 ~ replacedPath:', replacedPath);
+  const removedRuPath = currentPath.replace('/ru/', '/');
+  const href = useHref("/ru"+currentPath, { relative: "route"});
+  const href2 = useHref("/ru"+currentPath, { relative: "path"});
+  console.log("🚀 ~ href ~ href2:", href, href2)
+  console.log('🚀 ~ removedRuPath:', removedRuPath);
   console.log('🚀 ~ currentPath:', currentPath);
   const rootData = useRouteLoaderData<RootLoader>('root');
   const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
@@ -23,7 +27,7 @@ function LangSelector() {
   console.log('🚀 ~ selectedLocale, isUkrActive:', selectedLocale, isUkrActive);
   return (
     <ul className="flex">
-      {/*<li>
+      <li>
         <span
           className={clsx('flex', {
             'text-gray-400': isUkrActive,
@@ -43,12 +47,12 @@ function LangSelector() {
           </svg>
           UA
         </span>
-      </li>*/}
-      {/*<li className="border-l px-2">
+      </li>
+      <li className="border-l px-2">
         {isUkrActive ? (
           <a
-            href="https://staging1.fun/ru/"
-            //href={'staging1.fun/ru' + currentPath}
+            // href="https://staging1.fun/ru/"
+            href={href2}
             className={clsx({
               'text-gray-400': !isUkrActive,
             })}
@@ -58,7 +62,7 @@ function LangSelector() {
         ) : (
           <span>RU</span>
         )}
-      </li>*/}
+      </li>
     </ul>
   );
 }
