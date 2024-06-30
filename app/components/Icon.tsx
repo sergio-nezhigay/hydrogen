@@ -145,6 +145,15 @@ export function IconBag(props: IconProps) {
   );
 }
 
+export function UkrFlag() {
+  return (
+    <Icon className="w-4 h-4">
+      <circle cx="10" cy="10" r="10" fill="#0057B7" />
+      <path fill="#FFD700" d="M0 10c0 5.525 4.475 10 10 10s10-4.475 10-10" />
+    </Icon>
+  );
+}
+
 export function IconLogin(props: IconProps) {
   return (
     <Icon {...props}>

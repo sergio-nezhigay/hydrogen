@@ -427,7 +427,6 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
         bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
     >
       <FooterMenu menu={menu} />
-      <CountrySelector />
       <div
         className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-${itemsCount}`}
       >

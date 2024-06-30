@@ -33,13 +33,9 @@ import {NotFound} from '~/components/NotFound';
 import favicon from '~/assets/favicon.svg';
 import {seoPayload} from '~/lib/seo.server';
 import styles from '~/styles/app.css?url';
-import {GoogleTagManager} from '~/modules/GoogleTagManager';
-//import {partytownAtomicHeaders} from '~/utils/partytown/partytownAtomicHeaders';
-//import {maybeProxyRequest} from '~/utils/partytown/maybeProxyRequest';
-//import {PartytownGoogleTagManager} from '~/components/PartytownGoogleTagManager';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
-import { CustomAnalytics } from './modules/CustomAnalytics';
+import {CustomAnalytics} from './modules/CustomAnalytics';
 
 export type RootLoader = typeof loader;
 
@@ -124,7 +120,7 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
     },
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     selectedLocale: storefront.i18n,
-    googleGtmID: env.PUBLIC_GOOGLE_GTM_ID
+    googleGtmID: env.PUBLIC_GOOGLE_GTM_ID,
   };
 }
 
@@ -206,10 +202,8 @@ function Layout({children}: {children?: React.ReactNode}) {
             >
               {children}
             </PageLayout>
-            {/*<CustomAnalytics />*/}
             {/***********************************************/
             /**********  EXAMPLE UPDATE STARTS  ************/}
-            {/* <GoogleTagManager /> */}
             <CustomAnalytics />
             {/**********   EXAMPLE UPDATE END   ************/
             /***********************************************/}

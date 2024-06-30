@@ -179,4 +179,16 @@ shop-pay-button {
       @apply aspect-[inherit] w-full object-cover;
     }
   }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex-start {
+    @apply flex justify-start items-center;
+  }
 }
