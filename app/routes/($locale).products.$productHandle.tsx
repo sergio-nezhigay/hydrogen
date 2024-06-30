@@ -82,8 +82,14 @@ async function loadCriticalData({
     throw new Response('product', {status: 404});
   }
 
-  if (!product.selectedVariant) {
-    throw redirectToFirstVariant({product, request});
+  //  if (!product.selectedVariant) {
+  //    throw redirectToFirstVariant({product, request});
+  //  }
+  if (!product.selectedVariant && product.options.length) {
+    // set the selectedVariant to the first variant if there is only one option
+    if (product.options.length < 2) {
+      product.selectedVariant = product.variants.nodes[0];
+    }
   }
 
   const recommended = getRecommendedProducts(context.storefront, product.id);
