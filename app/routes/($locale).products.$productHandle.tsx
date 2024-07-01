@@ -205,7 +205,7 @@ export default function Product() {
               <div className="grid gap-4 py-4">
                 {descriptionHtml && (
                   <ProductDetail
-                    title="Product Details"
+                    title="Характеристики"
                     content={descriptionHtml}
                   />
                 )}
@@ -438,8 +438,14 @@ function ProductDetail({
   learnMore?: string;
 }) {
   const {translation} = useLoaderData<typeof loader>();
+  const isDefaultOpen = title === 'Характеристики';
   return (
-    <Disclosure key={title} as="div" className="grid w-full gap-2">
+    <Disclosure
+      key={title}
+      defaultOpen={isDefaultOpen}
+      as="div"
+      className="grid w-full gap-2"
+    >
       {({open}) => (
         <>
           <Disclosure.Button className="text-left">
