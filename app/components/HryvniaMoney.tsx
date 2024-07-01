@@ -3,11 +3,12 @@ import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
 
 interface HryvniaMoneyProps {
   data: MoneyV2;
+  className?: string;
 }
 
-function HryvniaMoney({data}: HryvniaMoneyProps) {
+function HryvniaMoney({data, className = ''}: HryvniaMoneyProps) {
   return (
-    <div>
+    <div className={className}>
       <Money
         data={data!}
         as="span"

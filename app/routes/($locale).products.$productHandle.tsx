@@ -36,11 +36,9 @@ import type {Storefront} from '~/lib/type';
 import {routeHeaders} from '~/data/cache';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import HryvniaMoney from '~/components/HryvniaMoney';
-import { translations } from '~/data/translations';
-
+import {translations} from '~/data/translations';
 
 export const headers = routeHeaders;
-
 
 export async function loader(args: LoaderFunctionArgs) {
   const {productHandle} = args.params;
@@ -64,7 +62,7 @@ async function loadCriticalData({
   request,
   context,
 }: LoaderFunctionArgs) {
-  const {productHandle, locale="uk"} = params;
+  const {productHandle, locale = 'uk'} = params;
   const translation = translations[locale as keyof typeof translations];
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
@@ -115,7 +113,7 @@ async function loadCriticalData({
     storeDomain: shop.primaryDomain.url,
     recommended,
     seo,
-    translation
+    translation,
   };
 }
 
@@ -148,34 +146,34 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
 };
 
-function redirectToFirstVariant({
-  product,
-  request,
-}: {
-  product: ProductQuery['product'];
-  request: Request;
-}) {
-  const url = new URL(request.url);
-  const searchParams = new URLSearchParams(url.search);
+//function redirectToFirstVariant({
+//  product,
+//  request,
+//}: {
+//  product: ProductQuery['product'];
+//  request: Request;
+//}) {
+//  const url = new URL(request.url);
+//  const searchParams = new URLSearchParams(url.search);
 
-  const firstVariant = product!.variants.nodes[0];
-  for (const option of firstVariant.selectedOptions) {
-    searchParams.set(option.name, option.value);
-  }
+//  const firstVariant = product!.variants.nodes[0];
+//  for (const option of firstVariant.selectedOptions) {
+//    searchParams.set(option.name, option.value);
+//  }
 
-  url.search = searchParams.toString();
+//  url.search = searchParams.toString();
 
-  return redirect(url.href.replace(url.origin, ''), 302);
-}
+//  return redirect(url.href.replace(url.origin, ''), 302);
+//}
 
 export default function Product() {
-  const {product, shop, recommended, variants} = useLoaderData<typeof loader>();
+  const {product, shop, recommended, variants, translation} =
+    useLoaderData<typeof loader>();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
 
   return (
     <>
-
       <Section className="px-0 md:px-8 lg:px-12">
         <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
           <ProductGallery
@@ -213,14 +211,14 @@ export default function Product() {
                 )}
                 {shippingPolicy?.body && (
                   <ProductDetail
-                    title="Shipping"
+                    title={translation.shipping}
                     content={getExcerpt(shippingPolicy.body)}
                     learnMore={`/policies/${shippingPolicy.handle}`}
                   />
                 )}
                 {refundPolicy?.body && (
                   <ProductDetail
-                    title="Returns"
+                    title={translation.returns}
                     content={getExcerpt(refundPolicy.body)}
                     learnMore={`/policies/${refundPolicy.handle}`}
                   />
@@ -412,25 +410,16 @@ export function ProductForm({
                   as="span"
                   className="flex items-center justify-center gap-2"
                 >
-                  <span>{translation.add_to_cart}</span> <span>·</span>{' '}
+                  <span>{translation.buy}</span> <span>·</span>{' '}
                   <HryvniaMoney data={selectedVariant?.price!} />
                   {isOnSale && (
-                    <Money
-                      withoutTrailingZeros
+                    <HryvniaMoney
                       data={selectedVariant?.compareAtPrice!}
-                      as="span"
                       className="opacity-50 strike"
                     />
                   )}
                 </Text>
               </AddToCartButton>
-            )}
-            {!isOutOfStock && (
-              <ShopPayButton
-                width="100%"
-                variantIds={[selectedVariant?.id!]}
-                storeDomain={storeDomain}
-              />
             )}
           </div>
         )}
@@ -448,6 +437,7 @@ function ProductDetail({
   content: string;
   learnMore?: string;
 }) {
+  const {translation} = useLoaderData<typeof loader>();
   return (
     <Disclosure key={title} as="div" className="grid w-full gap-2">
       {({open}) => (
@@ -477,7 +467,7 @@ function ProductDetail({
                   className="pb-px border-b border-primary/30 text-primary/50"
                   to={learnMore}
                 >
-                  Learn more
+                  {translation.learn_more}
                 </Link>
               </div>
             )}

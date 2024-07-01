@@ -247,6 +247,7 @@ function CartLineItem({line}: {line: CartLine}) {
   if (!line?.id) return null;
 
   const {id, quantity, merchandise} = line;
+  console.log('🚀 ~ merchandise:', merchandise);
 
   if (typeof quantity === 'undefined' || !merchandise?.product) return null;
 
@@ -285,11 +286,16 @@ function CartLineItem({line}: {line: CartLine}) {
           </Heading>
 
           <div className="grid pb-2">
-            {(merchandise?.selectedOptions || []).map((option) => (
-              <Text color="subtle" key={option.name}>
-                {option.name}: {option.value}
-              </Text>
-            ))}
+            {(merchandise?.selectedOptions || []).map((option) => {
+              if (option.value === 'Default Title') return null;
+              return (
+                <>
+                  <Text color="subtle" key={option.name}>
+                    {option.name}: {option.value}
+                  </Text>
+                </>
+              );
+            })}
           </div>
 
           <div className="flex items-center gap-2">

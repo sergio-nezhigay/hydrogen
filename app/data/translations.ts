@@ -1,11 +1,16 @@
 export const translations = {
-    ru: {
-      add_to_cart: "Добавить в корзину",
-      sold_out: "Нет в наличии"
-    },
-    uk: {
-      add_to_cart: "Додати до кошика",
-      sold_out: "Розпродано"
-    }
-  } as const;
-  
+  uk: {
+    buy: 'Купити',
+    sold_out: 'Розпродано',
+    shipping: 'Доставка',
+    returns: 'Повернення',
+    learn_more: 'Дізнатися більше',
+  },
+  ru: {
+    buy: 'Купить',
+    sold_out: 'Нет в наличии',
+    shipping: 'Доставка',
+    returns: 'Возврат',
+    learn_more: 'Узнать больше',
+  },
+} as const;
