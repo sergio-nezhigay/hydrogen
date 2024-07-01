@@ -36,9 +36,11 @@ import type {Storefront} from '~/lib/type';
 import {routeHeaders} from '~/data/cache';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import HryvniaMoney from '~/components/HryvniaMoney';
-import translations from '~/data/translations.json';
+import { translations } from '~/data/translations';
+
 
 export const headers = routeHeaders;
+
 
 export async function loader(args: LoaderFunctionArgs) {
   const {productHandle} = args.params;
@@ -63,7 +65,7 @@ async function loadCriticalData({
   context,
 }: LoaderFunctionArgs) {
   const {productHandle, locale="uk"} = params;
-  const translation = translations[locale];
+  const translation = translations[locale as keyof typeof translations];
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
   const selectedOptions = getSelectedProductOptions(request);
