@@ -36,6 +36,7 @@ import type {Storefront} from '~/lib/type';
 import {routeHeaders} from '~/data/cache';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import HryvniaMoney from '~/components/HryvniaMoney';
+import translations from '~/data/translations.json';
 
 export const headers = routeHeaders;
 
@@ -61,7 +62,8 @@ async function loadCriticalData({
   request,
   context,
 }: LoaderFunctionArgs) {
-  const {productHandle} = params;
+  const {productHandle, locale="uk"} = params;
+  const translation = translations[locale];
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
   const selectedOptions = getSelectedProductOptions(request);
@@ -111,6 +113,7 @@ async function loadCriticalData({
     storeDomain: shop.primaryDomain.url,
     recommended,
     seo,
+    translation
   };
 }
 
@@ -170,7 +173,7 @@ export default function Product() {
 
   return (
     <>
-      <h1>testbranch1</h1>
+
       <Section className="px-0 md:px-8 lg:px-12">
         <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
           <ProductGallery
@@ -259,7 +262,7 @@ export function ProductForm({
 }: {
   variants: ProductVariantFragmentFragment[];
 }) {
-  const {product, storeDomain} = useLoaderData<typeof loader>();
+  const {product, storeDomain, translation} = useLoaderData<typeof loader>();
 
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -270,7 +273,6 @@ export function ProductForm({
    */
   const selectedVariant = product.selectedVariant!;
   const isOutOfStock = !selectedVariant?.availableForSale;
-
   const isOnSale =
     selectedVariant?.price?.amount &&
     selectedVariant?.compareAtPrice?.amount &&
@@ -391,7 +393,7 @@ export function ProductForm({
           <div className="grid items-stretch gap-4">
             {isOutOfStock ? (
               <Button variant="secondary" disabled>
-                <Text>Sold out</Text>
+                <Text>{translation.sold_out}</Text>
               </Button>
             ) : (
               <AddToCartButton
@@ -408,7 +410,7 @@ export function ProductForm({
                   as="span"
                   className="flex items-center justify-center gap-2"
                 >
-                  <span>Додати до кошика</span> <span>·</span>{' '}
+                  <span>{translation.add_to_cart}</span> <span>·</span>{' '}
                   <HryvniaMoney data={selectedVariant?.price!} />
                   {isOnSale && (
                     <Money
