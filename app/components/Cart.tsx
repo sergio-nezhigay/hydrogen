@@ -247,7 +247,6 @@ function CartLineItem({line}: {line: CartLine}) {
   if (!line?.id) return null;
 
   const {id, quantity, merchandise} = line;
-  console.log('🚀 ~ merchandise:', merchandise);
 
   if (typeof quantity === 'undefined' || !merchandise?.product) return null;
 
