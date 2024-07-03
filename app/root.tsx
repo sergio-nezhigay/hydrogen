@@ -121,6 +121,7 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
     publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
     selectedLocale: storefront.i18n,
     googleGtmID: env.PUBLIC_GOOGLE_GTM_ID,
+    JUDGEME_PUBLIC_TOKEN: env.JUDGEME_PUBLIC_TOKEN,
   };
 }
 

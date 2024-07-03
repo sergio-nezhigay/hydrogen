@@ -37,6 +37,9 @@ import {routeHeaders} from '~/data/cache';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import HryvniaMoney from '~/components/HryvniaMoney';
 import {translations} from '~/data/translations';
+import {getJudgemeReviews} from '~/lib/judgeme';
+import ProductReviews from '~/modules/ProductReviews';
+import {StarRating} from '~/modules/StarRating';
 
 export const headers = routeHeaders;
 
@@ -66,6 +69,17 @@ async function loadCriticalData({
   const translation = translations[locale as keyof typeof translations];
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
+  const judgeme_API_TOKEN = context.env.JUDGEME_PUBLIC_TOKEN;
+
+  let judgemeReviews = null;
+  if (judgeme_API_TOKEN) {
+    const shop_domain = context.env.PUBLIC_STORE_DOMAIN;
+    judgemeReviews = await getJudgemeReviews(
+      judgeme_API_TOKEN,
+      shop_domain,
+      productHandle,
+    );
+  }
   const selectedOptions = getSelectedProductOptions(request);
 
   const [{shop, product}] = await Promise.all([
@@ -114,6 +128,7 @@ async function loadCriticalData({
     recommended,
     seo,
     translation,
+    judgemeReviews,
   };
 }
 
@@ -124,6 +139,7 @@ async function loadCriticalData({
  */
 function loadDeferredData({params, context}: LoaderFunctionArgs) {
   const {productHandle} = params;
+
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
   // In order to show which variants are available in the UI, we need to query
@@ -167,10 +183,16 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 //}
 
 export default function Product() {
-  const {product, shop, recommended, variants, translation} =
+  const {product, shop, recommended, variants, translation, judgemeReviews} =
     useLoaderData<typeof loader>();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
+  const rating =
+    judgemeReviews && 'rating' in judgemeReviews ? judgemeReviews.rating : 0;
+  const reviewNumber =
+    judgemeReviews && 'reviewNumber' in judgemeReviews
+      ? judgemeReviews.reviewNumber
+      : 0;
 
   return (
     <>
@@ -189,6 +211,10 @@ export default function Product() {
                 {vendor && (
                   <Text className={'opacity-50 font-medium'}>{vendor}</Text>
                 )}
+                <div className="space-x-2">
+                  <StarRating rating={rating} />
+                  <span className="align-top">({reviewNumber})</span>
+                </div>
               </div>
               <Suspense fallback={<ProductForm variants={[]} />}>
                 <Await
@@ -238,6 +264,7 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
+      {/*<ProductReviews />*/}
       <Analytics.ProductView
         data={{
           products: [
