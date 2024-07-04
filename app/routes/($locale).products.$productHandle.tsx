@@ -264,7 +264,7 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
-      {/*<ProductReviews />*/}
+      <ProductReviews />
       <Analytics.ProductView
         data={{
           products: [

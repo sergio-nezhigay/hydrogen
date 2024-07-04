@@ -56,7 +56,7 @@ export const getJudgemeReviews = async (
         }),
     ).then((res) => res.json())) as JudgemeReviewsData;
 
-    const reviews = data.reviews;
+    const reviews = data.reviews || [];
 
     const rating =
       reviews.reduce((acc, review) => acc + review.rating, 0) /
@@ -64,7 +64,7 @@ export const getJudgemeReviews = async (
     return {
       rating,
       reviewNumber: reviews.length,
-      //  reviews,
+      reviews,
     };
   }
   return {
