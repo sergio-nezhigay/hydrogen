@@ -164,7 +164,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
 };
 
-export const action = async ({request}: LoaderFunctionArgs) => {
+export const action = async ({request, context}: LoaderFunctionArgs) => {
   const formData = await request.formData();
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
@@ -179,14 +179,14 @@ export const action = async ({request}: LoaderFunctionArgs) => {
 
   // Extract the numeric product ID from the global ID
   const numericProductId = productId.split('/').pop();
-  console.log('🚀 ~ numericProductId in action:', numericProductId);
-
   if (!numericProductId) {
     return {error: 'Invalid product ID'};
   }
 
   try {
     await addJudgemeReview({
+      api_token: context.env.JUDGEME_PUBLIC_TOKEN,
+      shop_domain: context.env.PUBLIC_STORE_DOMAIN,
       id: parseInt(numericProductId),
       email,
       name,
@@ -197,6 +197,7 @@ export const action = async ({request}: LoaderFunctionArgs) => {
 
     return {success: true};
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Error submitting review:', error);
     return {
       error:

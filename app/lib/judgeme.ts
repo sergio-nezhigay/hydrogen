@@ -79,6 +79,8 @@ export async function addJudgemeReview({
   rating,
   title,
   body,
+  api_token,
+  shop_domain,
 }: {
   id: number;
   email: string;
@@ -86,16 +88,14 @@ export async function addJudgemeReview({
   rating: number;
   title: string;
   body: string;
+  api_token: string;
+  shop_domain: string;
 }) {
   const platform = 'shopify';
-  //  const token = process.env.JUDGEME_PUBLIC_TOKEN;
-
-  console.log('  id, email =', id, email);
-
   const response = await fetch('https://judge.me/api/v1/reviews', {
     method: 'POST',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${api_token}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -113,6 +113,6 @@ export async function addJudgemeReview({
   if (!response.ok) {
     throw new Error(`Failed to submit review: ${response.statusText}`);
   }
-  console.log('response-', response);
+
   return response.json();
 }
