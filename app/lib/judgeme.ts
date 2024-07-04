@@ -71,3 +71,48 @@ export const getJudgemeReviews = async (
     rating: 0,
   };
 };
+
+export async function addJudgemeReview({
+  id,
+  email,
+  name,
+  rating,
+  title,
+  body,
+}: {
+  id: number;
+  email: string;
+  name: string;
+  rating: number;
+  title: string;
+  body: string;
+}) {
+  const platform = 'shopify';
+  //  const token = process.env.JUDGEME_PUBLIC_TOKEN;
+
+  console.log('  id, email =', id, email);
+
+  const response = await fetch('https://judge.me/api/v1/reviews', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      shop_domain,
+      platform,
+      id,
+      email,
+      name,
+      rating,
+      title,
+      body,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to submit review: ${response.statusText}`);
+  }
+  console.log('response-', response);
+  return response.json();
+}

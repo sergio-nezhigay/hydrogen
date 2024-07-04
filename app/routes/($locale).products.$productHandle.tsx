@@ -17,6 +17,7 @@ import {
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
 import clsx from 'clsx';
+import {split} from 'postcss/lib/list';
 
 import type {
   ProductQuery,
@@ -37,9 +38,10 @@ import {routeHeaders} from '~/data/cache';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import HryvniaMoney from '~/components/HryvniaMoney';
 import {translations} from '~/data/translations';
-import {getJudgemeReviews} from '~/lib/judgeme';
+import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
 import ProductReviews from '~/modules/ProductReviews';
 import {StarRating} from '~/modules/StarRating';
+import {ReviewForm} from '~/modules/ReviewForm';
 
 export const headers = routeHeaders;
 
@@ -162,25 +164,46 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
 };
 
-//function redirectToFirstVariant({
-//  product,
-//  request,
-//}: {
-//  product: ProductQuery['product'];
-//  request: Request;
-//}) {
-//  const url = new URL(request.url);
-//  const searchParams = new URLSearchParams(url.search);
+export const action = async ({request}: LoaderFunctionArgs) => {
+  const formData = await request.formData();
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const rating = parseInt(formData.get('rating') as string);
+  const title = formData.get('title') as string;
+  const body = formData.get('body') as string;
+  const productId = formData.get('productId') as string;
 
-//  const firstVariant = product!.variants.nodes[0];
-//  for (const option of firstVariant.selectedOptions) {
-//    searchParams.set(option.name, option.value);
-//  }
+  if (!name || !email || !rating || !title || !body) {
+    return {error: 'All fields are required'};
+  }
 
-//  url.search = searchParams.toString();
+  // Extract the numeric product ID from the global ID
+  const numericProductId = productId.split('/').pop();
+  console.log('🚀 ~ numericProductId in action:', numericProductId);
 
-//  return redirect(url.href.replace(url.origin, ''), 302);
-//}
+  if (!numericProductId) {
+    return {error: 'Invalid product ID'};
+  }
+
+  try {
+    await addJudgemeReview({
+      id: parseInt(numericProductId),
+      email,
+      name,
+      rating,
+      title,
+      body,
+    });
+
+    return {success: true};
+  } catch (error) {
+    console.error('Error submitting review:', error);
+    return {
+      error:
+        'There was an error submitting your review. Please try again later.',
+    };
+  }
+};
 
 export default function Product() {
   const {product, shop, recommended, variants, translation, judgemeReviews} =
@@ -265,6 +288,7 @@ export default function Product() {
         </Await>
       </Suspense>
       <ProductReviews />
+      <ReviewForm productId={product.id} />
       <Analytics.ProductView
         data={{
           products: [

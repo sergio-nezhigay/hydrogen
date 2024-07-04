@@ -1,4 +1,3 @@
-import {Partytown} from '@builder.io/partytown/react';
 import {
   defer,
   type LinksFunction,
