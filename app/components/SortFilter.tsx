@@ -1,5 +1,5 @@
 import type {SyntheticEvent} from 'react';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {Menu, Disclosure} from '@headlessui/react';
 import type {Location} from '@remix-run/react';
 import {
@@ -43,7 +43,11 @@ export function SortFilter({
   children,
   collections = [],
 }: Props) {
-  const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 768);
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(()=>{
+    if(window?.innerWidth >= 768) setIsOpen(true);
+  }, []);
+  
   return (
     <>
       <div className="flex items-center justify-between w-full">
