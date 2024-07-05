@@ -35,7 +35,7 @@ export default async function handleRequest(
       //  'https://*.google-analytics.com',
       //  'https://*.analytics.google.com',
       //  'https://*.googletagmanager.com',
-      //  'https://analytics.google.com',
+      'https://analytics.google.com',
       //  'https://stats.g.doubleclick.net',
       //  'https://www.googletagmanager.com',
       //  'https://fonts.googleapis.com',
