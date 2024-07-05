@@ -204,7 +204,7 @@ function Layout({children}: {children?: React.ReactNode}) {
             </PageLayout>
             {/***********************************************/
             /**********  EXAMPLE UPDATE STARTS  ************/}
-            <CustomAnalytics />
+            {/*<CustomAnalytics />*/}
             {/**********   EXAMPLE UPDATE END   ************/
             /***********************************************/}
           </Analytics.Provider>
