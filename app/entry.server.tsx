@@ -14,7 +14,7 @@ export default async function handleRequest(
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     scriptSrc: [
       "'self'",
-      //  'https://cdn.shopify.com',
+      'https://cdn.shopify.com',
       //  'https://*.googletagmanager.com',
       //  'https://www.googletagmanager.com',
       //  'https://fonts.googleapis.com',
@@ -22,7 +22,7 @@ export default async function handleRequest(
     ],
     imgSrc: [
       "'self'",
-      //  'https://cdn.shopify.com',
+      'https://cdn.shopify.com',
       //  'https://*.google-analytics.com',
       //  'https://*.googletagmanager.com',
       //  'https://www.google.com.ua',

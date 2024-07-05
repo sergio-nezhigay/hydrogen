@@ -19,7 +19,7 @@ function ProductReviews() {
               {review.reviewer.name}
             </Text>
             <Text className="text-sm text-gray-500">
-              {new Date(review.created_at).toLocaleDateString()}
+              {new Date(review.created_at).toLocaleDateString('uk-UA')}
             </Text>
             <Text className="mt-2">{review.body}</Text>
             <Text className="mt-2">Rating: {review.rating} / 5</Text>
