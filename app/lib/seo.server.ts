@@ -139,7 +139,7 @@ function productJsonLd({
     '@type': 'Review',
     author: {
       '@type': 'Person',
-      name: review.author,
+      name: review.reviewer.name,
     } as Person,
     reviewRating: {
       '@type': 'Rating',
@@ -179,6 +179,11 @@ function productJsonLd({
       offers,
       sku: selectedVariant?.sku ?? '',
       url,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: judgemeReviewsData.rating,
+        reviewCount: judgemeReviewsData.reviewNumber,
+      },
       review: reviews,
     },
   ];
