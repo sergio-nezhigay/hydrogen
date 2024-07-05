@@ -15,12 +15,17 @@ import type {
   Blog as SeoBlog,
   CollectionPage,
   Offer,
+  Review,
   Organization,
   Product as SeoProduct,
   WebPage,
+  Person,
+  Rating,
 } from 'schema-dts';
 
 import type {ShopFragment} from 'storefrontapi.generated';
+
+import type {JudgemeReviewsData} from './type';
 
 function root({
   shop,
@@ -100,10 +105,12 @@ function productJsonLd({
   product,
   selectedVariant,
   url,
+  judgemeReviewsData,
 }: {
   product: ProductRequiredFields;
   selectedVariant: SelectedVariantRequiredFields;
   url: Request['url'];
+  judgemeReviewsData: JudgemeReviewsData;
 }): SeoConfig['jsonLd'] {
   const origin = new URL(url).origin;
   const variants = product.variants.nodes;
@@ -128,6 +135,19 @@ function productJsonLd({
       url: variantUrl.toString(),
     };
   });
+  const reviews: Review[] = judgemeReviewsData.reviews.map((review) => ({
+    '@type': 'Review',
+    author: {
+      '@type': 'Person',
+      name: review.author,
+    } as Person,
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: review.rating,
+      bestRating: '5',
+    } as Rating,
+    reviewBody: review.body,
+  }));
   return [
     {
       '@context': 'https://schema.org',
@@ -159,6 +179,7 @@ function productJsonLd({
       offers,
       sku: selectedVariant?.sku ?? '',
       url,
+      review: reviews,
     },
   ];
 }
@@ -167,10 +188,12 @@ function product({
   product,
   url,
   selectedVariant,
+  judgemeReviewsData,
 }: {
   product: ProductRequiredFields;
   selectedVariant: SelectedVariantRequiredFields;
   url: Request['url'];
+  judgemeReviewsData: JudgemeReviewsData;
 }): SeoConfig {
   const description = truncate(
     product?.seo?.description ?? product?.description ?? '',
@@ -179,7 +202,7 @@ function product({
     title: product?.seo?.title ?? product?.title,
     description,
     media: selectedVariant?.image,
-    jsonLd: productJsonLd({product, selectedVariant, url}),
+    jsonLd: productJsonLd({product, selectedVariant, url, judgemeReviewsData}),
   };
 }
 

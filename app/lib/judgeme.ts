@@ -1,15 +1,4 @@
-type JudgemeProductData = {
-  product: {
-    id: string;
-    handle: string;
-  };
-};
-
-type JudgemeReviewsData = {
-  reviews: {
-    rating: number;
-  }[];
-};
+import type {JudgemeProductData, JudgemeReviewsData} from './type';
 
 async function getInternalIdByHandle(
   api_token: string,
@@ -34,12 +23,7 @@ export const getJudgemeReviews = async (
   api_token: string,
   shop_domain: string,
   handle: string,
-) => {
-  if (!api_token) {
-    return {
-      error: 'Missing JUDGEME_PUBLIC_TOKEN',
-    };
-  }
+): Promise<JudgemeReviewsData> => {
   const internalId = await getInternalIdByHandle(
     api_token,
     shop_domain,
@@ -69,6 +53,8 @@ export const getJudgemeReviews = async (
   }
   return {
     rating: 0,
+    reviewNumber: 0,
+    reviews: [],
   };
 };
 

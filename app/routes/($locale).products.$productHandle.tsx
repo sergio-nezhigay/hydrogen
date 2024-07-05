@@ -17,7 +17,6 @@ import {
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
 import clsx from 'clsx';
-import {split} from 'postcss/lib/list';
 
 import type {
   ProductQuery,
@@ -55,7 +54,10 @@ export async function loader(args: LoaderFunctionArgs) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return defer({...deferredData, ...criticalData});
+  return defer({
+    ...deferredData,
+    ...criticalData,
+  });
 }
 
 /**
@@ -72,16 +74,13 @@ async function loadCriticalData({
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
   const judgeme_API_TOKEN = context.env.JUDGEME_PUBLIC_TOKEN;
+  const shop_domain = context.env.PUBLIC_STORE_DOMAIN;
+  const judgemeReviewsData = await getJudgemeReviews(
+    judgeme_API_TOKEN,
+    shop_domain,
+    productHandle,
+  );
 
-  let judgemeReviews = null;
-  if (judgeme_API_TOKEN) {
-    const shop_domain = context.env.PUBLIC_STORE_DOMAIN;
-    judgemeReviews = await getJudgemeReviews(
-      judgeme_API_TOKEN,
-      shop_domain,
-      productHandle,
-    );
-  }
   const selectedOptions = getSelectedProductOptions(request);
 
   const [{shop, product}] = await Promise.all([
@@ -121,6 +120,7 @@ async function loadCriticalData({
     product,
     selectedVariant,
     url: request.url,
+    judgemeReviewsData,
   });
 
   return {
@@ -130,7 +130,7 @@ async function loadCriticalData({
     recommended,
     seo,
     translation,
-    judgemeReviews,
+    judgemeReviewsData,
   };
 }
 
@@ -207,16 +207,19 @@ export const action = async ({request, context}: LoaderFunctionArgs) => {
 };
 
 export default function Product() {
-  const {product, shop, recommended, variants, translation, judgemeReviews} =
-    useLoaderData<typeof loader>();
+  const {
+    product,
+    shop,
+    recommended,
+    variants,
+    translation,
+    judgemeReviewsData,
+  } = useLoaderData<typeof loader>();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
-  const rating =
-    judgemeReviews && 'rating' in judgemeReviews ? judgemeReviews.rating : 0;
-  const reviewNumber =
-    judgemeReviews && 'reviewNumber' in judgemeReviews
-      ? judgemeReviews.reviewNumber
-      : 0;
+
+  const rating = judgemeReviewsData?.rating ?? 0;
+  const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
 
   return (
     <>

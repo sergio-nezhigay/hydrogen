@@ -1,27 +1,11 @@
 import {useLoaderData} from '@remix-run/react';
 
 import {Heading, Section, Text} from '~/components/Text';
-
-type Review = {
-  id: string;
-  reviewer: {
-    name: string;
-  };
-  created_at: string;
-  body: string;
-  rating: number;
-};
-
-type LoaderData = {
-  judgemeReviews: {
-    reviews: Review[];
-  };
-};
+import type {loader as productLoader} from '~/routes/($locale).products.$productHandle';
 
 function ProductReviews() {
-  const {judgemeReviews} = useLoaderData<LoaderData>();
-  const reviews =
-    judgemeReviews && 'reviews' in judgemeReviews ? judgemeReviews.reviews : [];
+  const {judgemeReviewsData} = useLoaderData<typeof productLoader>();
+  const reviews = judgemeReviewsData?.reviews ?? [];
 
   return (
     <Section className="px-0 md:px-8 lg:px-12">
