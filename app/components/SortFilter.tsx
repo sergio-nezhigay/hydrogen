@@ -29,11 +29,15 @@ export type SortParam =
   | 'newest'
   | 'featured';
 
-type Props = {
+export type CustomSortFilterProps = {
   filters: Filter[];
   appliedFilters?: AppliedFilter[];
   children: React.ReactNode;
   collections?: Array<{handle: string; title: string}>;
+};
+
+type SortFilterProps = CustomSortFilterProps & {
+  startIsOpen: boolean;
 };
 export const FILTER_URL_PREFIX = 'filter.';
 
@@ -42,12 +46,10 @@ export function SortFilter({
   appliedFilters = [],
   children,
   collections = [],
-}: Props) {
-  const [isOpen, setIsOpen] = useState(false);
-  useEffect(()=>{
-    if(window?.innerWidth >= 768) setIsOpen(true);
-  }, []);
-  
+  startIsOpen,
+}: SortFilterProps) {
+  const [isOpen, setIsOpen] = useState(startIsOpen);
+
   return (
     <>
       <div className="flex items-center justify-between w-full">
@@ -77,10 +79,44 @@ export function SortFilter({
   );
 }
 
+export function ResponsiveSortFilter({
+  filters,
+  appliedFilters = [],
+  children,
+  collections = [],
+}: CustomSortFilterProps) {
+  return (
+    <>
+      <div className="md:hidden">
+        {/*mobile-active*/}
+        <SortFilter
+          filters={filters}
+          appliedFilters={appliedFilters}
+          collections={collections}
+          startIsOpen={false}
+        >
+          {children}
+        </SortFilter>
+      </div>
+      <div className="hidden md:block">
+        {/*desktop-active*/}
+        <SortFilter
+          filters={filters}
+          appliedFilters={appliedFilters}
+          collections={collections}
+          startIsOpen={true}
+        >
+          {children}
+        </SortFilter>
+      </div>
+    </>
+  );
+}
+
 export function FiltersDrawer({
   filters = [],
   appliedFilters = [],
-}: Omit<Props, 'children'>) {
+}: Omit<SortFilterProps, 'children' | 'startIsOpen'>) {
   const [params] = useSearchParams();
   const location = useLocation();
 

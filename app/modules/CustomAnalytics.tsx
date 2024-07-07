@@ -63,7 +63,7 @@ export function CustomAnalytics() {
     // subscribe('custom_sidecart_viewed', (data) => {
     //   console.log('CustomAnalytics - Custom sidecart opened:', data);
     // });
-  }, []);
+  }, [canTrack, subscribe]);
 
   const initializeDataLayer = () => {
     if (!window.dataLayer) {

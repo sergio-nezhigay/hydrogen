@@ -24,7 +24,11 @@ import {PageHeader, Section, Text} from '~/components/Text';
 import {Grid} from '~/components/Grid';
 import {Button} from '~/components/Button';
 import {ProductCard} from '~/components/ProductCard';
-import {SortFilter, type SortParam} from '~/components/SortFilter';
+import {
+  ResponsiveSortFilter,
+  SortFilter,
+  type SortParam,
+} from '~/components/SortFilter';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
@@ -161,7 +165,7 @@ export default function Collection() {
         )}
       </PageHeader>
       <Section>
-        <SortFilter
+        <ResponsiveSortFilter
           filters={collection.products.filters as Filter[]}
           appliedFilters={appliedFilters}
           collections={collections}
@@ -202,7 +206,7 @@ export default function Collection() {
               </>
             )}
           </Pagination>
-        </SortFilter>
+        </ResponsiveSortFilter>
       </Section>
       <Analytics.CollectionView
         data={{
