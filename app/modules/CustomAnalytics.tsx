@@ -78,6 +78,8 @@ export function CustomAnalytics() {
 
   return (
     <>
+      {/* Load GTM script */}
+      <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
       {/* Initialize GTM container */}
       <Script
         suppressHydrationWarning
@@ -90,14 +92,10 @@ export function CustomAnalytics() {
               };
 
               gtag('js', new Date());
-              gtag({'gtm.start': new Date().getTime(),event:'gtm.js'})
               gtag('config', "${id}");
           `,
         }}
       />
-
-      {/* Load GTM script */}
-      <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
     </>
   );
 }
