@@ -35,6 +35,7 @@ import styles from '~/styles/app.css?url';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import {CustomAnalytics} from './modules/CustomAnalytics';
+import {GoogleTagManager} from './modules/GoogleTagManager';
 
 export type RootLoader = typeof loader;
 
@@ -160,8 +161,7 @@ function Layout({children}: {children?: React.ReactNode}) {
         <Links />
         {/***********************************************/
         /**********  EXAMPLE UPDATE STARTS  ************/}
-        {/* <Script
-          suppressHydrationWarning
+        <Script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -169,27 +169,24 @@ function Layout({children}: {children?: React.ReactNode}) {
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-WHH5JTBZ');`,
           }}
-        ></Script> */}
+        ></Script>
+
         {/**********   EXAMPLE UPDATE END   ************/
         /***********************************************/}
       </head>
       <body>
-        {/***********************************************/
-        /**********  EXAMPLE UPDATE STARTS  ************/}
-        {/* <noscript>
+        {/*<!-- Google Tag Manager (noscript) -->*/}
+        <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WHH5JTBZ"
             height="0"
             width="0"
-            style={{
-              display: 'none',
-              visibility: 'hidden',
-            }}
-            title="Googletag Manager"
+            style={{display: 'none', visibility: 'hidden'}}
+            title="gtm"
           ></iframe>
-        </noscript> */}
-        {/**********   EXAMPLE UPDATE END   ************/
-        /***********************************************/}
+        </noscript>
+        {/*<!-- End Google Tag Manager (noscript) */}
+
         {data ? (
           <Analytics.Provider
             cart={data.cart}
@@ -204,7 +201,8 @@ function Layout({children}: {children?: React.ReactNode}) {
             </PageLayout>
             {/***********************************************/
             /**********  EXAMPLE UPDATE STARTS  ************/}
-            <CustomAnalytics />
+            {/*<CustomAnalytics />*/}
+            <GoogleTagManager />
             {/**********   EXAMPLE UPDATE END   ************/
             /***********************************************/}
           </Analytics.Provider>

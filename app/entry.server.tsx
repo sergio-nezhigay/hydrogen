@@ -15,6 +15,7 @@ export default async function handleRequest(
     scriptSrc: [
       "'self'",
       'https://cdn.shopify.com',
+      'https://www.googletagmanager.com',
       //  'https://*.googletagmanager.com',
       //  'https://www.googletagmanager.com',
       //  'https://fonts.googleapis.com',
@@ -37,7 +38,8 @@ export default async function handleRequest(
       //  'https://*.googletagmanager.com',
       'https://analytics.google.com',
       'https://www.google-analytics.com',
-       'https://stats.g.doubleclick.net',
+      'https://stats.g.doubleclick.net',
+
       //  'https://www.googletagmanager.com',
       //  'https://fonts.googleapis.com',
       //  'https://fonts.gstatic.com/',

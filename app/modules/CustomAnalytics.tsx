@@ -11,10 +11,12 @@ export function CustomAnalytics() {
   useEffect(() => {
     setTimeout(() => {
       const isTrackingAllowed = canTrack();
+      // eslint-disable-next-line no-console
       console.log('CustomAnalytics - isTrackingAllowed', isTrackingAllowed);
     }, 1000);
     // Standard events
     subscribe('page_viewed', (data) => {
+      // eslint-disable-next-line no-console
       console.log('CustomAnalytics - Page viewed:', data);
       initializeDataLayer();
       window.dataLayer.push({
@@ -24,6 +26,7 @@ export function CustomAnalytics() {
     });
 
     subscribe('product_viewed', (data) => {
+      // eslint-disable-next-line no-console
       console.log('CustomAnalytics - Product viewed:', data);
       initializeDataLayer();
       if (data.products && data.products.length > 0) {
@@ -60,7 +63,6 @@ export function CustomAnalytics() {
     // subscribe('custom_sidecart_viewed', (data) => {
     //   console.log('CustomAnalytics - Custom sidecart opened:', data);
     // });
-
   }, []);
 
   const initializeDataLayer = () => {
