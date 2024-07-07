@@ -109,7 +109,7 @@ async function loadCriticalData({
     }
   }
 
-  const recommended = getRecommendedProducts(context.storefront, product.id);
+  //  const recommended = getRecommendedProducts(context.storefront, product.id);
 
   // TODO: firstVariant is never used because we will always have a selectedVariant due to redirect
   // Investigate if we can avoid the redirect for product pages with no search params for first variant
@@ -127,7 +127,7 @@ async function loadCriticalData({
     product,
     shop,
     storeDomain: shop.primaryDomain.url,
-    recommended,
+    //recommended,
     seo,
     translation,
     judgemeReviewsData,
@@ -210,7 +210,7 @@ export default function Product() {
   const {
     product,
     shop,
-    recommended,
+    //recommended,
     variants,
     translation,
     judgemeReviewsData,
@@ -281,7 +281,7 @@ export default function Product() {
           </div>
         </div>
       </Section>
-      <Suspense fallback={<Skeleton className="h-32" />}>
+      {/*<Suspense fallback={<Skeleton className="h-32" />}>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}
@@ -290,7 +290,7 @@ export default function Product() {
             <ProductSwimlane title="Related Products" products={products} />
           )}
         </Await>
-      </Suspense>
+      </Suspense>*/}
       <ProductReviews />
       <ReviewForm productId={product.id} />
       <Analytics.ProductView

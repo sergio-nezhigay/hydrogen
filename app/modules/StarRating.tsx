@@ -4,6 +4,7 @@ export function StarRating({rating}: {rating: number}) {
   const filledStar = <IconFilledStar className="w-4 h-4" />;
   const halfFilledStar = <IconStarHalf className="w-4 h-4" />;
   const star = <IconStar className="w-4 h-4" />;
+
   return (
     <div className="inline-flex gap-0.5">
       {rating >= 1 ? filledStar : rating >= 0.5 ? halfFilledStar : star}
