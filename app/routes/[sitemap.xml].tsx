@@ -50,7 +50,7 @@ function shopSitemap({data, baseUrl}: {data: SitemapsQuery; baseUrl: string}) {
   const productsData = flattenConnection(data.products)
     .filter((product) => product.onlineStoreUrl)
     .map((product) => {
-      const url = `${baseUrl}/products/${xmlEncode(product.handle)}`;
+      const url = `${baseUrl}/product/${xmlEncode(product.handle)}`;
 
       const finalObject: ProductEntry = {
         url,
