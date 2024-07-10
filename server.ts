@@ -16,6 +16,7 @@ import {
 
 import {AppSession} from '~/lib/session.server';
 import {getLocaleFromRequest} from '~/lib/utils';
+import {redirect} from '@shopify/remix-oxygen'
 
 /**
  * Export a fetch handler in module format.
@@ -71,6 +72,13 @@ export default {
         getCartId: cartGetIdDefault(request.headers),
         setCartId: cartSetIdDefault(),
       });
+
+      const url = new URL(request.url); 
+      if (url.pathname.startsWith('/product/')) { 
+        const newPathname = url.pathname.replace(/^\/product\//, '/products/'); 
+        url.pathname = newPathname; 
+        return redirect(url.toString(), { status: 301 }); 
+      }
 
       /**
        * Create a Remix request handler and pass
