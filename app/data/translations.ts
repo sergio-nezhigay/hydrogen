@@ -5,6 +5,7 @@ export const translations = {
     shipping: 'Доставка',
     returns: 'Повернення',
     learn_more: 'Дізнатися більше',
+    subtotal: 'Підсумок',
   },
   ru: {
     buy: 'Купить',
@@ -12,5 +13,6 @@ export const translations = {
     shipping: 'Доставка',
     returns: 'Возврат',
     learn_more: 'Узнать больше',
+    subtotal: 'Итог',
   },
 } as const;

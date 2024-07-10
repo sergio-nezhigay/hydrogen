@@ -4,6 +4,7 @@ import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import {Money, Image, flattenConnection} from '@shopify/hydrogen';
 import type {FulfillmentStatus} from '@shopify/hydrogen/customer-account-api-types';
 
+import {translations, translations} from '~/data/translations';
 import type {OrderFragment} from 'customer-accountapi.generated';
 import {statusMessage} from '~/lib/utils';
 import {Link} from '~/components/Link';
@@ -18,7 +19,8 @@ export async function loader({request, context, params}: LoaderFunctionArgs) {
   if (!params.id) {
     return redirect(params?.locale ? `${params.locale}/account` : '/account');
   }
-
+  const {productHandle, locale = 'uk'} = params;
+  const translation = translations[locale as keyof typeof translations];
   const queryParams = new URL(request.url).searchParams;
   const orderToken = queryParams.get('key');
 
@@ -65,6 +67,7 @@ export async function loader({request, context, params}: LoaderFunctionArgs) {
         discountValue,
         discountPercentage,
         fulfillmentStatus,
+        translation,
       },
       {
         headers: {
@@ -89,6 +92,7 @@ export default function OrderRoute() {
     discountValue,
     discountPercentage,
     fulfillmentStatus,
+    translation,
   } = useLoaderData<typeof loader>();
   return (
     <div>
@@ -228,13 +232,13 @@ export default function OrderRoute() {
                     colSpan={3}
                     className="hidden pt-6 pl-6 pr-3 font-normal text-right sm:table-cell md:pl-0"
                   >
-                    <Text>Subtotal</Text>
+                    <Text>{translation.subtotal}</Text>
                   </th>
                   <th
                     scope="row"
                     className="pt-6 pr-3 font-normal text-left sm:hidden"
                   >
-                    <Text>Subtotal</Text>
+                    <Text>{translation.subtotal}</Text>
                   </th>
                   <td className="pt-6 pl-3 pr-4 text-right md:pr-3">
                     <Money data={order.subtotal!} />
