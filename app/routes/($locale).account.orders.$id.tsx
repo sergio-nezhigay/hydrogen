@@ -4,7 +4,7 @@ import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import {Money, Image, flattenConnection} from '@shopify/hydrogen';
 import type {FulfillmentStatus} from '@shopify/hydrogen/customer-account-api-types';
 
-import {translations, translations} from '~/data/translations';
+import {translations} from '~/data/translations';
 import type {OrderFragment} from 'customer-accountapi.generated';
 import {statusMessage} from '~/lib/utils';
 import {Link} from '~/components/Link';
