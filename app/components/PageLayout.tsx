@@ -29,7 +29,7 @@ import {
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
-import logo from '/public/images/logo.svg';
+import logo from '/images/logo.svg';
 
 import LangSelector from '../modules/LangSelector';
 

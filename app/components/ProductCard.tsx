@@ -106,14 +106,14 @@ export function ProductCard({
           className="mt-2"
         >
           <Text as="span" className="flex items-center justify-center gap-2">
-            Add to Cart
+            Купити
           </Text>
         </AddToCartButton>
       )}
       {quickAdd && !firstVariant.availableForSale && (
         <Button variant="secondary" className="mt-2" disabled>
           <Text as="span" className="flex items-center justify-center gap-2">
-            Sold out
+            Розпродано
           </Text>
         </Button>
       )}

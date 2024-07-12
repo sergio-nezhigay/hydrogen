@@ -443,6 +443,7 @@ export function CartEmpty({
   layout?: Layouts;
   onClose?: () => void;
 }) {
+
   const scrollRef = useRef(null);
   const {y} = useScroll(scrollRef);
 
@@ -461,17 +462,16 @@ export function CartEmpty({
     <div ref={scrollRef} className={container[layout]} hidden={hidden}>
       <section className="grid gap-6">
         <Text format>
-          Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-          started!
+          Схоже, ви ще нічого не додали, давайте почнемо!
         </Text>
         <div>
-          <Button onClick={onClose}>Continue shopping</Button>
+          <Button onClick={onClose}>Продовжити покупки</Button>
         </div>
       </section>
       <section className="grid gap-8 pt-16">
         <FeaturedProducts
           count={4}
-          heading="Shop Best Sellers"
+          heading="Хіти продажів"
           layout={layout}
           onClose={onClose}
           sortKey="BEST_SELLING"

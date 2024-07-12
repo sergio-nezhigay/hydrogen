@@ -106,7 +106,7 @@ function FeatureProductsContent({
   }
 
   if (products?.length === 0) {
-    return <Text format>No products found.</Text>;
+    return <Text format>Товарів не знайдено</Text>;
   }
 
   return (
