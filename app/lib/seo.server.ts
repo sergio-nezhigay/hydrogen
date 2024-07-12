@@ -68,9 +68,9 @@ function root({
 
 function home(): SeoConfig {
   return {
-    title: 'Home',
-    titleTemplate: '%s | Hydrogen Demo Store',
-    description: 'The best place to buy snowboarding products',
+    title: 'Головна',
+    titleTemplate: '%s | магазин Byte.com.ua',
+    description: "Інтернет-магазин комп'ютерних перехідників та комплектуючих",
     robots: {
       noIndex: false,
       noFollow: false,
