@@ -67,7 +67,7 @@ export const links: LinksFunction = () => {
     },
     {
       rel: 'preconnect',
-      href: 'https://shop.app',
+      href: 'https://byte.com.ua/',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
