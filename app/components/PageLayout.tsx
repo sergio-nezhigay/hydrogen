@@ -4,6 +4,7 @@ import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm} from '@shopify/hydrogen';
 
+
 import {type LayoutQuery} from 'storefrontapi.generated';
 import {Text, Heading, Section} from '~/components/Text';
 import {Link} from '~/components/Link';
@@ -28,6 +29,7 @@ import {
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
+import logo from '/public/images/logo.svg';
 
 import LangSelector from '../modules/LangSelector';
 
@@ -271,10 +273,10 @@ function DesktopHeader({
         !isHome && y > 50 && ' shadow-lightHeader'
       } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
     >
-      <div className="flex gap-12">
-        <Link className="font-bold" to="/" prefetch="intent">
-          {title}
-        </Link>
+      <div className="flex-center gap-12">
+         <Link to="/" prefetch="intent">
+         <img src={logo} alt="Logo" className="h-8 w-auto" loading="lazy" />
+        </Link> 
         <nav className="flex gap-8">
           {/* Top level menu items */}
           {(menu?.items || []).map((item) => (
