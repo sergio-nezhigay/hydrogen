@@ -3,14 +3,11 @@ import {Disclosure, Listbox} from '@headlessui/react';
 import {
   defer,
   type MetaArgs,
-  redirect,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
 import {useLoaderData, Await, useNavigate} from '@remix-run/react';
 import {
   getSeoMeta,
-  Money,
-  ShopPayButton,
   VariantSelector,
   getSelectedProductOptions,
   Analytics,
