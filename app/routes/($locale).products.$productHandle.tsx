@@ -35,9 +35,9 @@ import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import HryvniaMoney from '~/components/HryvniaMoney';
 import {translations} from '~/data/translations';
 import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
-import ProductReviews from '~/modules/ProductReviews';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
+import ReviewList from '~/modules/ReviewList';
 
 export const headers = routeHeaders;
 
@@ -217,6 +217,7 @@ export default function Product() {
 
   const rating = judgemeReviewsData?.rating ?? 0;
   const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
+  const reviews = judgemeReviewsData?.reviews ?? [];
 
   return (
     <>
@@ -288,7 +289,7 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
-      <ProductReviews />
+      <ReviewList reviews={reviews} title={translation.reviews} />
       <ReviewForm productId={product.id} />
       <Analytics.ProductView
         data={{
