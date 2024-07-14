@@ -17,17 +17,30 @@ function ReviewList({reviews, title}: ReviewListProps) {
             {title}
           </Heading>
           {reviews.map((review) => (
-            <div key={review.id} className="mb-4 border-b pb-4">
-              <Text as="h3" className="font-semibold">
-                {review.reviewer.name}
-              </Text>
-              <Text className="text-sm text-gray-500">
-                {new Date(review.created_at).toLocaleDateString('uk-UA')}
-              </Text>
-              <Text className="mt-2">{review.body}</Text>
-              <Text className="mt-2">Rating: {review.rating} / 5</Text>
-              <StarRating rating={2.5} />
-              {/*<StarRating rating={review.rating} />*/}
+            <div key={review.id} className="mb-6 border-b pb-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <Text as="h3" className="font-semibold mr-2">
+                    {review.reviewer.name}
+                  </Text>
+                  {review.verified && (
+                    <span className="text-xs text-green-600">
+                      Verified Purchase
+                    </span>
+                  )}
+                </div>
+                <Text className="text-sm text-gray-500">
+                  {new Date(review.created_at).toLocaleDateString('uk-UA', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </Text>
+              </div>
+              <Text className="mt-1">{review.body}</Text>
+              <div className="mt-2 flex items-center">
+                <StarRating rating={review.rating} />
+              </div>
             </div>
           ))}
         </Section>
