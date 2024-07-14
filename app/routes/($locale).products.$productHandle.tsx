@@ -256,8 +256,9 @@ export default function Product() {
               <div className="grid gap-4 py-4">
                 {descriptionHtml && (
                   <ProductDetail
-                    title="Характеристики"
+                    title={translation.description}
                     content={descriptionHtml}
+                    isOpen={true}
                   />
                 )}
                 {shippingPolicy?.body && (
@@ -289,7 +290,11 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
-      <ReviewList reviews={reviews} title={translation.reviews} />
+      <ReviewList
+        reviews={reviews}
+        title={translation.reviews}
+        message={translation.verified_purchase}
+      />
       <ReviewForm productId={product.id} />
       <Analytics.ProductView
         data={{
@@ -485,17 +490,19 @@ function ProductDetail({
   title,
   content,
   learnMore,
+  isOpen = false,
 }: {
   title: string;
   content: string;
   learnMore?: string;
+  isOpen?: boolean;
 }) {
   const {translation} = useLoaderData<typeof loader>();
-  const isDefaultOpen = title === 'Характеристики';
+
   return (
     <Disclosure
       key={title}
-      defaultOpen={isDefaultOpen}
+      defaultOpen={isOpen}
       as="div"
       className="grid w-full gap-2"
     >
