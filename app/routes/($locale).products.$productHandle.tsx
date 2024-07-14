@@ -290,11 +290,7 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
-      <ReviewList
-        reviews={reviews}
-        title={translation.reviews}
-        message={translation.verified_purchase}
-      />
+      <ReviewList reviews={reviews} title={translation.reviews} />
       <ReviewForm productId={product.id} />
       <Analytics.ProductView
         data={{

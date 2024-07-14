@@ -9,7 +9,6 @@ export const translations = {
     enter_shipping_address: 'Введіть адресу доставки',
     by_carrier_rates: 'По тарифах перевізника',
     reviews: 'Відгуки',
-    verified_purchase: 'Перевірена покупка',
     description: 'Опис',
   },
   ru: {
@@ -22,7 +21,6 @@ export const translations = {
     enter_shipping_address: 'Введите адрес доставки',
     by_carrier_rates: 'По тарифам перевозчика',
     reviews: 'Отзывы',
-    verified_purchase: 'Проверенная покупка',
     description: 'Описание',
   },
 } as const;

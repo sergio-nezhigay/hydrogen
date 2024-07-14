@@ -6,10 +6,9 @@ import {StarRating} from './StarRating';
 type ReviewListProps = {
   reviews: JudgemeReview[];
   title: string;
-  message: string;
 };
 
-function ReviewList({reviews, title, message}: ReviewListProps) {
+function ReviewList({reviews, title}: ReviewListProps) {
   return (
     <>
       {reviews.length > 0 && (
@@ -44,16 +43,18 @@ function ReviewList({reviews, title, message}: ReviewListProps) {
                             d="M5 13l4 4L19 7"
                           ></path>
                         </svg>
-                        {message}
+                        Перевірена покупка
                       </span>
                     )}
                   </div>
                   <Text className="text-sm text-gray-500">
-                    {new Date(review.created_at).toLocaleDateString('uk-UA', {
-                      day: 'numeric',
-                      month: 'long',
-                      year: 'numeric',
-                    })}
+                    <time dateTime={new Date(review.created_at).toISOString()}>
+                      {new Date(review.created_at).toLocaleDateString('uk-UA', {
+                        day: 'numeric',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </time>
                   </Text>
                 </div>
                 <div className="mt-2 flex items-center">
