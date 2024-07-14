@@ -59,7 +59,6 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 };
 
 export const links: LinksFunction = () => {
-
   return [
     {rel: 'stylesheet', href: styles},
     {
@@ -71,7 +70,6 @@ export const links: LinksFunction = () => {
       href: 'https://byte.com.ua/',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
-
   ];
 };
 
@@ -150,11 +148,11 @@ function Layout({children}: {children?: React.ReactNode}) {
   const data = useRouteLoaderData<typeof loader>('root');
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
   const seoUrl = data?.seo.url ?? '';
-  const baseUrl = new URL(seoUrl).origin; 
+  const baseUrl = new URL(seoUrl).origin;
   const currentPath = new URL(seoUrl).pathname;
   const alternateUkLink = seoUrl;
   const alternateRuLink = `${baseUrl}/ru${currentPath}`;
-  
+
   return (
     <html lang={locale.language}>
       <head>

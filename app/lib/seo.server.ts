@@ -400,7 +400,7 @@ function blog({
 }): SeoConfig {
   return {
     title: blog?.seo?.title,
-    description: truncate(blog?.seo?.description || ''),
+    description: blog?.seo?.description || '',
     titleTemplate: '%s | Blog',
     url,
     jsonLd: {
@@ -423,7 +423,7 @@ function page({
   return {
     description: truncate(page?.seo?.description || ''),
     title: page?.seo?.title ?? page?.title,
-    titleTemplate: '%s | Page',
+    titleTemplate: '%s',
     url,
     jsonLd: {
       '@context': 'https://schema.org',
