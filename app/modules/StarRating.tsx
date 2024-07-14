@@ -1,9 +1,9 @@
-import {IconFilledStar, IconStarHalf, IconStar} from '~/components/Icon';
+import {Star} from '~/components/Icon';
 
 export function StarRating({rating}: {rating: number}) {
-  const filledStar = <IconFilledStar className="w-4 h-4" fill="orange" />;
-  const halfFilledStar = <IconStarHalf className="w-4 h-4" fill="orange" />;
-  const star = <IconStar className="w-4 h-4" fill="lightgray" />;
+  const filledStar = <Star fill="full" />;
+  const halfFilledStar = <Star fill="half" />;
+  const star = <Star fill="empty" />;
 
   return (
     <div className="inline-flex gap-0.5">
