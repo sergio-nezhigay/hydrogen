@@ -1,9 +1,12 @@
-import { Form, useActionData } from '@remix-run/react';
-import { useState, useEffect } from 'react';
-import { Star } from '~/components/Icon'; // Adjust the import path as necessary
+import {Form, useActionData} from '@remix-run/react';
+import {useState, useEffect} from 'react';
+
+import {translations} from '~/data/translations';
+import {Star} from '~/components/Icon'; // Adjust the import path as necessary
 
 interface ReviewFormProps {
   productId: string;
+  locale: keyof typeof translations;
 }
 
 interface ActionData {
@@ -14,17 +17,20 @@ interface ActionData {
 interface StarInputProps {
   rating: number;
   setRating: (rating: number) => void;
+  locale: keyof typeof translations;
 }
 
-
-function StarInput({ rating, setRating }:StarInputProps) {
+function StarInput({rating, setRating, locale}: StarInputProps) {
   const [hoverRating, setHoverRating] = useState<number>(0);
-
+  const translation = translations[locale];
   const handleStarClick = (index: number) => {
     setRating(index);
   };
 
-  const handleKeyDown = (index: number, event: React.KeyboardEvent<HTMLAnchorElement>) => {
+  const handleKeyDown = (
+    index: number,
+    event: React.KeyboardEvent<HTMLButtonElement>,
+  ) => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault();
       handleStarClick(index);
@@ -40,13 +46,18 @@ function StarInput({ rating, setRating }:StarInputProps) {
   };
 
   return (
-    <div className="star-input" role="radiogroup" aria-labelledby="rating-label">
-      <label id="rating-label" htmlFor="rating">Ваша оцінка</label>
+    <div
+      className="star-input"
+      role="radiogroup"
+      aria-labelledby="rating-label"
+    >
+      <label id="rating-label" htmlFor="rating">
+        {translation.your_rating}
+      </label>
       <div id="rating" className="inline-flex gap-0.5">
         {[1, 2, 3, 4, 5].map((index) => (
-          <a
+          <button
             key={index}
-            href="#"
             onClick={(e) => {
               e.preventDefault();
               handleStarClick(index);
@@ -59,8 +70,10 @@ function StarInput({ rating, setRating }:StarInputProps) {
             aria-checked={rating >= index}
             aria-label={`${index} Star${index > 1 ? 's' : ''}`}
           >
-            <Star fill={hoverRating >= index || rating >= index ? 'full' : 'empty'} />
-          </a>
+            <Star
+              fill={hoverRating >= index || rating >= index ? 'full' : 'empty'}
+            />
+          </button>
         ))}
       </div>
       <input type="hidden" name="rating" value={rating} />
@@ -68,8 +81,9 @@ function StarInput({ rating, setRating }:StarInputProps) {
   );
 }
 
-export function ReviewForm({ productId }: ReviewFormProps) {
+export function ReviewForm({productId, locale}: ReviewFormProps) {
   const actionData = useActionData<ActionData>();
+  const translation = translations[locale];
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -89,11 +103,11 @@ export function ReviewForm({ productId }: ReviewFormProps) {
 
   return (
     <div>
-      <h2>Submit a Review</h2>
+      <h2>{translation.submit_a_review}</h2>
       <Form method="post">
         <input type="hidden" name="productId" value={productId} />
         <div>
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">{translation.name}</label>
           <input
             type="text"
             id="name"
@@ -105,7 +119,7 @@ export function ReviewForm({ productId }: ReviewFormProps) {
           />
         </div>
         <div>
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">{translation.email}</label>
           <input
             type="email"
             id="email"
@@ -116,9 +130,9 @@ export function ReviewForm({ productId }: ReviewFormProps) {
             aria-required="true"
           />
         </div>
-        <StarInput rating={rating} setRating={setRating} />
+        <StarInput rating={rating} setRating={setRating} locale={locale} />
         <div>
-          <label htmlFor="title">Review Title</label>
+          <label htmlFor="title">{translation.review_title}</label>
           <input
             type="text"
             id="title"
@@ -130,7 +144,7 @@ export function ReviewForm({ productId }: ReviewFormProps) {
           />
         </div>
         <div>
-          <label htmlFor="body">Review Body</label>
+          <label htmlFor="body">{translation.review_body}</label>
           <textarea
             id="body"
             name="body"
@@ -140,10 +154,16 @@ export function ReviewForm({ productId }: ReviewFormProps) {
             aria-required="true"
           ></textarea>
         </div>
-        <button type="submit">Submit Review</button>
+        <button type="submit">{translation.submit_review}</button>
       </Form>
-      {actionData?.error && <p style={{ color: 'red' }} role="alert">{actionData.error}</p>}
-      {actionData?.success && <p role="status">Thank you for your review!</p>}
+      {actionData?.error && (
+        <p style={{color: 'red'}} role="alert">
+          {actionData.error}
+        </p>
+      )}
+      {actionData?.success && (
+        <p role="status">{translation.thank_you_for_review}</p>
+      )}
     </div>
   );
 }

@@ -66,8 +66,8 @@ async function loadCriticalData({
   request,
   context,
 }: LoaderFunctionArgs) {
-  const {productHandle, locale = 'uk'} = params;
-  const translation = translations[locale as keyof typeof translations];
+  const {productHandle, locale: rawLocale = 'uk'} = params;
+  const locale = rawLocale as keyof typeof translations;
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
   const judgeme_API_TOKEN = context.env.JUDGEME_PUBLIC_TOKEN;
@@ -96,9 +96,6 @@ async function loadCriticalData({
     throw new Response('product', {status: 404});
   }
 
-  //  if (!product.selectedVariant) {
-  //    throw redirectToFirstVariant({product, request});
-  //  }
   if (!product.selectedVariant && product.options.length) {
     // set the selectedVariant to the first variant if there is only one option
     if (product.options.length < 2) {
@@ -126,8 +123,8 @@ async function loadCriticalData({
     storeDomain: shop.primaryDomain.url,
     recommended,
     seo,
-    translation,
     judgemeReviewsData,
+    locale,
   };
 }
 
@@ -166,7 +163,7 @@ export const action = async ({request, context}: LoaderFunctionArgs) => {
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
   const rating = parseInt(formData.get('rating') as string);
-  const title = formData.get('title') as string;
+  const title = name; // to make simpler
   const body = formData.get('body') as string;
   const productId = formData.get('productId') as string;
 
@@ -204,17 +201,11 @@ export const action = async ({request, context}: LoaderFunctionArgs) => {
 };
 
 export default function Product() {
-  const {
-    product,
-    shop,
-    recommended,
-    variants,
-    translation,
-    judgemeReviewsData,
-  } = useLoaderData<typeof loader>();
+  const {product, shop, recommended, variants, locale, judgemeReviewsData} =
+    useLoaderData<typeof loader>();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
-
+  const translation = translations[locale as keyof typeof translations];
   const rating = judgemeReviewsData?.rating ?? 0;
   const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
   const reviews = judgemeReviewsData?.reviews ?? [];
@@ -291,7 +282,7 @@ export default function Product() {
         </Await>
       </Suspense>
       <ReviewList reviews={reviews} title={translation.reviews} />
-      <ReviewForm productId={product.id} />
+      <ReviewForm productId={product.id} locale={locale} />
       <Analytics.ProductView
         data={{
           products: [
@@ -316,8 +307,8 @@ export function ProductForm({
 }: {
   variants: ProductVariantFragmentFragment[];
 }) {
-  const {product, storeDomain, translation} = useLoaderData<typeof loader>();
-
+  const {product, storeDomain, locale} = useLoaderData<typeof loader>();
+  const translation = translations[locale as keyof typeof translations];
   const closeRef = useRef<HTMLButtonElement>(null);
 
   /**
@@ -493,7 +484,8 @@ function ProductDetail({
   learnMore?: string;
   isOpen?: boolean;
 }) {
-  const {translation} = useLoaderData<typeof loader>();
+  const {locale} = useLoaderData<typeof loader>();
+  const translation = translations[locale as keyof typeof translations];
 
   return (
     <Disclosure
