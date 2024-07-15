@@ -2,7 +2,7 @@ import {Form, useActionData} from '@remix-run/react';
 import {useState, useEffect} from 'react';
 
 import {translations} from '~/data/translations';
-import {Star} from '~/components/Icon'; // Adjust the import path as necessary
+import {Star} from '~/components/Icon';
 
 interface ReviewFormProps {
   productId: string;
@@ -47,14 +47,14 @@ function StarInput({rating, setRating, locale}: StarInputProps) {
 
   return (
     <div
-      className="star-input"
+      className="mb-4 text-center"
       role="radiogroup"
       aria-labelledby="rating-label"
     >
-      <label id="rating-label" htmlFor="rating">
+      <label id="rating-label" htmlFor="rating" className="block text-lg mb-2">
         {translation.your_rating}
       </label>
-      <div id="rating" className="inline-flex gap-0.5">
+      <div id="rating" className="inline-flex gap-1">
         {[1, 2, 3, 4, 5].map((index) => (
           <button
             key={index}
@@ -69,6 +69,7 @@ function StarInput({rating, setRating, locale}: StarInputProps) {
             role="radio"
             aria-checked={rating >= index}
             aria-label={`${index} Star${index > 1 ? 's' : ''}`}
+            className="focus:outline-blue-600"
           >
             <Star
               fill={hoverRating >= index || rating >= index ? 'full' : 'empty'}
@@ -88,7 +89,6 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [rating, setRating] = useState<number>(0);
-  const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
 
   useEffect(() => {
@@ -96,18 +96,21 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
       setName('');
       setEmail('');
       setRating(0);
-      setTitle('');
       setBody('');
     }
   }, [actionData]);
 
   return (
-    <div>
-      <h2>{translation.submit_a_review}</h2>
+    <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg bg-white">
+      <h2 className="text-2xl font-bold text-center mb-6">
+        {translation.submit_a_review}
+      </h2>
       <Form method="post">
         <input type="hidden" name="productId" value={productId} />
-        <div>
-          <label htmlFor="name">{translation.name}</label>
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-lg mb-2">
+            {translation.name}
+          </label>
           <input
             type="text"
             id="name"
@@ -116,10 +119,13 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
             onChange={(e) => setName(e.target.value)}
             required
             aria-required="true"
+            className="w-full p-2 border border-gray-300 rounded"
           />
         </div>
-        <div>
-          <label htmlFor="email">{translation.email}</label>
+        <div className="mb-4">
+          <label htmlFor="email" className="block text-lg mb-2">
+            {translation.email}
+          </label>
           <input
             type="email"
             id="email"
@@ -128,23 +134,15 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
             onChange={(e) => setEmail(e.target.value)}
             required
             aria-required="true"
+            className="w-full p-2 border border-gray-300 rounded"
           />
         </div>
         <StarInput rating={rating} setRating={setRating} locale={locale} />
-        <div>
-          <label htmlFor="title">{translation.review_title}</label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-            aria-required="true"
-          />
-        </div>
-        <div>
-          <label htmlFor="body">{translation.review_body}</label>
+
+        <div className="mb-4">
+          <label htmlFor="body" className="block text-lg mb-2">
+            {translation.review_body}
+          </label>
           <textarea
             id="body"
             name="body"
@@ -152,17 +150,25 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
             onChange={(e) => setBody(e.target.value)}
             required
             aria-required="true"
+            className="w-full p-2 border border-gray-300 rounded"
           ></textarea>
         </div>
-        <button type="submit">{translation.submit_review}</button>
+        <button
+          type="submit"
+          className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700"
+        >
+          {translation.submit_review}
+        </button>
       </Form>
       {actionData?.error && (
-        <p style={{color: 'red'}} role="alert">
+        <p className="text-red-500 text-center mt-4" role="alert">
           {actionData.error}
         </p>
       )}
       {actionData?.success && (
-        <p role="status">{translation.thank_you_for_review}</p>
+        <p className="text-green-500 text-center mt-4" role="status">
+          {translation.thank_you_for_review}
+        </p>
       )}
     </div>
   );

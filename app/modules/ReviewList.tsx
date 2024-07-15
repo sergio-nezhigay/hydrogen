@@ -12,7 +12,7 @@ function ReviewList({reviews, title}: ReviewListProps) {
   return (
     <>
       {reviews.length > 0 && (
-        <Section className="px-0 md:px-8 lg:px-12">
+        <Section>
           <Heading as="h2" className="mb-4">
             {title}
           </Heading>
