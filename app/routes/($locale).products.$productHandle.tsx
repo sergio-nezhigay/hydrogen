@@ -209,6 +209,10 @@ export default function Product() {
   const rating = judgemeReviewsData?.rating ?? 0;
   const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
   const reviews = judgemeReviewsData?.reviews ?? [];
+  const handleScrollToReviews = (event: { preventDefault: () => void; }) => {
+    event.preventDefault();
+    document.getElementById('review-list')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <>
@@ -224,13 +228,9 @@ export default function Product() {
                 <Heading as="h1" className="whitespace-normal">
                   {title}
                 </Heading>
-                {vendor && (
-                  <Text className={'opacity-50 font-medium'}>{vendor}</Text>
-                )}
-                <div className="space-x-2">
-                  <StarRating rating={rating} />
+                <a href="#review-list" className="space-x-2" onClick={handleScrollToReviews}>       <StarRating rating={rating} />
                   <span className="align-top">({reviewNumber})</span>
-                </div>
+                </a>
               </div>
               <Suspense fallback={<ProductForm variants={[]} />}>
                 <Await
@@ -281,7 +281,10 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
-      <ReviewList reviews={reviews} title={translation.reviews} />
+      <div id="review-list"> 
+        <ReviewList reviews={reviews} title={translation.reviews} />
+        </div>
+     
       <ReviewForm productId={product.id} locale={locale} />
       <Analytics.ProductView
         data={{

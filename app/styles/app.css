@@ -68,6 +68,7 @@ shop-pay-button {
 
   html {
     scroll-padding-top: 10rem;
+    scroll-behavior: smooth;
   }
 
   model-viewer::part(default-progress-mask) {
