@@ -116,7 +116,7 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
       {!formVisible ? (
         <Button
           onClick={handleButtonClick}
-          className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="w-full p-3 max-w-lg mx-auto bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           {translation.leave_a_review}
         </Button>
@@ -127,7 +127,7 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
           </Heading>
           <Form
             method="post"
-            className="p-4 border rounded-lg shadow-md bg-white"
+            className="p-4 border rounded-lg shadow-md bg-white w-full max-w-lg mx-auto"
           >
             <input type="hidden" name="productId" value={productId} />
             <div className="mb-4">
