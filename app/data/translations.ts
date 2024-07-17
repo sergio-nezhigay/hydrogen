@@ -18,6 +18,7 @@ export const translations = {
     review_body: 'Текст відгуку',
     submit_review: 'Надіслати відгук',
     thank_you_for_review: 'Дякуємо за ваш відгук!',
+    leave_a_review: 'Залишити відгук',
   },
   ru: {
     buy: 'Купить',
@@ -38,5 +39,6 @@ export const translations = {
     review_body: 'Текст отзыва',
     submit_review: 'Отправить отзыв',
     thank_you_for_review: 'Спасибо за ваш отзыв!',
+    leave_a_review: 'Оставить отзыв',
   },
 } as const;

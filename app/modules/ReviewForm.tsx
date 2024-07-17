@@ -1,6 +1,8 @@
 import {Form, useActionData} from '@remix-run/react';
 import {useState, useEffect} from 'react';
 
+import {Heading, Section, Text} from '~/components/Text';
+import {Button} from '~/components/Button';
 import {translations} from '~/data/translations';
 import {Star} from '~/components/Icon';
 
@@ -54,29 +56,32 @@ function StarInput({rating, setRating, locale}: StarInputProps) {
       <label id="rating-label" htmlFor="rating" className="block text-lg mb-2">
         {translation.your_rating}
       </label>
-      <div id="rating" className="inline-flex gap-1">
+      <ul id="rating" className="inline-flex gap-1 p-0 list-none">
         {[1, 2, 3, 4, 5].map((index) => (
-          <button
-            key={index}
-            onClick={(e) => {
-              e.preventDefault();
-              handleStarClick(index);
-            }}
-            onMouseEnter={() => handleMouseEnter(index)}
-            onMouseLeave={handleMouseLeave}
-            onKeyDown={(e) => handleKeyDown(index, e)}
-            tabIndex={0}
-            role="radio"
-            aria-checked={rating >= index}
-            aria-label={`${index} Star${index > 1 ? 's' : ''}`}
-            className="focus:outline-blue-600"
-          >
-            <Star
-              fill={hoverRating >= index || rating >= index ? 'full' : 'empty'}
-            />
-          </button>
+          <li key={index} className="inline-block">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleStarClick(index);
+              }}
+              onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
+              onKeyDown={(e) => handleKeyDown(index, e)}
+              tabIndex={0}
+              role="radio"
+              aria-checked={rating >= index}
+              aria-label={`${index} Star${index > 1 ? 's' : ''}`}
+              className="focus:outline-blue-600"
+            >
+              <Star
+                fill={
+                  hoverRating >= index || rating >= index ? 'full' : 'empty'
+                }
+              />
+            </button>
+          </li>
         ))}
-      </div>
+      </ul>
       <input type="hidden" name="rating" value={rating} />
     </div>
   );
@@ -90,6 +95,7 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
   const [email, setEmail] = useState('');
   const [rating, setRating] = useState<number>(0);
   const [body, setBody] = useState('');
+  const [formVisible, setFormVisible] = useState(false);
 
   useEffect(() => {
     if (actionData?.success) {
@@ -97,79 +103,101 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
       setEmail('');
       setRating(0);
       setBody('');
+      setFormVisible(false);
     }
   }, [actionData]);
 
-  return (
-    <div className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg bg-white">
-      <h2 className="text-2xl font-bold text-center mb-6">
-        {translation.submit_a_review}
-      </h2>
-      <Form method="post">
-        <input type="hidden" name="productId" value={productId} />
-        <div className="mb-4">
-          <label htmlFor="name" className="block text-lg mb-2">
-            {translation.name}
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-            aria-required="true"
-            className="w-full p-2 border border-gray-300 rounded"
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="email" className="block text-lg mb-2">
-            {translation.email}
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            aria-required="true"
-            className="w-full p-2 border border-gray-300 rounded"
-          />
-        </div>
-        <StarInput rating={rating} setRating={setRating} locale={locale} />
+  const handleButtonClick = () => {
+    setFormVisible(true);
+  };
 
-        <div className="mb-4">
-          <label htmlFor="body" className="block text-lg mb-2">
-            {translation.review_body}
-          </label>
-          <textarea
-            id="body"
-            name="body"
-            value={body}
-            onChange={(e) => setBody(e.target.value)}
-            required
-            aria-required="true"
-            className="w-full p-2 border border-gray-300 rounded"
-          ></textarea>
-        </div>
-        <button
-          type="submit"
+  return (
+    <Section>
+      {!formVisible ? (
+        <Button
+          onClick={handleButtonClick}
           className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
-          {translation.submit_review}
-        </button>
-      </Form>
-      {actionData?.error && (
-        <p className="text-red-500 text-center mt-4" role="alert">
-          {actionData.error}
-        </p>
+          {translation.leave_a_review}
+        </Button>
+      ) : (
+        <>
+          <Heading as="h2" className="mb-4 text-center">
+            {translation.submit_a_review}
+          </Heading>
+          <Form
+            method="post"
+            className="p-4 border rounded-lg shadow-md bg-white"
+          >
+            <input type="hidden" name="productId" value={productId} />
+            <div className="mb-4">
+              <label htmlFor="name" className="block text-lg mb-2">
+                {translation.name}
+              </label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+                aria-required="true"
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-lg mb-2">
+                {translation.email}
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                aria-required="true"
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <StarInput rating={rating} setRating={setRating} locale={locale} />
+            <div className="mb-4">
+              <label htmlFor="body" className="block text-lg mb-2">
+                {translation.review_body}
+              </label>
+              <textarea
+                id="body"
+                name="body"
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                required
+                aria-required="true"
+                className="w-full p-2 border border-gray-300 rounded"
+              ></textarea>
+            </div>
+            <Button
+              type="submit"
+              className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700"
+            >
+              {translation.submit_review}
+            </Button>
+          </Form>
+          {actionData?.error && (
+            <Text as="p" className="text-red-500 text-center mt-4" role="alert">
+              {actionData.error}
+            </Text>
+          )}
+          {actionData?.success && (
+            <Text
+              as="p"
+              className="text-green-500 text-center mt-4"
+              role="status"
+            >
+              {translation.thank_you_for_review}
+            </Text>
+          )}
+        </>
       )}
-      {actionData?.success && (
-        <p className="text-green-500 text-center mt-4" role="status">
-          {translation.thank_you_for_review}
-        </p>
-      )}
-    </div>
+    </Section>
   );
 }
