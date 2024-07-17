@@ -122,7 +122,7 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
         </Button>
       ) : (
         <>
-          <Heading as="h2" className="mb-4 text-center">
+          <Heading as="h2" className="mb-4 text-center max-w-full">
             {translation.submit_a_review}
           </Heading>
           <Form
