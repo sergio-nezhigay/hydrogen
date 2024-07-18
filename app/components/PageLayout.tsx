@@ -2,7 +2,7 @@ import {useParams, Form, Await, useRouteLoaderData} from '@remix-run/react';
 import useWindowScroll from 'react-use/esm/useWindowScroll';
 import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
-import {CartForm} from '@shopify/hydrogen';
+import {CartForm, Image} from '@shopify/hydrogen';
 
 
 import {type LayoutQuery} from 'storefrontapi.generated';
@@ -29,7 +29,7 @@ import {
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
-import logo from '/images/logo.svg';
+
 
 import LangSelector from '../modules/LangSelector';
 
@@ -43,6 +43,8 @@ type LayoutProps = {
 
 export function PageLayout({children, layout}: LayoutProps) {
   const {headerMenu, footerMenu} = layout || {};
+  const logoUrl = layout?.shop.brand?.logo?.image! as string;
+
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -52,7 +54,7 @@ export function PageLayout({children, layout}: LayoutProps) {
           </a>
         </div>
         {headerMenu && layout?.shop.name && (
-          <Header title={layout.shop.name} menu={headerMenu} />
+          <Header title={layout.shop.name} menu={headerMenu} url={logoUrl} />
         )}
         <main role="main" id="mainContent" className="flex-grow">
           {children}
@@ -63,7 +65,8 @@ export function PageLayout({children, layout}: LayoutProps) {
   );
 }
 
-function Header({title, menu}: {title: string; menu?: EnhancedMenu}) {
+function Header({title, menu, url}: {title: string; menu?: EnhancedMenu; 
+  url: string}) {
   const isHome = useIsHomePath();
 
   const {
@@ -254,11 +257,13 @@ function DesktopHeader({
   menu,
   openCart,
   title,
+  logoUrl
 }: {
   isHome: boolean;
   openCart: () => void;
   menu?: EnhancedMenu;
   title: string;
+  logoUrl?:string;
 }) {
   const params = useParams();
   const {y} = useWindowScroll();
@@ -275,7 +280,13 @@ function DesktopHeader({
     >
       <div className="flex-center gap-12">
          <Link to="/" prefetch="intent">
-         <img src={logo} alt="Logo" className="h-8 w-auto" loading="lazy" />
+  {logoUrl&&<Image    
+              width={168}
+              height={168}
+              className="w-auto" 
+              src={logoUrl}
+              alt="Byte logo"/>}
+         
         </Link> 
         <nav className="flex gap-8">
           {/* Top level menu items */}
