@@ -4,7 +4,6 @@ import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm, Image} from '@shopify/hydrogen';
 
-
 import {type LayoutQuery} from 'storefrontapi.generated';
 import {Text, Heading, Section} from '~/components/Text';
 import {Link} from '~/components/Link';
@@ -30,7 +29,6 @@ import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
 
-
 import LangSelector from '../modules/LangSelector';
 
 type LayoutProps = {
@@ -43,7 +41,7 @@ type LayoutProps = {
 
 export function PageLayout({children, layout}: LayoutProps) {
   const {headerMenu, footerMenu} = layout || {};
-  const logoUrl = layout?.shop.brand?.logo?.image! as string;
+  const logoUrl = layout?.shop.brand?.logo?.image?.url || '';
 
   return (
     <>
@@ -54,7 +52,11 @@ export function PageLayout({children, layout}: LayoutProps) {
           </a>
         </div>
         {headerMenu && layout?.shop.name && (
-          <Header title={layout.shop.name} menu={headerMenu} url={logoUrl} />
+          <Header
+            title={layout.shop.name}
+            menu={headerMenu}
+            logoUrl={logoUrl}
+          />
         )}
         <main role="main" id="mainContent" className="flex-grow">
           {children}
@@ -65,8 +67,15 @@ export function PageLayout({children, layout}: LayoutProps) {
   );
 }
 
-function Header({title, menu, url}: {title: string; menu?: EnhancedMenu; 
-  url: string}) {
+function Header({
+  title,
+  menu,
+  logoUrl,
+}: {
+  title: string;
+  menu?: EnhancedMenu;
+  logoUrl: string;
+}) {
   const isHome = useIsHomePath();
 
   const {
@@ -100,12 +109,14 @@ function Header({title, menu, url}: {title: string; menu?: EnhancedMenu;
         title={title}
         menu={menu}
         openCart={openCart}
+        logoUrl={logoUrl}
       />
       <MobileHeader
         isHome={isHome}
         title={title}
         openCart={openCart}
         openMenu={openMenu}
+        logoUrl={logoUrl}
       />
     </>
   );
@@ -181,11 +192,13 @@ function MobileHeader({
   isHome,
   openCart,
   openMenu,
+  logoUrl,
 }: {
   title: string;
   isHome: boolean;
   openCart: () => void;
   openMenu: () => void;
+  logoUrl?: string;
 }) {
   // useHeaderStyleFix(containerStyle, setContainerStyle, isHome);
 
@@ -232,17 +245,20 @@ function MobileHeader({
         </Form>
       </div>
 
-      <Link
-        className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center flex-grow w-full h-full"
-        to="/"
-      >
-        <Heading
-          className="font-bold text-center leading-none"
-          as={isHome ? 'h1' : 'h2'}
+      {logoUrl && (
+        <Link
+          className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center flex-grow w-full h-full"
+          to="/"
         >
-          {title}
-        </Heading>
-      </Link>
+          <Image
+            width={50}
+            height={40}
+            className="w-auto h-10"
+            src={logoUrl}
+            alt="Byte logo"
+          />
+        </Link>
+      )}
 
       <div className="flex items-center justify-end w-full gap-4">
         <AccountLink className="relative flex items-center justify-center w-8 h-8" />
@@ -257,13 +273,13 @@ function DesktopHeader({
   menu,
   openCart,
   title,
-  logoUrl
+  logoUrl,
 }: {
   isHome: boolean;
   openCart: () => void;
   menu?: EnhancedMenu;
   title: string;
-  logoUrl?:string;
+  logoUrl?: string;
 }) {
   const params = useParams();
   const {y} = useWindowScroll();
@@ -279,15 +295,19 @@ function DesktopHeader({
       } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
     >
       <div className="flex-center gap-12">
-         <Link to="/" prefetch="intent">
-  {logoUrl&&<Image    
+        {logoUrl && (
+          <Link to="/" prefetch="intent">
+            (
+            <Image
               width={168}
               height={168}
-              className="w-auto" 
+              className="w-auto"
               src={logoUrl}
-              alt="Byte logo"/>}
-         
-        </Link> 
+              alt="Byte logo"
+            />
+            )
+          </Link>
+        )}
         <nav className="flex gap-8">
           {/* Top level menu items */}
           {(menu?.items || []).map((item) => (
@@ -440,7 +460,6 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
         bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
     >
       <FooterMenu menu={menu} />
-
     </Section>
   );
 }
