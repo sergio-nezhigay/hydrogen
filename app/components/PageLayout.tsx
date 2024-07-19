@@ -453,7 +453,7 @@ interface FooterItemProps {
 
 const FooterItem: React.FC<FooterItemProps> = ({icon, title, content}) => (
   <li className="grid grid-cols-[50px_1fr] items-center  py-2">
-    <div className="w-10 h-10 flex justify-center items-center">
+    <div className="w-8 h-8 flex justify-center items-center">
       <Image src={icon} alt={title} className="max-w-full max-h-full" />
     </div>
     <div>
@@ -473,7 +473,8 @@ const Footer: React.FC<FooterProps> = ({menu}) => {
     >
       <ul className="list-none p-0 grid grid-cols-1 gap-4 border-t border-gray-700">
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-phone-96_480x480.png?v=1721388252"
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/inverted-phone.png?v=1721400233"
+          //  icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-phone-96_480x480.png?v=1721388252"
           title="Телефон:"
           content={
             <a
@@ -485,7 +486,7 @@ const Footer: React.FC<FooterProps> = ({menu}) => {
           }
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-clock-96_480x480.png?v=1721388252"
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/inverted-clock-96.png?v=1721400543"
           title="Робочі години:"
           content={
             <p className="m-0">
@@ -496,7 +497,7 @@ const Footer: React.FC<FooterProps> = ({menu}) => {
           }
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-email-96_480x480.png?v=1721388252"
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/inverted-email-96.png?v=1721400543"
           title="Email:"
           content={
             <a
@@ -508,7 +509,7 @@ const Footer: React.FC<FooterProps> = ({menu}) => {
           }
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-address-96_480x480.png?v=1721388252"
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/inverted-address-96.png?v=1721400543"
           title="Адреса:"
           content={<span className="ml-2">Київ, вул. Щусєва, 36</span>}
         />
