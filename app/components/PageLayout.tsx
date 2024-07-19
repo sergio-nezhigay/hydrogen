@@ -297,7 +297,6 @@ function DesktopHeader({
       <div className="flex-center gap-12">
         {logoUrl && (
           <Link to="/" prefetch="intent">
-            
             <Image
               width={168}
               height={168}
@@ -305,7 +304,6 @@ function DesktopHeader({
               src={logoUrl}
               alt="Byte logo"
             />
-            
           </Link>
         )}
         <nav className="flex gap-8">
@@ -443,26 +441,81 @@ function Badge({
   );
 }
 
-function Footer({menu}: {menu?: EnhancedMenu}) {
-  const isHome = useIsHomePath();
-  const itemsCount = menu
-    ? menu?.items?.length + 1 > 4
-      ? 4
-      : menu?.items?.length + 1
-    : [];
+interface FooterProps {
+  menu?: EnhancedMenu;
+}
 
+interface FooterItemProps {
+  icon: string;
+  title: string;
+  content: React.ReactNode;
+}
+
+const FooterItem: React.FC<FooterItemProps> = ({icon, title, content}) => (
+  <li className="grid grid-cols-[50px_1fr] items-center  py-2">
+    <div className="w-10 h-10 flex justify-center items-center">
+      <Image src={icon} alt={title} className="max-w-full max-h-full" />
+    </div>
+    <div>
+      <strong>{title}</strong>
+      {content}
+    </div>
+  </li>
+);
+
+const Footer: React.FC<FooterProps> = ({menu}) => {
   return (
     <Section
-      divider={isHome ? 'none' : 'top'}
+      divider="top"
       as="footer"
       role="contentinfo"
-      className={`grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
-        bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
+      className="min-h-[25rem] items-start w-full py-8 px-6 md:px-8 lg:px-12 bg-gray-800 text-gray-300 overflow-hidden"
     >
-      <FooterMenu menu={menu} />
+      <ul className="list-none p-0 grid grid-cols-1 gap-4 border-t border-gray-700">
+        <FooterItem
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-phone-96_480x480.png?v=1721388252"
+          title="Телефон:"
+          content={
+            <a
+              href="tel:+380980059236"
+              className="text-gray-300 ml-2 font-bold"
+            >
+              (098) 005-9236
+            </a>
+          }
+        />
+        <FooterItem
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-clock-96_480x480.png?v=1721388252"
+          title="Робочі години:"
+          content={
+            <p className="m-0">
+              Понеділок – П`ятниця: 10:00 - 18:00
+              <br />
+              Субота, Неділя – Вихідні
+            </p>
+          }
+        />
+        <FooterItem
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-email-96_480x480.png?v=1721388252"
+          title="Email:"
+          content={
+            <a
+              href="mailto:info@informatica.com.ua"
+              className="text-gray-300 ml-2 font-bold"
+            >
+              info@informatica.com.ua
+            </a>
+          }
+        />
+        <FooterItem
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-address-96_480x480.png?v=1721388252"
+          title="Адреса:"
+          content={<span className="ml-2">Київ, вул. Щусєва, 36</span>}
+        />
+      </ul>
     </Section>
   );
-}
+};
 
 function FooterLink({item}: {item: ChildEnhancedMenuItem}) {
   if (item.to.startsWith('http')) {
