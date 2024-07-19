@@ -337,6 +337,7 @@ export function ProductForm({
           variants={variants}
         >
           {({option}) => {
+            const valuesNumber = option.values.length;
             return (
               <div
                 key={option.name}
@@ -345,8 +346,8 @@ export function ProductForm({
                 <Heading as="legend" size="lead" className="min-w-[4rem]">
                   {option.name}
                 </Heading>
-                <div className="flex flex-wrap items-baseline gap-4">
-                  {option.values.length > 7 ? (
+                {valuesNumber>1 &&     <div className="flex flex-wrap items-baseline gap-4">
+                  {valuesNumber > 7 ? (
                     <div className="relative w-full">
                       <Listbox
                         onChange={(selectedOption) => {
@@ -432,7 +433,8 @@ export function ProductForm({
                       </Link>
                     ))
                   )}
-                </div>
+                </div>}
+            
               </div>
             );
           }}

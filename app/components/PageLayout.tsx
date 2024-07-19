@@ -297,7 +297,7 @@ function DesktopHeader({
       <div className="flex-center gap-12">
         {logoUrl && (
           <Link to="/" prefetch="intent">
-            (
+            
             <Image
               width={168}
               height={168}
@@ -305,7 +305,7 @@ function DesktopHeader({
               src={logoUrl}
               alt="Byte logo"
             />
-            )
+            
           </Link>
         )}
         <nav className="flex gap-8">
