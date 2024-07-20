@@ -224,15 +224,19 @@ export default function Product() {
           />
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
             <section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
+             
+            
               <div className="grid gap-2">
-                <Heading as="h1" className="whitespace-normal">
+                <Heading as="h1" className="whitespace-normal ">
+                {/* test1234512345         test1234512345         test1234512345         test1234512345         test1234512345         test1234512345  */}
                   {title}
                 </Heading>
-                <a href="#review-list" className="space-x-2" onClick={handleScrollToReviews}>       <StarRating rating={rating} />
+
+                 <a href="#review-list" className="space-x-2" onClick={handleScrollToReviews}>       <StarRating rating={rating} />
                   <span className="align-top">({reviewNumber})</span>
-                </a>
-              </div>
-              <Suspense fallback={<ProductForm variants={[]} />}>
+                </a> 
+              </div> 
+               <Suspense fallback={<ProductForm variants={[]} />}>
                 <Await
                   errorElement="There was a problem loading related products"
                   resolve={variants}
@@ -243,8 +247,8 @@ export default function Product() {
                     />
                   )}
                 </Await>
-              </Suspense>
-              <div className="grid gap-4 py-4">
+              </Suspense> 
+               <div className="grid gap-4 py-4">
                 {descriptionHtml && (
                   <ProductDetail
                     title={translation.description}
@@ -266,12 +270,12 @@ export default function Product() {
                     learnMore={`/policies/${refundPolicy.handle}`}
                   />
                 )}
-              </div>
+              </div> 
             </section>
           </div>
         </div>
       </Section>
-      <Suspense fallback={<Skeleton className="h-32" />}>
+      {/* <Suspense fallback={<Skeleton className="h-32" />}>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}
@@ -280,12 +284,12 @@ export default function Product() {
             <ProductSwimlane title="Related Products" products={products} />
           )}
         </Await>
-      </Suspense>
-      <div id="review-list"> 
+      </Suspense> */}
+      {/* <div id="review-list"> 
         <ReviewList reviews={reviews} title={translation.reviews} />
         </div>
      
-      <ReviewForm productId={product.id} locale={locale} />
+      <ReviewForm productId={product.id} locale={locale} /> */}
       <Analytics.ProductView
         data={{
           products: [
