@@ -14,7 +14,7 @@ import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {getHeroPlaceholder} from '~/lib/placeholders';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
-
+import {translations} from '~/data/translations';
 export const headers = routeHeaders;
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -134,6 +134,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
     secondaryHero,
     featuredCollections,
     tertiaryHero,
+    language,
   };
 }
 
@@ -148,8 +149,12 @@ export default function Homepage() {
     tertiaryHero,
     featuredCollections,
     featuredProducts,
+    language,
   } = useLoaderData<typeof loader>();
-
+  console.log('🚀 ~ language:', language);
+  const locale = language.toLowerCase() as keyof typeof translations;
+  const translation = translations[locale];
+  console.log('🚀 ~ translation:', translation);
   // TODO: skeletons vs placeholders
   const skeletons = getHeroPlaceholder([{}, {}, {}]);
 
@@ -173,7 +178,7 @@ export default function Homepage() {
               return (
                 <ProductSwimlane
                   products={response.products}
-                  title="Featured Products"
+                  title={translation.featured_products}
                   count={4}
                 />
               );
@@ -209,7 +214,7 @@ export default function Homepage() {
               return (
                 <FeaturedCollections
                   collections={response.collections}
-                  title="Collections"
+                  title={translation.collections}
                 />
               );
             }}

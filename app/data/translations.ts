@@ -24,6 +24,8 @@ export const translations = {
     address: 'Адреса',
     address_details: 'Київ, вул. Щусєва, 36',
     working_hours_details: `\n\tПонеділок – П'ятниця: 10:00 - 18:00\n\tСубота, Неділя – Вихідні`,
+    featured_products: 'Рекомендовані товари',
+    collections: 'Колекції',
   },
   ru: {
     buy: 'Купить',
@@ -50,5 +52,7 @@ export const translations = {
     address: 'Адрес',
     address_details: 'Киев, ул. Щусева, 36',
     working_hours_details: `\n\tПонедельник – Пятница: 10:00 - 18:00\n\tСуббота, Воскресенье – Выходные`,
+    featured_products: 'Рекомендуемые товары',
+    collections: 'Коллекции',
   },
 } as const;
