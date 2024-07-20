@@ -286,21 +286,17 @@ function DesktopHeader({
   return (
     <header
       role="banner"
-      className={`${
-        isHome
-          ? 'bg-primary/80 dark:bg-contrast/60 text-contrast dark:text-primary shadow-darkHeader'
-          : 'bg-contrast/80 text-primary'
-      } ${
+      className={`bg-contrast/80 text-primary ${
         !isHome && y > 50 && ' shadow-lightHeader'
       } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
     >
       <div className="flex-center gap-12">
         {logoUrl && (
-          <Link to="/" prefetch="intent">
+          <Link to="/" prefetch="intent" className="px-2">
             <Image
-              width={168}
-              height={168}
-              className="w-auto"
+              width={80}
+              height={80}
+              className="w-20"
               src={logoUrl}
               alt="Byte logo"
             />
@@ -463,30 +459,29 @@ const FooterItem: React.FC<FooterItemProps> = ({icon, title, content}) => (
   </li>
 );
 
-const Footer: React.FC<FooterProps> = ({menu}) => {
+const Footer: React.FC<FooterProps> = () => {
+  const textColor = 'text-gray-200/80';
+  const linkStyle = `${textColor} ml-2 font-bold`;
+
   return (
     <Section
       divider="top"
       as="footer"
       role="contentinfo"
-      className="min-h-[25rem] items-start w-full py-8 px-6 md:px-8 lg:px-12 bg-gray-800 text-gray-300 overflow-hidden"
+      className={`min-h-[25rem] items-start w-full py-8 px-6 md:px-8 lg:px-12 bg-gray-800 overflow-hidden ${textColor}`}
     >
       <ul className="list-none p-0 grid grid-cols-1 gap-4 border-t border-gray-700">
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/inverted-phone.png?v=1721400233"
-          //  icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/icons8-phone-96_480x480.png?v=1721388252"
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/phone-flip-svgrepo-com_1.svg?v=1721456243"
           title="Телефон:"
           content={
-            <a
-              href="tel:+380980059236"
-              className="text-gray-300 ml-2 font-bold"
-            >
+            <a href="tel:+380980059236" className={linkStyle}>
               (098) 005-9236
             </a>
           }
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/inverted-clock-96.png?v=1721400543"
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/time-svgrepo-com_1_1.svg?v=1721456153"
           title="Робочі години:"
           content={
             <p className="m-0">
@@ -497,19 +492,16 @@ const Footer: React.FC<FooterProps> = ({menu}) => {
           }
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/inverted-email-96.png?v=1721400543"
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/email-svgrepo-com_3.svg?v=1721455854"
           title="Email:"
           content={
-            <a
-              href="mailto:info@informatica.com.ua"
-              className="text-gray-300 ml-2 font-bold"
-            >
+            <a href="mailto:info@informatica.com.ua" className={linkStyle}>
               info@informatica.com.ua
             </a>
           }
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/inverted-address-96.png?v=1721400543"
+          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/place-marker-svgrepo-com_2.svg?v=1721456036"
           title="Адреса:"
           content={<span className="ml-2">Київ, вул. Щусєва, 36</span>}
         />
