@@ -209,9 +209,11 @@ export default function Product() {
   const rating = judgemeReviewsData?.rating ?? 0;
   const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
   const reviews = judgemeReviewsData?.reviews ?? [];
-  const handleScrollToReviews = (event: { preventDefault: () => void; }) => {
+  const handleScrollToReviews = (event: {preventDefault: () => void}) => {
     event.preventDefault();
-    document.getElementById('review-list')?.scrollIntoView({ behavior: 'smooth' });
+    document
+      .getElementById('review-list')
+      ?.scrollIntoView({behavior: 'smooth'});
   };
 
   return (
@@ -224,19 +226,23 @@ export default function Product() {
           />
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
             <section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
-             
-            
               <div className="grid gap-2">
-                <Heading as="h1" className="whitespace-normal ">
-                {/* test1234512345         test1234512345         test1234512345         test1234512345         test1234512345         test1234512345  */}
+                {/*overflow-hidden?*/}
+                <Heading as="h1" className="whitespace-normal overflow-hidden ">
                   {title}
                 </Heading>
 
-                 <a href="#review-list" className="space-x-2" onClick={handleScrollToReviews}>       <StarRating rating={rating} />
+                <a
+                  href="#review-list"
+                  className="space-x-2"
+                  onClick={handleScrollToReviews}
+                >
+                  {' '}
+                  <StarRating rating={rating} />
                   <span className="align-top">({reviewNumber})</span>
-                </a> 
-              </div> 
-               <Suspense fallback={<ProductForm variants={[]} />}>
+                </a>
+              </div>
+              <Suspense fallback={<ProductForm variants={[]} />}>
                 <Await
                   errorElement="There was a problem loading related products"
                   resolve={variants}
@@ -247,8 +253,8 @@ export default function Product() {
                     />
                   )}
                 </Await>
-              </Suspense> 
-               <div className="grid gap-4 py-4">
+              </Suspense>
+              <div className="grid gap-4 py-4">
                 {descriptionHtml && (
                   <ProductDetail
                     title={translation.description}
@@ -270,12 +276,12 @@ export default function Product() {
                     learnMore={`/policies/${refundPolicy.handle}`}
                   />
                 )}
-              </div> 
+              </div>
             </section>
           </div>
         </div>
       </Section>
-      {/* <Suspense fallback={<Skeleton className="h-32" />}>
+      {/*<Suspense fallback={<Skeleton className="h-32" />}>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}
@@ -284,12 +290,12 @@ export default function Product() {
             <ProductSwimlane title="Related Products" products={products} />
           )}
         </Await>
-      </Suspense> */}
-      {/* <div id="review-list"> 
+      </Suspense>*/}
+      {/*<div id="review-list">
         <ReviewList reviews={reviews} title={translation.reviews} />
-        </div>
-     
-      <ReviewForm productId={product.id} locale={locale} /> */}
+      </div>
+
+      <ReviewForm productId={product.id} locale={locale} />*/}
       <Analytics.ProductView
         data={{
           products: [
@@ -350,95 +356,100 @@ export function ProductForm({
                 <Heading as="legend" size="lead" className="min-w-[4rem]">
                   {option.name}
                 </Heading>
-                {valuesNumber>1 &&     <div className="flex flex-wrap items-baseline gap-4">
-                  {valuesNumber > 7 ? (
-                    <div className="relative w-full">
-                      <Listbox
-                        onChange={(selectedOption) => {
-                          const value = option.values.find(
-                            (v) => v.value === selectedOption,
-                          );
+                {valuesNumber > 1 && (
+                  <div className="flex flex-wrap items-baseline gap-4">
+                    {valuesNumber > 7 ? (
+                      <div className="relative w-full">
+                        <Listbox
+                          onChange={(selectedOption) => {
+                            const value = option.values.find(
+                              (v) => v.value === selectedOption,
+                            );
 
-                          if (value) {
-                            navigate(value.to);
-                          }
-                        }}
-                      >
-                        {({open}) => (
-                          <>
-                            <Listbox.Button
-                              ref={closeRef}
-                              className={clsx(
-                                'flex items-center justify-between w-full py-3 px-4 border border-primary',
-                                open
-                                  ? 'rounded-b md:rounded-t md:rounded-b-none'
-                                  : 'rounded',
-                              )}
-                            >
-                              <span>{option.value}</span>
-                              <IconCaret direction={open ? 'up' : 'down'} />
-                            </Listbox.Button>
-                            <Listbox.Options
-                              className={clsx(
-                                'border-primary bg-contrast absolute bottom-12 z-30 grid h-48 w-full overflow-y-scroll rounded-t border px-2 py-2 transition-[max-height] duration-150 sm:bottom-auto md:rounded-b md:rounded-t-none md:border-t-0 md:border-b',
-                                open ? 'max-h-48' : 'max-h-0',
-                              )}
-                            >
-                              {option.values
-                                .filter((value) => value.isAvailable)
-                                .map(({value, to, isActive}) => (
-                                  <Listbox.Option
-                                    key={`option-${option.name}-${value}`}
-                                    value={value}
-                                  >
-                                    {({active}) => (
-                                      <Link
-                                        to={to}
-                                        preventScrollReset
-                                        className={clsx(
-                                          'text-primary w-full p-2 transition rounded flex justify-start items-center text-left cursor-pointer',
-                                          active && 'bg-primary/10',
-                                        )}
-                                        onClick={() => {
-                                          if (!closeRef?.current) return;
-                                          closeRef.current.click();
-                                        }}
-                                      >
-                                        {value}
-                                        {isActive && (
-                                          <span className="ml-2">
-                                            <IconCheck />
-                                          </span>
-                                        )}
-                                      </Link>
-                                    )}
-                                  </Listbox.Option>
-                                ))}
-                            </Listbox.Options>
-                          </>
-                        )}
-                      </Listbox>
-                    </div>
-                  ) : (
-                    option.values.map(({value, isAvailable, isActive, to}) => (
-                      <Link
-                        key={option.name + value}
-                        to={to}
-                        preventScrollReset
-                        prefetch="intent"
-                        replace
-                        className={clsx(
-                          'leading-none py-1 border-b-[1.5px] cursor-pointer transition-all duration-200',
-                          isActive ? 'border-primary/50' : 'border-primary/0',
-                          isAvailable ? 'opacity-100' : 'opacity-50',
-                        )}
-                      >
-                        {value}
-                      </Link>
-                    ))
-                  )}
-                </div>}
-            
+                            if (value) {
+                              navigate(value.to);
+                            }
+                          }}
+                        >
+                          {({open}) => (
+                            <>
+                              <Listbox.Button
+                                ref={closeRef}
+                                className={clsx(
+                                  'flex items-center justify-between w-full py-3 px-4 border border-primary',
+                                  open
+                                    ? 'rounded-b md:rounded-t md:rounded-b-none'
+                                    : 'rounded',
+                                )}
+                              >
+                                <span>{option.value}</span>
+                                <IconCaret direction={open ? 'up' : 'down'} />
+                              </Listbox.Button>
+                              <Listbox.Options
+                                className={clsx(
+                                  'border-primary bg-contrast absolute bottom-12 z-30 grid h-48 w-full overflow-y-scroll rounded-t border px-2 py-2 transition-[max-height] duration-150 sm:bottom-auto md:rounded-b md:rounded-t-none md:border-t-0 md:border-b',
+                                  open ? 'max-h-48' : 'max-h-0',
+                                )}
+                              >
+                                {option.values
+                                  .filter((value) => value.isAvailable)
+                                  .map(({value, to, isActive}) => (
+                                    <Listbox.Option
+                                      key={`option-${option.name}-${value}`}
+                                      value={value}
+                                    >
+                                      {({active}) => (
+                                        <Link
+                                          to={to}
+                                          preventScrollReset
+                                          className={clsx(
+                                            'text-primary w-full p-2 transition rounded flex justify-start items-center text-left cursor-pointer',
+                                            active && 'bg-primary/10',
+                                          )}
+                                          onClick={() => {
+                                            if (!closeRef?.current) return;
+                                            closeRef.current.click();
+                                          }}
+                                        >
+                                          {value}
+                                          {isActive && (
+                                            <span className="ml-2">
+                                              <IconCheck />
+                                            </span>
+                                          )}
+                                        </Link>
+                                      )}
+                                    </Listbox.Option>
+                                  ))}
+                              </Listbox.Options>
+                            </>
+                          )}
+                        </Listbox>
+                      </div>
+                    ) : (
+                      option.values.map(
+                        ({value, isAvailable, isActive, to}) => (
+                          <Link
+                            key={option.name + value}
+                            to={to}
+                            preventScrollReset
+                            prefetch="intent"
+                            replace
+                            className={clsx(
+                              'leading-none py-1 border-b-[1.5px] cursor-pointer transition-all duration-200',
+                              isActive
+                                ? 'border-primary/50'
+                                : 'border-primary/0',
+                              isAvailable ? 'opacity-100' : 'opacity-50',
+                            )}
+                          >
+                            {value}
+                          </Link>
+                        ),
+                      )
+                    )}
+                  </div>
+                )}
               </div>
             );
           }}

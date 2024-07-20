@@ -66,7 +66,7 @@ export function PageLayout({children, layout, locale}: LayoutProps) {
           {children}
         </main>
       </div>
-      {/* {footerMenu && <Footer menu={footerMenu} locale={locale} />} */}
+      {footerMenu && <Footer menu={footerMenu} locale={locale} />}
     </>
   );
 }
