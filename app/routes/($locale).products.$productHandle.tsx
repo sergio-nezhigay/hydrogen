@@ -281,7 +281,7 @@ export default function Product() {
           </div>
         </div>
       </Section>
-      {/*<Suspense fallback={<Skeleton className="h-32" />}>
+      <Suspense fallback={<Skeleton className="h-32" />}>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}
@@ -290,12 +290,12 @@ export default function Product() {
             <ProductSwimlane title="Related Products" products={products} />
           )}
         </Await>
-      </Suspense>*/}
-      {/*<div id="review-list">
+      </Suspense>
+      <div id="review-list">
         <ReviewList reviews={reviews} title={translation.reviews} />
       </div>
 
-      <ReviewForm productId={product.id} locale={locale} />*/}
+      <ReviewForm productId={product.id} locale={locale} />
       <Analytics.ProductView
         data={{
           products: [
