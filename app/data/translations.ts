@@ -19,6 +19,11 @@ export const translations = {
     submit_review: 'Надіслати відгук',
     thank_you_for_review: 'Дякуємо за ваш відгук!',
     leave_a_review: 'Залишити відгук',
+    phone: 'Телефон',
+    working_hours: 'Робочі години',
+    address: 'Адреса',
+    address_details: 'Київ, вул. Щусєва, 36',
+    working_hours_details: `\n\tПонеділок – П'ятниця: 10:00 - 18:00\n\tСубота, Неділя – Вихідні`,
   },
   ru: {
     buy: 'Купить',
@@ -40,5 +45,10 @@ export const translations = {
     submit_review: 'Отправить отзыв',
     thank_you_for_review: 'Спасибо за ваш отзыв!',
     leave_a_review: 'Оставить отзыв',
+    phone: 'Телефон',
+    working_hours: 'Рабочие часы',
+    address: 'Адрес',
+    address_details: 'Киев, ул. Щусева, 36',
+    working_hours_details: `\n\tПонедельник – Пятница: 10:00 - 18:00\n\tСуббота, Воскресенье – Выходные`,
   },
 } as const;

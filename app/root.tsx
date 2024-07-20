@@ -36,6 +36,7 @@ import styles from '~/styles/app.css?url';
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import {CustomAnalytics} from './modules/CustomAnalytics';
 import {GoogleTagManager} from './modules/GoogleTagManager';
+import type {translations} from './data/translations';
 
 export type RootLoader = typeof loader;
 
@@ -175,6 +176,9 @@ function Layout({children}: {children?: React.ReactNode}) {
             <PageLayout
               key={`${locale.language}-${locale.country}`}
               layout={data.layout}
+              locale={
+                locale.language.toLowerCase() as keyof typeof translations
+              }
             >
               {children}
             </PageLayout>

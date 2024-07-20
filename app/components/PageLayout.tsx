@@ -3,6 +3,7 @@ import useWindowScroll from 'react-use/esm/useWindowScroll';
 import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm, Image} from '@shopify/hydrogen';
+import type {LanguageCode} from '@shopify/hydrogen/storefront-api-types';
 
 import {type LayoutQuery} from 'storefrontapi.generated';
 import {Text, Heading, Section} from '~/components/Text';
@@ -28,6 +29,7 @@ import {
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
+import {translations} from '~/data/translations';
 
 import LangSelector from '../modules/LangSelector';
 
@@ -37,10 +39,12 @@ type LayoutProps = {
     headerMenu?: EnhancedMenu | null;
     footerMenu?: EnhancedMenu | null;
   };
+  locale: keyof typeof translations;
 };
 
-export function PageLayout({children, layout}: LayoutProps) {
+export function PageLayout({children, layout, locale}: LayoutProps) {
   const {headerMenu, footerMenu} = layout || {};
+
   const logoUrl = layout?.shop.brand?.logo?.image?.url || '';
 
   return (
@@ -62,7 +66,7 @@ export function PageLayout({children, layout}: LayoutProps) {
           {children}
         </main>
       </div>
-      {footerMenu && <Footer menu={footerMenu} />}
+      {footerMenu && <Footer menu={footerMenu} locale={locale} />}
     </>
   );
 }
@@ -255,7 +259,7 @@ function MobileHeader({
             height={40}
             className="w-auto h-10"
             src={logoUrl}
-            alt="Byte logo"
+            alt="logo"
           />
         </Link>
       )}
@@ -298,7 +302,7 @@ function DesktopHeader({
               height={80}
               className="w-20"
               src={logoUrl}
-              alt="Byte logo"
+              alt="logo"
             />
           </Link>
         )}
@@ -438,6 +442,7 @@ function Badge({
 }
 
 interface FooterProps {
+  locale: keyof typeof translations;
   menu?: EnhancedMenu;
 }
 
@@ -448,18 +453,24 @@ interface FooterItemProps {
 }
 
 const FooterItem: React.FC<FooterItemProps> = ({icon, title, content}) => (
-  <li className="grid grid-cols-[50px_1fr] items-center  py-2">
+  <li className="grid grid-cols-[50px_1fr] items-center  py-2 whitespace-pre">
     <div className="w-8 h-8 flex justify-center items-center">
-      <Image src={icon} alt={title} className="max-w-full max-h-full" />
+      <Image
+        src={icon}
+        alt={title}
+        className="max-w-full max-h-full"
+        sizes="32px"
+      />
     </div>
     <div>
-      <strong>{title}</strong>
+      <strong>{title}:</strong>
       {content}
     </div>
   </li>
 );
 
-const Footer: React.FC<FooterProps> = () => {
+const Footer: React.FC<FooterProps> = ({locale}) => {
+  const translation = translations[locale];
   const textColor = 'text-gray-200/80';
   const linkStyle = `${textColor} ml-2 font-bold`;
 
@@ -473,7 +484,7 @@ const Footer: React.FC<FooterProps> = () => {
       <ul className="list-none p-0 grid grid-cols-1 gap-4 border-t border-gray-700">
         <FooterItem
           icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/phone-flip-svgrepo-com_1.svg?v=1721456243"
-          title="Телефон:"
+          title={translation.phone}
           content={
             <a href="tel:+380980059236" className={linkStyle}>
               (098) 005-9236
@@ -482,18 +493,12 @@ const Footer: React.FC<FooterProps> = () => {
         />
         <FooterItem
           icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/time-svgrepo-com_1_1.svg?v=1721456153"
-          title="Робочі години:"
-          content={
-            <p className="m-0">
-              Понеділок – П`ятниця: 10:00 - 18:00
-              <br />
-              Субота, Неділя – Вихідні
-            </p>
-          }
+          title={translation.working_hours}
+          content={translation.working_hours_details}
         />
         <FooterItem
           icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/email-svgrepo-com_3.svg?v=1721455854"
-          title="Email:"
+          title="Email"
           content={
             <a href="mailto:info@informatica.com.ua" className={linkStyle}>
               info@informatica.com.ua
@@ -502,8 +507,8 @@ const Footer: React.FC<FooterProps> = () => {
         />
         <FooterItem
           icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/place-marker-svgrepo-com_2.svg?v=1721456036"
-          title="Адреса:"
-          content={<span className="ml-2">Київ, вул. Щусєва, 36</span>}
+          title={translation.address}
+          content={<span className="ml-2">{translation.address_details}</span>}
         />
       </ul>
     </Section>
