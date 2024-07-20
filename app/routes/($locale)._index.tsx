@@ -85,20 +85,20 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       return null;
     });
 
-  const secondaryHero = context.storefront
-    .query(COLLECTION_HERO_QUERY, {
-      variables: {
-        handle: 'backcountry',
-        country,
-        language,
-      },
-    })
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-      // eslint-disable-next-line no-console
-      console.error(error);
-      return null;
-    });
+  //  const secondaryHero = context.storefront
+  //    .query(COLLECTION_HERO_QUERY, {
+  //      variables: {
+  //        handle: 'backcountry',
+  //        country,
+  //        language,
+  //      },
+  //    })
+  //    .catch((error) => {
+  //      // Log query errors, but don't throw them so the page can still render
+  //      // eslint-disable-next-line no-console
+  //      console.error(error);
+  //      return null;
+  //    });
 
   const featuredCollections = context.storefront
     .query(FEATURED_COLLECTIONS_QUERY, {
@@ -114,26 +114,26 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       return null;
     });
 
-  const tertiaryHero = context.storefront
-    .query(COLLECTION_HERO_QUERY, {
-      variables: {
-        handle: 'winter-2022',
-        country,
-        language,
-      },
-    })
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-      // eslint-disable-next-line no-console
-      console.error(error);
-      return null;
-    });
+  //  const tertiaryHero = context.storefront
+  //    .query(COLLECTION_HERO_QUERY, {
+  //      variables: {
+  //        handle: 'winter-2022',
+  //        country,
+  //        language,
+  //      },
+  //    })
+  //    .catch((error) => {
+  //      // Log query errors, but don't throw them so the page can still render
+  //      // eslint-disable-next-line no-console
+  //      console.error(error);
+  //      return null;
+  //    });
 
   return {
     featuredProducts,
-    secondaryHero,
+    //secondaryHero,
     featuredCollections,
-    tertiaryHero,
+    //tertiaryHero,
     language,
   };
 }
@@ -143,14 +143,9 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 };
 
 export default function Homepage() {
-  const {
-    primaryHero,
-    secondaryHero,
-    tertiaryHero,
-    featuredCollections,
-    featuredProducts,
-    language,
-  } = useLoaderData<typeof loader>();
+  const {featuredCollections, featuredProducts, language} =
+    useLoaderData<typeof loader>();
+
   const locale = language.toLowerCase() as keyof typeof translations;
   const translation = translations[locale];
   // TODO: skeletons vs placeholders
@@ -158,9 +153,9 @@ export default function Homepage() {
 
   return (
     <>
-      {primaryHero && (
+      {/*{primaryHero && (
         <Hero {...primaryHero} height="full" top loading="eager" />
-      )}
+      )}*/}
 
       {featuredProducts && (
         <Suspense>
@@ -185,7 +180,7 @@ export default function Homepage() {
         </Suspense>
       )}
 
-      {secondaryHero && (
+      {/*{secondaryHero && (
         <Suspense fallback={<Hero {...skeletons[1]} />}>
           <Await resolve={secondaryHero}>
             {(response) => {
@@ -196,7 +191,7 @@ export default function Homepage() {
             }}
           </Await>
         </Suspense>
-      )}
+      )}*/}
 
       {featuredCollections && (
         <Suspense>
@@ -220,7 +215,7 @@ export default function Homepage() {
         </Suspense>
       )}
 
-      {tertiaryHero && (
+      {/*{tertiaryHero && (
         <Suspense fallback={<Hero {...skeletons[2]} />}>
           <Await resolve={tertiaryHero}>
             {(response) => {
@@ -231,7 +226,7 @@ export default function Homepage() {
             }}
           </Await>
         </Suspense>
-      )}
+      )}*/}
     </>
   );
 }
@@ -279,15 +274,15 @@ const HOMEPAGE_SEO_QUERY = `#graphql
   ${COLLECTION_CONTENT_FRAGMENT}
 ` as const;
 
-const COLLECTION_HERO_QUERY = `#graphql
-  query heroCollectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    hero: collection(handle: $handle) {
-      ...CollectionContent
-    }
-  }
-  ${COLLECTION_CONTENT_FRAGMENT}
-` as const;
+//const COLLECTION_HERO_QUERY = `#graphql
+//  query heroCollectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
+//  @inContext(country: $country, language: $language) {
+//    hero: collection(handle: $handle) {
+//      ...CollectionContent
+//    }
+//  }
+//  ${COLLECTION_CONTENT_FRAGMENT}
+//` as const;
 
 // @see: https://shopify.dev/api/storefront/current/queries/products
 export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
