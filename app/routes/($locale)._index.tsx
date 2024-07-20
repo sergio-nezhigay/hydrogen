@@ -151,10 +151,8 @@ export default function Homepage() {
     featuredProducts,
     language,
   } = useLoaderData<typeof loader>();
-  console.log('🚀 ~ language:', language);
   const locale = language.toLowerCase() as keyof typeof translations;
   const translation = translations[locale];
-  console.log('🚀 ~ translation:', translation);
   // TODO: skeletons vs placeholders
   const skeletons = getHeroPlaceholder([{}, {}, {}]);
 
