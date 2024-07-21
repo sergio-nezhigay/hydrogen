@@ -202,10 +202,16 @@ export function FiltersDrawer({
 function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
+  const locale =
+    selectedLocale.language.toLowerCase() as keyof typeof translations;
+  const translation = translations[locale];
+
   return (
     <>
       <Heading as="h4" size="lead" className="pb-4">
-        Applied filters
+        {translation.applied_filters}
       </Heading>
       <div className="flex flex-wrap gap-2">
         {filters.map((filter: AppliedFilter) => {
@@ -263,6 +269,14 @@ const PRICE_RANGE_FILTER_DEBOUNCE = 500;
 
 function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
   const location = useLocation();
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
+
+  const locale =
+    selectedLocale.language.toLowerCase() as keyof typeof translations;
+
+  const translation = translations[locale];
+
   const params = useMemo(
     () => new URLSearchParams(location.search),
     [location.search],
@@ -310,24 +324,24 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
   return (
     <div className="flex flex-col">
       <label className="mb-4">
-        <span>from</span>
+        <span>{translation.from}</span>
         <input
           name="minPrice"
           className="text-black"
           type="number"
           value={minPrice ?? ''}
-          placeholder={'$'}
+          placeholder={'₴'}
           onChange={onChangeMin}
         />
       </label>
       <label>
-        <span>to</span>
+        <span>{translation.to}</span>
         <input
           name="maxPrice"
           className="text-black"
           type="number"
           value={maxPrice ?? ''}
-          placeholder={'$'}
+          placeholder={'₴'}
           onChange={onChangeMax}
         />
       </label>

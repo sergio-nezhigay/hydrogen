@@ -27,6 +27,9 @@ export const translations = {
     featured_products: 'Рекомендовані товари',
     collections: 'Колекції',
     filter_by: 'Фільтрувати за',
+    from: 'від',
+    to: 'до',
+    applied_filters: 'Застосовані фільтри',
   },
   ru: {
     buy: 'Купить',
@@ -56,5 +59,8 @@ export const translations = {
     featured_products: 'Рекомендуемые товары',
     collections: 'Коллекции',
     filter_by: 'Фильтровать по',
+    from: 'от',
+    to: 'до',
+    applied_filters: 'Примененные фильтры',
   },
 } as const;
