@@ -374,34 +374,39 @@ function filterInputToParams(
 }
 
 export default function SortMenu() {
+  const [params] = useSearchParams();
+  const location = useLocation();
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
+  const locale =
+    selectedLocale.language.toLowerCase() as keyof typeof translations;
+  const translation = translations[locale];
   const items: {label: string; key: SortParam}[] = [
-    {label: 'Featured', key: 'featured'},
+    {label: translation.featured, key: 'featured'},
     {
-      label: 'Price: Low - High',
+      label: translation.price_low_high ?? 'Price: Low - High',
       key: 'price-low-high',
     },
     {
-      label: 'Price: High - Low',
+      label: translation.price_high_low ?? 'Price: High - Low',
       key: 'price-high-low',
     },
     {
-      label: 'Best Selling',
+      label: translation.best_selling ?? 'Best Selling',
       key: 'best-selling',
     },
     {
-      label: 'Newest',
+      label: translation.newest ?? 'Newest',
       key: 'newest',
     },
   ];
-  const [params] = useSearchParams();
-  const location = useLocation();
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
     <Menu as="div" className="relative z-40">
       <Menu.Button className="flex items-center">
         <span className="px-2">
-          <span className="px-2 font-medium">Sort by:</span>
+          <span className="px-2 font-medium">{translation.sort_by}:</span>
           <span>{(activeItem || items[0]).label}</span>
         </span>
         <IconCaret />
