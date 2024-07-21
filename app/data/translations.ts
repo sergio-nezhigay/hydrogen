@@ -26,6 +26,7 @@ export const translations = {
     working_hours_details: `\n\tПонеділок – П'ятниця: 10:00 - 18:00\n\tСубота, Неділя – Вихідні`,
     featured_products: 'Рекомендовані товари',
     collections: 'Колекції',
+    filter_by: 'Фільтрувати за',
   },
   ru: {
     buy: 'Купить',
@@ -54,5 +55,6 @@ export const translations = {
     working_hours_details: `\n\tПонедельник – Пятница: 10:00 - 18:00\n\tСуббота, Воскресенье – Выходные`,
     featured_products: 'Рекомендуемые товары',
     collections: 'Коллекции',
+    filter_by: 'Фильтровать по',
   },
 } as const;

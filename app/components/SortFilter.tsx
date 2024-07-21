@@ -7,6 +7,7 @@ import {
   useLocation,
   useSearchParams,
   useNavigate,
+  useRouteLoaderData,
 } from '@remix-run/react';
 import useDebounce from 'react-use/esm/useDebounce';
 import type {
@@ -16,6 +17,9 @@ import type {
 
 import {Heading, Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
+import {DEFAULT_LOCALE} from '~/lib/utils';
+import type {RootLoader} from '~/root';
+import {translations} from '~/data/translations';
 
 export type AppliedFilter = {
   label: string;
@@ -119,6 +123,13 @@ export function FiltersDrawer({
 }: Omit<SortFilterProps, 'children' | 'startIsOpen'>) {
   const [params] = useSearchParams();
   const location = useLocation();
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
+
+  const locale =
+    selectedLocale.language.toLowerCase() as keyof typeof translations;
+
+  const translation = translations[locale];
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     switch (filter.type) {
@@ -156,7 +167,7 @@ export function FiltersDrawer({
         ) : null}
 
         <Heading as="h4" size="lead" className="pb-4">
-          Filter By
+          {translation.filter_by}
         </Heading>
         <div className="divide-y">
           {filters.map((filter: Filter) => (

@@ -334,7 +334,7 @@ function collection({
     description: truncate(
       collection?.seo?.description ?? collection?.description ?? '',
     ),
-    titleTemplate: '%s | Collection',
+    titleTemplate: '%s',
     media: {
       type: 'image',
       url: collection?.image?.url,
