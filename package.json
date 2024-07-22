@@ -23,6 +23,7 @@
   "dependencies": {
     "@builder.io/partytown": "^0.10.2",
     "@headlessui/react": "^1.7.2",
+    "@radix-ui/react-slot": "^1.1.0",
     "@remix-run/node": "^2.10.1",
     "@remix-run/react": "^2.10.1",
     "@remix-run/server-runtime": "^2.10.1",
@@ -33,6 +34,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^1.2.1",
     "cross-env": "^7.0.3",
+    "embla-carousel-react": "^8.1.7",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",
     "isbot": "^3.8.0",
