@@ -36,6 +36,7 @@ export const translations = {
     best_selling: 'Найпопулярніші',
     newest: 'Новинки',
     sort_by: 'Сортувати за:',
+    also_interested: 'Також вас можуть зацікавити',
   },
   ru: {
     buy: 'Купить',
@@ -74,5 +75,6 @@ export const translations = {
     best_selling: 'Бестселлеры',
     newest: 'Новинки',
     sort_by: 'Сортировать по:',
+    also_interested: 'Также вас могут заинтересовать',
   },
 } as const;

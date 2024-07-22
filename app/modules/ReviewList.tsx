@@ -12,10 +12,7 @@ function ReviewList({reviews, title}: ReviewListProps) {
   return (
     <>
       {reviews.length > 0 && (
-        <Section>
-          <Heading as="h2" className="mb-4">
-            {title}
-          </Heading>
+        <Section heading={title}>
           <ul>
             {reviews.map((review) => (
               <li

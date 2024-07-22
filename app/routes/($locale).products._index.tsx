@@ -43,12 +43,12 @@ export async function loader({
     url: request.url,
     collection: {
       id: 'all-products',
-      title: 'All Products',
+      title: 'Каталог',
       handle: 'products',
       descriptionHtml: 'All the store products',
       description: 'All the store products',
       seo: {
-        title: 'All Products',
+        title: 'All Products1',
         description: 'All the store products',
       },
       metafields: [],
@@ -72,7 +72,7 @@ export default function AllProducts() {
 
   return (
     <>
-      <PageHeader heading="All Products" variant="allCollections" />
+      <PageHeader heading="Каталог" variant="allCollections" />
       <Section>
         <Pagination connection={products}>
           {({nodes, isLoading, NextLink, PreviousLink}) => {

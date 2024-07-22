@@ -287,7 +287,10 @@ export default function Product() {
           resolve={recommended}
         >
           {(products) => (
-            <ProductSwimlane title="Related Products" products={products} />
+            <ProductSwimlane
+              title={translation.also_interested}
+              products={products}
+            />
           )}
         </Await>
       </Suspense>
