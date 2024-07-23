@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { EmblaOptionsType } from 'embla-carousel';
 import useEmblaCarousel from 'embla-carousel-react';
 import { Thumb } from './Thumb';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,   type CarouselApi, } from '~/components/ui/carousel';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '~/components/ui/carousel';
 
 type PropType = {
   slides: number[];
@@ -10,57 +10,51 @@ type PropType = {
 };
 
 const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
-    const [api, setApi] = React.useState<CarouselApi>()
-    const [current, setCurrent] = React.useState(0)
-    const [count, setCount] = React.useState(0)
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options);
-  const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
-    containScroll: 'keepSnaps',
-    dragFree: true,
-  });
+  const [api, setApi] = useState<CarouselApi>();
+  const [thumbsApi, setThumbsApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
 
   const onThumbClick = useCallback(
     (index: number) => {
-        console.log("onThumbClick")
-      if (!emblaMainApi || !emblaThumbsApi) return;
-      emblaMainApi.scrollTo(index);
+      if (!api || !thumbsApi) return;
+      api.scrollTo(index);
     },
-    [emblaMainApi, emblaThumbsApi]
+    [api, thumbsApi]
   );
 
-  React.useEffect(() => {
-    if (!api) {
-      return
-    }
- 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
- 
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1)
-    })
-  }, [api])
+  useEffect(() => {
+    if (!api) return;
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+    const handleSelect = () => setCurrent(api.selectedScrollSnap() + 1);
+    api.on('select', handleSelect);
+    return () => {
+      api.off('select', handleSelect);
+    };
+  }, [api]);
 
   const onSelect = useCallback(() => {
-    if (!emblaMainApi || !emblaThumbsApi) return;
-    setSelectedIndex(emblaMainApi.selectedScrollSnap());
-    emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap());
-  }, [emblaMainApi, emblaThumbsApi]);
+    if (!thumbsApi || !api) return;
+    setCurrent(api.selectedScrollSnap());
+    thumbsApi.scrollTo(api.selectedScrollSnap());
+  }, [api, thumbsApi]);
 
   useEffect(() => {
-    if (!emblaMainApi) return;
+    if (!api) return;
     onSelect();
 
-    emblaMainApi.on('select', onSelect).on('reInit', onSelect);
-  }, [emblaMainApi, onSelect]);
+    api.on('select', onSelect).on('reInit', onSelect);
+    return () => {
+      api.off('select', onSelect).off('reInit', onSelect);
+    };
+  }, [api, onSelect]);
 
   return (
     <div className="max-w-2xl mx-auto h-20">
-           <Carousel setApi={setApi} className="w-full max-w-xs">
+      <Carousel setApi={setApi} className="w-full max-w-xs">
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
+          {slides.map((index) => (
             <CarouselItem key={index}>
               <h1>CarouselItem</h1>
             </CarouselItem>
@@ -72,21 +66,27 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
       <div className="py-2 text-center text-sm text-muted-foreground">
         Slide {current} of {count}
       </div>
-<h3>thumbs</h3>
-      <div className="mt-2">
-        <div className="overflow-hidden" ref={emblaThumbsRef}>
-          <div className="flex -ml-2">
+        <Carousel
+          setApi={setThumbsApi}
+          className="w-full max-w-sm mt-2"
+          opts={{
+            containScroll: 'keepSnaps',
+            dragFree: true,
+          }}
+        >
+          <CarouselContent className="-ml-1">
             {slides.map((index) => (
-              <Thumb
-                key={index}
-                onClick={() => onThumbClick(index)}
-                selected={index === selectedIndex}
-                index={index}
-              />
+              <CarouselItem key={index} className='pl-1 basis-1/5'>
+                <Thumb
+                  onClick={() => onThumbClick(index)}
+                  selected={index === current}
+                  index={index}
+                />
+              </CarouselItem>
             ))}
-          </div>
-        </div>
-      </div>
+          </CarouselContent>
+        </Carousel>
+
     </div>
   );
 };
