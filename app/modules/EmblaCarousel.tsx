@@ -1,11 +1,18 @@
 import {Image} from '@shopify/hydrogen';
+import React, {useState, useEffect, useCallback} from 'react';
+import type {EmblaOptionsType} from 'embla-carousel';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { EmblaOptionsType } from 'embla-carousel';
-import useEmblaCarousel from 'embla-carousel-react';
-import { Thumb } from './Thumb';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi } from '~/components/ui/carousel';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from '~/components/ui/carousel';
 import type {MediaFragment} from 'storefrontapi.generated';
+
+import {Thumb} from './Thumb';
 
 type PropType = {
   slides: number[];
@@ -13,7 +20,7 @@ type PropType = {
   media: MediaFragment[];
 };
 
-const EmblaCarousel: React.FC<PropType> = ({ slides, options, media }) => {
+const EmblaCarousel: React.FC<PropType> = ({slides, options, media}) => {
   const [api, setApi] = useState<CarouselApi>();
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -23,7 +30,7 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, media }) => {
       if (!api || !thumbsApi) return;
       api.scrollTo(index);
     },
-    [api, thumbsApi]
+    [api, thumbsApi],
   );
 
   useEffect(() => {
@@ -57,52 +64,52 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, media }) => {
     <div className=" w-full lg:col-span-2">
       <Carousel setApi={setApi} className="w-full">
         <CarouselContent>
-          {media.map((med, i) => {
-                   const image =
-                   med.__typename === 'MediaImage'
-                     ? {...med.image, altText: med.alt || 'Product image'}
-                     : null;
+          {media.map((med, index) => {
+            const image =
+              med.__typename === 'MediaImage'
+                ? {...med.image, altText: med.alt || 'Product image'}
+                : null;
 
-            return  <CarouselItem key={i}>
-              <>{image && (
-              <Image
-                loading={i === 0 ? 'eager' : 'lazy'}
-                data={image}
-                sizes="200px"  
-       
-                className="object-cover w-full h-full aspect-square fadeIn"
-              />
-            )}</>
-              
-            </CarouselItem>
+            return (
+              <CarouselItem key={med.id}>
+                <>
+                  {image && (
+                    <Image
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      data={image}
+                      sizes="(min-width: 48em) 60vw, 90vw"
+                      className="object-cover w-full h-full aspect-square fadeIn"
+                    />
+                  )}
+                </>
+              </CarouselItem>
+            );
           })}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
 
-        <Carousel
-          setApi={setThumbsApi}
-          className="w-full max-w-sm mt-2"
-          opts={{
-            containScroll: 'keepSnaps',
-            dragFree: true,
-          }}
-        >
-          <CarouselContent className="-ml-1 items-center">
-            {media.map((med, index) => (
-              <CarouselItem key={index} className='pl-1 basis-1/5'>
-                <Thumb
-                  onClick={() => onThumbClick(index)}
-                  selected={index === current}
-                  index={index}
-                  med={med}
-                />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
-
+      <Carousel
+        setApi={setThumbsApi}
+        opts={{
+          containScroll: 'keepSnaps',
+          dragFree: true,
+        }}
+      >
+        <CarouselContent className="-ml-1 items-center">
+          {media.map((med, index) => (
+            <CarouselItem key={med.id} className="pl-1 basis-1/10">
+              <Thumb
+                onClick={() => onThumbClick(index)}
+                selected={index === current}
+                index={index}
+                med={med}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </div>
   );
 };
