@@ -219,7 +219,8 @@ export default function Product() {
   return (
     <>
       <Section className="px-0 md:px-8 lg:px-12">
-        <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-2">
+          {/*<div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">*/}
           <ProductGallery
             media={media.nodes}
             className="w-full lg:col-span-2"
@@ -346,7 +347,8 @@ export function ProductForm({
       <div className="grid gap-4">
         <VariantSelector
           handle={product.handle}
-          options={product.options}
+          options={product.options.filter((option) => option.values.length > 1)}
+          //  options={product.options}
           variants={variants}
         >
           {({option}) => {

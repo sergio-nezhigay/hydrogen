@@ -1,5 +1,5 @@
 import {Image} from '@shopify/hydrogen';
-import React, {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect, useCallback} from 'react';
 import type {EmblaOptionsType} from 'embla-carousel';
 
 import {
@@ -61,7 +61,8 @@ const EmblaCarousel: React.FC<PropType> = ({slides, options, media}) => {
   }, [api, onSelect]);
 
   return (
-    <div className=" w-full lg:col-span-2">
+    <div className="w-full">
+      {/*<div className=" w-full lg:col-span-2">*/}
       <Carousel setApi={setApi} className="w-full">
         <CarouselContent>
           {media.map((med, index) => {

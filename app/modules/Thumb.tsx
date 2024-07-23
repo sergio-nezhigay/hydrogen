@@ -1,4 +1,3 @@
-import React from 'react';
 import {Image} from '@shopify/hydrogen';
 
 import type {MediaFragment} from 'storefrontapi.generated';

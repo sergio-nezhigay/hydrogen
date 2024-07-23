@@ -1,10 +1,8 @@
-import {Image} from '@shopify/hydrogen';
-import { EmblaOptionsType } from 'embla-carousel';
-
+import type {EmblaOptionsType} from 'embla-carousel';
 
 import type {MediaFragment} from 'storefrontapi.generated';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 import EmblaCarousel from '~/modules/EmblaCarousel';
+
 const OPTIONS: EmblaOptionsType = {};
 // const SLIDE_COUNT = 10;
 // const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
@@ -23,9 +21,5 @@ export function ProductGallery({
   }
   const SLIDES = Array.from(Array(media.length).keys());
 
-  return (
-
-      <EmblaCarousel slides={SLIDES} options={OPTIONS} media={media}/>
-
-  );
+  return <EmblaCarousel slides={SLIDES} options={OPTIONS} media={media} />;
 }
