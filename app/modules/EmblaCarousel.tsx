@@ -1,92 +1,115 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { EmblaOptionsType } from 'embla-carousel';
-import useEmblaCarousel from 'embla-carousel-react';
-import { Thumb } from './Thumb';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious,   type CarouselApi, } from '~/components/ui/carousel';
+import {Image} from '@shopify/hydrogen';
+import React, {useState, useEffect, useCallback} from 'react';
+import type {EmblaOptionsType} from 'embla-carousel';
+
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from '~/components/ui/carousel';
+import type {MediaFragment} from 'storefrontapi.generated';
+
+import {Thumb} from './Thumb';
 
 type PropType = {
   slides: number[];
   options?: EmblaOptionsType;
+  media: MediaFragment[];
 };
 
-const EmblaCarousel: React.FC<PropType> = ({ slides, options }) => {
-    const [api, setApi] = React.useState<CarouselApi>()
-    const [current, setCurrent] = React.useState(0)
-    const [count, setCount] = React.useState(0)
-
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaMainRef, emblaMainApi] = useEmblaCarousel(options);
-  const [emblaThumbsRef, emblaThumbsApi] = useEmblaCarousel({
-    containScroll: 'keepSnaps',
-    dragFree: true,
-  });
+const EmblaCarousel: React.FC<PropType> = ({slides, options, media}) => {
+  const [api, setApi] = useState<CarouselApi>();
+  const [thumbsApi, setThumbsApi] = useState<CarouselApi>();
+  const [current, setCurrent] = useState(0);
 
   const onThumbClick = useCallback(
     (index: number) => {
-        console.log("onThumbClick")
-      if (!emblaMainApi || !emblaThumbsApi) return;
-      emblaMainApi.scrollTo(index);
+      if (!api || !thumbsApi) return;
+      api.scrollTo(index);
     },
-    [emblaMainApi, emblaThumbsApi]
+    [api, thumbsApi],
   );
 
-  React.useEffect(() => {
-    if (!api) {
-      return
-    }
- 
-    setCount(api.scrollSnapList().length)
-    setCurrent(api.selectedScrollSnap() + 1)
- 
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap() + 1)
-    })
-  }, [api])
+  useEffect(() => {
+    if (!api) return;
+
+    setCurrent(api.selectedScrollSnap() + 1);
+    const handleSelect = () => setCurrent(api.selectedScrollSnap() + 1);
+    api.on('select', handleSelect);
+    return () => {
+      api.off('select', handleSelect);
+    };
+  }, [api]);
 
   const onSelect = useCallback(() => {
-    if (!emblaMainApi || !emblaThumbsApi) return;
-    setSelectedIndex(emblaMainApi.selectedScrollSnap());
-    emblaThumbsApi.scrollTo(emblaMainApi.selectedScrollSnap());
-  }, [emblaMainApi, emblaThumbsApi]);
+    if (!thumbsApi || !api) return;
+    setCurrent(api.selectedScrollSnap());
+    thumbsApi.scrollTo(api.selectedScrollSnap());
+  }, [api, thumbsApi]);
 
   useEffect(() => {
-    if (!emblaMainApi) return;
+    if (!api) return;
     onSelect();
 
-    emblaMainApi.on('select', onSelect).on('reInit', onSelect);
-  }, [emblaMainApi, onSelect]);
+    api.on('select', onSelect).on('reInit', onSelect);
+    return () => {
+      api.off('select', onSelect).off('reInit', onSelect);
+    };
+  }, [api, onSelect]);
 
   return (
-    <div className="max-w-2xl mx-auto h-20">
-           <Carousel setApi={setApi} className="w-full max-w-xs">
+    <div className=" w-full lg:col-span-2">
+      <Carousel setApi={setApi} className="w-full">
         <CarouselContent>
-          {Array.from({ length: 5 }).map((_, index) => (
-            <CarouselItem key={index}>
-              <h1>CarouselItem</h1>
-            </CarouselItem>
-          ))}
+          {media.map((med, index) => {
+            const image =
+              med.__typename === 'MediaImage'
+                ? {...med.image, altText: med.alt || 'Product image'}
+                : null;
+
+            return (
+              <CarouselItem key={med.id}>
+                <>
+                  {image && (
+                    <Image
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      data={image}
+                      sizes="(min-width: 48em) 60vw, 90vw"
+                      className="object-cover w-full h-full aspect-square fadeIn"
+                    />
+                  )}
+                </>
+              </CarouselItem>
+            );
+          })}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
       </Carousel>
-      <div className="py-2 text-center text-sm text-muted-foreground">
-        Slide {current} of {count}
-      </div>
-<h3>thumbs</h3>
-      <div className="mt-2">
-        <div className="overflow-hidden" ref={emblaThumbsRef}>
-          <div className="flex -ml-2">
-            {slides.map((index) => (
+
+      <Carousel
+        setApi={setThumbsApi}
+        opts={{
+          containScroll: 'keepSnaps',
+          dragFree: true,
+        }}
+      >
+        <CarouselContent className="-ml-1 items-center">
+          {media.map((med, index) => (
+            <CarouselItem key={med.id} className="pl-1 basis-1/10">
               <Thumb
-                key={index}
                 onClick={() => onThumbClick(index)}
-                selected={index === selectedIndex}
+                selected={index === current}
                 index={index}
+                med={med}
               />
-            ))}
-          </div>
-        </div>
-      </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </div>
   );
 };

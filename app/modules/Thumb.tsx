@@ -1,20 +1,34 @@
 import React from 'react';
+import {Image} from '@shopify/hydrogen';
 
+import type {MediaFragment} from 'storefrontapi.generated';
 type PropType = {
   selected: boolean;
   index: number;
+  med: MediaFragment;
   onClick: () => void;
 };
 
-export const Thumb: React.FC<PropType> = ({ selected, index, onClick }) => {
+export const Thumb: React.FC<PropType> = ({selected, index, onClick, med}) => {
+  const image =
+    med.__typename === 'MediaImage'
+      ? {...med.image, altText: med.alt || 'Product image'}
+      : null;
+
   return (
-    <div className={`flex-shrink-0 w-20 h-20 ${selected ? 'bg-gray-800 text-white' : 'bg-transparent'} min-w-0  pl-2`}>
+    <div className={`${selected && 'border border-primary'} p-1`}>
       <button
         onClick={onClick}
         type="button"
-        className={`inline-flex items-center justify-center w-full h-16 text-xl font-semibold shadow-inner rounded-full focus:outline-none ${selected ? 'text-white' : 'text-gray-800'}`}
+        className={`inline-flex items-center justify-center w-full focus:outline-none`}
       >
-        {index + 1}
+        {image && (
+          <Image
+            data={image}
+            sizes="100px"
+            className="object-cover w-full h-full aspect-square fadeIn"
+          />
+        )}
       </button>
     </div>
   );
