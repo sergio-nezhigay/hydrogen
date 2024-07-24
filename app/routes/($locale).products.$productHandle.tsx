@@ -235,8 +235,7 @@ export default function Product() {
                   onClick={handleScrollToReviews}
                 >
                   {' '}
-                  sdgswfg
-                  <StarRating rating={rating} />
+                  <StarRating rating={rating} />s{' '}
                   <span className="align-top">({reviewNumber})</span>
                 </a>
               </div>
