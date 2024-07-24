@@ -37,7 +37,7 @@ import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
-import EmblaCarousel from '~/modules/EmblaCarousel';
+import ProductImages from '~/modules/ProductImages';
 
 export const headers = routeHeaders;
 
@@ -220,12 +220,11 @@ export default function Product() {
     <>
       <Section className="px-0 md:px-8 lg:px-12">
         <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2">
-          <EmblaCarousel media={media.nodes} />
+          <ProductImages media={media.nodes} />
 
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
             <section className="flex flex-col w-full gap-8 p-6 md:mx-auto  md:px-0">
               <div className="grid gap-2">
-                {/*overflow-hidden?*/}
                 <Heading as="h1" className="whitespace-normal overflow-hidden ">
                   {title}
                 </Heading>
@@ -236,6 +235,7 @@ export default function Product() {
                   onClick={handleScrollToReviews}
                 >
                   {' '}
+                  sdgswfg
                   <StarRating rating={rating} />
                   <span className="align-top">({reviewNumber})</span>
                 </a>
@@ -344,8 +344,8 @@ export function ProductForm({
       <div className="grid gap-4">
         <VariantSelector
           handle={product.handle}
-          options={product.options.filter((option) => option.values.length > 1)}
-          //  options={product.options}
+          //  options={product.options.filter((option) => option.values.length > 1)}
+          options={product.options}
           variants={variants}
         >
           {({option}) => {

@@ -13,11 +13,11 @@ import type {MediaFragment} from 'storefrontapi.generated';
 
 import {Thumb} from './Thumb';
 
-type PropType = {
+type ProductImagesProps = {
   media: MediaFragment[];
 };
 
-const EmblaCarousel: React.FC<PropType> = ({media}) => {
+function ProductImages({media}: ProductImagesProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -97,11 +97,11 @@ const EmblaCarousel: React.FC<PropType> = ({media}) => {
           containScroll: 'keepSnaps',
           dragFree: true,
         }}
-        className="sm-max:hidden"
+        className="sm-max:hidden mt-4"
       >
-        <CarouselContent className="-ml-1">
+        <CarouselContent className="-ml-4">
           {media.map((med, index) => (
-            <CarouselItem key={med.id} className="pl-1 basis-1/10">
+            <CarouselItem key={med.id} className="pl-4 basis-1/10 ">
               <Thumb
                 onClick={() => onThumbClick(index)}
                 selected={index === current}
@@ -114,6 +114,6 @@ const EmblaCarousel: React.FC<PropType> = ({media}) => {
       </Carousel>
     </div>
   );
-};
+}
 
-export default EmblaCarousel;
+export default ProductImages;
