@@ -1,4 +1,5 @@
 import {Image} from '@shopify/hydrogen';
+import clsx from 'clsx';
 
 import type {MediaFragment} from 'storefrontapi.generated';
 type PropType = {
@@ -15,7 +16,12 @@ export const Thumb: React.FC<PropType> = ({selected, index, onClick, med}) => {
       : null;
 
   return (
-    <div className={`${selected && 'border border-primary'} p-1`}>
+    <div
+      className={clsx('p-1 border', {
+        'border-primary': selected,
+        'border-transparent': !selected,
+      })}
+    >
       <button
         onClick={onClick}
         type="button"
@@ -24,8 +30,11 @@ export const Thumb: React.FC<PropType> = ({selected, index, onClick, med}) => {
         {image && (
           <Image
             data={image}
-            sizes="100px"
-            className="object-cover w-full h-full aspect-square fadeIn"
+            width={100}
+            height={100}
+            aspectRatio={'1/1'}
+            sizes="auto"
+            className="object-cover w-full h-full fadeIn"
           />
         )}
       </button>

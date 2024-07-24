@@ -25,7 +25,6 @@ import {Button} from '~/components/Button';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {Skeleton} from '~/components/Skeleton';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
-import {ProductGallery} from '~/components/ProductGallery copy';
 import {IconCaret, IconCheck, IconClose} from '~/components/Icon';
 import {getExcerpt} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
@@ -38,6 +37,9 @@ import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
+import EmblaCarousel from '~/modules/EmblaCarousel';
+
+import {ProductImages} from '~/modules/ProductImages';
 
 export const headers = routeHeaders;
 
@@ -219,12 +221,9 @@ export default function Product() {
   return (
     <>
       <Section className="px-0 md:px-8 lg:px-12">
-        <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-2">
-          {/*<div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">*/}
-          <ProductGallery
-            media={media.nodes}
-            className="w-full lg:col-span-2"
-          />
+        <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2">
+          <EmblaCarousel media={media.nodes} />
+
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
             <section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
               <div className="grid gap-2">

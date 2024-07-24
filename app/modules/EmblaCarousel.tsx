@@ -1,6 +1,5 @@
 import {Image} from '@shopify/hydrogen';
 import {useState, useEffect, useCallback} from 'react';
-import type {EmblaOptionsType} from 'embla-carousel';
 
 import {
   Carousel,
@@ -15,12 +14,10 @@ import type {MediaFragment} from 'storefrontapi.generated';
 import {Thumb} from './Thumb';
 
 type PropType = {
-  slides: number[];
-  options?: EmblaOptionsType;
   media: MediaFragment[];
 };
 
-const EmblaCarousel: React.FC<PropType> = ({slides, options, media}) => {
+const EmblaCarousel: React.FC<PropType> = ({media}) => {
   const [api, setApi] = useState<CarouselApi>();
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -34,18 +31,17 @@ const EmblaCarousel: React.FC<PropType> = ({slides, options, media}) => {
   );
 
   useEffect(() => {
-    if (!api) return;
-
+    if (!api || !thumbsApi) return;
     setCurrent(api.selectedScrollSnap() + 1);
     const handleSelect = () => setCurrent(api.selectedScrollSnap() + 1);
     api.on('select', handleSelect);
     return () => {
       api.off('select', handleSelect);
     };
-  }, [api]);
+  }, [api, thumbsApi]);
 
   const onSelect = useCallback(() => {
-    if (!thumbsApi || !api) return;
+    if (!api || !thumbsApi) return;
     setCurrent(api.selectedScrollSnap());
     thumbsApi.scrollTo(api.selectedScrollSnap());
   }, [api, thumbsApi]);
@@ -60,15 +56,18 @@ const EmblaCarousel: React.FC<PropType> = ({slides, options, media}) => {
     };
   }, [api, onSelect]);
 
+  if (!media.length) {
+    return null;
+  }
+
   return (
-    <div className="w-full">
-      {/*<div className=" w-full lg:col-span-2">*/}
-      <Carousel setApi={setApi} className="w-full">
+    <div className="w-full px-12 ">
+      <Carousel setApi={setApi}>
         <CarouselContent>
           {media.map((med, index) => {
             const image =
               med.__typename === 'MediaImage'
-                ? {...med.image, altText: med.alt || 'Product image'}
+                ? {...med.image, altText: med.alt || 'Product image ' + index}
                 : null;
 
             return (
@@ -78,8 +77,9 @@ const EmblaCarousel: React.FC<PropType> = ({slides, options, media}) => {
                     <Image
                       loading={index === 0 ? 'eager' : 'lazy'}
                       data={image}
-                      sizes="(min-width: 48em) 60vw, 90vw"
-                      className="object-cover w-full h-full aspect-square fadeIn"
+                      aspectRatio={'1/1'}
+                      sizes="auto"
+                      className="object-cover w-full h-full fadeIn"
                     />
                   )}
                 </>
@@ -97,8 +97,9 @@ const EmblaCarousel: React.FC<PropType> = ({slides, options, media}) => {
           containScroll: 'keepSnaps',
           dragFree: true,
         }}
+        className="sm-max:hidden"
       >
-        <CarouselContent className="-ml-1 items-center">
+        <CarouselContent className="-ml-1">
           {media.map((med, index) => (
             <CarouselItem key={med.id} className="pl-1 basis-1/10">
               <Thumb
