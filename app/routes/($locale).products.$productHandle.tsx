@@ -39,8 +39,6 @@ import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
 import EmblaCarousel from '~/modules/EmblaCarousel';
 
-import {ProductImages} from '~/modules/ProductImages';
-
 export const headers = routeHeaders;
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -225,7 +223,7 @@ export default function Product() {
           <EmblaCarousel media={media.nodes} />
 
           <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
-            <section className="flex flex-col w-full max-w-xl gap-8 p-6 md:mx-auto md:max-w-sm md:px-0">
+            <section className="flex flex-col w-full gap-8 p-6 md:mx-auto  md:px-0">
               <div className="grid gap-2">
                 {/*overflow-hidden?*/}
                 <Heading as="h1" className="whitespace-normal overflow-hidden ">
@@ -342,7 +340,7 @@ export function ProductForm({
   const navigate = useNavigate();
 
   return (
-    <div className="grid gap-10">
+    <div className="grid gap-10 md:max-w-48">
       <div className="grid gap-4">
         <VariantSelector
           handle={product.handle}

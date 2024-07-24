@@ -61,7 +61,7 @@ const EmblaCarousel: React.FC<PropType> = ({media}) => {
   }
 
   return (
-    <div className="w-full px-12 ">
+    <div className="w-full md:px-12 ">
       <Carousel setApi={setApi}>
         <CarouselContent>
           {media.map((med, index) => {
@@ -87,8 +87,8 @@ const EmblaCarousel: React.FC<PropType> = ({media}) => {
             );
           })}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="sm-max:hidden" />
+        <CarouselNext className="sm-max:hidden" />
       </Carousel>
 
       <Carousel
