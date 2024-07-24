@@ -2,8 +2,6 @@ import {Form, useActionData} from '@remix-run/react';
 import {useState, useEffect} from 'react';
 
 import {Heading, Section, Text} from '~/components/Text';
-//import {Button} from '~/components/Button';
-//import {Button} from '~/components/Button';
 import {translations} from '~/data/translations';
 import {Star} from '~/components/Icon';
 import {Button} from '~/components/ui/button';

@@ -9,7 +9,7 @@ type PropType = {
   onClick: () => void;
 };
 
-export const Thumb: React.FC<PropType> = ({selected, index, onClick, med}) => {
+export function Thumb({selected, onClick, med}: PropType) {
   const image =
     med.__typename === 'MediaImage'
       ? {...med.image, altText: med.alt || 'Product image'}
@@ -17,7 +17,7 @@ export const Thumb: React.FC<PropType> = ({selected, index, onClick, med}) => {
 
   return (
     <div
-      className={clsx('p-1 border', {
+      className={clsx('border', {
         'border-primary': selected,
         'border-transparent': !selected,
       })}
@@ -40,4 +40,4 @@ export const Thumb: React.FC<PropType> = ({selected, index, onClick, med}) => {
       </button>
     </div>
   );
-};
+}

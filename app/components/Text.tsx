@@ -121,7 +121,7 @@ export function Section({
     x: 'px-6 md:px-8 lg:px-12',
     y: 'py-6 md:py-8 lg:py-12',
     swimlane: 'pt-4 md:pt-8 lg:pt-12 md:pb-4 lg:pb-8',
-    all: 'p-6 md:p-8 lg:p-12',
+    all: 'px-6 pt-6 md:px-8 md:pt-8 lg:px-12 lg:pt-12 md:pb-4 lg:pb-8',
   };
 
   const dividers = {
