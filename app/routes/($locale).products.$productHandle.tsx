@@ -471,7 +471,7 @@ export function ProductForm({
                 variant="red"
                 data-test="add-to-cart"
               >
-                <ShoppingCart className="mr-2 h-4 w-4" />
+                <ShoppingCart className="mr-4 h-6 w-6" />
                 <Text
                   as="span"
                   className="flex items-center justify-center gap-2 text-gray-50"
