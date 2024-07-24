@@ -1,5 +1,6 @@
 import {useRef, Suspense} from 'react';
 import {Disclosure, Listbox} from '@headlessui/react';
+import {ShoppingCart} from 'lucide-react';
 import {
   defer,
   type MetaArgs,
@@ -234,8 +235,7 @@ export default function Product() {
                   className="space-x-2"
                   onClick={handleScrollToReviews}
                 >
-                  {' '}
-                  <StarRating rating={rating} />s{' '}
+                  <StarRating rating={rating} />
                   <span className="align-top">({reviewNumber})</span>
                 </a>
               </div>
@@ -343,7 +343,6 @@ export function ProductForm({
       <div className="grid gap-4">
         <VariantSelector
           handle={product.handle}
-          //  options={product.options.filter((option) => option.values.length > 1)}
           options={product.options}
           variants={variants}
         >
@@ -469,12 +468,13 @@ export function ProductForm({
                     quantity: 1,
                   },
                 ]}
-                variant="primary"
+                variant="red"
                 data-test="add-to-cart"
               >
+                <ShoppingCart className="mr-2 h-4 w-4" />
                 <Text
                   as="span"
-                  className="flex items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-2 text-gray-50"
                 >
                   <span>{translation.buy}</span> <span>·</span>{' '}
                   <HryvniaMoney data={selectedVariant?.price!} />

@@ -2,9 +2,11 @@ import {Form, useActionData} from '@remix-run/react';
 import {useState, useEffect} from 'react';
 
 import {Heading, Section, Text} from '~/components/Text';
-import {Button} from '~/components/Button';
+//import {Button} from '~/components/Button';
+//import {Button} from '~/components/Button';
 import {translations} from '~/data/translations';
 import {Star} from '~/components/Icon';
+import {Button} from '~/components/ui/button';
 
 interface ReviewFormProps {
   productId: string;
@@ -116,7 +118,8 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
       {!formVisible ? (
         <Button
           onClick={handleButtonClick}
-          className="w-full p-3 max-w-lg mx-auto bg-blue-600 text-white rounded hover:bg-blue-700"
+          variant="secondary"
+          className="mx-auto"
         >
           {translation.leave_a_review}
         </Button>
