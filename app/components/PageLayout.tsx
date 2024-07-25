@@ -49,7 +49,7 @@ export function PageLayout({children, layout, locale}: LayoutProps) {
 
   return (
     <>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <div className="">
           <a href="#mainContent" className="sr-only">
             Skip to content
@@ -62,7 +62,7 @@ export function PageLayout({children, layout, locale}: LayoutProps) {
             logoUrl={logoUrl}
           />
         )}
-        <main role="main" id="mainContent" className="flex-grow">
+        <main role="main" id="mainContent" className=" grow">
           {children}
         </main>
       </div>
@@ -211,13 +211,13 @@ function MobileHeader({
   return (
     <header
       role="banner"
-      className={`bg-contrast/80 text-primary
-       flex lg:hidden items-center h-nav sticky backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-4 px-4 md:px-8`}
+      className={`sticky top-0
+       z-40 flex h-nav w-full items-center justify-between gap-4 bg-contrast/80 px-4 leading-none text-primary backdrop-blur-lg md:px-8 lg:hidden`}
     >
-      <div className="flex items-center justify-start w-full gap-4">
+      <div className="flex w-full items-center justify-start gap-4">
         <button
           onClick={openMenu}
-          className="relative flex items-center justify-center w-8 h-8"
+          className="relative flex size-8 items-center justify-center"
         >
           <IconMenu />
         </button>
@@ -228,7 +228,7 @@ function MobileHeader({
         >
           <button
             type="submit"
-            className="relative flex items-center justify-center w-8 h-8"
+            className="relative flex size-8 items-center justify-center"
           >
             <IconSearch />
           </button>
@@ -248,21 +248,21 @@ function MobileHeader({
 
       {logoUrl && (
         <Link
-          className="flex items-center self-stretch leading-[3rem] md:leading-[4rem] justify-center flex-grow w-full h-full"
+          className="flex size-full grow items-center justify-center self-stretch leading-[3rem] md:leading-[4rem]"
           to="/"
         >
           <Image
             width={50}
             height={40}
-            className="w-auto h-10"
+            className="h-10 w-auto"
             src={logoUrl}
             alt="logo"
           />
         </Link>
       )}
 
-      <div className="flex items-center justify-end w-full gap-4">
-        <AccountLink className="relative flex items-center justify-center w-8 h-8" />
+      <div className="flex w-full items-center justify-end gap-4">
+        <AccountLink className="relative flex size-8 items-center justify-center" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -289,7 +289,7 @@ function DesktopHeader({
       role="banner"
       className={`bg-contrast/80 text-primary ${
         !isHome && y > 50 && ' shadow-lightHeader'
-      } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
+      } sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 px-12 py-8 leading-none backdrop-blur-lg transition duration-300 lg:flex`}
     >
       <div className="flex-center gap-12">
         {logoUrl && (
@@ -339,13 +339,13 @@ function DesktopHeader({
           />
           <button
             type="submit"
-            className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
+            className="relative flex size-8 items-center justify-center focus:ring-primary/5"
           >
             <IconSearch />
           </button>
         </Form>
         <LangSelector />
-        <AccountLink className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5" />
+        <AccountLink className="relative flex size-8 items-center justify-center focus:ring-primary/5" />
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -410,9 +410,9 @@ function Badge({
         <div
           className={`${
             dark
-              ? 'text-primary bg-contrast dark:text-contrast dark:bg-primary'
-              : 'text-contrast bg-primary'
-          } absolute bottom-1 right-1 text-[0.625rem] font-medium subpixel-antialiased h-3 min-w-[0.75rem] flex items-center justify-center leading-none text-center rounded-full w-auto px-[0.125rem] pb-px`}
+              ? 'bg-contrast text-primary dark:bg-primary dark:text-contrast'
+              : 'bg-primary text-contrast'
+          } absolute bottom-1 right-1 flex h-3 w-auto min-w-3 items-center justify-center rounded-full px-0.5 pb-px text-center text-[0.625rem] font-medium leading-none subpixel-antialiased`}
         >
           <span>{count || 0}</span>
         </div>
@@ -424,14 +424,14 @@ function Badge({
   return isHydrated ? (
     <button
       onClick={openCart}
-      className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
+      className="relative flex size-8 items-center justify-center focus:ring-primary/5"
     >
       {BadgeCounter}
     </button>
   ) : (
     <Link
       to="/cart"
-      className="relative flex items-center justify-center w-8 h-8 focus:ring-primary/5"
+      className="relative flex size-8 items-center justify-center focus:ring-primary/5"
     >
       {BadgeCounter}
     </Link>
@@ -450,12 +450,12 @@ interface FooterItemProps {
 }
 
 const FooterItem: React.FC<FooterItemProps> = ({icon, title, content}) => (
-  <li className="grid grid-cols-[50px_1fr] items-center  py-2 whitespace-pre">
-    <div className="w-8 h-8 flex justify-center items-center">
+  <li className="grid grid-cols-[50px_1fr] items-center  whitespace-pre py-2">
+    <div className="flex size-8 items-center justify-center">
       <Image
         src={icon}
         alt={title}
-        className="max-w-full max-h-full"
+        className="max-h-full max-w-full"
         sizes="32px"
       />
     </div>
@@ -476,9 +476,9 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
       divider="top"
       as="footer"
       role="contentinfo"
-      className={`min-h-[25rem] items-start w-full py-8 px-6 md:px-8 lg:px-12 bg-gray-800 overflow-hidden ${textColor}`}
+      className={`min-h-[25rem] w-full items-start overflow-hidden bg-gray-800 px-6 py-8 md:px-8 lg:px-12 ${textColor}`}
     >
-      <ul className="list-none p-0 grid grid-cols-1 gap-4 border-t border-gray-700">
+      <ul className="grid list-none grid-cols-1 gap-4 border-t border-gray-700 p-0">
         <FooterItem
           icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/phone-flip-svgrepo-com_1.svg?v=1721456243"
           title={translation.phone}
@@ -554,7 +554,7 @@ function FooterMenu({menu}: {menu?: EnhancedMenu}) {
                 {item?.items?.length > 0 ? (
                   <div
                     className={`${
-                      open ? `max-h-48 h-fit` : `max-h-0 md:max-h-fit`
+                      open ? `h-fit max-h-48` : `max-h-0 md:max-h-fit`
                     } overflow-hidden transition-all duration-300`}
                   >
                     <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">

@@ -26,21 +26,21 @@ export function ProductSwimlane({
   ...props
 }: ProductSwimlaneProps) {
   return (
-    <Section heading={title} padding="y" {...props}>
-      <Carousel className="w-full ">
-        <CarouselContent className="-ml-1">
-          {products.nodes.map((product) => (
-            <CarouselItem
-              key={product.id}
-              className=" pl-1 md:basis-1/2 lg:basis-1/5"
-            >
-              <ProductCard product={product} className="w-full" />
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </Section>
+    //<Section heading={title} padding="y" {...props}>
+    <Carousel className="">
+      <CarouselContent className="-ml-4">
+        {products.nodes.map((product) => (
+          <CarouselItem
+            key={product.id}
+            className=" pl-4  md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+          >
+            <ProductCard product={product} className="w-full" />
+          </CarouselItem>
+        ))}
+      </CarouselContent>
+      {/*<CarouselPrevious />
+      <CarouselNext />*/}
+    </Carousel>
+    //</Section>
   );
 }
