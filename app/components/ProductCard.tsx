@@ -57,7 +57,7 @@ export function ProductCard({
           <div className="card-image aspect-[4/5] bg-primary/5">
             {image && (
               <Image
-                className="object-cover w-full fadeIn"
+                className="fadeIn w-full object-cover"
                 sizes="(min-width: 64em) 25vw, (min-width: 48em) 30vw, 45vw"
                 aspectRatio="4/5"
                 data={image}
@@ -68,16 +68,13 @@ export function ProductCard({
             <Text
               as="label"
               size="fine"
-              className="absolute top-0 right-0 m-4 text-right text-notice"
+              className="absolute right-0 top-0 m-4 text-right text-notice"
             >
               {cardLabel}
             </Text>
           </div>
           <div className="grid gap-1">
-            <Text
-              className="w-full overflow-hidden whitespace-nowrap text-ellipsis "
-              as="h3"
-            >
+            <Text className="w-full truncate " as="h3">
               {product.title}
             </Text>
             <div className="flex gap-4">
@@ -102,7 +99,7 @@ export function ProductCard({
               merchandiseId: firstVariant.id,
             },
           ]}
-          variant="secondary"
+          variant="red"
           className="mt-2"
         >
           <Text as="span" className="flex items-center justify-center gap-2">
