@@ -17,17 +17,17 @@ function ReviewList({reviews, title}: ReviewListProps) {
             {reviews.map((review) => (
               <li
                 key={review.id}
-                className="mb-6 p-4 border rounded-lg shadow-md bg-white"
+                className="mb-6 rounded-lg border bg-white p-4 shadow-md"
               >
-                <div className="flex items-center justify-between mb-2">
+                <div className="mb-2 flex items-center justify-between">
                   <div className="flex items-center">
-                    <Text as="h3" className="font-semibold mr-2">
+                    <Text as="h3" className="mr-2 font-semibold">
                       {review.reviewer.name}
                     </Text>
                     {review.verified && (
-                      <span className="text-xs text-green-600 flex items-center">
+                      <span className="flex items-center text-xs text-green-600">
                         <svg
-                          className="w-4 h-4 mr-1"
+                          className="mr-1 size-4"
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"

@@ -219,14 +219,14 @@ export default function Product() {
 
   return (
     <>
-      <Section className="px-0 md:px-8 lg:px-12 fff">
-        <div className="grid items-start md:gap-6 lg:gap-20 md:grid-cols-2">
+      <Section padding="y">
+        <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20">
           <ProductImages media={media.nodes} />
 
-          <div className="sticky md:-mb-nav md:top-nav md:-translate-y-nav md:h-screen md:pt-nav hiddenScroll md:overflow-y-scroll">
-            <section className="flex flex-col w-full gap-8 p-6 md:mx-auto  md:px-0">
+          <div className="hiddenScroll sticky md:top-nav md:-mb-nav md:h-screen md:-translate-y-nav md:overflow-y-scroll md:pt-nav">
+            <section className="flex w-full flex-col gap-8 p-6 md:mx-auto">
               <div className="grid gap-2">
-                <Heading as="h1" className="whitespace-normal overflow-hidden ">
+                <Heading as="h1" className="overflow-hidden whitespace-normal ">
                   {title}
                 </Heading>
 
@@ -351,9 +351,9 @@ export function ProductForm({
             return (
               <div
                 key={option.name}
-                className="flex flex-col flex-wrap mb-4 gap-y-2 last:mb-0"
+                className="mb-4 flex flex-col flex-wrap gap-y-2 last:mb-0"
               >
-                <Heading as="legend" size="lead" className="min-w-[4rem]">
+                <Heading as="legend" size="lead" className="min-w-16">
                   {option.name}
                 </Heading>
                 {valuesNumber > 1 && (
@@ -376,9 +376,9 @@ export function ProductForm({
                               <Listbox.Button
                                 ref={closeRef}
                                 className={clsx(
-                                  'flex items-center justify-between w-full py-3 px-4 border border-primary',
+                                  'flex w-full items-center justify-between border border-primary px-4 py-3',
                                   open
-                                    ? 'rounded-b md:rounded-t md:rounded-b-none'
+                                    ? 'rounded-b md:rounded-b-none md:rounded-t'
                                     : 'rounded',
                                 )}
                               >
@@ -387,7 +387,7 @@ export function ProductForm({
                               </Listbox.Button>
                               <Listbox.Options
                                 className={clsx(
-                                  'border-primary bg-contrast absolute bottom-12 z-30 grid h-48 w-full overflow-y-scroll rounded-t border px-2 py-2 transition-[max-height] duration-150 sm:bottom-auto md:rounded-b md:rounded-t-none md:border-t-0 md:border-b',
+                                  'absolute bottom-12 z-30 grid h-48 w-full overflow-y-scroll rounded-t border border-primary bg-contrast p-2 transition-[max-height] duration-150 sm:bottom-auto md:rounded-b md:rounded-t-none md:border-b md:border-t-0',
                                   open ? 'max-h-48' : 'max-h-0',
                                 )}
                               >
@@ -403,7 +403,7 @@ export function ProductForm({
                                           to={to}
                                           preventScrollReset
                                           className={clsx(
-                                            'text-primary w-full p-2 transition rounded flex justify-start items-center text-left cursor-pointer',
+                                            'flex w-full cursor-pointer items-center justify-start rounded p-2 text-left text-primary transition',
                                             active && 'bg-primary/10',
                                           )}
                                           onClick={() => {
@@ -436,7 +436,7 @@ export function ProductForm({
                             prefetch="intent"
                             replace
                             className={clsx(
-                              'leading-none py-1 border-b-[1.5px] cursor-pointer transition-all duration-200',
+                              'cursor-pointer border-b-[1.5px] py-1 leading-none transition-all duration-200',
                               isActive
                                 ? 'border-primary/50'
                                 : 'border-primary/0',
@@ -471,7 +471,7 @@ export function ProductForm({
                 variant="red"
                 data-test="add-to-cart"
               >
-                <ShoppingCart className="mr-4 h-6 w-6" />
+                <ShoppingCart className="mr-4 size-6" />
                 <Text
                   as="span"
                   className="flex items-center justify-center gap-2 text-gray-50"
@@ -481,7 +481,7 @@ export function ProductForm({
                   {isOnSale && (
                     <HryvniaMoney
                       data={selectedVariant?.compareAtPrice!}
-                      className="opacity-50 strike"
+                      className="strike opacity-50"
                     />
                   )}
                 </Text>
@@ -524,14 +524,14 @@ function ProductDetail({
               </Text>
               <IconClose
                 className={clsx(
-                  'transition-transform transform-gpu duration-200',
-                  !open && 'rotate-[45deg]',
+                  'transform-gpu transition-transform duration-200',
+                  !open && 'rotate-45',
                 )}
               />
             </div>
           </Disclosure.Button>
 
-          <Disclosure.Panel className={'pb-4 pt-2 grid gap-2'}>
+          <Disclosure.Panel className={'grid gap-2 pb-4 pt-2'}>
             <div
               className="prose dark:prose-invert"
               dangerouslySetInnerHTML={{__html: content}}
@@ -539,7 +539,7 @@ function ProductDetail({
             {learnMore && (
               <div className="">
                 <Link
-                  className="pb-px border-b border-primary/30 text-primary/50"
+                  className="border-b border-primary/30 pb-px text-primary/50"
                   to={learnMore}
                 >
                   {translation.learn_more}
