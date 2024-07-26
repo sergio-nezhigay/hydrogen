@@ -47,6 +47,7 @@ export function ProductSwimlane({
       display="flex"
       className="flex flex-col"
     >
+      {products.nodes.length}
       <Carousel
         setApi={setApi}
         opts={{
