@@ -11,7 +11,7 @@ import {
   CarouselApi,
 } from './ui/carousel';
 import {DotButtons} from '~/modules/DotButtons';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 
 const mockProducts = {
   nodes: new Array(12).fill(''),
@@ -39,6 +39,20 @@ export function ProductSwimlane({
     [api],
   );
 
+  const onSelect = useCallback(() => {
+    if (!api) return;
+    setCurrent(api.selectedScrollSnap());
+  }, [api]);
+
+  useEffect(() => {
+    if (!api) return;
+    onSelect();
+    api.on('select', onSelect).on('reInit', onSelect);
+    return () => {
+      api.off('select', onSelect).off('reInit', onSelect);
+    };
+  }, [api, onSelect]);
+
   return (
     <Section
       heading={title}
@@ -47,7 +61,6 @@ export function ProductSwimlane({
       display="flex"
       className="flex flex-col"
     >
-      {products.nodes.length}
       <Carousel
         setApi={setApi}
         opts={{
