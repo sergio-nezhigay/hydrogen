@@ -58,7 +58,7 @@ export function ProductCard({
             {image && (
               <Image
                 className="fadeIn w-full object-cover"
-                sizes="(min-width: 64em) 25vw, (min-width: 48em) 30vw, 45vw"
+                sizes="auto"
                 aspectRatio="4/5"
                 data={image}
                 alt={image.altText || `Picture of ${product.title}`}
@@ -73,8 +73,11 @@ export function ProductCard({
               {cardLabel}
             </Text>
           </div>
-          <div className="grid gap-1">
-            <Text className="w-full truncate " as="h3">
+          <div className="grid gap-1 sm-max:px-2">
+            <Text
+              className="w-full truncate line-clamp-1 md:line-clamp-2"
+              as="h3"
+            >
               {product.title}
             </Text>
             <div className="flex gap-4">

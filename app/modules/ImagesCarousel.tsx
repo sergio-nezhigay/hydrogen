@@ -13,7 +13,7 @@ import type {MediaFragment} from 'storefrontapi.generated';
 
 import {Thumb} from './Thumb';
 
-import {DotButtons} from './DotButton';
+import {DotButtons} from './DotButtons';
 
 type ImagesCarouselProps = {
   media: MediaFragment[];
