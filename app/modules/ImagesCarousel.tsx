@@ -12,23 +12,17 @@ import {
 import type {MediaFragment} from 'storefrontapi.generated';
 
 import {Thumb} from './Thumb';
+import {Button} from '~/components/ui/button';
+import clsx from 'clsx';
 
-type ProductImagesProps = {
+type ImagesCarouselProps = {
   media: MediaFragment[];
 };
 
-function ProductImages({media}: ProductImagesProps) {
+export function ImagesCarousel({media}: ImagesCarouselProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
-
-  const onThumbClick = useCallback(
-    (index: number) => {
-      if (!api || !thumbsApi) return;
-      api.scrollTo(index);
-    },
-    [api, thumbsApi],
-  );
 
   useEffect(() => {
     if (!api || !thumbsApi) return;
@@ -39,6 +33,15 @@ function ProductImages({media}: ProductImagesProps) {
       api.off('select', handleSelect);
     };
   }, [api, thumbsApi]);
+
+  const scrollTo = useCallback(
+    (index: number) => {
+      if (!api) return;
+      api.scrollTo(index);
+      setCurrent(api.selectedScrollSnap());
+    },
+    [api],
+  );
 
   const onSelect = useCallback(() => {
     if (!api || !thumbsApi) return;
@@ -51,6 +54,7 @@ function ProductImages({media}: ProductImagesProps) {
     onSelect();
 
     api.on('select', onSelect).on('reInit', onSelect);
+
     return () => {
       api.off('select', onSelect).off('reInit', onSelect);
     };
@@ -90,7 +94,17 @@ function ProductImages({media}: ProductImagesProps) {
         <CarouselPrevious className="sm-max:hidden" />
         <CarouselNext className="sm-max:hidden" />
       </Carousel>
-
+      {/*dots*/}
+      <div className="flex-center sm:hidden gap-2">
+        {media.map((_, index) => (
+          <DotButton
+            key={index}
+            selected={index === current}
+            onClick={() => scrollTo(index)}
+          />
+        ))}
+      </div>
+      {/*thumbs*/}
       <Carousel
         setApi={setThumbsApi}
         opts={{
@@ -103,7 +117,7 @@ function ProductImages({media}: ProductImagesProps) {
           {media.map((med, index) => (
             <CarouselItem key={med.id} className="pl-4 basis-1/10 ">
               <Thumb
-                onClick={() => onThumbClick(index)}
+                onClick={() => scrollTo(index)}
                 selected={index === current}
                 index={index}
                 med={med}
@@ -116,4 +130,18 @@ function ProductImages({media}: ProductImagesProps) {
   );
 }
 
-export default ProductImages;
+type DotButtonType = {
+  selected: boolean;
+  onClick: () => void;
+};
+
+export const DotButton = ({selected, onClick}: DotButtonType) => (
+  <Button
+    className={clsx(
+      'inline-block p-2 h-0 rounded-full',
+      selected ? 'bg-stone-800' : 'bg-stone-300',
+    )}
+    type="button"
+    onClick={onClick}
+  ></Button>
+);

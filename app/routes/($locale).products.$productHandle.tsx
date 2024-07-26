@@ -38,7 +38,7 @@ import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
-import ProductImages from '~/modules/ProductImages';
+import {ImagesCarousel} from '~/modules/ImagesCarousel';
 
 export const headers = routeHeaders;
 
@@ -221,7 +221,7 @@ export default function Product() {
     <>
       <Section padding="y">
         <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20">
-          <ProductImages media={media.nodes} />
+          <ImagesCarousel media={media.nodes} />
 
           <div className="hiddenScroll sticky md:top-nav md:-mb-nav md:h-screen md:-translate-y-nav md:overflow-y-scroll md:pt-nav">
             <section className="flex w-full flex-col gap-8 p-6 md:mx-auto">
