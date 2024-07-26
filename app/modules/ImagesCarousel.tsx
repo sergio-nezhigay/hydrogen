@@ -12,8 +12,8 @@ import {
 import type {MediaFragment} from 'storefrontapi.generated';
 
 import {Thumb} from './Thumb';
-import {Button} from '~/components/ui/button';
-import clsx from 'clsx';
+
+import {DotButtons} from './DotButton';
 
 type ImagesCarouselProps = {
   media: MediaFragment[];
@@ -94,16 +94,11 @@ export function ImagesCarousel({media}: ImagesCarouselProps) {
         <CarouselPrevious className="sm-max:hidden" />
         <CarouselNext className="sm-max:hidden" />
       </Carousel>
-      {/*dots*/}
-      <div className="flex-center sm:hidden gap-2">
-        {media.map((_, index) => (
-          <DotButton
-            key={index}
-            selected={index === current}
-            onClick={() => scrollTo(index)}
-          />
-        ))}
-      </div>
+      <DotButtons
+        totalButtons={media.length}
+        activeIndex={current}
+        onButtonClick={scrollTo}
+      />
       {/*thumbs*/}
       <Carousel
         setApi={setThumbsApi}
@@ -129,19 +124,3 @@ export function ImagesCarousel({media}: ImagesCarouselProps) {
     </div>
   );
 }
-
-type DotButtonType = {
-  selected: boolean;
-  onClick: () => void;
-};
-
-export const DotButton = ({selected, onClick}: DotButtonType) => (
-  <Button
-    className={clsx(
-      'inline-block p-2 h-0 rounded-full',
-      selected ? 'bg-stone-800' : 'bg-stone-300',
-    )}
-    type="button"
-    onClick={onClick}
-  ></Button>
-);
