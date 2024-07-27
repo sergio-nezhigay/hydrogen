@@ -1,4 +1,5 @@
 import {useRef, Suspense} from 'react';
+import {Image} from '@shopify/hydrogen';
 import {Disclosure, Listbox} from '@headlessui/react';
 import {ShoppingCart} from 'lucide-react';
 import {
@@ -17,6 +18,7 @@ import invariant from 'tiny-invariant';
 import clsx from 'clsx';
 
 import type {
+  MediaFragment,
   ProductQuery,
   ProductVariantFragmentFragment,
 } from 'storefrontapi.generated';
@@ -39,6 +41,7 @@ import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
 import {ImagesCarousel} from '~/modules/ImagesCarousel';
+import {Gallery} from '~/modules/Gallery';
 
 export const headers = routeHeaders;
 
@@ -221,8 +224,7 @@ export default function Product() {
     <>
       <Section padding="y">
         <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20">
-          <ImagesCarousel media={media.nodes} />
-
+          <Gallery media={media.nodes} ChildComponent={ProductImage} />
           <div className="hiddenScroll sticky md:top-nav md:-mb-nav md:h-screen md:-translate-y-nav md:overflow-y-scroll md:pt-nav">
             <section className="flex w-full flex-col gap-8 p-6 md:mx-auto">
               <div className="grid gap-2">
@@ -311,6 +313,31 @@ export default function Product() {
           ],
         }}
       />
+    </>
+  );
+}
+
+export type ProductImageProps = {
+  med: MediaFragment;
+  index: number;
+};
+
+function ProductImage({med, index}: ProductImageProps) {
+  const image =
+    med.__typename === 'MediaImage'
+      ? {...med.image, altText: med.alt || 'Product image ' + index}
+      : null;
+  return (
+    <>
+      {image && (
+        <Image
+          loading={index === 0 ? 'eager' : 'lazy'}
+          data={image}
+          aspectRatio={'1/1'}
+          sizes="auto"
+          className="object-cover w-full h-full fadeIn"
+        />
+      )}
     </>
   );
 }

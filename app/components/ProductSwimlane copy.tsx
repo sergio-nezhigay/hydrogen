@@ -12,7 +12,6 @@ import {
 } from './ui/carousel';
 import {DotButtons} from '~/modules/DotButtons';
 import {useCallback, useEffect, useState} from 'react';
-import {Gallery} from '~/modules/Gallery';
 
 const mockProducts = {
   nodes: new Array(12).fill(''),
@@ -62,7 +61,6 @@ export function ProductSwimlane({
       display="flex"
       className="flex flex-col"
     >
-      {/*<Gallery media={media.nodes} />*/}
       <Carousel
         setApi={setApi}
         opts={{
