@@ -62,7 +62,7 @@ export function ProductSwimlane({
       display="flex"
       className="flex flex-col"
     >
-      {/*<Gallery media={media.nodes} />*/}
+      {/*<Gallery media={products.nodes} ChildComponent={ProductCard} />*/}
       <Carousel
         setApi={setApi}
         opts={{

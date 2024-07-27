@@ -224,7 +224,7 @@ export default function Product() {
     <>
       <Section padding="y">
         <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20">
-          <Gallery media={media.nodes} ChildComponent={ProductImage} />
+          <Gallery nodesArray={media.nodes} ChildComponent={ProductImage} />
           <div className="hiddenScroll sticky md:top-nav md:-mb-nav md:h-screen md:-translate-y-nav md:overflow-y-scroll md:pt-nav">
             <section className="flex w-full flex-col gap-8 p-6 md:mx-auto">
               <div className="grid gap-2">
@@ -318,14 +318,14 @@ export default function Product() {
 }
 
 export type ProductImageProps = {
-  med: MediaFragment;
+  childData: MediaFragment;
   index: number;
 };
 
-function ProductImage({med, index}: ProductImageProps) {
+function ProductImage({childData, index}: ProductImageProps) {
   const image =
-    med.__typename === 'MediaImage'
-      ? {...med.image, altText: med.alt || 'Product image ' + index}
+    childData.__typename === 'MediaImage'
+      ? {...childData.image, altText: childData.alt || 'Product image ' + index}
       : null;
   return (
     <>

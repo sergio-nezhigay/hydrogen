@@ -11,6 +11,15 @@ import {isDiscounted, isNewArrival} from '~/lib/utils';
 import {getProductPlaceholder} from '~/lib/placeholders';
 import HryvniaMoney from '~/components/HryvniaMoney';
 
+export type ProductCardProps = {
+  product: ProductCardFragment;
+  label?: string;
+  className?: string;
+  loading?: HTMLImageElement['loading'];
+  onClick?: () => void;
+  quickAdd?: boolean;
+};
+
 export function ProductCard({
   product,
   label,
@@ -18,14 +27,7 @@ export function ProductCard({
   loading,
   onClick,
   quickAdd,
-}: {
-  product: ProductCardFragment;
-  label?: string;
-  className?: string;
-  loading?: HTMLImageElement['loading'];
-  onClick?: () => void;
-  quickAdd?: boolean;
-}) {
+}: ProductCardProps) {
   let cardLabel;
 
   const cardProduct: Product = product?.variants

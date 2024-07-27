@@ -14,13 +14,14 @@ import {Thumb} from './Thumb';
 
 import {DotButtons} from './DotButtons';
 import {ProductImageProps} from '~/routes/($locale).products.$productHandle';
+import {ProductCardProps} from '~/components/ProductCard';
 
 type GalleryProps = {
-  media: MediaFragment[];
-  ChildComponent: FC<ProductImageProps>;
+  nodesArray: any[];
+  ChildComponent: any;
 };
 
-export function Gallery({ChildComponent, media}: GalleryProps) {
+export function Gallery({ChildComponent, nodesArray}: GalleryProps) {
   const [api, setApi] = useState<CarouselApi>();
   const [thumbsApi, setThumbsApi] = useState<CarouselApi>();
   const [current, setCurrent] = useState(0);
@@ -61,7 +62,7 @@ export function Gallery({ChildComponent, media}: GalleryProps) {
     };
   }, [api, onSelect]);
 
-  if (!media.length) {
+  if (!nodesArray.length) {
     return null;
   }
 
@@ -69,10 +70,10 @@ export function Gallery({ChildComponent, media}: GalleryProps) {
     <div className="w-full md:px-12 ">
       <Carousel setApi={setApi}>
         <CarouselContent>
-          {media.map((med, index) => {
+          {nodesArray.map((med, index) => {
             return (
               <CarouselItem key={med.id}>
-                <ChildComponent med={med} index={index} />
+                <ChildComponent childData={med} index={index} />
               </CarouselItem>
             );
           })}
@@ -81,7 +82,7 @@ export function Gallery({ChildComponent, media}: GalleryProps) {
         <CarouselNext className="sm-max:hidden" />
       </Carousel>
       <DotButtons
-        totalButtons={media.length}
+        totalButtons={nodesArray.length}
         activeIndex={current}
         onButtonClick={scrollTo}
       />
@@ -95,7 +96,7 @@ export function Gallery({ChildComponent, media}: GalleryProps) {
         className="sm-max:hidden mt-4"
       >
         <CarouselContent className="-ml-4">
-          {media.map((med, index) => (
+          {nodesArray.map((med, index) => (
             <CarouselItem key={med.id} className="pl-4 basis-1/10 ">
               <Thumb
                 onClick={() => scrollTo(index)}
