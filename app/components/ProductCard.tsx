@@ -13,6 +13,7 @@ import HryvniaMoney from '~/components/HryvniaMoney';
 
 export type ProductCardProps = {
   product: ProductCardFragment;
+  childData?: ProductCardFragment;
   label?: string;
   className?: string;
   loading?: HTMLImageElement['loading'];
@@ -22,6 +23,7 @@ export type ProductCardProps = {
 
 export function ProductCard({
   product,
+  childData,
   label,
   className,
   loading,
@@ -29,7 +31,7 @@ export function ProductCard({
   quickAdd,
 }: ProductCardProps) {
   let cardLabel;
-
+  if (childData) product = childData;
   const cardProduct: Product = product?.variants
     ? (product as Product)
     : getProductPlaceholder();
