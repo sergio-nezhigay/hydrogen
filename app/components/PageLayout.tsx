@@ -31,7 +31,8 @@ import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
 
-import LangSelector from '../modules/LangSelector';
+import LangSelector from '~/modules/LangSelector';
+import BreadCrumbs from '~/modules/BreadCrumbs';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -62,6 +63,7 @@ export function PageLayout({children, layout, locale}: LayoutProps) {
             logoUrl={logoUrl}
           />
         )}
+        <BreadCrumbs />
         <main role="main" id="mainContent" className=" grow">
           {children}
         </main>

@@ -38,6 +38,10 @@ import {parseAsCurrency} from '~/lib/utils';
 
 export const headers = routeHeaders;
 
+export const handle = {
+  breadcrumbType: 'collections',
+};
+
 export async function loader({params, request, context}: LoaderFunctionArgs) {
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 8,

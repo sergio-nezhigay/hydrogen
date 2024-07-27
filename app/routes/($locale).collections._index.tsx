@@ -24,6 +24,10 @@ const PAGINATION_SIZE = 4;
 
 export const headers = routeHeaders;
 
+export const handle = {
+  breadcrumbType: 'collections',
+};
+
 export const loader = async ({
   request,
   context: {storefront},

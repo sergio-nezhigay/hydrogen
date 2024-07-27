@@ -7,7 +7,7 @@ import {
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {useLoaderData, Await, useNavigate} from '@remix-run/react';
+import {useLoaderData, Await, useNavigate, useMatches} from '@remix-run/react';
 import {
   getSeoMeta,
   VariantSelector,
