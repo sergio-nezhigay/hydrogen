@@ -40,7 +40,6 @@ import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
-import {ImagesCarousel} from '~/modules/ImagesCarousel';
 import {Gallery} from '~/modules/Gallery';
 
 export const headers = routeHeaders;

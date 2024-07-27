@@ -74,7 +74,12 @@ export function Gallery({
 
   return (
     <div className="w-full md:px-12 ">
-      <Carousel setApi={setApi}>
+      <Carousel
+        setApi={setApi}
+        opts={{
+          align: 'start',
+        }}
+      >
         <CarouselContent>
           {nodesArray.map((med, index) => {
             return (
@@ -84,9 +89,10 @@ export function Gallery({
             );
           })}
         </CarouselContent>
-        {/*<CarouselPrevious className="sm-max:hidden" />
-        <CarouselNext className="sm-max:hidden" />*/}
+        <CarouselPrevious className="sm-max:hidden" />
+        <CarouselNext className="sm-max:hidden" />
       </Carousel>
+      {/*dots*/}
       <DotButtons
         totalButtons={nodesArray.length}
         activeIndex={current}
