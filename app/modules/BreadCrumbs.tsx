@@ -12,63 +12,84 @@ interface RouteHandle {
   breadcrumbType?: TBreadcrumbType;
 }
 
+interface Collection {
+  handle: string;
+  title: string;
+}
+
+interface Product {
+  handle: string;
+  title: string;
+  collections: {
+    nodes: Collection[];
+  };
+}
+
+interface RouteData {
+  collection?: Collection;
+  product?: Product;
+}
+
+interface Route {
+  handle?: RouteHandle;
+  data?: RouteData;
+}
+
 function BreadCrumbs() {
   const matches = useMatches();
-  console.log('🚀 ~ matches:', matches);
-  const deepestRoute = matches.at(-1);
+  const deepestRoute = matches.at(-1) as Route | undefined;
 
-  const handle = deepestRoute?.handle as RouteHandle;
+  const handle = deepestRoute?.handle;
 
   const parsedBreadcrumbType = breadcrumbTypeSchema.safeParse(
     handle?.breadcrumbType,
   );
   const isValidBreadcrumbType = parsedBreadcrumbType.success;
   const pages: {href: string; name: string}[] = [{href: '/', name: 'Home'}];
-  if (isValidBreadcrumbType)
-    if (isValidBreadcrumbType) {
-      switch (parsedBreadcrumbType.data) {
-        case 'collections':
-          pages.push({
-            href: '/collections',
-            name: 'Collections',
-          });
-          break;
 
-        case 'collection':
-          pages.push({
-            href: '/collections',
-            name: 'Collections',
-          });
-          pages.push({
-            href: `/collections/${deepestRoute?.data.collection.handle}`,
-            name: `${deepestRoute?.data?.collection?.title}`,
-          });
-          break;
-        case 'product':
-          pages.push({
-            href: '/collections',
-            name: 'Collections',
-          });
+  if (isValidBreadcrumbType) {
+    switch (parsedBreadcrumbType.data) {
+      case 'collections':
+        pages.push({
+          href: '/collections',
+          name: 'Collections',
+        });
+        break;
 
-          const collection =
-            deepestRoute?.data?.product.collections.nodes.at(0);
-          if (collection) {
-            pages.push({
-              href: `/collections/${collection.handle}`,
-              name: collection.title,
-            });
-          }
+      case 'collection':
+        pages.push({
+          href: '/collections',
+          name: 'Collections',
+        });
+        pages.push({
+          href: `/collections/${deepestRoute?.data?.collection?.handle}`,
+          name: deepestRoute?.data?.collection?.title || 'Collection',
+        });
+        break;
+      case 'product':
+        pages.push({
+          href: '/collections',
+          name: 'Collections',
+        });
 
+        const collection = deepestRoute?.data?.product?.collections.nodes.at(0);
+        if (collection) {
           pages.push({
-            href: `/products/${deepestRoute?.data.product.handle}`,
-            name: deepestRoute?.data.product.title,
+            href: `/collections/${collection.handle}`,
+            name: collection.title,
           });
-          break;
+        }
 
-        default:
-          break;
-      }
+        pages.push({
+          href: `/products/${deepestRoute?.data?.product?.handle ?? ''}`,
+          name: deepestRoute?.data?.product?.title ?? 'Product',
+        });
+        break;
+
+      default:
+        break;
     }
+  }
 
   return (
     <nav className="flex" aria-label="Breadcrumb">
