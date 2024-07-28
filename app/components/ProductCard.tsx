@@ -13,7 +13,6 @@ import HryvniaMoney from '~/components/HryvniaMoney';
 
 export type ProductCardProps = {
   product: ProductCardFragment;
-  itemData?: ProductCardFragment;
   label?: string;
   className?: string;
   loading?: HTMLImageElement['loading'];

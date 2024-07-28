@@ -44,6 +44,10 @@ import {Gallery} from '~/modules/Gallery';
 
 export const headers = routeHeaders;
 
+export const handle = {
+  breadcrumbType: 'product',
+};
+
 export async function loader(args: LoaderFunctionArgs) {
   const {productHandle} = args.params;
   invariant(productHandle, 'Missing productHandle param, check route filename');
@@ -653,6 +657,12 @@ const PRODUCT_QUERY = `#graphql
       seo {
         description
         title
+      }
+      collections(first: 1) {
+        nodes {
+            title
+            handle
+        }
       }
     }
     shop {

@@ -39,7 +39,7 @@ import {parseAsCurrency} from '~/lib/utils';
 export const headers = routeHeaders;
 
 export const handle = {
-  breadcrumbType: 'collections',
+  breadcrumbType: 'collection',
 };
 
 export async function loader({params, request, context}: LoaderFunctionArgs) {
