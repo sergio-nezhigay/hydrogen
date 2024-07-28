@@ -16,75 +16,77 @@ import {ProductCardWrapperProps} from '~/components/ProductSwimlane';
 import {ProductImageProps} from '~/routes/($locale).products.$productHandle';
 
 type GalleryProps = {
-  nodesArray: any[];
-  ChildComponent: FC<ProductCardWrapperProps> | FC<ProductImageProps>;
+  galleryItems: any[];
+  GalleryItemComponent: FC<ProductCardWrapperProps> | FC<ProductImageProps>;
   itemClasses?: string;
   showThumbs?: boolean;
 };
 
 export function Gallery({
-  ChildComponent,
-  nodesArray,
+  GalleryItemComponent,
+  galleryItems,
   itemClasses,
   showThumbs = false,
 }: GalleryProps) {
-  const [api, setApi] = useState<CarouselApi>();
-  const [thumbsApi, setThumbsApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
+  const [carouselApi, setCarouselApi] = useState<CarouselApi>();
+  const [thumbsCarouselApi, setThumbsCarouselApi] = useState<CarouselApi>();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    if (!api || !thumbsApi) return;
-    setCurrent(api.selectedScrollSnap() + 1);
-    const handleSelect = () => setCurrent(api.selectedScrollSnap() + 1);
-    api.on('select', handleSelect);
+    if (!carouselApi || !thumbsCarouselApi) return;
+    setCurrentIndex(carouselApi.selectedScrollSnap() + 1);
+    const handleSelect = () =>
+      setCurrentIndex(carouselApi.selectedScrollSnap() + 1);
+    carouselApi.on('select', handleSelect);
     return () => {
-      api.off('select', handleSelect);
+      carouselApi.off('select', handleSelect);
     };
-  }, [api, thumbsApi]);
+  }, [carouselApi, thumbsCarouselApi]);
 
   const scrollTo = useCallback(
     (index: number) => {
-      if (!api) return;
-      api.scrollTo(index);
-      setCurrent(api.selectedScrollSnap());
+      if (!carouselApi) return;
+      carouselApi.scrollTo(index);
+      setCurrentIndex(carouselApi.selectedScrollSnap());
     },
-    [api],
+    [carouselApi],
   );
 
   const onSelect = useCallback(() => {
-    if (!api) return;
-    setCurrent(api.selectedScrollSnap());
-    if (thumbsApi) thumbsApi.scrollTo(api.selectedScrollSnap());
-  }, [api, thumbsApi]);
+    if (!carouselApi) return;
+    setCurrentIndex(carouselApi.selectedScrollSnap());
+    if (thumbsCarouselApi)
+      thumbsCarouselApi.scrollTo(carouselApi.selectedScrollSnap());
+  }, [carouselApi, thumbsCarouselApi]);
 
   useEffect(() => {
-    if (!api) return;
+    if (!carouselApi) return;
     onSelect();
 
-    api.on('select', onSelect).on('reInit', onSelect);
+    carouselApi.on('select', onSelect).on('reInit', onSelect);
 
     return () => {
-      api.off('select', onSelect).off('reInit', onSelect);
+      carouselApi.off('select', onSelect).off('reInit', onSelect);
     };
-  }, [api, onSelect]);
+  }, [carouselApi, onSelect]);
 
-  if (!nodesArray.length) {
+  if (!galleryItems.length) {
     return null;
   }
 
   return (
     <div className="w-full md:px-12 ">
       <Carousel
-        setApi={setApi}
+        setApi={setCarouselApi}
         opts={{
           align: 'start',
         }}
       >
         <CarouselContent>
-          {nodesArray.map((med, index) => {
+          {galleryItems.map((item, index) => {
             return (
-              <CarouselItem key={med.id} className={itemClasses}>
-                <ChildComponent childData={med} index={index} />
+              <CarouselItem key={item.id} className={itemClasses}>
+                <GalleryItemComponent childData={item} index={index} />
               </CarouselItem>
             );
           })}
@@ -94,14 +96,14 @@ export function Gallery({
       </Carousel>
       {/*dots*/}
       <DotButtons
-        totalButtons={nodesArray.length}
-        activeIndex={current}
+        totalButtons={galleryItems.length}
+        activeIndex={currentIndex}
         onButtonClick={scrollTo}
       />
       {/*thumbs*/}
       {showThumbs && (
         <Carousel
-          setApi={setThumbsApi}
+          setApi={setThumbsCarouselApi}
           opts={{
             containScroll: 'keepSnaps',
             dragFree: true,
@@ -109,13 +111,13 @@ export function Gallery({
           className="sm-max:hidden mt-4"
         >
           <CarouselContent className="-ml-4">
-            {nodesArray.map((med, index) => (
-              <CarouselItem key={med.id} className="pl-4 basis-1/10 ">
+            {galleryItems.map((item, index) => (
+              <CarouselItem key={item.id} className="pl-4 basis-1/10 ">
                 <Thumb
                   onClick={() => scrollTo(index)}
-                  selected={index === current}
+                  selected={index === currentIndex}
                   index={index}
-                  med={med}
+                  item={item}
                 />
               </CarouselItem>
             ))}

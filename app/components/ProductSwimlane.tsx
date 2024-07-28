@@ -30,8 +30,8 @@ export function ProductSwimlane({
       className="flex flex-col"
     >
       <Gallery
-        nodesArray={products.nodes}
-        ChildComponent={ProductCardWrapper}
+        galleryItems={products.nodes}
+        GalleryItemComponent={ProductCardWrapper}
         itemClasses="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
       />
     </Section>

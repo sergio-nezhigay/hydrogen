@@ -224,8 +224,8 @@ export default function Product() {
       <Section padding="y">
         <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20">
           <Gallery
-            nodesArray={media.nodes}
-            ChildComponent={ProductImage}
+            galleryItems={media.nodes}
+            GalleryItemComponent={ProductImage}
             showThumbs={true}
           />
           <div className="hiddenScroll sticky md:top-nav md:-mb-nav md:h-screen md:-translate-y-nav md:overflow-y-scroll md:pt-nav">

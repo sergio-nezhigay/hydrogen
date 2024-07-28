@@ -5,14 +5,14 @@ import type {MediaFragment} from 'storefrontapi.generated';
 type PropType = {
   selected: boolean;
   index: number;
-  med: MediaFragment;
+  item: MediaFragment;
   onClick: () => void;
 };
 
-export function Thumb({selected, onClick, med}: PropType) {
+export function Thumb({selected, onClick, item}: PropType) {
   const image =
-    med.__typename === 'MediaImage'
-      ? {...med.image, altText: med.alt || 'Product image'}
+    item.__typename === 'MediaImage'
+      ? {...item.image, altText: item.alt || 'Product image'}
       : null;
 
   return (
