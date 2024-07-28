@@ -152,13 +152,12 @@ function NoResults({
   noResults: boolean;
   recommendations: Promise<null | FeaturedData>;
 }) {
+  const translation = useTranslation();
   return (
     <>
       {noResults && (
         <Section padding="x">
-          <Text className="opacity-50">
-            No results, try a different search.
-          </Text>
+          <Text className="opacity-50">{translation.no_results}</Text>
         </Section>
       )}
       <Suspense>
@@ -173,11 +172,11 @@ function NoResults({
             return (
               <>
                 <FeaturedCollections
-                  title="Trending Collections"
+                  title={translation.trending_collections}
                   collections={featuredCollections}
                 />
                 <ProductSwimlane
-                  title="Trending Products"
+                  title={translation.trending_products}
                   products={featuredProducts}
                 />
               </>

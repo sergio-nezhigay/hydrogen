@@ -40,8 +40,11 @@ export const translations = {
     search: 'Пошук',
     go: 'Шукати',
     prev: 'Попередня',
-    next: 'Наступна...',
+    next: 'Наступна',
     loading: 'Завантаження',
+    no_results: 'Немає результатів, спробуйте інший пошук.',
+    trending_collections: 'Популярні колекції',
+    trending_products: 'Популярні товари',
   },
   ru: {
     buy: 'Купить',
@@ -86,5 +89,8 @@ export const translations = {
     prev: 'Предыдущая',
     next: 'Следующая',
     loading: 'Загрузка...',
+    no_results: 'Нет результатов, попробуйте другой поиск.',
+    trending_collections: 'Популярные коллекции',
+    trending_products: 'Популярные товары',
   },
 } as const;
