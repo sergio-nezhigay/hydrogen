@@ -51,9 +51,6 @@ function BreadCrumbs() {
   const matches = useMatches();
   const translation = useTranslation();
   const deepestRoute = matches.at(-1) as Route | undefined;
-  console.log('====================================');
-  console.log(deepestRoute?.handle);
-  console.log('====================================');
   // Return null if the current route is the home page
   if (!deepestRoute?.handle) {
     return null;
