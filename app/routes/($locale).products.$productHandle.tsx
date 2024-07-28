@@ -321,14 +321,14 @@ export default function Product() {
 }
 
 export type ProductImageProps = {
-  childData: MediaFragment;
+  itemData: MediaFragment;
   index: number;
 };
 
-function ProductImage({childData, index}: ProductImageProps) {
+function ProductImage({itemData, index}: ProductImageProps) {
   const image =
-    childData.__typename === 'MediaImage'
-      ? {...childData.image, altText: childData.alt || 'Product image ' + index}
+    itemData.__typename === 'MediaImage'
+      ? {...itemData.image, altText: itemData.alt || 'Product image ' + index}
       : null;
   return (
     <>

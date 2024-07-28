@@ -86,7 +86,7 @@ export function Gallery({
           {galleryItems.map((item, index) => {
             return (
               <CarouselItem key={item.id} className={itemClasses}>
-                <GalleryItemComponent childData={item} index={index} />
+                <GalleryItemComponent itemData={item} index={index} />
               </CarouselItem>
             );
           })}

@@ -40,9 +40,9 @@ export function ProductSwimlane({
 
 export type ProductCardWrapperProps = {
   index: number;
-  childData: ProductCardFragment;
+  itemData: ProductCardFragment;
 };
 
-function ProductCardWrapper({childData}: ProductCardWrapperProps) {
-  return <ProductCard product={childData} className="w-full" />;
+function ProductCardWrapper({itemData}: ProductCardWrapperProps) {
+  return <ProductCard product={itemData} className="w-full" />;
 }
