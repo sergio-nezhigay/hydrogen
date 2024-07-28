@@ -105,6 +105,7 @@ export function Section({
   divider = 'none',
   display = 'grid',
   heading,
+  headingClassName,
   padding = 'all',
   ...props
 }: {
@@ -114,6 +115,7 @@ export function Section({
   divider?: 'none' | 'top' | 'bottom' | 'both';
   display?: 'grid' | 'flex';
   heading?: string;
+  headingClassName?: string;
   padding?: 'x' | 'y' | 'swimlane' | 'all' | 'gallery';
   [key: string]: any;
 }) {
@@ -148,7 +150,13 @@ export function Section({
   return (
     <Component {...props} className={styles}>
       {heading && (
-        <Heading size="lead" className={padding === 'y' ? paddings['x'] : ''}>
+        <Heading
+          size="lead"
+          className={clsx(
+            padding === 'y' ? paddings['x'] : '',
+            headingClassName,
+          )}
+        >
           {heading}
         </Heading>
       )}
