@@ -508,7 +508,7 @@ export function ProductForm({
                 <ShoppingCart className="mr-4 size-6" />
                 <Text
                   as="span"
-                  className="flex items-center justify-center gap-2 text-gray-50"
+                  className="flex items-center justify-center gap-2"
                 >
                   <span>{translation.buy}</span> <span>·</span>{' '}
                   <HryvniaMoney data={selectedVariant?.price!} />
@@ -567,7 +567,7 @@ function ProductDetail({
 
           <Disclosure.Panel className={'grid gap-2 pb-4 pt-2'}>
             <div
-              className="prose dark:prose-invert"
+              //  className="prose dark:prose-invert"
               dangerouslySetInnerHTML={{__html: content}}
             />
             {learnMore && (

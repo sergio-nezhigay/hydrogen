@@ -44,7 +44,7 @@ function ReviewList({reviews, title}: ReviewListProps) {
                       </span>
                     )}
                   </div>
-                  <Text className="text-sm text-gray-500">
+                  <Text className="text-sm">
                     <time dateTime={new Date(review.created_at).toISOString()}>
                       {new Date(review.created_at).toLocaleDateString('uk-UA', {
                         day: 'numeric',
