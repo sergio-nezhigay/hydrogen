@@ -15,6 +15,7 @@ import type {RootLoader} from '~/root';
 import {countries} from '~/data/countries';
 
 import type {I18nLocale} from './type';
+import {translations} from '~/data/translations';
 
 type EnhancedMenuItemProps = {
   to: string;
@@ -318,4 +319,13 @@ export function isLocalPath(url: string) {
   }
 
   return false;
+}
+
+export function useTranslation() {
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
+  const locale =
+    selectedLocale.language.toLowerCase() as keyof typeof translations;
+  const translation = translations[locale];
+  return translation;
 }

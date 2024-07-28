@@ -29,7 +29,7 @@ import {AddToCartButton} from '~/components/AddToCartButton';
 import {Skeleton} from '~/components/Skeleton';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {IconCaret, IconCheck, IconClose} from '~/components/Icon';
-import {getExcerpt} from '~/lib/utils';
+import {getExcerpt, useTranslation} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
 import type {Storefront} from '~/lib/type';
 import {routeHeaders} from '~/data/cache';
@@ -212,7 +212,7 @@ export default function Product() {
     useLoaderData<typeof loader>();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
-  const translation = translations[locale as keyof typeof translations];
+  const translation = useTranslation();
   const rating = judgemeReviewsData?.rating ?? 0;
   const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
   const reviews = judgemeReviewsData?.reviews ?? [];
@@ -355,7 +355,7 @@ export function ProductForm({
   variants: ProductVariantFragmentFragment[];
 }) {
   const {product, storeDomain, locale} = useLoaderData<typeof loader>();
-  const translation = translations[locale as keyof typeof translations];
+  const translation = useTranslation();
   const closeRef = useRef<HTMLButtonElement>(null);
 
   /**
@@ -539,8 +539,7 @@ function ProductDetail({
   learnMore?: string;
   isOpen?: boolean;
 }) {
-  const {locale} = useLoaderData<typeof loader>();
-  const translation = translations[locale as keyof typeof translations];
+  const translation = useTranslation();
 
   return (
     <Disclosure

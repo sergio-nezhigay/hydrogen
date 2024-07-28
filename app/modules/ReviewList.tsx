@@ -1,4 +1,4 @@
-import {Heading, Section, Text} from '~/components/Text';
+import {Section, Text} from '~/components/Text';
 import type {JudgemeReview} from '~/lib/type';
 
 import {StarRating} from './StarRating';

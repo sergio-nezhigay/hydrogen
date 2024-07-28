@@ -26,6 +26,7 @@ import {
   getFeaturedData,
   type FeaturedData,
 } from './($locale).featured-products';
+import {useTranslation} from '~/lib/utils';
 
 export async function loader({
   request,
@@ -81,24 +82,25 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 export default function Search() {
   const {searchTerm, products, noResultRecommendations} =
     useLoaderData<typeof loader>();
+  const translation = useTranslation();
   const noResults = products?.nodes?.length === 0;
 
   return (
     <>
       <PageHeader>
         <Heading as="h1" size="copy">
-          Search
+          {translation.search}
         </Heading>
         <Form method="get" className="relative flex w-full text-heading">
           <Input
             defaultValue={searchTerm}
             name="q"
-            placeholder="Search…"
+            placeholder={`${translation.search}...`}
             type="search"
             variant="search"
           />
           <button className="absolute right-0 py-2" type="submit">
-            Go
+            {translation.go}
           </button>
         </Form>
       </PageHeader>
@@ -123,13 +125,13 @@ export default function Search() {
                 <>
                   <div className="flex items-center justify-center mt-6">
                     <PreviousLink className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary w-full">
-                      {isLoading ? 'Loading...' : 'Previous'}
+                      {isLoading ? translation.loading : translation.prev}
                     </PreviousLink>
                   </div>
                   <Grid data-test="product-grid">{itemsMarkup}</Grid>
                   <div className="flex items-center justify-center mt-6">
                     <NextLink className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary w-full">
-                      {isLoading ? 'Loading...' : 'Next'}
+                      {isLoading ? translation.loading : translation.next}
                     </NextLink>
                   </div>
                 </>

@@ -37,6 +37,11 @@ export const translations = {
     newest: 'Новинки',
     sort_by: 'Сортувати за:',
     also_interested: 'Також вас можуть зацікавити',
+    search: 'Пошук',
+    go: 'Шукати',
+    prev: 'Попередня',
+    next: 'Наступна...',
+    loading: 'Завантаження',
   },
   ru: {
     buy: 'Купить',
@@ -76,5 +81,10 @@ export const translations = {
     newest: 'Новинки',
     sort_by: 'Сортировать по:',
     also_interested: 'Также вас могут заинтересовать',
+    search: 'Поиск',
+    go: 'Искать',
+    prev: 'Предыдущая',
+    next: 'Следующая',
+    loading: 'Загрузка...',
   },
 } as const;

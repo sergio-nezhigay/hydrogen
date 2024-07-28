@@ -17,7 +17,7 @@ import type {
 
 import {Heading, Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
-import {DEFAULT_LOCALE} from '~/lib/utils';
+import {DEFAULT_LOCALE, useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
 
@@ -123,13 +123,7 @@ export function FiltersDrawer({
 }: Omit<SortFilterProps, 'children' | 'startIsOpen'>) {
   const [params] = useSearchParams();
   const location = useLocation();
-  const rootData = useRouteLoaderData<RootLoader>('root');
-  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
-
-  const locale =
-    selectedLocale.language.toLowerCase() as keyof typeof translations;
-
-  const translation = translations[locale];
+  const translation = useTranslation();
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     switch (filter.type) {

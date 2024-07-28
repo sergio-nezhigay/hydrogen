@@ -11,6 +11,8 @@ import {
 } from '~/components/ui/breadcrumb';
 import {Section} from '~/components/Text';
 
+import {useTranslation} from '~/lib/utils';
+
 export const breadcrumbTypeSchema = z.enum([
   'collections',
   'collection',
@@ -47,6 +49,7 @@ interface Route {
 
 function BreadCrumbs() {
   const matches = useMatches();
+  const translation = useTranslation();
   const deepestRoute = matches.at(-1) as Route | undefined;
 
   // Return null if the current route is the home page
@@ -67,24 +70,25 @@ function BreadCrumbs() {
       case 'collections':
         pages.push({
           href: '/collections',
-          name: 'Collections',
+          name: translation.collections,
         });
         break;
 
       case 'collection':
         pages.push({
           href: '/collections',
-          name: 'Collections',
+          name: translation.collections,
         });
         pages.push({
           href: `/collections/${deepestRoute?.data?.collection?.handle}`,
-          name: deepestRoute?.data?.collection?.title || 'Collection',
+          name:
+            deepestRoute?.data?.collection?.title || translation.collections,
         });
         break;
       case 'product':
         pages.push({
           href: '/collections',
-          name: 'Collections',
+          name: translation.collections,
         });
 
         const collection = deepestRoute?.data?.product?.collections.nodes.at(0);

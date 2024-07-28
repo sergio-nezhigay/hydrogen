@@ -19,6 +19,7 @@ import {Button} from '~/components/Button';
 import {getImageLoadingPriority} from '~/lib/const';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
+import {useTranslation} from '~/lib/utils';
 
 const PAGINATION_SIZE = 4;
 
@@ -55,10 +56,11 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 
 export default function Collections() {
   const {collections} = useLoaderData<typeof loader>();
+  const translation = useTranslation();
 
   return (
     <>
-      <PageHeader heading="Collections" />
+      <PageHeader heading={translation.collections} />
       <Section>
         <Pagination connection={collections}>
           {({nodes, isLoading, PreviousLink, NextLink}) => (
