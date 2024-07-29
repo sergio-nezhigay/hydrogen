@@ -98,8 +98,8 @@ function BreadCrumbs() {
   }
 
   return (
-    <Section heading="Breadcrumbs" headingClassName="sr-only">
-      <Breadcrumb className="container">
+    <Section heading="Breadcrumbs" headingClassName="sr-only" padding="y">
+      <Breadcrumb>
         <BreadcrumbList>
           {pages.map((page, idx) => (
             <BreadcrumbItem key={page.name}>

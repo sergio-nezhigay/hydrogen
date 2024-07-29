@@ -226,14 +226,14 @@ export default function Product() {
   return (
     <>
       <Section padding="y">
-        <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20 container">
+        <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20">
           <Gallery
             galleryItems={media.nodes}
             GalleryItemComponent={ProductImage}
             showThumbs={true}
           />
           <div className="hiddenScroll sticky md:top-nav md:-mb-nav md:h-screen md:-translate-y-nav md:overflow-y-scroll md:pt-nav">
-            <section className="flex w-full flex-col gap-8 p-6 md:mx-auto">
+            <section className="flex w-full flex-col gap-8 py-6 md:mx-auto">
               <div className="grid gap-2">
                 <Heading as="h1" className="overflow-hidden whitespace-normal ">
                   {title}
@@ -481,7 +481,9 @@ export function ProductForm({
                   )}
                 </div>
               </div>
-            ) : null;
+            ) : (
+              <></>
+            );
           }}
         </VariantSelector>
         {selectedVariant && (

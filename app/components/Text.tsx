@@ -121,7 +121,7 @@ export function Section({
 }) {
   const paddings = {
     x: 'px-6 md:px-8 lg:px-12',
-    y: 'py-6 md:py-8 lg:py-12 md:px-8 lg:px-12',
+    y: 'py-6 md:py-8 lg:py-12 ',
     swimlane: 'pt-4 md:pt-8 lg:pt-12 md:pb-4 lg:pb-8',
     gallery: 'py-6 md:py-8 lg:py-12',
     all: 'px-6 pt-6 md:px-8 md:pt-8 lg:px-12 lg:pt-12 md:pb-4 lg:pb-8',
@@ -149,18 +149,21 @@ export function Section({
 
   return (
     <Component {...props} className={styles}>
-      {heading && (
-        <Heading
-          size="lead"
-          className={clsx(
-            padding === 'y' ? paddings['x'] : '',
-            headingClassName,
-          )}
-        >
-          {heading}
-        </Heading>
-      )}
-      {children}
+      <div className="container">
+        {heading && (
+          <Heading
+            size="lead"
+            className={clsx(
+              padding === 'y' ? paddings['x'] : '',
+              headingClassName,
+              paddings['y'],
+            )}
+          >
+            {heading}
+          </Heading>
+        )}
+        {children}
+      </div>
     </Component>
   );
 }

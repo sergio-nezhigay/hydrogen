@@ -291,7 +291,7 @@ function DesktopHeader({
       role="banner"
       className={`bg-contrast/80 text-primary ${
         !isHome && y > 50 && ' shadow-lightHeader'
-      } sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 px-12 py-8 leading-none backdrop-blur-lg transition duration-300 lg:flex `}
+      } sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 py-8 leading-none backdrop-blur-lg transition duration-300 lg:flex `}
     >
       <div className="container flex-between">
         <div className="flex-center gap-12 ">

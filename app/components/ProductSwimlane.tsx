@@ -27,7 +27,7 @@ export function ProductSwimlane({
       {...props}
       padding="y"
       display="flex"
-      className="flex flex-col container"
+      className="flex flex-col"
     >
       <Gallery
         galleryItems={products.nodes}
