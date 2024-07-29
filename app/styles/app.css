@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 .container {
-  /*outline: 1px dotted black;*/
+  outline: 1px dotted black;
 }
 
 /* Tokens */

@@ -214,7 +214,7 @@ function MobileHeader({
     <header
       role="banner"
       className={`sticky top-0
-       z-40 flex h-nav w-full items-center justify-between gap-4 bg-contrast/80 px-4 leading-none text-primary backdrop-blur-lg md:px-8 lg:hidden`}
+       z-40 flex h-nav w-full items-center justify-between gap-4 bg-contrast/80 px-4 md:px-8 py-6 md:py-8 leading-none text-primary backdrop-blur-lg  lg:hidden`}
     >
       <div className="flex w-full items-center justify-start gap-4">
         <button
