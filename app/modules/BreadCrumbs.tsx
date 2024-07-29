@@ -72,12 +72,7 @@ function BreadCrumbs() {
           name: translation.collections,
         });
         break;
-
       case 'collection':
-        pages.push({
-          href: '/collections',
-          name: translation.collections,
-        });
         pages.push({
           href: `/collections/${deepestRoute?.data?.collection?.handle}`,
           name:
@@ -85,11 +80,6 @@ function BreadCrumbs() {
         });
         break;
       case 'product':
-        pages.push({
-          href: '/collections',
-          name: translation.collections,
-        });
-
         const collection = deepestRoute?.data?.product?.collections.nodes.at(0);
         if (collection) {
           pages.push({
@@ -97,13 +87,11 @@ function BreadCrumbs() {
             name: collection.title,
           });
         }
-
         pages.push({
           href: `/products/${deepestRoute?.data?.product?.handle ?? ''}`,
           name: deepestRoute?.data?.product?.title ?? 'Product',
         });
         break;
-
       default:
         break;
     }
