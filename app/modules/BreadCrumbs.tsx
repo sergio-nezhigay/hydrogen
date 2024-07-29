@@ -99,7 +99,7 @@ function BreadCrumbs() {
 
   return (
     <Section heading="Breadcrumbs" headingClassName="sr-only">
-      <Breadcrumb>
+      <Breadcrumb className="container">
         <BreadcrumbList>
           {pages.map((page, idx) => (
             <BreadcrumbItem key={page.name}>

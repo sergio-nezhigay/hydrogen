@@ -64,7 +64,7 @@ export function PageLayout({children, layout, locale}: LayoutProps) {
           />
         )}
         <BreadCrumbs />
-        <main role="main" id="mainContent" className=" grow">
+        <main role="main" id="mainContent" className="grow">
           {children}
         </main>
       </div>
@@ -291,64 +291,66 @@ function DesktopHeader({
       role="banner"
       className={`bg-contrast/80 text-primary ${
         !isHome && y > 50 && ' shadow-lightHeader'
-      } sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 px-12 py-8 leading-none backdrop-blur-lg transition duration-300 lg:flex`}
+      } sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 px-12 py-8 leading-none backdrop-blur-lg transition duration-300 lg:flex `}
     >
-      <div className="flex-center gap-12">
-        {logoUrl && (
-          <Link to="/" prefetch="intent" className="px-2">
-            <Image
-              width={80}
-              height={80}
-              className="w-20"
-              src={logoUrl}
-              alt="logo"
-            />
-          </Link>
-        )}
-        <nav className="flex gap-8">
-          {/* Top level menu items */}
-          {(menu?.items || []).map((item) => (
-            <Link
-              key={item.id}
-              to={item.to}
-              target={item.target}
-              prefetch="intent"
-              className={({isActive}) =>
-                isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
-              }
-            >
-              {item.title}
+      <div className="container flex-between">
+        <div className="flex-center gap-12 ">
+          {logoUrl && (
+            <Link to="/" prefetch="intent">
+              <Image
+                width={80}
+                height={80}
+                className="w-20"
+                src={logoUrl}
+                alt="logo"
+              />
             </Link>
-          ))}
-        </nav>
-      </div>
-      <div className="flex items-center gap-1">
-        <Form
-          method="get"
-          action={params.locale ? `/${params.locale}/search` : '/search'}
-          className="flex items-center gap-2"
-        >
-          <Input
-            className={
-              isHome
-                ? 'focus:border-contrast/20 dark:focus:border-primary/20'
-                : 'focus:border-primary/20'
-            }
-            type="search"
-            variant="minisearch"
-            placeholder="Пошук"
-            name="q"
-          />
-          <button
-            type="submit"
-            className="relative flex size-8 items-center justify-center focus:ring-primary/5"
+          )}
+          <nav className="flex gap-8">
+            {/* Top level menu items */}
+            {(menu?.items || []).map((item) => (
+              <Link
+                key={item.id}
+                to={item.to}
+                target={item.target}
+                prefetch="intent"
+                className={({isActive}) =>
+                  isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
+                }
+              >
+                {item.title}
+              </Link>
+            ))}
+          </nav>
+        </div>
+        <div className="flex items-center gap-1">
+          <Form
+            method="get"
+            action={params.locale ? `/${params.locale}/search` : '/search'}
+            className="flex items-center gap-2"
           >
-            <IconSearch />
-          </button>
-        </Form>
-        <LangSelector />
-        <AccountLink className="relative flex size-8 items-center justify-center focus:ring-primary/5" />
-        <CartCount isHome={isHome} openCart={openCart} />
+            <Input
+              className={
+                isHome
+                  ? 'focus:border-contrast/20 dark:focus:border-primary/20'
+                  : 'focus:border-primary/20'
+              }
+              type="search"
+              variant="minisearch"
+              placeholder="Пошук"
+              name="q"
+            />
+            <button
+              type="submit"
+              className="relative flex size-8 items-center justify-center focus:ring-primary/5"
+            >
+              <IconSearch />
+            </button>
+          </Form>
+          <LangSelector />
+          <AccountLink className="relative flex size-8 items-center justify-center focus:ring-primary/5" />
+          <CartCount isHome={isHome} openCart={openCart} />
+        </div>
       </div>
     </header>
   );
@@ -480,7 +482,7 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
       role="contentinfo"
       className={`min-h-[25rem] w-full items-start overflow-hidden bg-gray-800 px-6 py-8 md:px-8 lg:px-12 ${textColor}`}
     >
-      <ul className="grid list-none grid-cols-1 gap-4 border-t border-gray-700 p-0">
+      <ul className="container grid list-none grid-cols-1 gap-4 border-t border-gray-700 p-0">
         <FooterItem
           icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/phone-flip-svgrepo-com_1.svg?v=1721456243"
           title={translation.phone}

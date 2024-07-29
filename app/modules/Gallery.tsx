@@ -75,7 +75,7 @@ export function Gallery({
   }
 
   return (
-    <div className="w-full md:px-12 ">
+    <div className="w-full md:px-12">
       <Carousel
         setApi={setCarouselApi}
         opts={{

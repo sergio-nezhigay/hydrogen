@@ -226,7 +226,7 @@ export default function Product() {
   return (
     <>
       <Section padding="y">
-        <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20">
+        <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20 container">
           <Gallery
             galleryItems={media.nodes}
             GalleryItemComponent={ProductImage}

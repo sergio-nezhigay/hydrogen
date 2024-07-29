@@ -157,7 +157,7 @@ export default function Collection() {
 
   return (
     <>
-      <PageHeader heading={collection.title}>
+      <PageHeader heading={collection.title} className="container">
         {collection?.description && (
           <div className="flex items-baseline justify-between w-full">
             <div>
@@ -168,7 +168,7 @@ export default function Collection() {
           </div>
         )}
       </PageHeader>
-      <Section>
+      <Section className="container">
         <ResponsiveSortFilter
           filters={collection.products.filters as Filter[]}
           appliedFilters={appliedFilters}
