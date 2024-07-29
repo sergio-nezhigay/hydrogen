@@ -112,7 +112,7 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
   };
 
   return (
-    <Section>
+    <Section heading="Review Form" headingClassName="sr-only" padding="y">
       {!formVisible ? (
         <Button
           onClick={handleButtonClick}

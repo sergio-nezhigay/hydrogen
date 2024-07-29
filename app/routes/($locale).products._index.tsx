@@ -48,7 +48,7 @@ export async function loader({
       descriptionHtml: 'All the store products',
       description: 'All the store products',
       seo: {
-        title: 'All Products1',
+        title: 'All Products',
         description: 'All the store products',
       },
       metafields: [],
