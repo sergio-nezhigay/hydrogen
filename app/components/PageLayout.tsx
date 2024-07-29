@@ -480,9 +480,10 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
       divider="top"
       as="footer"
       role="contentinfo"
-      className={`min-h-[25rem] w-full items-start overflow-hidden bg-gray-800 px-6 py-8 md:px-8 lg:px-12 ${textColor}`}
+      padding="y"
+      className={`min-h-[25rem] w-full items-start overflow-hidden bg-gray-800 py-8  ${textColor}`}
     >
-      <ul className="container grid list-none grid-cols-1 gap-4 border-t border-gray-700 p-0">
+      <ul className="grid list-none grid-cols-1 gap-4 border-t border-gray-700 p-0">
         <FooterItem
           icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/phone-flip-svgrepo-com_1.svg?v=1721456243"
           title={translation.phone}

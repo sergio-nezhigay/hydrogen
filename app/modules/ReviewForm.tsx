@@ -112,12 +112,17 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
   };
 
   return (
-    <Section heading="Review Form" headingClassName="sr-only" padding="y">
+    <Section
+      heading="Review Form"
+      headingClassName="sr-only"
+      padding="y"
+      className="pb-6"
+    >
       {!formVisible ? (
         <Button
           onClick={handleButtonClick}
           variant="secondary"
-          className="mx-auto"
+          className="mx-auto block"
         >
           {translation.leave_a_review}
         </Button>
