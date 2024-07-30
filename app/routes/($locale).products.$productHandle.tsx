@@ -510,7 +510,7 @@ export function ProductForm({
                 {isOnSale && (
                   <HryvniaMoney
                     data={selectedVariant?.compareAtPrice!}
-                    className="strike opacity-50"
+                    className="strike opacity-50 inline"
                   />
                 )}
               </div>
