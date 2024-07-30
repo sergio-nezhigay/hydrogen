@@ -523,6 +523,7 @@ export function ProductForm({
                 ]}
                 variant="red"
                 data-test="add-to-cart"
+                className="sm-max:w-full"
               >
                 <ShoppingCart className="mr-4 size-6" />
                 <Text

@@ -107,7 +107,7 @@ export function ProductCard({
           variant="red"
           className="mt-2"
         >
-          <Text as="span" className="flex items-center justify-center gap-2">
+          <Text as="span" className="flex-center gap-2">
             {translation.buy}
           </Text>
         </AddToCartButton>
