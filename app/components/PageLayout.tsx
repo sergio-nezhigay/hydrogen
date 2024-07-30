@@ -3,7 +3,6 @@ import useWindowScroll from 'react-use/esm/useWindowScroll';
 import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm, Image} from '@shopify/hydrogen';
-import type {LanguageCode} from '@shopify/hydrogen/storefront-api-types';
 
 import {type LayoutQuery} from 'storefrontapi.generated';
 import {Text, Heading, Section} from '~/components/Text';
@@ -12,7 +11,7 @@ import {Cart} from '~/components/Cart';
 import {CartLoading} from '~/components/CartLoading';
 import {Input} from '~/components/Input';
 import {Drawer, useDrawer} from '~/components/Drawer';
-import {CountrySelector} from '~/components/CountrySelector';
+
 import {
   IconMenu,
   IconCaret,
@@ -45,7 +44,7 @@ type LayoutProps = {
 };
 
 export function PageLayout({children, layout, locale}: LayoutProps) {
-  const {headerMenu, footerMenu} = layout || {};
+  const {headerMenu} = layout || {};
 
   const logoUrl = layout?.shop.brand?.logo?.image?.url || '';
 
@@ -69,7 +68,7 @@ export function PageLayout({children, layout, locale}: LayoutProps) {
           {children}
         </main>
       </div>
-      {footerMenu && <Footer menu={footerMenu} locale={locale} />}
+      <Footer locale={locale} />
     </>
   );
 }
@@ -537,51 +536,51 @@ function FooterLink({item}: {item: ChildEnhancedMenuItem}) {
   );
 }
 
-function FooterMenu({menu}: {menu?: EnhancedMenu}) {
-  const styles = {
-    section: 'grid gap-4',
-    nav: 'grid gap-2 pb-6',
-  };
+//function FooterMenu({menu}: {menu?: EnhancedMenu}) {
+//  const styles = {
+//    section: 'grid gap-4',
+//    nav: 'grid gap-2 pb-6',
+//  };
 
-  return (
-    <>
-      {(menu?.items || []).map((item) => (
-        <section key={item.id} className={styles.section}>
-          <Disclosure>
-            {({open}) => (
-              <>
-                <Disclosure.Button className="text-left md:cursor-default">
-                  <Heading className="flex justify-between" size="lead" as="h3">
-                    {item.title}
-                    {item?.items?.length > 0 && (
-                      <span className="md:hidden">
-                        <IconCaret direction={open ? 'up' : 'down'} />
-                      </span>
-                    )}
-                  </Heading>
-                </Disclosure.Button>
-                {item?.items?.length > 0 ? (
-                  <div
-                    className={`${
-                      open ? `h-fit max-h-48` : `max-h-0 md:max-h-fit`
-                    } overflow-hidden transition-all duration-300`}
-                  >
-                    <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">
-                      <Disclosure.Panel static>
-                        <nav className={styles.nav}>
-                          {item.items.map((subItem: ChildEnhancedMenuItem) => (
-                            <FooterLink key={subItem.id} item={subItem} />
-                          ))}
-                        </nav>
-                      </Disclosure.Panel>
-                    </Suspense>
-                  </div>
-                ) : null}
-              </>
-            )}
-          </Disclosure>
-        </section>
-      ))}
-    </>
-  );
-}
+//  return (
+//    <>
+//      {(menu?.items || []).map((item) => (
+//        <section key={item.id} className={styles.section}>
+//          <Disclosure>
+//            {({open}) => (
+//              <>
+//                <Disclosure.Button className="text-left md:cursor-default">
+//                  <Heading className="flex justify-between" size="lead" as="h3">
+//                    {item.title}
+//                    {item?.items?.length > 0 && (
+//                      <span className="md:hidden">
+//                        <IconCaret direction={open ? 'up' : 'down'} />
+//                      </span>
+//                    )}
+//                  </Heading>
+//                </Disclosure.Button>
+//                {item?.items?.length > 0 ? (
+//                  <div
+//                    className={`${
+//                      open ? `h-fit max-h-48` : `max-h-0 md:max-h-fit`
+//                    } overflow-hidden transition-all duration-300`}
+//                  >
+//                    <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">
+//                      <Disclosure.Panel static>
+//                        <nav className={styles.nav}>
+//                          {item.items.map((subItem: ChildEnhancedMenuItem) => (
+//                            <FooterLink key={subItem.id} item={subItem} />
+//                          ))}
+//                        </nav>
+//                      </Disclosure.Panel>
+//                    </Suspense>
+//                  </div>
+//                ) : null}
+//              </>
+//            )}
+//          </Disclosure>
+//        </section>
+//      ))}
+//    </>
+//  );
+//}

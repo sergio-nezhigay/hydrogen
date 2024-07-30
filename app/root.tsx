@@ -21,7 +21,6 @@ import {
   Analytics,
   getShopAnalytics,
   getSeoMeta,
-  Script,
   type SeoConfig,
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
@@ -35,7 +34,6 @@ import styles from '~/styles/app.css?url';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import {CustomAnalytics} from './modules/CustomAnalytics';
-import {GoogleTagManager} from './modules/GoogleTagManager';
 import type {translations} from './data/translations';
 
 export type RootLoader = typeof loader;
@@ -239,15 +237,11 @@ const LAYOUT_QUERY = `#graphql
   query layout(
     $language: LanguageCode
     $headerMenuHandle: String!
-    $footerMenuHandle: String!
   ) @inContext(language: $language) {
     shop {
       ...Shop
     }
     headerMenu: menu(handle: $headerMenuHandle) {
-      ...Menu
-    }
-    footerMenu: menu(handle: $footerMenuHandle) {
       ...Menu
     }
   }
@@ -295,11 +289,11 @@ async function getLayoutData({storefront, env}: AppLoadContext) {
   const data = await storefront.query(LAYOUT_QUERY, {
     variables: {
       headerMenuHandle: 'main-menu',
-      footerMenuHandle: 'footer',
       language: storefront.i18n.language,
     },
   });
 
+  console.log('🚀 ~ data:', JSON.stringify(data));
   invariant(data, 'No data returned from Shopify API');
 
   /*
@@ -321,14 +315,5 @@ async function getLayoutData({storefront, env}: AppLoadContext) {
       )
     : undefined;
 
-  const footerMenu = data?.footerMenu
-    ? parseMenu(
-        data.footerMenu,
-        data.shop.primaryDomain.url,
-        env,
-        customPrefixes,
-      )
-    : undefined;
-
-  return {shop: data.shop, headerMenu, footerMenu};
+  return {shop: data.shop, headerMenu};
 }

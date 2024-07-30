@@ -40,6 +40,7 @@ export default async function handleRequest(
       'https://www.googletagmanager.com',
       'https://fonts.googleapis.com',
       'https://fonts.gstatic.com/',
+      //  'https://googleads.g.doubleclick.net',
     ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
