@@ -501,7 +501,7 @@ export function ProductForm({
           ) : (
             <div className="md:flex-start gap-4">
               <div className="sm-max:mb-4">
-                <p className="mb-1"> Є в наявності</p>
+                <p className="mb-1">{translation.available}</p>
                 <HryvniaMoney
                   data={selectedVariant.price!}
                   className="text-xl md:text-3xl"
@@ -521,7 +521,6 @@ export function ProductForm({
                     quantity: 1,
                   },
                 ]}
-                className="w-full"
                 variant="red"
                 data-test="add-to-cart"
               >

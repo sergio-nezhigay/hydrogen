@@ -41,7 +41,7 @@ export default function Page() {
 
   return (
     <>
-      <PageHeader heading={page.title}>
+      <PageHeader heading={page.title} className="container">
         <div
           dangerouslySetInnerHTML={{__html: page.body}}
           className="prose dark:prose-invert"

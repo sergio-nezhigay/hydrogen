@@ -18,6 +18,7 @@ import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {getImageLoadingPriority} from '~/lib/const';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
+import {useTranslation} from '~/lib/utils';
 
 const PAGE_BY = 8;
 
@@ -69,10 +70,15 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 
 export default function AllProducts() {
   const {products} = useLoaderData<typeof loader>();
+  const translation = useTranslation();
 
   return (
     <>
-      <PageHeader heading="Каталог" variant="allCollections" />
+      <PageHeader
+        heading="Каталог"
+        variant="allCollections"
+        className="container"
+      />
       <Section>
         <Pagination connection={products}>
           {({nodes, isLoading, NextLink, PreviousLink}) => {
@@ -88,13 +94,13 @@ export default function AllProducts() {
               <>
                 <div className="flex items-center justify-center mt-6">
                   <PreviousLink className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary w-full">
-                    {isLoading ? 'Loading...' : 'Previous'}
+                    {isLoading ? translation.loading : translation.prev}
                   </PreviousLink>
                 </div>
                 <Grid data-test="product-grid">{itemsMarkup}</Grid>
                 <div className="flex items-center justify-center mt-6">
                   <NextLink className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary w-full">
-                    {isLoading ? 'Loading...' : 'Next'}
+                    {isLoading ? translation.loading : translation.next}
                   </NextLink>
                 </div>
               </>

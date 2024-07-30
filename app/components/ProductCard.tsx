@@ -7,7 +7,7 @@ import {Text} from '~/components/Text';
 import {Link} from '~/components/Link';
 import {Button} from '~/components/Button';
 import {AddToCartButton} from '~/components/AddToCartButton';
-import {isDiscounted, isNewArrival} from '~/lib/utils';
+import {isDiscounted, isNewArrival, useTranslation} from '~/lib/utils';
 import {getProductPlaceholder} from '~/lib/placeholders';
 import HryvniaMoney from '~/components/HryvniaMoney';
 
@@ -29,6 +29,7 @@ export function ProductCard({
   quickAdd,
 }: ProductCardProps) {
   let cardLabel;
+  const translation = useTranslation();
   const cardProduct: Product = product?.variants
     ? (product as Product)
     : getProductPlaceholder();
@@ -107,7 +108,7 @@ export function ProductCard({
           className="mt-2"
         >
           <Text as="span" className="flex items-center justify-center gap-2">
-            Купити
+            {translation.buy}
           </Text>
         </AddToCartButton>
       )}

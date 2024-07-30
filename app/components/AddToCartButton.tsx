@@ -37,7 +37,7 @@ export function AddToCartButton({
             <Button
               type="submit"
               variant="red"
-              size="xl"
+              size="lg"
               className={className}
               disabled={disabled ?? fetcher.state !== 'idle'}
               {...props}

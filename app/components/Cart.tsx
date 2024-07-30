@@ -22,7 +22,7 @@ import {Text, Heading} from '~/components/Text';
 import {Link} from '~/components/Link';
 import {IconRemove} from '~/components/Icon';
 import {FeaturedProducts} from '~/components/FeaturedProducts';
-import {getInputStyleClasses} from '~/lib/utils';
+import {getInputStyleClasses, useTranslation} from '~/lib/utils';
 
 import HryvniaMoney from './HryvniaMoney';
 
@@ -186,7 +186,6 @@ function CartLines({
 }
 
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
-
   if (!checkoutUrl) return null;
   // const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[email]=somebody@store.com`;
   const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
@@ -194,7 +193,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
   return (
     <div className="flex flex-col mt-2">
       <a href={checkoutUrlWithZipcode} target="_self">
-      {/* <a href={checkoutUrl} target="_self"> */}
+        {/* <a href={checkoutUrl} target="_self"> */}
         <Button as="span" width="full">
           Оформити замовлення
         </Button>
@@ -447,7 +446,7 @@ export function CartEmpty({
   layout?: Layouts;
   onClose?: () => void;
 }) {
-
+  const translation = useTranslation();
   const scrollRef = useRef(null);
   const {y} = useScroll(scrollRef);
 
@@ -465,17 +464,15 @@ export function CartEmpty({
   return (
     <div ref={scrollRef} className={container[layout]} hidden={hidden}>
       <section className="grid gap-6">
-        <Text format>
-          Схоже, ви ще нічого не додали, давайте почнемо!
-        </Text>
+        <Text format>{translation.no_items_added_yet}</Text>
         <div>
-          <Button onClick={onClose}>Продовжити покупки</Button>
+          <Button onClick={onClose}>{translation.continue_shopping}</Button>
         </div>
       </section>
       <section className="grid gap-8 pt-16">
         <FeaturedProducts
           count={4}
-          heading="Хіти продажів"
+          heading={translation.trending_products}
           layout={layout}
           onClose={onClose}
           sortKey="BEST_SELLING"

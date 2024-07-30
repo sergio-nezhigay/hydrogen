@@ -25,6 +25,7 @@ import {
   type EnhancedMenu,
   type ChildEnhancedMenuItem,
   useIsHomePath,
+  useTranslation,
 } from '~/lib/utils';
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
@@ -129,11 +130,17 @@ function Header({
 }
 
 function CartDrawer({isOpen, onClose}: {isOpen: boolean; onClose: () => void}) {
+  const translation = useTranslation();
   const rootData = useRouteLoaderData<RootLoader>('root');
   if (!rootData) return null;
 
   return (
-    <Drawer open={isOpen} onClose={onClose} heading="Кошик" openFrom="right">
+    <Drawer
+      open={isOpen}
+      onClose={onClose}
+      heading={translation.basket}
+      openFrom="right"
+    >
       <div className="grid">
         <Suspense fallback={<CartLoading />}>
           <Await resolve={rootData?.cart}>
