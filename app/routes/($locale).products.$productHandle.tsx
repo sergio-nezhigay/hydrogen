@@ -500,10 +500,13 @@ export function ProductForm({
               <Text>{translation.sold_out}</Text>
             </Button>
           ) : (
-            <div className="md:flex gap-4">
-              <div className="shrink-0">
-                <p className=""> Є в наявності</p>
-                <HryvniaMoney data={selectedVariant.price!} />
+            <div className="md:flex-start gap-4">
+              <div className="sm-max:mb-4">
+                <p className="mb-1"> Є в наявності</p>
+                <HryvniaMoney
+                  data={selectedVariant.price!}
+                  className="text-xl md:text-3xl"
+                />
                 {isOnSale && (
                   <HryvniaMoney
                     data={selectedVariant?.compareAtPrice!}
