@@ -168,7 +168,11 @@ export default function Collection() {
           </div>
         )}
       </PageHeader>
-      <Section className="container">
+      <Section
+        padding="y"
+        heading={collection.title}
+        headingClassName="sr-only"
+      >
         <ResponsiveSortFilter
           filters={collection.products.filters as Filter[]}
           appliedFilters={appliedFilters}
