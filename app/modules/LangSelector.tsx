@@ -20,7 +20,7 @@ function LangSelector() {
             UA
           </a>
         ) : (
-          <span className="flex-center gap-2 text-gray-400">
+          <span className="flex-center gap-2 text-gray-50/50">
             <UkrFlag />
             UA
           </span>
@@ -30,7 +30,7 @@ function LangSelector() {
         {isUkrActive ? (
           <a href={'/ru' + currentUrl}>RU</a>
         ) : (
-          <span className="text-gray-400">RU</span>
+          <span className="text-gray-50/50">RU</span>
         )}
       </li>
     </ul>

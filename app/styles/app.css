@@ -8,9 +8,11 @@
 /* Tokens */
 :root {
   --color-red: 224 0 39;
-  --color-primary: 41, 37, 36; /*Text, buttons, etc.*/
+  --color-primary: 41 37 36; /*Text, buttons, etc.*/
   --color-contrast: 250 250 249; /* Backgrounds, borders, etc. */
-  --color-accent: 191 72 0; /* Labels like "On sale" */
+  --color-accent: 0 42 63; /* Labels like "On sale" */
+  --color-header-bg: #005d8df0;
+  --color-header-text: #f9f9f9;
   --font-size-fine: 0.75rem; /* text-xs */
   --font-size-copy: 1rem; /* text-base */
   --font-size-lead: 1.125rem; /* text-lg */
@@ -18,15 +20,15 @@
   --font-size-display: 3rem; /* text-4xl */
   --color-shop-pay: #5a31f4;
   --shop-pay-button--width: 100%; /* Sets the width for the shop-pay-button web component */
-  --height-nav: 0rem;
+  --height-nav: 3.5rem;
   --screen-height: 100vh;
   --screen-height-dynamic: 100vh;
 
   @media (min-width: 32em) {
-    --height-nav: 0rem;
+    --height-nav: 6rem;
   }
   @media (min-width: 48em) {
-    --height-nav: 0rem;
+    --height-nav: 6rem;
     --font-size-heading: 2.25rem; /* text-4xl */
     --font-size-display: 3.75rem; /* text-6xl */
   }
@@ -40,7 +42,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-primary: 41, 37, 36;
+    --color-primary: 41 37 36;
     --color-contrast: 250 250 249;
     --color-accent: 191 72 0;
   }

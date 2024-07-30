@@ -214,7 +214,7 @@ function MobileHeader({
     <header
       role="banner"
       className={`sticky top-0
-       z-40 flex h-nav w-full items-center justify-between gap-4 bg-contrast/80 px-4 md:px-8 py-6 md:py-8 leading-none text-primary backdrop-blur-lg  lg:hidden`}
+       z-40 flex h-nav w-full items-center justify-between gap-4 bg-headerBg text-headerText px-4 md:px-8 py-6 md:py-8 leading-none backdrop-blur-lg  lg:hidden`}
     >
       <div className="flex w-full items-center justify-start gap-4">
         <button
@@ -289,20 +289,21 @@ function DesktopHeader({
   return (
     <header
       role="banner"
-      className={`bg-contrast/80 text-primary ${
+      className={`bg-headerBg text-headerText ${
         !isHome && y > 50 && ' shadow-lightHeader'
-      } sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 py-8 leading-none backdrop-blur-lg transition duration-300 lg:flex `}
+      } sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 leading-none backdrop-blur-lg  transition duration-300 lg:flex py-6 `}
     >
-      <div className="container flex-between">
-        <div className="flex-center gap-12 ">
+      <div className="container flex-between h-full">
+        <div className="flex-center gap-12 h-full">
           {logoUrl && (
-            <Link to="/" prefetch="intent">
+            <Link to="/" prefetch="intent" className="h-full block w-full">
               <Image
-                width={80}
-                height={80}
-                className="w-20"
+                height={95}
+                width={164}
+                className="object-fit w-full h-full"
                 src={logoUrl}
                 alt="logo"
+                sizes="auto"
               />
             </Link>
           )}
@@ -330,11 +331,7 @@ function DesktopHeader({
             className="flex items-center gap-2"
           >
             <Input
-              className={
-                isHome
-                  ? 'focus:border-contrast/20 dark:focus:border-primary/20'
-                  : 'focus:border-primary/20'
-              }
+              className="focus:border-contrast/20 placeholder:opacity-70"
               type="search"
               variant="minisearch"
               placeholder="Пошук"
@@ -481,7 +478,7 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
       as="footer"
       role="contentinfo"
       padding="y"
-      className={`min-h-[25rem] w-full items-start overflow-hidden bg-gray-800 py-8  ${textColor}`}
+      className={`min-h-[25rem] w-full items-start overflow-hidden bg-stone-800 py-8  ${textColor}`}
     >
       <ul className="grid list-none grid-cols-1 gap-4 border-t border-gray-700 p-0">
         <FooterItem
