@@ -87,7 +87,7 @@ export default function Search() {
 
   return (
     <>
-      <PageHeader>
+      <PageHeader className="container">
         <Heading as="h1" size="copy">
           {translation.search}
         </Heading>
@@ -95,12 +95,12 @@ export default function Search() {
           <Input
             defaultValue={searchTerm}
             name="q"
-            placeholder={`${translation.search}...`}
+            placeholder={`${translation.isearchfor}...`}
             type="search"
             variant="search"
           />
           <button className="absolute right-0 py-2" type="submit">
-            {translation.go}
+            {translation.find}
           </button>
         </Form>
       </PageHeader>

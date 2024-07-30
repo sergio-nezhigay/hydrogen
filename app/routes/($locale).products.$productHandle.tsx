@@ -109,7 +109,6 @@ async function loadCriticalData({
       product.selectedVariant = product.variants.nodes[0];
     }
   }
-  console.log('🚀 ~ product:', JSON.stringify(product));
 
   const recommended = getRecommendedProducts(context.storefront, product.id);
 
