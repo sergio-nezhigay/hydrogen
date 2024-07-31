@@ -5,9 +5,9 @@ import type {
   Collection,
   Page,
   Product,
-  ProductVariant,
   ShopPolicy,
   Image,
+  ProductVariant,
 } from '@shopify/hydrogen/storefront-api-types';
 import type {
   Article as SeoArticle,
@@ -26,6 +26,7 @@ import type {
 import type {ShopFragment} from 'storefrontapi.generated';
 
 import type {JudgemeReviewsData} from './type';
+import {assertNonNullType} from 'graphql';
 
 function root({
   shop,
@@ -227,12 +228,15 @@ function productJsonLd({
       offers,
       sku: selectedVariant?.sku ?? '',
       url,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: judgemeReviewsData.rating,
-        reviewCount: judgemeReviewsData.reviewNumber,
-      },
-      review: reviews,
+      aggregateRating:
+        judgemeReviewsData.reviewNumber > 0
+          ? {
+              '@type': 'AggregateRating',
+              ratingValue: judgemeReviewsData.rating,
+              reviewCount: judgemeReviewsData.reviewNumber,
+            }
+          : undefined,
+      review: reviews.length > 0 ? reviews : undefined,
     },
   ];
 }
