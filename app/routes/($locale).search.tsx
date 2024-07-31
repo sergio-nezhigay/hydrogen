@@ -92,12 +92,16 @@ export default function Search() {
           {translation.search}
         </Heading>
         <Form method="get" className="relative flex w-full text-heading">
+          <label htmlFor="search" className="sr-only">
+            Search
+          </label>
           <Input
             defaultValue={searchTerm}
             name="q"
             placeholder={`${translation.isearchfor}...`}
             type="search"
             variant="search"
+            id="search"
           />
           <button className="absolute right-0 py-2" type="submit">
             {translation.find}

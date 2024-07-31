@@ -249,7 +249,11 @@ function MobileHeader({
             variant="minisearch"
             placeholder="Пошук"
             name="q"
+            id="search-mobile"
           />
+          <label htmlFor="search-mobile" className="sr-only">
+            Search
+          </label>
         </Form>
       </div>
 
@@ -339,12 +343,16 @@ function DesktopHeader({
             action={params.locale ? `/${params.locale}/search` : '/search'}
             className="flex items-center gap-2 group"
           >
+            <label htmlFor="search-desktop" className="sr-only">
+              Search
+            </label>
             <Input
               className="focus:border-contrast/20 placeholder:opacity-70 group-hover:placeholder:opacity-100"
               type="search"
               variant="minisearch"
               placeholder="Пошук"
               name="q"
+              id="search-desktop"
             />
             <button
               type="submit"
