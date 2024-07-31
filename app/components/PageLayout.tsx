@@ -318,7 +318,7 @@ function DesktopHeader({
                 key={item.id}
                 to={item.to}
                 target={item.target}
-                prefetch="intent"
+                prefetch="viewport"
                 className={({isActive}) =>
                   clsx(
                     {
