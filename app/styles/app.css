@@ -253,4 +253,8 @@ shop-pay-button {
   .flex-start {
     @apply flex justify-start items-center;
   }
+
+  .flex-end {
+    @apply flex justify-end items-center;
+  }
 }

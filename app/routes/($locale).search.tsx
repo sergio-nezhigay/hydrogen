@@ -51,15 +51,14 @@ export async function loader({
     url: request.url,
     collection: {
       id: 'search',
-      title: 'Search',
+      title: `Search`,
       handle: 'search',
       descriptionHtml: 'Search results',
       description: 'Search results',
       seo: {
-        title: 'Search',
-        description: `Showing ${products.nodes.length} search results for "${searchTerm}"`,
+        title: `"${searchTerm}" - Результати пошуку`,
+        description: `Показуємо ${products.nodes.length} результатів для пошуку "${searchTerm}"`,
       },
-      metafields: [],
       products,
       updatedAt: new Date().toISOString(),
     },

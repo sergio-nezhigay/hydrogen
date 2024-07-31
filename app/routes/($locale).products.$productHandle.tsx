@@ -238,15 +238,22 @@ export default function Product() {
                 <Heading as="h1" className="overflow-hidden whitespace-normal ">
                   {title}
                 </Heading>
-                <div className="flex-between">
-                  <a
-                    href="#review-list"
-                    className="space-x-2 flex"
-                    onClick={handleScrollToReviews}
-                  >
-                    <StarRating rating={rating} />
-                    <span className="align-top">({reviewNumber})</span>
-                  </a>
+                <div
+                  className={clsx({
+                    'flex-between': reviewNumber > 0,
+                    'flex-end': reviewNumber === 0,
+                  })}
+                >
+                  {reviewNumber > 0 && (
+                    <a
+                      href="#review-list"
+                      className="space-x-2 flex"
+                      onClick={handleScrollToReviews}
+                    >
+                      <StarRating rating={rating} />
+                      <span className="align-top">({reviewNumber})</span>
+                    </a>
+                  )}
 
                   {product.selectedVariant?.sku && (
                     <span className="text-primary/70">
