@@ -1,11 +1,10 @@
 import {useParams, Form, Await, useRouteLoaderData} from '@remix-run/react';
 import useWindowScroll from 'react-use/esm/useWindowScroll';
-import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm, Image} from '@shopify/hydrogen';
 
 import {type LayoutQuery} from 'storefrontapi.generated';
-import {Text, Heading, Section} from '~/components/Text';
+import {Text, Section} from '~/components/Text';
 import {Link} from '~/components/Link';
 import {Cart} from '~/components/Cart';
 import {CartLoading} from '~/components/CartLoading';
@@ -14,7 +13,6 @@ import {Drawer, useDrawer} from '~/components/Drawer';
 
 import {
   IconMenu,
-  IconCaret,
   IconLogin,
   IconAccount,
   IconBag,
@@ -282,7 +280,6 @@ function DesktopHeader({
   isHome,
   menu,
   openCart,
-  title,
   logoUrl,
 }: {
   isHome: boolean;
@@ -525,68 +522,3 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
     </Section>
   );
 };
-
-function FooterLink({item}: {item: ChildEnhancedMenuItem}) {
-  if (item.to.startsWith('http')) {
-    return (
-      <a href={item.to} target={item.target} rel="noopener noreferrer">
-        {item.title}
-      </a>
-    );
-  }
-
-  return (
-    <Link to={item.to} target={item.target} prefetch="intent">
-      {item.title}
-    </Link>
-  );
-}
-
-//function FooterMenu({menu}: {menu?: EnhancedMenu}) {
-//  const styles = {
-//    section: 'grid gap-4',
-//    nav: 'grid gap-2 pb-6',
-//  };
-
-//  return (
-//    <>
-//      {(menu?.items || []).map((item) => (
-//        <section key={item.id} className={styles.section}>
-//          <Disclosure>
-//            {({open}) => (
-//              <>
-//                <Disclosure.Button className="text-left md:cursor-default">
-//                  <Heading className="flex justify-between" size="lead" as="h3">
-//                    {item.title}
-//                    {item?.items?.length > 0 && (
-//                      <span className="md:hidden">
-//                        <IconCaret direction={open ? 'up' : 'down'} />
-//                      </span>
-//                    )}
-//                  </Heading>
-//                </Disclosure.Button>
-//                {item?.items?.length > 0 ? (
-//                  <div
-//                    className={`${
-//                      open ? `h-fit max-h-48` : `max-h-0 md:max-h-fit`
-//                    } overflow-hidden transition-all duration-300`}
-//                  >
-//                    <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">
-//                      <Disclosure.Panel static>
-//                        <nav className={styles.nav}>
-//                          {item.items.map((subItem: ChildEnhancedMenuItem) => (
-//                            <FooterLink key={subItem.id} item={subItem} />
-//                          ))}
-//                        </nav>
-//                      </Disclosure.Panel>
-//                    </Suspense>
-//                  </div>
-//                ) : null}
-//              </>
-//            )}
-//          </Disclosure>
-//        </section>
-//      ))}
-//    </>
-//  );
-//}

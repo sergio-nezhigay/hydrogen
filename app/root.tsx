@@ -63,9 +63,9 @@ export const links: LinksFunction = () => {
     {rel: 'preconnect', href: 'https://cdn.shopify.com'},
     {rel: 'preconnect', href: 'https://byte.com.ua'},
     {rel: 'preconnect', href: 'https://www.googletagmanager.com'},
-    {rel: 'preconnect', href: 'https://analytics.google.com'},
-    {rel: 'preconnect', href: 'https://googleads.g.doubleclick.net'},
-    {rel: 'preconnect', href: 'https://monorail-edge.shopifysvc.com'},
+    {rel: 'dns-prefetch', href: 'https://analytics.google.com'},
+    {rel: 'dns-prefetch', href: 'https://googleads.g.doubleclick.net'},
+    {rel: 'dns-prefetch', href: 'https://monorail-edge.shopifysvc.com'},
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 };
@@ -155,8 +155,6 @@ function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <meta name="msvalidate.01" content="A352E6A0AF9A652267361BBB572B8468" />
-
         <Meta />
         <Links />
         <link rel="alternate" href={alternateUkLink} hrefLang="uk" />

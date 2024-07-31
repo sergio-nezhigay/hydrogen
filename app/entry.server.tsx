@@ -24,8 +24,16 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://www.google.com',
       'https://www.google.com.ua',
+      'https://*.doubleclick.net', // Added for Google Ads images
+      'data:', // Allow inline base64 encoded images
     ],
-    connectSrc: ["'self'", 'https://analytics.google.com'],
+    connectSrc: [
+      "'self'",
+      'https://analytics.google.com',
+      'https://monorail-edge.shopifysvc.com', // Shopify services
+      'https://googleads.g.doubleclick.net', // Google Ads
+      'https://cdn.shopify.com', // Shopify CDN
+    ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
