@@ -60,14 +60,12 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 export const links: LinksFunction = () => {
   return [
     {rel: 'stylesheet', href: styles},
-    {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'https://byte.com.ua/',
-    },
+    {rel: 'preconnect', href: 'https://cdn.shopify.com'},
+    {rel: 'preconnect', href: 'https://byte.com.ua'},
+    {rel: 'preconnect', href: 'https://www.googletagmanager.com'},
+    {rel: 'preconnect', href: 'https://analytics.google.com'},
+    {rel: 'preconnect', href: 'https://googleads.g.doubleclick.net'},
+    {rel: 'preconnect', href: 'https://monorail-edge.shopifysvc.com'},
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 };
