@@ -24,8 +24,9 @@ export function Thumb({selected, onClick, item}: PropType) {
     >
       <button
         onClick={onClick}
+        onMouseEnter={onClick}
         type="button"
-        className={`inline-flex items-center justify-center w-full focus:outline-none`}
+        className={`block items-center justify-center w-full `}
       >
         {image && (
           <Image

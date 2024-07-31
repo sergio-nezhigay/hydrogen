@@ -12,6 +12,7 @@ import {
 import {Section} from '~/components/Text';
 
 import {useTranslation} from '~/lib/utils';
+import clsx from 'clsx';
 
 export const breadcrumbTypeSchema = z.enum([
   'collections',
@@ -102,19 +103,24 @@ function BreadCrumbs() {
       <Breadcrumb>
         <BreadcrumbList>
           {pages.map((page, idx) => (
-            <BreadcrumbItem key={page.name}>
+            <BreadcrumbItem key={page.name} className="text-primary">
               {idx < pages.length - 1 ? (
                 <BreadcrumbLink asChild>
-                  <Link to={page.href} className="text-primary">
+                  <Link
+                    to={page.href}
+                    className={clsx('hover:text-red', {
+                      'hover:underline': page.name !== 'Home',
+                    })}
+                  >
                     {page.name === 'Home' ? (
-                      <Home className="w-5 h-5" />
+                      <Home className="size-5" />
                     ) : (
                       page.name
                     )}
                   </Link>
                 </BreadcrumbLink>
               ) : (
-                <span className="text-primary">{page.name}</span>
+                <span>{page.name}</span>
               )}
               {idx < pages.length - 1 && <BreadcrumbSeparator />}
             </BreadcrumbItem>

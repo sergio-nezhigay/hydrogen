@@ -37,7 +37,9 @@ export function FeaturedCollections({
                     />
                   )}
                 </div>
-                <Heading size="copy">{collection.title}</Heading>
+                <Heading size="copy" className="hover:text-red">
+                  {collection.title}
+                </Heading>
               </div>
             </Link>
           );

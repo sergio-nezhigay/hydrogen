@@ -108,7 +108,7 @@ export function Gallery({
             containScroll: 'keepSnaps',
             dragFree: true,
           }}
-          className="sm-max:hidden mt-4"
+          className="sm-max:hidden mt-4 mr-1"
         >
           <CarouselContent className="-ml-4">
             {galleryItems.map((item, index) => (

@@ -60,7 +60,7 @@ export function SortFilter({
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={
-            'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5'
+            'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5 hover:bg-stone-700/5 rounded-md'
           }
         >
           <IconFilters />
@@ -398,7 +398,7 @@ export default function SortMenu() {
 
   return (
     <Menu as="div" className="relative z-40">
-      <Menu.Button className="flex items-center">
+      <Menu.Button className="flex items-center hover:bg-stone-700/5 rounded-md py-1">
         <span className="px-2">
           <span className="px-2 font-medium">{translation.sort_by}:</span>
           <span>{(activeItem || items[0]).label}</span>

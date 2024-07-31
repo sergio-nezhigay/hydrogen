@@ -67,6 +67,7 @@ export function ProductCard({
                 loading={loading}
               />
             )}
+
             <Text
               as="label"
               size="fine"
@@ -77,7 +78,7 @@ export function ProductCard({
           </div>
           <div className="grid gap-1 sm-max:px-2">
             <Text
-              className="w-full truncate line-clamp-1 md:line-clamp-2"
+              className="w-full truncate line-clamp-1 md:line-clamp-2 hover:text-red"
               as="h3"
             >
               {product.title}
