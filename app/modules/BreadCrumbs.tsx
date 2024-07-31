@@ -111,6 +111,7 @@ function BreadCrumbs() {
                     className={clsx('hover:text-red', {
                       'hover:underline': page.name !== 'Home',
                     })}
+                    prefetch="viewport"
                   >
                     {page.name === 'Home' ? (
                       <Home className="size-5" />

@@ -25,7 +25,11 @@ export function FeaturedCollections({
       <Grid items={collectionsWithImage.length}>
         {collectionsWithImage.map((collection) => {
           return (
-            <Link key={collection.id} to={`/collections/${collection.handle}`}>
+            <Link
+              key={collection.id}
+              to={`/collections/${collection.handle}`}
+              prefetch="viewport"
+            >
               <div className="grid gap-4">
                 <div className="card-image bg-primary/5 aspect-[3/2]">
                   {collection?.image && (
