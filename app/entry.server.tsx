@@ -26,7 +26,7 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://www.google.com',
       //  'https://*.google-analytics.com',
-      //  'https://*.googletagmanager.com',
+      //'https://*.googletagmanager.com',
       'https://www.google.com.ua',
       //  'https://www.googletagmanager.com',
       //  'https://fonts.googleapis.com',

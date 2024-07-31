@@ -33,6 +33,7 @@ import {translations} from '~/data/translations';
 
 import LangSelector from '~/modules/LangSelector';
 import BreadCrumbs from '~/modules/BreadCrumbs';
+import clsx from 'clsx';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -322,7 +323,12 @@ function DesktopHeader({
                 target={item.target}
                 prefetch="intent"
                 className={({isActive}) =>
-                  isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
+                  clsx(
+                    {
+                      'border-b -mb-px': isActive,
+                    },
+                    'pb-1 hover:border-b hover:-mb-px',
+                  )
                 }
               >
                 {item.title}
@@ -334,10 +340,10 @@ function DesktopHeader({
           <Form
             method="get"
             action={params.locale ? `/${params.locale}/search` : '/search'}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 group"
           >
             <Input
-              className="focus:border-contrast/20 placeholder:opacity-70"
+              className="focus:border-contrast/20 placeholder:opacity-70 group-hover:placeholder:opacity-100"
               type="search"
               variant="minisearch"
               placeholder="Пошук"
@@ -345,13 +351,13 @@ function DesktopHeader({
             />
             <button
               type="submit"
-              className="relative flex size-8 items-center justify-center focus:ring-primary/5"
+              className="relative flex size-8 items-center justify-center focus:ring-primary/5 group-hover:bg-stone-100/20 rounded-md"
             >
               <IconSearch />
             </button>
           </Form>
           <LangSelector />
-          <AccountLink className="relative flex size-8 items-center justify-center focus:ring-primary/5" />
+          <AccountLink className="relative flex size-8 items-center justify-center focus:ring-primary/5 hover:bg-stone-100/20 rounded-md" />
           <CartCount isHome={isHome} openCart={openCart} />
         </div>
       </div>
@@ -431,7 +437,7 @@ function Badge({
   return isHydrated ? (
     <button
       onClick={openCart}
-      className="relative flex size-8 items-center justify-center focus:ring-primary/5"
+      className="relative flex size-8 items-center justify-center focus:ring-primary/5 hover:bg-stone-100/20 rounded-md"
     >
       {BadgeCounter}
     </button>
