@@ -67,7 +67,7 @@ export default function Collections() {
             <>
               <div className="flex items-center justify-center mb-6">
                 <Button as={PreviousLink} variant="secondary" width="full">
-                  {isLoading ? 'Loading...' : 'Previous collections'}
+                  {isLoading ? translation.loading : translation.prev}
                 </Button>
               </div>
               <Grid
@@ -84,7 +84,7 @@ export default function Collections() {
               </Grid>
               <div className="flex items-center justify-center mt-6">
                 <Button as={NextLink} variant="secondary" width="full">
-                  {isLoading ? 'Loading...' : 'Next collections'}
+                  {isLoading ? translation.loading : translation.next}
                 </Button>
               </div>
             </>

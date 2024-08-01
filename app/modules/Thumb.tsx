@@ -17,7 +17,7 @@ export function Thumb({selected, onClick, item}: PropType) {
 
   return (
     <div
-      className={clsx('border', {
+      className={clsx('border ', {
         'border-primary': selected,
         'border-transparent': !selected,
       })}
@@ -26,7 +26,7 @@ export function Thumb({selected, onClick, item}: PropType) {
         onClick={onClick}
         onMouseEnter={onClick}
         type="button"
-        className={`block items-center justify-center w-full `}
+        className={`block items-center justify-center w-full bg-primary/5`}
       >
         {image && (
           <Image

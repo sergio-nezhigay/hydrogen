@@ -14,6 +14,7 @@ import {Thumb} from './Thumb';
 import {DotButtons} from './DotButtons';
 import {ProductCardWrapperProps} from '~/components/ProductSwimlane';
 import {ProductImageProps} from '~/routes/($locale).products.$productHandle';
+import clsx from 'clsx';
 
 type GalleryProps = {
   galleryItems: any[];
@@ -85,7 +86,7 @@ export function Gallery({
         <CarouselContent>
           {galleryItems.map((item, index) => {
             return (
-              <CarouselItem key={item.id} className={itemClasses}>
+              <CarouselItem key={item.id} className={clsx(itemClasses)}>
                 <GalleryItemComponent itemData={item} index={index} />
               </CarouselItem>
             );
@@ -112,7 +113,7 @@ export function Gallery({
         >
           <CarouselContent className="-ml-4">
             {galleryItems.map((item, index) => (
-              <CarouselItem key={item.id} className="pl-4 basis-1/10 ">
+              <CarouselItem key={item.id} className="pl-4 basis-1/10">
                 <Thumb
                   onClick={() => scrollTo(index)}
                   selected={index === currentIndex}

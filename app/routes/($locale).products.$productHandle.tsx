@@ -231,6 +231,7 @@ export default function Product() {
             galleryItems={media.nodes}
             GalleryItemComponent={ProductImage}
             showThumbs={true}
+            //itemClasses="bg-primary/5"
           />
           <div className="hiddenScroll sticky md:top-nav md:-mb-nav md:h-screen md:-translate-y-nav md:overflow-y-scroll md:pt-nav">
             <section className="flex w-full flex-col gap-8 md:mx-auto">
@@ -349,7 +350,7 @@ function ProductImage({itemData, index}: ProductImageProps) {
       ? {...itemData.image, altText: itemData.alt || 'Product image ' + index}
       : null;
   return (
-    <>
+    <div className="bg-primary/5">
       {image && (
         <Image
           loading={index === 0 ? 'eager' : 'lazy'}
@@ -359,7 +360,7 @@ function ProductImage({itemData, index}: ProductImageProps) {
           className="object-cover w-full h-full fadeIn"
         />
       )}
-    </>
+    </div>
   );
 }
 

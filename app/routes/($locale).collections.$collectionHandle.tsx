@@ -34,7 +34,7 @@ import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
 import {FILTER_URL_PREFIX} from '~/components/SortFilter';
 import {getImageLoadingPriority} from '~/lib/const';
-import {parseAsCurrency} from '~/lib/utils';
+import {parseAsCurrency, useTranslation} from '~/lib/utils';
 
 export const headers = routeHeaders;
 
@@ -152,7 +152,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 export default function Collection() {
   const {collection, collections, appliedFilters} =
     useLoaderData<typeof loader>();
-
+  const translation = useTranslation();
   const {ref, inView} = useInView();
 
   return (
@@ -191,7 +191,7 @@ export default function Collection() {
               <>
                 <div className="flex items-center justify-center mb-6">
                   <Button as={PreviousLink} variant="secondary" width="full">
-                    {isLoading ? 'Loading...' : 'Load previous'}
+                    {isLoading ? translation.loading : translation.prev}
                   </Button>
                 </div>
                 <ProductsLoadedOnScroll
@@ -208,7 +208,7 @@ export default function Collection() {
                     variant="secondary"
                     width="full"
                   >
-                    {isLoading ? 'Loading...' : 'Load more products'}
+                    {isLoading ? translation.loading : translation.next}
                   </Button>
                 </div>
               </>
