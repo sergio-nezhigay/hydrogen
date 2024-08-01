@@ -13,15 +13,19 @@ export function DotButtons({
   onButtonClick,
 }: DotButtonsProps) {
   return (
-    <div className="flex-center sm:hidden gap-2 mt-4">
-      {Array.from({length: totalButtons}).map((_, index) => (
-        <DotButton
-          key={index}
-          isSelected={index === activeIndex}
-          onClick={() => onButtonClick(index)}
-        />
-      ))}
-    </div>
+    <>
+      {totalButtons > 1 && (
+        <div className="flex-center sm:hidden gap-2 mt-4">
+          {Array.from({length: totalButtons}).map((_, index) => (
+            <DotButton
+              key={index}
+              isSelected={index === activeIndex}
+              onClick={() => onButtonClick(index)}
+            />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 

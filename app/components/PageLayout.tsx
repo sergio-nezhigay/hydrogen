@@ -33,6 +33,7 @@ import {translations} from '~/data/translations';
 
 import LangSelector from '~/modules/LangSelector';
 import BreadCrumbs from '~/modules/BreadCrumbs';
+import clsx from 'clsx';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -320,9 +321,12 @@ function DesktopHeader({
                 key={item.id}
                 to={item.to}
                 target={item.target}
-                prefetch="intent"
+                prefetch="viewport"
                 className={({isActive}) =>
-                  isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
+                  clsx('pb-1', {
+                    'border-b -mb-px': isActive,
+                    'hover:border-b hover:-mb-px': !isActive,
+                  })
                 }
               >
                 {item.title}

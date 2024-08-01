@@ -1,6 +1,6 @@
 import {useRef, Suspense} from 'react';
 import {Image} from '@shopify/hydrogen';
-import {Disclosure, Listbox} from '@headlessui/react';
+import {Disclosure, DisclosurePanel, Listbox} from '@headlessui/react';
 import {ShoppingCart} from 'lucide-react';
 import {
   defer,
@@ -585,7 +585,12 @@ function ProductDetail({
             </div>
           </Disclosure.Button>
 
-          <Disclosure.Panel className={'grid gap-2 pb-4 pt-2'}>
+          <DisclosurePanel
+            transition
+            className={
+              'grid gap-2 pb-4 pt-2 origin-top transition duration-200 ease-out data-[closed]:-translate-y-8 data-[closed]:opacity-0'
+            }
+          >
             <div
               //  className="prose dark:prose-invert"
               dangerouslySetInnerHTML={{__html: content}}
@@ -600,7 +605,7 @@ function ProductDetail({
                 </Link>
               </div>
             )}
-          </Disclosure.Panel>
+          </DisclosurePanel>
         </>
       )}
     </Disclosure>

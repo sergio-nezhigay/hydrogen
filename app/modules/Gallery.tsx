@@ -92,8 +92,12 @@ export function Gallery({
             );
           })}
         </CarouselContent>
-        <CarouselPrevious className="sm-max:hidden" />
-        <CarouselNext className="sm-max:hidden" />
+        {galleryItems.length > 1 && (
+          <>
+            <CarouselPrevious className="sm-max:hidden" />
+            <CarouselNext className="sm-max:hidden" />
+          </>
+        )}
       </Carousel>
       {/*dots*/}
       <DotButtons
@@ -102,7 +106,7 @@ export function Gallery({
         onButtonClick={scrollTo}
       />
       {/*thumbs*/}
-      {showThumbs && (
+      {showThumbs && galleryItems.length > 1 && (
         <Carousel
           setApi={setThumbsCarouselApi}
           opts={{
