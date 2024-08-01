@@ -1,10 +1,11 @@
 import {useParams, Form, Await, useRouteLoaderData} from '@remix-run/react';
 import useWindowScroll from 'react-use/esm/useWindowScroll';
+import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm, Image} from '@shopify/hydrogen';
 
 import {type LayoutQuery} from 'storefrontapi.generated';
-import {Text, Section} from '~/components/Text';
+import {Text, Heading, Section} from '~/components/Text';
 import {Link} from '~/components/Link';
 import {Cart} from '~/components/Cart';
 import {CartLoading} from '~/components/CartLoading';
@@ -13,6 +14,7 @@ import {Drawer, useDrawer} from '~/components/Drawer';
 
 import {
   IconMenu,
+  IconCaret,
   IconLogin,
   IconAccount,
   IconBag,
@@ -31,7 +33,6 @@ import {translations} from '~/data/translations';
 
 import LangSelector from '~/modules/LangSelector';
 import BreadCrumbs from '~/modules/BreadCrumbs';
-import clsx from 'clsx';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -249,11 +250,7 @@ function MobileHeader({
             variant="minisearch"
             placeholder="Пошук"
             name="q"
-            id="search-mobile"
           />
-          <label htmlFor="search-mobile" className="sr-only">
-            Search
-          </label>
         </Form>
       </div>
 
@@ -284,6 +281,7 @@ function DesktopHeader({
   isHome,
   menu,
   openCart,
+  title,
   logoUrl,
 }: {
   isHome: boolean;
@@ -322,14 +320,9 @@ function DesktopHeader({
                 key={item.id}
                 to={item.to}
                 target={item.target}
-                prefetch="viewport"
+                prefetch="intent"
                 className={({isActive}) =>
-                  clsx(
-                    {
-                      'border-b -mb-px': isActive,
-                    },
-                    'pb-1 hover:border-b hover:-mb-px',
-                  )
+                  isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
                 }
               >
                 {item.title}
@@ -343,16 +336,12 @@ function DesktopHeader({
             action={params.locale ? `/${params.locale}/search` : '/search'}
             className="flex items-center gap-2 group"
           >
-            <label htmlFor="search-desktop" className="sr-only">
-              Search
-            </label>
             <Input
               className="focus:border-contrast/20 placeholder:opacity-70 group-hover:placeholder:opacity-100"
               type="search"
               variant="minisearch"
               placeholder="Пошук"
               name="q"
-              id="search-desktop"
             />
             <button
               type="submit"
@@ -530,3 +519,68 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
     </Section>
   );
 };
+
+function FooterLink({item}: {item: ChildEnhancedMenuItem}) {
+  if (item.to.startsWith('http')) {
+    return (
+      <a href={item.to} target={item.target} rel="noopener noreferrer">
+        {item.title}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={item.to} target={item.target} prefetch="intent">
+      {item.title}
+    </Link>
+  );
+}
+
+//function FooterMenu({menu}: {menu?: EnhancedMenu}) {
+//  const styles = {
+//    section: 'grid gap-4',
+//    nav: 'grid gap-2 pb-6',
+//  };
+
+//  return (
+//    <>
+//      {(menu?.items || []).map((item) => (
+//        <section key={item.id} className={styles.section}>
+//          <Disclosure>
+//            {({open}) => (
+//              <>
+//                <Disclosure.Button className="text-left md:cursor-default">
+//                  <Heading className="flex justify-between" size="lead" as="h3">
+//                    {item.title}
+//                    {item?.items?.length > 0 && (
+//                      <span className="md:hidden">
+//                        <IconCaret direction={open ? 'up' : 'down'} />
+//                      </span>
+//                    )}
+//                  </Heading>
+//                </Disclosure.Button>
+//                {item?.items?.length > 0 ? (
+//                  <div
+//                    className={`${
+//                      open ? `h-fit max-h-48` : `max-h-0 md:max-h-fit`
+//                    } overflow-hidden transition-all duration-300`}
+//                  >
+//                    <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">
+//                      <Disclosure.Panel static>
+//                        <nav className={styles.nav}>
+//                          {item.items.map((subItem: ChildEnhancedMenuItem) => (
+//                            <FooterLink key={subItem.id} item={subItem} />
+//                          ))}
+//                        </nav>
+//                      </Disclosure.Panel>
+//                    </Suspense>
+//                  </div>
+//                ) : null}
+//              </>
+//            )}
+//          </Disclosure>
+//        </section>
+//      ))}
+//    </>
+//  );
+//}
