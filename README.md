@@ -40,13 +40,14 @@ npm run build
 
 ```bash
 npm run dev
-```
+``
+
 
 ## Setup for using Customer Account API (`/account` section)
 
 ### Setup public domain using ngrok
 
-1. Setup a [ngrok](https://ngrok.com/) account and add a permanent domain (ie. `https://<your-ngrok-domain>.app`).
+1. Setup a [ngrok](https://ngrok.com/) account and add a permanent domain (ie. `https://<your-ngrok-domain>.app`)
 1. Install the [ngrok CLI](https://ngrok.com/download) to use in terminal
 1. Start ngrok using `ngrok http --domain=<your-ngrok-domain>.app 3000`
 
@@ -56,3 +57,4 @@ npm run dev
 1. Edit `Callback URI(s)` to include `https://<your-ngrok-domain>.app/account/authorize`
 1. Edit `Javascript origin(s)` to include your public domain `https://<your-ngrok-domain>.app` or keep it blank
 1. Edit `Logout URI` to include your public domain `https://<your-ngrok-domain>.app` or keep it blank
+```
