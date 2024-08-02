@@ -154,9 +154,6 @@ export default function Collection() {
     useLoaderData<typeof loader>();
   const translation = useTranslation();
   const {ref, inView} = useInView();
-  console.log('====================================');
-  console.log(collection);
-  console.log('====================================');
 
   return (
     <>

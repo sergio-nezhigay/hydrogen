@@ -5,6 +5,7 @@ import {Heading, Section, Text} from '~/components/Text';
 import {translations} from '~/data/translations';
 import {Star} from '~/components/Icon';
 import {Button} from '~/components/ui/button';
+import {useTranslation} from '~/lib/utils';
 
 interface ReviewFormProps {
   productId: string;
@@ -89,7 +90,7 @@ function StarInput({rating, setRating, locale}: StarInputProps) {
 
 export function ReviewForm({productId, locale}: ReviewFormProps) {
   const actionData = useActionData<ActionData>();
-  const translation = translations[locale];
+  const translation = useTranslation();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

@@ -210,9 +210,6 @@ export const action = async ({request, context}: LoaderFunctionArgs) => {
 export default function Product() {
   const {product, shop, recommended, variants, locale, judgemeReviewsData} =
     useLoaderData<typeof loader>();
-  console.log('====================================');
-  console.log(product);
-  console.log('====================================');
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
   const translation = useTranslation();

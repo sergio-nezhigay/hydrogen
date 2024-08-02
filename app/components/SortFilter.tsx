@@ -196,11 +196,8 @@ export function FiltersDrawer({
 function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
-  const rootData = useRouteLoaderData<RootLoader>('root');
-  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
-  const locale =
-    selectedLocale.language.toLowerCase() as keyof typeof translations;
-  const translation = translations[locale];
+
+  const translation = useTranslation();
 
   return (
     <>
