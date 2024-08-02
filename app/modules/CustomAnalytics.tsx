@@ -1,14 +1,11 @@
 import {Script, useAnalytics} from '@shopify/hydrogen';
 import {useEffect} from 'react';
 import {useLoaderData} from '@remix-run/react';
-
 import type {loader} from '~/root';
-import {subscribe} from 'graphql';
 
 export function CustomAnalytics() {
   const {subscribe, canTrack} = useAnalytics();
   const data = useLoaderData<typeof loader>();
-
   useEffect(() => {
     setTimeout(() => {
       const isTrackingAllowed = canTrack();
@@ -25,7 +22,6 @@ export function CustomAnalytics() {
         page: data.url,
       });
     });
-
     subscribe('product_viewed', (data) => {
       // eslint-disable-next-line no-console
       console.log('CustomAnalytics - Product viewed:', data);
@@ -59,7 +55,6 @@ export function CustomAnalytics() {
     // subscribe('cart_updated', (data) => {
     //   console.log('CustomAnalytics - Cart updated:', data);
     // });
-
     // // Custom events
     // subscribe('custom_sidecart_viewed', (data) => {
     //   console.log('CustomAnalytics - Custom sidecart opened:', data);
@@ -71,12 +66,10 @@ export function CustomAnalytics() {
       window.dataLayer = [];
     }
   };
-
   const id = data?.googleGtmID;
   if (!id) {
     return null;
   }
-
   return (
     <>
       {/* Load GTM script */}
@@ -87,11 +80,9 @@ export function CustomAnalytics() {
         dangerouslySetInnerHTML={{
           __html: `
               dataLayer = window.dataLayer || [];
-
               function gtag(){
                 dataLayer.push(arguments)
               };
-
               gtag('js', new Date());
               gtag('config', "${id}");
           `,
