@@ -94,8 +94,8 @@ export function CustomAnalytics() {
               gtag('js', new Date());
               gtag('config', "${id}");
           `,
-        }}*/}
-      />
+        }}
+      />*/}
     </>
   );
 }
