@@ -8,21 +8,20 @@ export function CustomAnalytics() {
   const data = useLoaderData<typeof loader>();
   useEffect(() => {
     setTimeout(() => {
-      initializeDataLayer();
       const isTrackingAllowed = canTrack();
       // eslint-disable-next-line no-console
       console.log('CustomAnalytics - isTrackingAllowed', isTrackingAllowed);
     }, 1000);
     // Standard events
-    //subscribe('page_viewed', (data) => {
-    //  // eslint-disable-next-line no-console
-    //  console.log('CustomAnalytics - Page viewed:', data);
-    //  initializeDataLayer();
-    //  window.dataLayer.push({
-    //    event: 'shopify_page_view',
-    //    page: data.url,
-    //  });
-    //});
+    subscribe('page_viewed', (data) => {
+      // eslint-disable-next-line no-console
+      console.log('CustomAnalytics - Page viewed:', data);
+      initializeDataLayer();
+      window.dataLayer.push({
+        event: 'shopify_page_view',
+        page: data.url,
+      });
+    });
     //subscribe('product_viewed', (data) => {
     //  // eslint-disable-next-line no-console
     //  console.log('CustomAnalytics - Product viewed:', data);
