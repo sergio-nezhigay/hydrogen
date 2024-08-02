@@ -329,3 +329,14 @@ export function useTranslation() {
   const translation = translations[locale];
   return translation;
 }
+
+export function translateStock(label: string) {
+  switch (label) {
+    case 'In stock':
+      return 'В наявності';
+    case 'Out of stock':
+      return 'Продано';
+    default:
+      return label;
+  }
+}

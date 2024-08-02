@@ -17,7 +17,7 @@ import type {
 
 import {Heading, Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
-import {DEFAULT_LOCALE, useTranslation} from '~/lib/utils';
+import {DEFAULT_LOCALE, translateStock, useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
 
@@ -126,6 +126,7 @@ export function FiltersDrawer({
   const translation = useTranslation();
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
+    const currentParams = new URLSearchParams(location.search);
     switch (filter.type) {
       case 'PRICE_RANGE':
         const priceFilter = params.get(`${FILTER_URL_PREFIX}price`);
@@ -139,13 +140,20 @@ export function FiltersDrawer({
 
       default:
         const to = getFilterLink(option.input as string, params, location);
+        const isActive =
+          currentParams.toString() ===
+          new URLSearchParams(to.split('?')[1]).toString();
+        const linkClass = isActive
+          ? 'focus:underline hover:underline font-bold text-blue-500'
+          : 'focus:underline hover:underline font-normal text-gray-800';
         return (
           <Link
-            className="focus:underline hover:underline"
+            className={linkClass}
+            //className="focus:underline hover:underline"
             prefetch="intent"
             to={to}
           >
-            {option.label}
+            {translateStock(option.label)}
           </Link>
         );
     }
@@ -212,7 +220,7 @@ function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
               className="flex px-2 border rounded-full gap"
               key={`${filter.label}-${JSON.stringify(filter.filter)}`}
             >
-              <span className="flex-grow">{filter.label}</span>
+              <span className="flex-grow">{translateStock(filter.label)}</span>
               <span>
                 <IconXMark />
               </span>
@@ -251,6 +259,9 @@ function getFilterLink(
   params: URLSearchParams,
   location: ReturnType<typeof useLocation>,
 ) {
+  console.log('====================================');
+  console.log(rawInput, params, location);
+  console.log('====================================');
   const paramsClone = new URLSearchParams(params);
   const newParams = filterInputToParams(rawInput, paramsClone);
   return `${location.pathname}?${newParams.toString()}`;
