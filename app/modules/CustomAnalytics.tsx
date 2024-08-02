@@ -81,7 +81,7 @@ export function CustomAnalytics() {
       {/* Load GTM script */}
       <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
       {/* Initialize GTM container */}
-      {/*<Script
+      <Script
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `
@@ -95,7 +95,7 @@ export function CustomAnalytics() {
               gtag('config', "${id}");
           `,
         }}
-      />*/}
+      />
     </>
   );
 }
