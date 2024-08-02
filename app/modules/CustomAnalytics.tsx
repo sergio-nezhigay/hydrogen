@@ -8,6 +8,7 @@ export function CustomAnalytics() {
   const data = useLoaderData<typeof loader>();
   useEffect(() => {
     setTimeout(() => {
+      initializeDataLayer();
       const isTrackingAllowed = canTrack();
       // eslint-disable-next-line no-console
       console.log('CustomAnalytics - isTrackingAllowed', isTrackingAllowed);
