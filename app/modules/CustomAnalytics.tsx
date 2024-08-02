@@ -73,7 +73,7 @@ export function CustomAnalytics() {
   return (
     <>
       {/* Load GTM script */}
-      <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
+      {/*<Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />*/}
       {/* Initialize GTM container */}
       <Script
         suppressHydrationWarning
