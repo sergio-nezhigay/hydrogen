@@ -357,7 +357,7 @@ function ProductImage({itemData, index}: ProductImageProps) {
           data={image}
           aspectRatio={'1/1'}
           sizes="auto"
-          className="object-cover w-full h-full fadeIn"
+          className="object-cover w-full h-full"
         />
       )}
     </div>

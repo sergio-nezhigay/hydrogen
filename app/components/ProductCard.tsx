@@ -59,7 +59,7 @@ export function ProductCard({
           <div className="card-image aspect-[4/5] bg-primary/5">
             {image && (
               <Image
-                className="fadeIn w-full object-cover"
+                className="w-full object-cover"
                 sizes="auto"
                 aspectRatio="4/5"
                 data={image}

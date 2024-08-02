@@ -35,7 +35,7 @@ export function Thumb({selected, onClick, item}: PropType) {
             height={100}
             aspectRatio={'1/1'}
             sizes="auto"
-            className="object-cover w-full h-full fadeIn"
+            className="object-cover w-full h-full"
           />
         )}
       </button>
