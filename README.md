@@ -46,7 +46,7 @@ npm run dev
 
 ### Setup public domain using ngrok
 
-1. Setup a [ngrok](https://ngrok.com/) account and add a permanent domain (ie. `https://<your-ngrok-domain>.app`).
+1. Setup a [ngrok](https://ngrok.com/) account and add a permanent domain (ie. `https://<your-ngrok-domain>.app`)
 1. Install the [ngrok CLI](https://ngrok.com/download) to use in terminal
 1. Start ngrok using `ngrok http --domain=<your-ngrok-domain>.app 3000`
 
