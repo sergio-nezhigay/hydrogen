@@ -1,4 +1,5 @@
 import {useRef, Suspense} from 'react';
+
 import {Image} from '@shopify/hydrogen';
 import {Disclosure, DisclosurePanel, Listbox} from '@headlessui/react';
 import {ShoppingCart} from 'lucide-react';

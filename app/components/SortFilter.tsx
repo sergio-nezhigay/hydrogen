@@ -2,6 +2,7 @@ import type {SyntheticEvent} from 'react';
 import {useMemo, useState} from 'react';
 import {Menu, Disclosure} from '@headlessui/react';
 import type {Location} from '@remix-run/react';
+import {Check} from 'lucide-react';
 import {
   Link,
   useLocation,
@@ -20,6 +21,7 @@ import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
 import {DEFAULT_LOCALE, customTranslate, useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
+import clsx from 'clsx';
 
 export type AppliedFilter = {
   label: string;
@@ -88,13 +90,11 @@ export function ResponsiveSortFilter({
   children,
   collections = [],
 }: CustomSortFilterProps) {
-  console.log('====================================');
-  console.log();
-  console.log('======ResponsiveSortFilter========');
   return (
     <>
       {/*desktop-active*/}
       {/*rearrange later*/}
+
       <SortFilter
         filters={filters}
         appliedFilters={appliedFilters}
@@ -120,7 +120,6 @@ export function FiltersDrawer({
       filter: JSON.parse(option.input as string),
       label: option.label,
     } as AppliedFilter;
-    const currentParams = new URLSearchParams(location.search);
     switch (filter.type) {
       case 'PRICE_RANGE':
         const priceFilter = params.get(`${FILTER_URL_PREFIX}price`);
@@ -135,11 +134,9 @@ export function FiltersDrawer({
       default:
         const to = getFilterLink(option.input as string, params, location);
         const isActive =
-          currentParams.toString() ===
+          params.toString() ===
           new URLSearchParams(to.split('?')[1]).toString();
-        const linkClass = isActive
-          ? 'focus:underline hover:underline font-bold text-blue-500'
-          : 'focus:underline hover:underline font-normal text-gray-800';
+
         const appliedFilterLink = getAppliedFilterLink(
           appliedFilter,
           params,
@@ -148,11 +145,17 @@ export function FiltersDrawer({
 
         return (
           <Link
-            className={linkClass}
             prefetch="intent"
             to={isActive ? appliedFilterLink : to}
+            className="flex-start gap-1"
           >
-            {customTranslate(option.label)}
+            <span className="size-4 inline-block border">
+              {isActive && (
+                <Check className="size-4 text-slate-50 bg-headerBg" />
+              )}
+            </span>
+
+            <span>{customTranslate(option.label)}</span>
           </Link>
         );
     }
@@ -271,18 +274,13 @@ const PRICE_RANGE_FILTER_DEBOUNCE = 500;
 
 function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
   const location = useLocation();
-  const rootData = useRouteLoaderData<RootLoader>('root');
 
   const params = useMemo(
     () => new URLSearchParams(location.search),
     [location.search],
   );
-  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
 
-  const locale =
-    selectedLocale.language.toLowerCase() as keyof typeof translations;
-
-  const translation = translations[locale];
+  const translation = useTranslation();
 
   const navigate = useNavigate();
 
@@ -406,7 +404,8 @@ export default function SortMenu() {
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
-    <Menu as="div" className="relative z-40">
+    <Menu as="div" className="">
+      {/*<Menu as="div" className="relative z-40">*/}
       <Menu.Button className="flex items-center hover:bg-stone-700/5 rounded-md py-1">
         <span className="px-2">
           <span className="px-2 font-medium">{translation.sort_by}:</span>

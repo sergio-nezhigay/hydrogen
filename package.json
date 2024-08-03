@@ -21,7 +21,6 @@
   ],
   "prettier": "@shopify/prettier-config",
   "dependencies": {
-    "@builder.io/partytown": "^0.10.2",
     "@headlessui/react": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@remix-run/node": "^2.10.1",
