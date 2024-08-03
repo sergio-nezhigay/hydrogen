@@ -53,7 +53,6 @@ export function SortFilter({
   startIsOpen,
 }: SortFilterProps) {
   const [isOpen, setIsOpen] = useState(startIsOpen);
-  console.log('========SortFilter=============');
   return (
     <>
       <div className="flex items-center justify-between w-full">
@@ -89,30 +88,21 @@ export function ResponsiveSortFilter({
   children,
   collections = [],
 }: CustomSortFilterProps) {
+  console.log('====================================');
+  console.log();
+  console.log('======ResponsiveSortFilter========');
   return (
     <>
-      <div className="md:hidden">
-        {/*mobile-active*/}
-        <SortFilter
-          filters={filters}
-          appliedFilters={appliedFilters}
-          collections={collections}
-          startIsOpen={false}
-        >
-          {children}
-        </SortFilter>
-      </div>
-      <div className="hidden md:block">
-        {/*desktop-active*/}
-        <SortFilter
-          filters={filters}
-          appliedFilters={appliedFilters}
-          collections={collections}
-          startIsOpen={true}
-        >
-          {children}
-        </SortFilter>
-      </div>
+      {/*desktop-active*/}
+      {/*rearrange later*/}
+      <SortFilter
+        filters={filters}
+        appliedFilters={appliedFilters}
+        collections={collections}
+        startIsOpen={true}
+      >
+        {children}
+      </SortFilter>
     </>
   );
 }
