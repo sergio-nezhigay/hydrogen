@@ -330,7 +330,7 @@ export function useTranslation() {
   return translation;
 }
 
-export function translateStock(label: string) {
+export function customTranslate(label: string) {
   switch (label) {
     case 'In stock':
       return 'В наявності';

@@ -1,5 +1,5 @@
 import type {SyntheticEvent} from 'react';
-import {useEffect, useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {Menu, Disclosure} from '@headlessui/react';
 import type {Location} from '@remix-run/react';
 import {
@@ -17,7 +17,7 @@ import type {
 
 import {Heading, Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
-import {DEFAULT_LOCALE, translateStock, useTranslation} from '~/lib/utils';
+import {DEFAULT_LOCALE, customTranslate, useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
 
@@ -53,7 +53,7 @@ export function SortFilter({
   startIsOpen,
 }: SortFilterProps) {
   const [isOpen, setIsOpen] = useState(startIsOpen);
-
+  console.log('========SortFilter=============');
   return (
     <>
       <div className="flex items-center justify-between w-full">
@@ -126,6 +126,10 @@ export function FiltersDrawer({
   const translation = useTranslation();
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
+    const appliedFilter = {
+      filter: JSON.parse(option.input as string),
+      label: option.label,
+    } as AppliedFilter;
     const currentParams = new URLSearchParams(location.search);
     switch (filter.type) {
       case 'PRICE_RANGE':
@@ -146,14 +150,19 @@ export function FiltersDrawer({
         const linkClass = isActive
           ? 'focus:underline hover:underline font-bold text-blue-500'
           : 'focus:underline hover:underline font-normal text-gray-800';
+        const appliedFilterLink = getAppliedFilterLink(
+          appliedFilter,
+          params,
+          location,
+        );
+
         return (
           <Link
             className={linkClass}
-            //className="focus:underline hover:underline"
             prefetch="intent"
-            to={to}
+            to={isActive ? appliedFilterLink : to}
           >
-            {translateStock(option.label)}
+            {customTranslate(option.label)}
           </Link>
         );
     }
@@ -220,7 +229,7 @@ function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
               className="flex px-2 border rounded-full gap"
               key={`${filter.label}-${JSON.stringify(filter.filter)}`}
             >
-              <span className="flex-grow">{translateStock(filter.label)}</span>
+              <span className="flex-grow">{customTranslate(filter.label)}</span>
               <span>
                 <IconXMark />
               </span>
@@ -236,13 +245,17 @@ function getAppliedFilterLink(
   filter: AppliedFilter,
   params: URLSearchParams,
   location: Location,
-) {
+): string {
   const paramsClone = new URLSearchParams(params);
+
   Object.entries(filter.filter).forEach(([key, value]) => {
     const fullKey = FILTER_URL_PREFIX + key;
-    paramsClone.delete(fullKey, JSON.stringify(value));
+    if (value != null) {
+      paramsClone.delete(fullKey, JSON.stringify(value));
+    }
   });
-  return `${location.pathname}?${paramsClone.toString()}`;
+  const resultUrl = `${location.pathname}?${paramsClone.toString()}`;
+  return resultUrl;
 }
 
 function getSortLink(
@@ -259,9 +272,6 @@ function getFilterLink(
   params: URLSearchParams,
   location: ReturnType<typeof useLocation>,
 ) {
-  console.log('====================================');
-  console.log(rawInput, params, location);
-  console.log('====================================');
   const paramsClone = new URLSearchParams(params);
   const newParams = filterInputToParams(rawInput, paramsClone);
   return `${location.pathname}?${newParams.toString()}`;
@@ -272,6 +282,11 @@ const PRICE_RANGE_FILTER_DEBOUNCE = 500;
 function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
   const location = useLocation();
   const rootData = useRouteLoaderData<RootLoader>('root');
+
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search],
+  );
   const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
 
   const locale =
@@ -279,10 +294,6 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
 
   const translation = translations[locale];
 
-  const params = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search],
-  );
   const navigate = useNavigate();
 
   const [minPrice, setMinPrice] = useState(min);
