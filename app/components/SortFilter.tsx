@@ -1,6 +1,6 @@
 import type {SyntheticEvent} from 'react';
 import {useMemo, useState} from 'react';
-import {Menu, Disclosure} from '@headlessui/react';
+import {Menu, Disclosure, DisclosurePanel} from '@headlessui/react';
 import type {Location} from '@remix-run/react';
 import {Check} from 'lucide-react';
 import {
@@ -147,7 +147,7 @@ export function FiltersDrawer({
           <Link
             prefetch="intent"
             to={isActive ? appliedFilterLink : to}
-            className="flex-start gap-1"
+            className="flex-start gap-2"
           >
             <span className="size-4 inline-block border">
               {isActive && (
@@ -164,12 +164,11 @@ export function FiltersDrawer({
   return (
     <>
       <nav className="py-8">
-        {appliedFilters.length > 0 ? (
+        {appliedFilters.length > 0 && (
           <div className="pb-8">
             <AppliedFilters filters={appliedFilters} />
           </div>
-        ) : null}
-
+        )}
         <Heading as="h4" size="lead" className="pb-4">
           {translation.filter_by}
         </Heading>
@@ -182,7 +181,11 @@ export function FiltersDrawer({
                     <Text size="lead">{filter.label}</Text>
                     <IconCaret direction={open ? 'up' : 'down'} />
                   </Disclosure.Button>
-                  <Disclosure.Panel key={filter.id}>
+                  <DisclosurePanel
+                    key={filter.id}
+                    transition
+                    className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-8 data-[closed]:opacity-0"
+                  >
                     <ul key={filter.id} className="py-2">
                       {filter.values?.map((option) => {
                         return (
@@ -192,7 +195,7 @@ export function FiltersDrawer({
                         );
                       })}
                     </ul>
-                  </Disclosure.Panel>
+                  </DisclosurePanel>
                 </>
               )}
             </Disclosure>
@@ -207,30 +210,23 @@ function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
 
-  const translation = useTranslation();
-
   return (
-    <>
-      <Heading as="h4" size="lead" className="pb-4">
-        {translation.applied_filters}
-      </Heading>
-      <div className="flex flex-wrap gap-2">
-        {filters.map((filter: AppliedFilter) => {
-          return (
-            <Link
-              to={getAppliedFilterLink(filter, params, location)}
-              className="flex px-2 border rounded-full gap"
-              key={`${filter.label}-${JSON.stringify(filter.filter)}`}
-            >
-              <span className="flex-grow">{customTranslate(filter.label)}</span>
-              <span>
-                <IconXMark />
-              </span>
-            </Link>
-          );
-        })}
-      </div>
-    </>
+    <div className="flex flex-wrap gap-2">
+      {filters.map((filter: AppliedFilter) => {
+        return (
+          <Link
+            to={getAppliedFilterLink(filter, params, location)}
+            className="flex px-2 border rounded-full gap"
+            key={filter.label}
+          >
+            <span className="flex-grow">{customTranslate(filter.label)}</span>
+            <span>
+              <IconXMark />
+            </span>
+          </Link>
+        );
+      })}
+    </div>
   );
 }
 
