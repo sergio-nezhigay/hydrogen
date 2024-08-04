@@ -34,6 +34,7 @@ import {translations} from '~/data/translations';
 import LangSelector from '~/modules/LangSelector';
 import BreadCrumbs from '~/modules/BreadCrumbs';
 import clsx from 'clsx';
+import {Phone, Clock, Mail, MapPin} from 'lucide-react';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -455,27 +456,24 @@ interface FooterProps {
 }
 
 interface FooterItemProps {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   content: React.ReactNode;
 }
 
-const FooterItem: React.FC<FooterItemProps> = ({icon, title, content}) => (
-  <li className="grid grid-cols-[50px_1fr] items-center  whitespace-pre py-2">
-    <div className="flex size-8 items-center justify-center">
-      <Image
-        src={icon}
-        alt={title}
-        className="max-h-full max-w-full"
-        sizes="32px"
-      />
-    </div>
-    <div>
-      <strong>{title}:</strong>
-      {content}
-    </div>
-  </li>
-);
+function FooterItem({icon, title, content}: FooterItemProps) {
+  return (
+    <li className="grid grid-cols-[50px_1fr] items-center whitespace-pre py-2">
+      <div className="flex size-8 items-center justify-center">{icon}</div>
+      <div>
+        <strong>{title}:</strong>
+        {content}
+      </div>
+    </li>
+  );
+}
+
+export default FooterItem;
 
 const Footer: React.FC<FooterProps> = ({locale}) => {
   const translation = translations[locale];
@@ -492,7 +490,7 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
     >
       <ul className="grid list-none grid-cols-1 gap-4 border-t border-gray-700 p-0">
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/phone-flip-svgrepo-com_1.svg?v=1721456243"
+          icon={<Phone size={32} />}
           title={translation.phone}
           content={
             <a href="tel:+380980059236" className={linkStyle}>
@@ -501,12 +499,12 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
           }
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/time-svgrepo-com_1_1.svg?v=1721456153"
+          icon={<Clock size={32} />}
           title={translation.working_hours}
           content={translation.working_hours_details}
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/email-svgrepo-com_3.svg?v=1721455854"
+          icon={<Mail size={32} />}
           title="Email"
           content={
             <a href="mailto:info@informatica.com.ua" className={linkStyle}>
@@ -515,7 +513,7 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
           }
         />
         <FooterItem
-          icon="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/place-marker-svgrepo-com_2.svg?v=1721456036"
+          icon={<MapPin size={32} />}
           title={translation.address}
           content={<span className="ml-2">{translation.address_details}</span>}
         />
@@ -523,68 +521,3 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
     </Section>
   );
 };
-
-function FooterLink({item}: {item: ChildEnhancedMenuItem}) {
-  if (item.to.startsWith('http')) {
-    return (
-      <a href={item.to} target={item.target} rel="noopener noreferrer">
-        {item.title}
-      </a>
-    );
-  }
-
-  return (
-    <Link to={item.to} target={item.target} prefetch="intent">
-      {item.title}
-    </Link>
-  );
-}
-
-//function FooterMenu({menu}: {menu?: EnhancedMenu}) {
-//  const styles = {
-//    section: 'grid gap-4',
-//    nav: 'grid gap-2 pb-6',
-//  };
-
-//  return (
-//    <>
-//      {(menu?.items || []).map((item) => (
-//        <section key={item.id} className={styles.section}>
-//          <Disclosure>
-//            {({open}) => (
-//              <>
-//                <Disclosure.Button className="text-left md:cursor-default">
-//                  <Heading className="flex justify-between" size="lead" as="h3">
-//                    {item.title}
-//                    {item?.items?.length > 0 && (
-//                      <span className="md:hidden">
-//                        <IconCaret direction={open ? 'up' : 'down'} />
-//                      </span>
-//                    )}
-//                  </Heading>
-//                </Disclosure.Button>
-//                {item?.items?.length > 0 ? (
-//                  <div
-//                    className={`${
-//                      open ? `h-fit max-h-48` : `max-h-0 md:max-h-fit`
-//                    } overflow-hidden transition-all duration-300`}
-//                  >
-//                    <Suspense data-comment="This suspense fixes a hydration bug in Disclosure.Panel with static prop">
-//                      <Disclosure.Panel static>
-//                        <nav className={styles.nav}>
-//                          {item.items.map((subItem: ChildEnhancedMenuItem) => (
-//                            <FooterLink key={subItem.id} item={subItem} />
-//                          ))}
-//                        </nav>
-//                      </Disclosure.Panel>
-//                    </Suspense>
-//                  </div>
-//                ) : null}
-//              </>
-//            )}
-//          </Disclosure>
-//        </section>
-//      ))}
-//    </>
-//  );
-//}

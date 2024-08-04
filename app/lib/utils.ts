@@ -340,3 +340,28 @@ export function customTranslate(label: string) {
       return label;
   }
 }
+
+export function sortAvailability(a: string, b: string) {
+  if (a.includes('availability') && b.includes('price')) return 1;
+  if (b.includes('availability') && a.includes('price')) return -1;
+  if (a.includes('availability') || a.includes('price')) return 1;
+  return -1;
+}
+
+import {useState, useEffect} from 'react';
+
+export function useViewType() {
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== 'undefined' && window.innerWidth <= 768,
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return isMobile;
+}

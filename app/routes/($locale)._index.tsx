@@ -7,7 +7,6 @@ import {Suspense, useEffect} from 'react';
 import {Await, useLoaderData, useLocation} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
 
-import {Hero} from '~/components/Hero';
 import {FeaturedCollections} from '~/components/FeaturedCollections';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
@@ -85,21 +84,6 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       return null;
     });
 
-  //  const secondaryHero = context.storefront
-  //    .query(COLLECTION_HERO_QUERY, {
-  //      variables: {
-  //        handle: 'backcountry',
-  //        country,
-  //        language,
-  //      },
-  //    })
-  //    .catch((error) => {
-  //      // Log query errors, but don't throw them so the page can still render
-  //      // eslint-disable-next-line no-console
-  //      console.error(error);
-  //      return null;
-  //    });
-
   const featuredCollections = context.storefront
     .query(FEATURED_COLLECTIONS_QUERY, {
       variables: {
@@ -114,26 +98,9 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       return null;
     });
 
-  //  const tertiaryHero = context.storefront
-  //    .query(COLLECTION_HERO_QUERY, {
-  //      variables: {
-  //        handle: 'winter-2022',
-  //        country,
-  //        language,
-  //      },
-  //    })
-  //    .catch((error) => {
-  //      // Log query errors, but don't throw them so the page can still render
-  //      // eslint-disable-next-line no-console
-  //      console.error(error);
-  //      return null;
-  //    });
-
   return {
     featuredProducts,
-    //secondaryHero,
     featuredCollections,
-    //tertiaryHero,
     language,
   };
 }
@@ -153,10 +120,6 @@ export default function Homepage() {
 
   return (
     <>
-      {/*{primaryHero && (
-        <Hero {...primaryHero} height="full" top loading="eager" />
-      )}*/}
-
       {featuredProducts && (
         <Suspense>
           <Await resolve={featuredProducts}>
@@ -179,19 +142,6 @@ export default function Homepage() {
           </Await>
         </Suspense>
       )}
-
-      {/*{secondaryHero && (
-        <Suspense fallback={<Hero {...skeletons[1]} />}>
-          <Await resolve={secondaryHero}>
-            {(response) => {
-              if (!response || !response?.hero) {
-                return <></>;
-              }
-              return <Hero {...response.hero} />;
-            }}
-          </Await>
-        </Suspense>
-      )}*/}
 
       {featuredCollections && (
         <Suspense>

@@ -18,7 +18,13 @@ import type {
 
 import {Heading, Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
-import {DEFAULT_LOCALE, customTranslate, useTranslation} from '~/lib/utils';
+import {
+  DEFAULT_LOCALE,
+  customTranslate,
+  sortAvailability,
+  useTranslation,
+  useViewType,
+} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
 import clsx from 'clsx';
@@ -90,19 +96,28 @@ export function ResponsiveSortFilter({
   children,
   collections = [],
 }: CustomSortFilterProps) {
+  const isMobile = useViewType();
   return (
     <>
-      {/*desktop-active*/}
-      {/*rearrange later*/}
-
-      <SortFilter
-        filters={filters}
-        appliedFilters={appliedFilters}
-        collections={collections}
-        startIsOpen={true}
-      >
-        {children}
-      </SortFilter>
+      {isMobile ? (
+        <SortFilter
+          filters={filters}
+          appliedFilters={appliedFilters}
+          collections={collections}
+          startIsOpen={false}
+        >
+          {children}
+        </SortFilter>
+      ) : (
+        <SortFilter
+          filters={filters}
+          appliedFilters={appliedFilters}
+          collections={collections}
+          startIsOpen={true}
+        >
+          {children}
+        </SortFilter>
+      )}
     </>
   );
 }
@@ -160,7 +175,9 @@ export function FiltersDrawer({
         );
     }
   };
-
+  console.log('====================================');
+  console.log(filters);
+  console.log('====================================');
   return (
     <>
       <nav className="py-8">
@@ -173,33 +190,35 @@ export function FiltersDrawer({
           {translation.filter_by}
         </Heading>
         <div className="divide-y">
-          {filters.map((filter: Filter) => (
-            <Disclosure as="div" key={filter.id} className="w-full">
-              {({open}) => (
-                <>
-                  <Disclosure.Button className="flex justify-between w-full py-4">
-                    <Text size="lead">{filter.label}</Text>
-                    <IconCaret direction={open ? 'up' : 'down'} />
-                  </Disclosure.Button>
-                  <DisclosurePanel
-                    key={filter.id}
-                    transition
-                    className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-8 data-[closed]:opacity-0"
-                  >
-                    <ul key={filter.id} className="py-2">
-                      {filter.values?.map((option) => {
-                        return (
-                          <li key={option.id} className="pb-4">
-                            {filterMarkup(filter, option)}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </DisclosurePanel>
-                </>
-              )}
-            </Disclosure>
-          ))}
+          {filters
+            .sort((a, b) => sortAvailability(a.id, b.id))
+            .map((filter: Filter) => (
+              <Disclosure as="div" key={filter.id} className="w-full">
+                {({open}) => (
+                  <>
+                    <Disclosure.Button className="flex justify-between w-full py-4">
+                      <Text size="lead">{filter.label}</Text>
+                      <IconCaret direction={open ? 'up' : 'down'} />
+                    </Disclosure.Button>
+                    <DisclosurePanel
+                      key={filter.id}
+                      transition
+                      className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-8 data-[closed]:opacity-0"
+                    >
+                      <ul key={filter.id} className="py-2">
+                        {filter.values?.map((option) => {
+                          return (
+                            <li key={option.id} className="pb-4">
+                              {filterMarkup(filter, option)}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </DisclosurePanel>
+                  </>
+                )}
+              </Disclosure>
+            ))}
         </div>
       </nav>
     </>
@@ -319,12 +338,12 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
   };
 
   return (
-    <div className="flex flex-col">
-      <label className="mb-4">
+    <div className="flex md:flex-col gap-2">
+      <label className="mb-4 ">
         <span>{translation.from}</span>
         <input
           name="minPrice"
-          className="text-black"
+          className="text-black w-full"
           type="number"
           value={minPrice ?? ''}
           placeholder={'₴'}
@@ -335,7 +354,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
         <span>{translation.to}</span>
         <input
           name="maxPrice"
-          className="text-black"
+          className="text-black w-full"
           type="number"
           value={maxPrice ?? ''}
           placeholder={'₴'}
