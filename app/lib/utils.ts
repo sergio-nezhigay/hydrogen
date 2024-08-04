@@ -1,5 +1,5 @@
 import {useLocation, useRouteLoaderData} from '@remix-run/react';
-import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
+import type {Filter, MoneyV2} from '@shopify/hydrogen/storefront-api-types';
 import type {FulfillmentStatus} from '@shopify/hydrogen/customer-account-api-types';
 import typographicBase from 'typographic-base';
 import type {ClassValue} from 'clsx';
@@ -341,11 +341,16 @@ export function customTranslate(label: string) {
   }
 }
 
-export function sortAvailability(a: string, b: string) {
-  if (a.includes('availability') && b.includes('price')) return 1;
-  if (b.includes('availability') && a.includes('price')) return -1;
-  if (a.includes('availability') || a.includes('price')) return 1;
-  return -1;
+export function sortFilters(a: Filter, b: Filter) {
+  const isAvailability = (id: string) => id.includes('availability');
+  const isPrice = (id: string) => id.includes('price');
+
+  if (isAvailability(a.id) && !isAvailability(b.id)) return 1;
+  if (!isAvailability(a.id) && isAvailability(b.id)) return -1;
+  if (isPrice(a.id) && !isPrice(b.id)) return 1;
+  if (!isPrice(a.id) && isPrice(b.id)) return -1;
+
+  return 1;
 }
 
 import {useState, useEffect} from 'react';

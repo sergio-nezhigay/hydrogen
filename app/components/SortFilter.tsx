@@ -21,7 +21,7 @@ import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
 import {
   DEFAULT_LOCALE,
   customTranslate,
-  sortAvailability,
+  sortFilters,
   useTranslation,
   useViewType,
 } from '~/lib/utils';
@@ -191,7 +191,7 @@ export function FiltersDrawer({
         </Heading>
         <div className="divide-y">
           {filters
-            .sort((a, b) => sortAvailability(a.id, b.id))
+            .sort((a, b) => sortFilters(a, b))
             .map((filter: Filter) => (
               <Disclosure as="div" key={filter.id} className="w-full">
                 {({open}) => (
