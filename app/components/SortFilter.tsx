@@ -162,9 +162,9 @@ export function FiltersDrawer({
           <Link
             prefetch="intent"
             to={isActive ? appliedFilterLink : to}
-            className="flex-start gap-2"
+            className="flex-start gap-2 hover:bg-slate-100 p-1 rounded-sm group "
           >
-            <span className="size-4 inline-block border">
+            <span className="size-4 inline-block border border-stone-300 rounded-sm group-hover:border-stone-800">
               {isActive && (
                 <Check className="size-4 text-slate-50 bg-headerBg" />
               )}
@@ -175,9 +175,7 @@ export function FiltersDrawer({
         );
     }
   };
-  console.log('====================================');
-  console.log(filters);
-  console.log('====================================');
+
   return (
     <>
       <nav className="py-8">
@@ -193,11 +191,21 @@ export function FiltersDrawer({
           {filters
             .sort((a, b) => sortFilters(a, b))
             .map((filter: Filter) => (
-              <Disclosure as="div" key={filter.id} className="w-full">
+              <Disclosure
+                defaultOpen={true}
+                as="div"
+                key={filter.id}
+                className="w-full"
+              >
                 {({open}) => (
                   <>
-                    <Disclosure.Button className="flex justify-between w-full py-4">
-                      <Text size="lead">{filter.label}</Text>
+                    <Disclosure.Button className="flex justify-between w-full py-2">
+                      <Text
+                        size="lead"
+                        className="text-secondary font-normal hover:text-red"
+                      >
+                        {filter.label}
+                      </Text>
                       <IconCaret direction={open ? 'up' : 'down'} />
                     </Disclosure.Button>
                     <DisclosurePanel
@@ -205,10 +213,10 @@ export function FiltersDrawer({
                       transition
                       className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-8 data-[closed]:opacity-0"
                     >
-                      <ul key={filter.id} className="py-2">
+                      <ul key={filter.id} className="py-1">
                         {filter.values?.map((option) => {
                           return (
-                            <li key={option.id} className="pb-4">
+                            <li key={option.id} className="pb-2">
                               {filterMarkup(filter, option)}
                             </li>
                           );
@@ -235,7 +243,7 @@ function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
         return (
           <Link
             to={getAppliedFilterLink(filter, params, location)}
-            className="flex px-2 border rounded-full gap"
+            className="flex px-2 border rounded-full gap hover:bg-slate-100"
             key={filter.label}
           >
             <span className="flex-grow">{customTranslate(filter.label)}</span>
@@ -338,7 +346,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
   };
 
   return (
-    <div className="flex md:flex-col gap-2">
+    <div className="flex  gap-2">
       <label className="mb-4 ">
         <span>{translation.from}</span>
         <input

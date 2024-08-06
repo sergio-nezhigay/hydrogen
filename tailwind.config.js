@@ -39,7 +39,7 @@ module.exports = {
         notice: 'rgb(var(--color-accent) / <alpha-value>)',
         shopPay: 'rgb(var(--color-shop-pay) / <alpha-value>)',
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
+          DEFAULT: 'var(--secondary)',
           foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
