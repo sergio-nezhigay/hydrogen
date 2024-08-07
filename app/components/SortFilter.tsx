@@ -49,7 +49,7 @@ export type CustomSortFilterProps = {
 };
 
 type SortFilterProps = CustomSortFilterProps & {
-  startIsOpen: boolean;
+  isDesktop: boolean;
 };
 export const FILTER_URL_PREFIX = 'filter.';
 
@@ -58,20 +58,30 @@ export function SortFilter({
   appliedFilters = [],
   children,
   collections = [],
-  startIsOpen,
+  isDesktop,
 }: SortFilterProps) {
-  const [isOpen, setIsOpen] = useState(startIsOpen);
+  const [isOpen, setIsOpen] = useState(isDesktop);
   return (
     <>
-      <div className="flex items-center justify-between w-full">
+      <div
+        className={clsx(
+          'w-full grid grid-cols-[1fr_auto] gap-4 items-center',
+          {},
+        )}
+      >
         <button
           onClick={() => setIsOpen(!isOpen)}
           className={
-            'relative flex items-center justify-center w-8 h-8 focus:ring-primary/5 hover:bg-stone-700/5 rounded-md'
+            'md:hidden relative flex items-center justify-center w-8 h-8 focus:ring-primary/5 hover:bg-stone-700/5 rounded-md'
           }
         >
           <IconFilters />
         </button>
+        <div className="sm-max:col-span-2 md:row-start-1 sm-max:min-h-[26px]">
+          {appliedFilters.length > 0 && (
+            <AppliedFilters filters={appliedFilters} />
+          )}
+        </div>
         <SortMenu />
       </div>
       <div className="flex flex-col flex-wrap md:flex-row">
@@ -82,12 +92,25 @@ export function SortFilter({
               : 'opacity-0 md:min-w-[0px] md:w-[0px] pr-0 max-h-0 md:max-h-full'
           }`}
         >
-          <FiltersDrawer filters={filters} appliedFilters={appliedFilters} />
+          <FiltersDrawer
+            filters={filters}
+            appliedFilters={appliedFilters}
+            isDesktop={isDesktop}
+          />
         </div>
         <div className="flex-1">{children}</div>
       </div>
     </>
   );
+}
+
+interface SelectedFilter2Props {
+  filters: AppliedFilter[];
+}
+
+function SelectedFilter2({filters}: SelectedFilter2Props) {
+  console.log(filters);
+  return <AppliedFilters filters={filters} />;
 }
 
 export function ResponsiveSortFilter({
@@ -104,7 +127,7 @@ export function ResponsiveSortFilter({
           filters={filters}
           appliedFilters={appliedFilters}
           collections={collections}
-          startIsOpen={false}
+          isDesktop={false}
         >
           {children}
         </SortFilter>
@@ -113,7 +136,7 @@ export function ResponsiveSortFilter({
           filters={filters}
           appliedFilters={appliedFilters}
           collections={collections}
-          startIsOpen={true}
+          isDesktop={true}
         >
           {children}
         </SortFilter>
@@ -178,12 +201,7 @@ export function FiltersDrawer({
 
   return (
     <>
-      <nav className="py-8">
-        {appliedFilters.length > 0 && (
-          <div className="pb-8">
-            <AppliedFilters filters={appliedFilters} />
-          </div>
-        )}
+      <nav className="py-4">
         <Heading as="h4" size="lead" className="pb-4">
           {translation.filter_by}
         </Heading>
@@ -208,11 +226,7 @@ export function FiltersDrawer({
                       </Text>
                       <IconCaret direction={open ? 'up' : 'down'} />
                     </Disclosure.Button>
-                    <DisclosurePanel
-                      key={filter.id}
-                      transition
-                      className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-8 data-[closed]:opacity-0"
-                    >
+                    <DisclosurePanel key={filter.id}>
                       <ul key={filter.id} className="py-1">
                         {filter.values?.map((option) => {
                           return (
@@ -427,7 +441,7 @@ export default function SortMenu() {
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
-    <Menu as="div" className="">
+    <Menu as="div" className="shrink-0 row-start-1 col-start-2">
       {/*<Menu as="div" className="relative z-40">*/}
       <Menu.Button className="flex items-center hover:bg-stone-700/5 rounded-md py-1">
         <span className="px-2">
