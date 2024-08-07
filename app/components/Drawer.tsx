@@ -48,7 +48,7 @@ export function Drawer({
         <div className="fixed inset-0">
           <div className="absolute inset-0 overflow-hidden">
             <div
-              className={`fixed inset-y-0 flex max-w-full ${
+              className={`fixed inset-y-0 flex max-w-[360px] ${
                 openFrom === 'right' ? 'right-0' : ''
               }`}
             >

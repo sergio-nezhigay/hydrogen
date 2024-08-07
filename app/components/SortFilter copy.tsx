@@ -27,8 +27,9 @@ import {
 } from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
+import clsx from 'clsx';
 
-import {useDrawer, Drawer} from './Drawer';
+import {Test} from './Test';
 
 export type AppliedFilter = {
   label: string;
@@ -42,60 +43,115 @@ export type SortParam =
   | 'newest'
   | 'featured';
 
-export type SortFilterProps = {
+export type CustomSortFilterProps = {
   filters: Filter[];
   appliedFilters?: AppliedFilter[];
   children: React.ReactNode;
   collections?: Array<{handle: string; title: string}>;
 };
 
+type SortFilterProps = CustomSortFilterProps & {
+  isDesktop: boolean;
+};
 export const FILTER_URL_PREFIX = 'filter.';
 
 export function SortFilter({
   filters,
   appliedFilters = [],
   children,
+  collections = [],
+  isDesktop,
 }: SortFilterProps) {
+  const [isOpen, setIsOpen] = useState(isDesktop);
+  return (
+    <>
+      <Test />
+      <div
+        className={clsx(
+          'w-full grid grid-cols-[1fr_auto] gap-4 items-center',
+          {},
+        )}
+      >
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={
+            'md:hidden relative flex items-center justify-center w-8 h-8 focus:ring-primary/5 hover:bg-stone-700/5 rounded-md'
+          }
+        >
+          <IconFilters />
+        </button>
+        <div className="sm-max:col-span-2 md:row-start-1 sm-max:min-h-[26px]">
+          {appliedFilters.length > 0 && (
+            <AppliedFilters filters={appliedFilters} />
+          )}
+        </div>
+        <SortMenu />
+      </div>
+      <div className="flex flex-col flex-wrap md:flex-row">
+        <div
+          className={`transition-all duration-200 ${
+            isOpen
+              ? 'opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full'
+              : 'opacity-0 md:min-w-[0px] md:w-[0px] pr-0 max-h-0 md:max-h-full'
+          }`}
+        >
+          <FiltersDrawer
+            filters={filters}
+            appliedFilters={appliedFilters}
+            isDesktop={isDesktop}
+          />
+        </div>
+        <div className="flex-1">{children}</div>
+      </div>
+    </>
+  );
+}
+
+interface SelectedFilter2Props {
+  filters: AppliedFilter[];
+}
+
+function SelectedFilter2({filters}: SelectedFilter2Props) {
+  console.log(filters);
+  return <AppliedFilters filters={filters} />;
+}
+
+export function ResponsiveSortFilter({
+  filters,
+  appliedFilters = [],
+  children,
+  collections = [],
+}: CustomSortFilterProps) {
   const isMobile = useViewType();
   return (
     <>
       {isMobile ? (
-        <>
-          <div className="flex-between">
-            <FiltersDrawer filters={filters} appliedFilters={appliedFilters} />
-            <SortMenu />
-          </div>
-
-          <div className="flex flex-col flex-wrap md:flex-row">
-            <div className="flex-1">{children}</div>
-          </div>
-        </>
+        <SortFilter
+          filters={filters}
+          appliedFilters={appliedFilters}
+          collections={collections}
+          isDesktop={false}
+        >
+          {children}
+        </SortFilter>
       ) : (
-        <>
-          <div className="flex">
-            <>
-              {appliedFilters.length > 0 && (
-                <AppliedFilters filters={appliedFilters} />
-              )}
-            </>
-            <div className="ml-auto">
-              <SortMenu />
-            </div>
-          </div>
-          <div className="flex flex-col flex-wrap md:flex-row">
-            <div className="opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full">
-              <Filters filters={filters} />
-            </div>
-
-            <div className="flex-1">{children}</div>
-          </div>
-        </>
+        <SortFilter
+          filters={filters}
+          appliedFilters={appliedFilters}
+          collections={collections}
+          isDesktop={true}
+        >
+          {children}
+        </SortFilter>
       )}
     </>
   );
 }
 
-function Filters({filters}: {filters: Filter[]}) {
+export function FiltersDrawer({
+  filters = [],
+  appliedFilters = [],
+}: Omit<SortFilterProps, 'children' | 'startIsOpen'>) {
   const [params] = useSearchParams();
   const location = useLocation();
   const translation = useTranslation();
@@ -174,7 +230,7 @@ function Filters({filters}: {filters: Filter[]}) {
                       <IconCaret direction={open ? 'up' : 'down'} />
                     </Disclosure.Button>
                     <DisclosurePanel key={filter.id}>
-                      <ul key={filter.id} className="py-2">
+                      <ul key={filter.id} className="py-1">
                         {filter.values?.map((option) => {
                           return (
                             <li key={option.id} className="pb-2">
@@ -265,7 +321,9 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
   );
 
   const translation = useTranslation();
+
   const navigate = useNavigate();
+
   const [minPrice, setMinPrice] = useState(min);
   const [maxPrice, setMaxPrice] = useState(max);
 
@@ -398,14 +456,13 @@ export default function SortMenu() {
 
       <Menu.Items
         as="nav"
-        className="absolute right-0 flex flex-col p-4 text-right rounded-sm
-        bg-contrast"
+        className="absolute right-0 flex flex-col p-4 text-right rounded-sm bg-stone-50"
       >
         {items.map((item) => (
           <Menu.Item key={item.label}>
             {() => (
               <Link
-                className={`block text-sm pb-2 px-3 hover:font-bold ${
+                className={`block text-sm pb-2 px-3 ${
                   activeItem?.key === item.key ? 'font-bold' : 'font-normal'
                 }`}
                 to={getSortLink(item.key, params, location)}
@@ -417,39 +474,5 @@ export default function SortMenu() {
         ))}
       </Menu.Items>
     </Menu>
-  );
-}
-
-interface FiltersDrawerProps {
-  filters: Filter[];
-  appliedFilters?: AppliedFilter[];
-}
-
-function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
-  const {
-    isOpen: isOpen,
-    openDrawer: onOpen,
-    closeDrawer: onClose,
-  } = useDrawer();
-  return (
-    <>
-      <button
-        onClick={onOpen}
-        className="size-8 flex-center hover:bg-stone-700/5 rounded-md"
-      >
-        <IconFilters />
-      </button>
-      <Drawer open={isOpen} onClose={onClose} openFrom="left" heading="Filters">
-        <div className="p-4">
-          <div className="min-h-[26px]">
-            {appliedFilters && appliedFilters.length > 0 && (
-              <AppliedFilters filters={appliedFilters} />
-            )}
-          </div>
-
-          <Filters filters={filters} />
-        </div>
-      </Drawer>
-    </>
   );
 }

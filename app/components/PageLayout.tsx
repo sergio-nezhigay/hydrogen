@@ -109,9 +109,11 @@ function Header({
   return (
     <>
       <CartDrawer isOpen={isCartOpen} onClose={closeCart} />
+
       {menu && (
         <MenuDrawer isOpen={isMenuOpen} onClose={closeMenu} menu={menu} />
       )}
+
       <DesktopHeader
         isHome={isHome}
         title={title}
