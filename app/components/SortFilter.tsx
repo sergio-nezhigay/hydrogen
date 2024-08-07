@@ -99,6 +99,7 @@ function Filters({filters}: {filters: Filter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
   const translation = useTranslation();
+  const sortedFilters = filters.sort((a, b) => sortFilters(a, b));
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     const appliedFilter = {
@@ -153,41 +154,39 @@ function Filters({filters}: {filters: Filter[]}) {
           {translation.filter_by}
         </Heading>
         <div className="divide-y">
-          {filters
-            .sort((a, b) => sortFilters(a, b))
-            .map((filter: Filter) => (
-              <Disclosure
-                defaultOpen={true}
-                as="div"
-                key={filter.id}
-                className="w-full"
-              >
-                {({open}) => (
-                  <>
-                    <Disclosure.Button className="flex justify-between w-full py-1">
-                      <Text
-                        size="lead"
-                        className="text-secondary font-normal hover:text-red"
-                      >
-                        {filter.label}
-                      </Text>
-                      <IconCaret direction={open ? 'up' : 'down'} />
-                    </Disclosure.Button>
-                    <DisclosurePanel key={filter.id}>
-                      <ul key={filter.id} className="py-2">
-                        {filter.values?.map((option) => {
-                          return (
-                            <li key={option.id} className="pb-2">
-                              {filterMarkup(filter, option)}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </DisclosurePanel>
-                  </>
-                )}
-              </Disclosure>
-            ))}
+          {sortedFilters.map((filter: Filter) => (
+            <Disclosure
+              defaultOpen={true}
+              as="div"
+              key={filter.id}
+              className="w-full"
+            >
+              {({open}) => (
+                <>
+                  <Disclosure.Button className="flex justify-between w-full py-1">
+                    <Text
+                      size="lead"
+                      className="text-secondary font-normal hover:text-red"
+                    >
+                      {filter.label}
+                    </Text>
+                    <IconCaret direction={open ? 'up' : 'down'} />
+                  </Disclosure.Button>
+                  <DisclosurePanel key={filter.id}>
+                    <ul key={filter.id} className="py-2">
+                      {filter.values?.map((option) => {
+                        return (
+                          <li key={option.id} className="pb-2">
+                            {filterMarkup(filter, option)}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </DisclosurePanel>
+                </>
+              )}
+            </Disclosure>
+          ))}
         </div>
       </nav>
     </>
@@ -439,7 +438,7 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
       >
         <IconFilters />
       </button>
-      <Drawer open={isOpen} onClose={onClose} openFrom="left" heading="Filters">
+      <Drawer open={isOpen} onClose={onClose} openFrom="left">
         <div className="p-4">
           <div className="min-h-[26px]">
             {appliedFilters && appliedFilters.length > 0 && (
