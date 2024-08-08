@@ -62,7 +62,7 @@ export const links: LinksFunction = () => {
     {rel: 'stylesheet', href: styles},
     {rel: 'preconnect', href: 'https://cdn.shopify.com'},
     {rel: 'preconnect', href: 'https://byte.com.ua'},
-    {rel: 'preconnect', href: 'https://www.googletagmanager.com'},
+    {rel: 'dns-prefetch', href: 'https://www.googletagmanager.com'},
     {rel: 'dns-prefetch', href: 'https://analytics.google.com'},
     {rel: 'dns-prefetch', href: 'https://googleads.g.doubleclick.net'},
     {rel: 'dns-prefetch', href: 'https://monorail-edge.shopifysvc.com'},
