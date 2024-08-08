@@ -41,8 +41,8 @@ export const translations = {
     search: 'Пошук',
     isearchfor: 'Я шукаю',
     prev: 'Попередня',
-    basket: 'Кошик',
     next: 'Наступна',
+    basket: 'Кошик',
     loading: 'Завантаження',
     no_results: 'Немає результатів, спробуйте інший пошук.',
     trending_collections: 'Популярні колекції',
@@ -50,6 +50,8 @@ export const translations = {
     available: 'Є в наявності',
     no_items_added_yet: 'Схоже, ви ще нічого не додали, давайте почнемо!',
     continue_shopping: 'Продовжити покупки',
+    copyright: '© 2024 Byte. Всі права захищено. ',
+    dev_site: 'Сайт розробника',
   },
   ru: {
     buy: 'Купить',
@@ -102,5 +104,7 @@ export const translations = {
     available: 'Есть в наличии',
     no_items_added_yet: 'Похоже, вы еще ничего не добавили, давайте начнем!',
     continue_shopping: 'Продолжить покупки',
+    copyright: '© 2024 Byte. Все права защищены. ',
+    dev_site: 'Сайт разработчика',
   },
 } as const;

@@ -520,6 +520,15 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
           content={<span className="ml-2">{translation.address_details}</span>}
         />
       </ul>
+      <p className="mt-4 text-center text-sm text-gray-400">
+        {translation.copyright}
+        <a
+          href="https://serhii.vercel.app/"
+          className="text-gray-300 underline"
+        >
+          {translation.dev_site}
+        </a>
+      </p>
     </Section>
   );
 };

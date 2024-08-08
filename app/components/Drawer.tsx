@@ -49,7 +49,7 @@ export function Drawer({
           <div className="absolute inset-0 overflow-hidden">
             <div
               className={`fixed inset-y-0 flex  ${
-                openFrom === 'right' ? 'right-0' : 'max-w-[360px]'
+                openFrom === 'right' ? 'right-0' : 'max-w-[320px]'
               }`}
             >
               <Transition.Child
