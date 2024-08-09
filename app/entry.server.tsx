@@ -21,6 +21,7 @@ export default async function handleRequest(
       "'self'",
       'https://cdn.shopify.com',
       'https://*.google-analytics.com',
+      'https://www.google.com',
       'https://*.googletagmanager.com',
     ],
     connectSrc: [
@@ -28,7 +29,7 @@ export default async function handleRequest(
       'https://analytics.google.com',
       'https://*.google-analytics.com',
       'https://*.analytics.google.com',
-      'https://www.google.com',
+
       'https://www.google.com.ua',
       'https://*.googletagmanager.com',
     ],
