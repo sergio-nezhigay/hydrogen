@@ -15,7 +15,6 @@ export default async function handleRequest(
     scriptSrc: [
       "'self'",
       'https://cdn.shopify.com',
-
       'https://*.googletagmanager.com',
     ],
     imgSrc: [
@@ -29,32 +28,10 @@ export default async function handleRequest(
       'https://analytics.google.com',
       'https://*.google-analytics.com',
       'https://*.analytics.google.com',
+      'https://www.google.com.ua',
       'https://*.googletagmanager.com',
     ],
-    //scriptSrc: [
-    //  "'self'",
-    //  'https://cdn.shopify.com',
-    //  'https://*.googletagmanager.com',
-    //  'https://www.googletagmanager.com',
-    //  'https://td.doubleclick.net',
-    //  'https://analytics.google.com',
-    //  'https://googleads.g.doubleclick.net',
-    //],
-    //imgSrc: [
-    //  "'self'",
-    //  'https://cdn.shopify.com',
-    //  'https://www.google.com',
-    //  'https://www.google.com.ua',
-    //  'https://www.googletagmanager.com',
-    //],
-    //connectSrc: [
-    //  "'self'",
-    //  'https://analytics.google.com',
-    //  'https://stats.g.doubleclick.net',
-    //  'https://monorail-edge.shopifysvc.com',
-    //  'https://googleads.g.doubleclick.net',
-    //  'https://cdn.shopify.com',
-    //],
+
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
