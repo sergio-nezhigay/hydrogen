@@ -177,7 +177,7 @@ function Layout({children}: {children?: React.ReactNode}) {
               {children}
             </PageLayout>
 
-            <CustomAnalytics />
+            {/*<CustomAnalytics />*/}
           </Analytics.Provider>
         ) : (
           children
