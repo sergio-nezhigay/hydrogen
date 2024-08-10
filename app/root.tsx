@@ -5,6 +5,7 @@ import {
   type AppLoadContext,
   type MetaArgs,
 } from '@shopify/remix-oxygen';
+
 import {
   isRouteErrorResponse,
   Links,
@@ -22,6 +23,7 @@ import {
   getShopAnalytics,
   getSeoMeta,
   type SeoConfig,
+  Script,
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
 
@@ -33,8 +35,9 @@ import {seoPayload} from '~/lib/seo.server';
 import styles from '~/styles/app.css?url';
 
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
-import {CustomAnalytics} from './modules/CustomAnalytics';
+//import {CustomAnalytics} from './modules/CustomAnalytics';
 import type {translations} from './data/translations';
+import {GoogleTagManager} from './modules/GoogleTagManager';
 
 export type RootLoader = typeof loader;
 
@@ -157,10 +160,31 @@ function Layout({children}: {children?: React.ReactNode}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
+
         <link rel="alternate" href={alternateUkLink} hrefLang="uk" />
         <link rel="alternate" href={alternateRuLink} hrefLang="ru" />
+        {/***********************************************/
+        /**********  EXAMPLE UPDATE STARTS  ************/}
+        <Script src="https://www.googletagmanager.com/gtm.js?id=GTM-WRQRP5RF" />
+        {/**********   EXAMPLE UPDATE END   ************/
+        /***********************************************/}
       </head>
       <body>
+        {/***********************************************/
+        /**********  EXAMPLE UPDATE STARTS  ************/}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WRQRP5RF"
+            height="0"
+            width="0"
+            style={{
+              display: 'none',
+              visibility: 'hidden',
+            }}
+          ></iframe>
+        </noscript>
+        {/**********   EXAMPLE UPDATE END   ************/
+        /***********************************************/}
         {data ? (
           <Analytics.Provider
             cart={data.cart}
@@ -176,7 +200,11 @@ function Layout({children}: {children?: React.ReactNode}) {
             >
               {children}
             </PageLayout>
-
+            {/***********************************************/
+            /**********  EXAMPLE UPDATE STARTS  ************/}
+            <GoogleTagManager />
+            {/**********   EXAMPLE UPDATE END   ************/
+            /***********************************************/}
             {/*<CustomAnalytics />*/}
           </Analytics.Provider>
         ) : (
@@ -197,38 +225,30 @@ export default function App() {
   );
 }
 
-export function ErrorBoundary({error}: {error: Error}) {
-  const routeError = useRouteError();
+export function ErrorBoundary() {
+  const error = useRouteError();
+  let errorMessage = 'Unknown error';
+  let errorStatus = 500;
 
-  const isRouteError = isRouteErrorResponse(routeError);
-
-  let title = 'Error';
-  let pageType = 'page';
-
-  if (isRouteError) {
-    title = 'Not found';
-    if (routeError.status === 404) pageType = routeError.data || pageType;
+  if (isRouteErrorResponse(error)) {
+    errorMessage = error?.data?.message ?? error.data;
+    errorStatus = error.status;
+  } else if (error instanceof Error) {
+    errorMessage = error.message;
   }
 
   return (
-    <Layout>
-      {isRouteError ? (
-        <>
-          {routeError.status === 404 ? (
-            <NotFound type={pageType} />
-          ) : (
-            <GenericError
-              error={{message: `${routeError.status} ${routeError.data}`}}
-            />
-          )}
-        </>
-      ) : (
-        <GenericError error={error instanceof Error ? error : undefined} />
+    <div className="route-error">
+      <h1>Oops</h1>
+      <h2>{errorStatus}</h2>
+      {errorMessage && (
+        <fieldset>
+          <pre>{errorMessage}</pre>
+        </fieldset>
       )}
-    </Layout>
+    </div>
   );
 }
-
 const LAYOUT_QUERY = `#graphql
   query layout(
     $language: LanguageCode
@@ -283,6 +303,7 @@ const LAYOUT_QUERY = `#graphql
 
 async function getLayoutData({storefront, env}: AppLoadContext) {
   const data = await storefront.query(LAYOUT_QUERY, {
+    cache: storefront.CacheLong(),
     variables: {
       headerMenuHandle: 'main-menu',
       language: storefront.i18n.language,
