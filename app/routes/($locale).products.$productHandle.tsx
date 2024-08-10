@@ -53,16 +53,16 @@ export async function loader(args: LoaderFunctionArgs) {
   const {productHandle} = args.params;
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
-  // Start fetching non-critical data without blocking time to first byte
-  //  const deferredData = loadDeferredData(args);
+  //   Start fetching non-critical data without blocking time to first byte
+  const deferredData = loadDeferredData(args);
 
-  //  // Await the critical data required to render initial state of the page
-  //  const criticalData = await loadCriticalData(args);
+  // Await the critical data required to render initial state of the page
+  const criticalData = await loadCriticalData(args);
 
-  //  return defer({
-  //    ...deferredData,
-  //    ...criticalData,
-  //  });
+  return defer({
+    ...deferredData,
+    ...criticalData,
+  });
 }
 
 /**
