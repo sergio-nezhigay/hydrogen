@@ -232,9 +232,8 @@ export default function Product() {
             galleryItems={media.nodes}
             GalleryItemComponent={ProductImage}
             showThumbs={true}
-            //itemClasses="bg-primary/5"
           />
-          <div className="hiddenScroll sticky md:top-nav md:-mb-nav md:h-screen md:-translate-y-nav md:overflow-y-scroll md:pt-nav">
+          <div className=" ">
             <section className="flex w-full flex-col gap-8 md:mx-auto">
               <div className="grid gap-2">
                 <Heading as="h1" className="overflow-hidden whitespace-normal ">
