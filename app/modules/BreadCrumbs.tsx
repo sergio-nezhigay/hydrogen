@@ -100,7 +100,7 @@ function BreadCrumbs() {
 
   return (
     <Section heading="Breadcrumbs" headingClassName="sr-only" padding="y">
-      <Breadcrumb className="md:w-1/2">
+      <Breadcrumb>
         <BreadcrumbList>
           {pages.map((page, idx) => (
             <BreadcrumbItem key={page.name} className="text-primary">
