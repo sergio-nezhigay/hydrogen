@@ -53,7 +53,7 @@ export async function loader(args: LoaderFunctionArgs) {
   const {productHandle} = args.params;
   invariant(productHandle, 'Missing productHandle param, check route filename');
 
-  //   Start fetching non-critical data without blocking time to first byte
+  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
   // Await the critical data required to render initial state of the page
@@ -162,72 +162,71 @@ function loadDeferredData({params, context}: LoaderFunctionArgs) {
   return {variants};
 }
 
-//export const meta = ({matches}: MetaArgs<typeof loader>) => {
-//  return getSeoMeta(...matches.map((match) => (match.data as any).seo));
-//};
+export const meta = ({matches}: MetaArgs<typeof loader>) => {
+  return getSeoMeta(...matches.map((match) => (match.data as any).seo));
+};
 
-//export const action = async ({request, context}: LoaderFunctionArgs) => {
-//  const formData = await request.formData();
-//  const name = formData.get('name') as string;
-//  const email = formData.get('email') as string;
-//  const rating = parseInt(formData.get('rating') as string);
-//  const title = name; // to make simpler
-//  const body = formData.get('body') as string;
-//  const productId = formData.get('productId') as string;
+export const action = async ({request, context}: LoaderFunctionArgs) => {
+  const formData = await request.formData();
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const rating = parseInt(formData.get('rating') as string);
+  const title = name; // to make simpler
+  const body = formData.get('body') as string;
+  const productId = formData.get('productId') as string;
 
-//  if (!name || !email || !rating || !title || !body) {
-//    return {error: 'All fields are required'};
-//  }
+  if (!name || !email || !rating || !title || !body) {
+    return {error: 'All fields are required'};
+  }
 
-//  // Extract the numeric product ID from the global ID
-//  const numericProductId = productId.split('/').pop();
-//  if (!numericProductId) {
-//    return {error: 'Invalid product ID'};
-//  }
+  // Extract the numeric product ID from the global ID
+  const numericProductId = productId.split('/').pop();
+  if (!numericProductId) {
+    return {error: 'Invalid product ID'};
+  }
 
-//  try {
-//    await addJudgemeReview({
-//      api_token: context.env.JUDGEME_PUBLIC_TOKEN,
-//      shop_domain: context.env.PUBLIC_STORE_DOMAIN,
-//      id: parseInt(numericProductId),
-//      email,
-//      name,
-//      rating,
-//      title,
-//      body,
-//    });
+  try {
+    await addJudgemeReview({
+      api_token: context.env.JUDGEME_PUBLIC_TOKEN,
+      shop_domain: context.env.PUBLIC_STORE_DOMAIN,
+      id: parseInt(numericProductId),
+      email,
+      name,
+      rating,
+      title,
+      body,
+    });
 
-//    return {success: true};
-//  } catch (error) {
-//    // eslint-disable-next-line no-console
-//    console.error('Error submitting review:', error);
-//    return {
-//      error:
-//        'There was an error submitting your review. Please try again later.',
-//    };
-//  }
-//};
+    return {success: true};
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error submitting review:', error);
+    return {
+      error:
+        'There was an error submitting your review. Please try again later.',
+    };
+  }
+};
 
 export default function Product() {
-  //  const {product, shop, recommended, variants, locale, judgemeReviewsData} =
-  //    useLoaderData<typeof loader>();
-  //  const {media, title, vendor, descriptionHtml} = product;
-  //  const {shippingPolicy, refundPolicy} = shop;
-  //  const translation = useTranslation();
-  //  const rating = judgemeReviewsData?.rating ?? 0;
-  //  const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
-  //  const reviews = judgemeReviewsData?.reviews ?? [];
-  //  const handleScrollToReviews = (event: {preventDefault: () => void}) => {
-  //    event.preventDefault();
-  //    document
-  //      .getElementById('review-list')
-  //      ?.scrollIntoView({behavior: 'smooth'});
-  //  };
+  const {product, shop, recommended, variants, locale, judgemeReviewsData} =
+    useLoaderData<typeof loader>();
+  const {media, title, vendor, descriptionHtml} = product;
+  const {shippingPolicy, refundPolicy} = shop;
+  const translation = useTranslation();
+  const rating = judgemeReviewsData?.rating ?? 0;
+  const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
+  const reviews = judgemeReviewsData?.reviews ?? [];
+  const handleScrollToReviews = (event: {preventDefault: () => void}) => {
+    event.preventDefault();
+    document
+      .getElementById('review-list')
+      ?.scrollIntoView({behavior: 'smooth'});
+  };
 
   return (
     <>
-      <h1>Product</h1>
-      {/*<Section padding="y">
+      <Section padding="y">
         <div className="grid items-start md:grid-cols-2 md:gap-6 lg:gap-20">
           <Gallery
             galleryItems={media.nodes}
@@ -303,8 +302,8 @@ export default function Product() {
             </section>
           </div>
         </div>
-      </Section>*/}
-      {/*<Suspense fallback={<Skeleton className="h-32" />}>
+      </Section>
+      <Suspense fallback={<Skeleton className="h-32" />}>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}
@@ -321,8 +320,8 @@ export default function Product() {
         <ReviewList reviews={reviews} title={translation.reviews} />
       </div>
 
-      <ReviewForm productId={product.id} locale={locale} />*/}
-      {/*<Analytics.ProductView
+      <ReviewForm productId={product.id} locale={locale} />
+      <Analytics.ProductView
         data={{
           products: [
             {
@@ -336,7 +335,7 @@ export default function Product() {
             },
           ],
         }}
-      />*/}
+      />
     </>
   );
 }
