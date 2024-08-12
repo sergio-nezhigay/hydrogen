@@ -350,6 +350,34 @@ function collection({
   };
 }
 
+function searchResults({
+  collection,
+  url,
+}: {
+  collection: CollectionRequiredFields;
+  url: Request['url'];
+}): SeoConfig {
+  return {
+    title: collection?.seo?.title,
+    description: truncate(
+      collection?.seo?.description ?? collection?.description ?? '',
+    ),
+    robots: {
+      noIndex: true,
+      noFollow: true,
+    },
+    titleTemplate: '%s',
+    media: {
+      type: 'image',
+      url: collection?.image?.url,
+      height: collection?.image?.height,
+      width: collection?.image?.width,
+      altText: collection?.image?.altText,
+    },
+    jsonLd: collectionJsonLd({collection, url}),
+  };
+}
+
 type CollectionListRequiredFields = {
   nodes: Omit<CollectionRequiredFields, 'products'>[];
 };
@@ -550,6 +578,7 @@ export const seoPayload = {
   policy,
   product,
   root,
+  searchResults,
 };
 
 /**

@@ -47,7 +47,7 @@ export async function loader({
 
   const shouldGetRecommendations = !searchTerm || products?.nodes?.length === 0;
 
-  const seo = seoPayload.collection({
+  const seo = seoPayload.searchResults({
     url: request.url,
     collection: {
       id: 'search',

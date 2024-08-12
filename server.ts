@@ -78,6 +78,16 @@ export default {
         const newPathname = url.pathname.replace(/^\/product\//, '/products/');
         url.pathname = newPathname;
         return redirect(url.toString(), {status: 301});
+      } else if (url.pathname.startsWith('/category/')) {
+        const newPathname = url.pathname.replace(
+          /^\/category\//,
+          '/collections/',
+        );
+        url.pathname = newPathname;
+        return redirect(url.toString(), {status: 301});
+      } else if (url.hostname.endsWith('dev')) {
+        url.pathname = 'byte.com.ua';
+        return redirect(url.toString(), {status: 301});
       }
 
       /**
