@@ -85,11 +85,7 @@ export default {
         );
         url.pathname = newPathname;
         return redirect(url.toString(), {status: 301});
-      } else if (url.hostname.endsWith('dev')) {
-        url.pathname = 'byte.com.ua';
-        return redirect(url.toString(), {status: 301});
       }
-
       /**
        * Create a Remix request handler and pass
        * Hydrogen's Storefront client to the loader context.
