@@ -34,22 +34,25 @@ function root({
   shop: ShopFragment;
   url: Request['url'];
 }): SeoConfig {
-  const baseUrl = 'byte.com.ua';
+  const urlObj = new URL(url);
+  const origin = urlObj.origin;
+  const cleanPathname = urlObj.pathname;
+
   const alternates = [
     {
       language: 'uk',
-      url: `${url}/`,
+      url: `${origin}${cleanPathname}`,
       default: true,
     },
     {
       language: 'ru',
-      url: `${url}/ru/`,
+      url: `${origin}/ru${cleanPathname}`,
     },
   ];
 
   return {
     title: shop?.name,
-    titleTemplate: `%s | Магазин ${baseUrl}`,
+    titleTemplate: `%s | ${urlObj.hostname}`,
     description: truncate(shop?.description ?? ''),
     handle: '@shopify',
     url,
