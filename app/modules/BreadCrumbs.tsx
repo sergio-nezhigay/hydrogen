@@ -114,7 +114,10 @@ function BreadCrumbs() {
                     prefetch="viewport"
                   >
                     {page.name === 'Home' ? (
-                      <Home className="size-5" />
+                      <>
+                        <Home className="size-5" />
+                        <span className="sr-only">Головна сторінка</span>
+                      </>
                     ) : (
                       page.name
                     )}

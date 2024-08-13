@@ -43,6 +43,8 @@ function DotButton({isSelected, onClick}: DotButtonProps) {
       )}
       type="button"
       onClick={onClick}
+      aria-pressed={isSelected}
+      aria-label={isSelected ? 'Поточне зображення' : 'Вибрати зображення'}
     />
   );
 }
