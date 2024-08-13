@@ -36,19 +36,21 @@ function root({
 }): SeoConfig {
   const urlObj = new URL(url);
   const origin = urlObj.origin;
-  const cleanPathname = urlObj.pathname;
-
-  const alternates = [
-    {
-      language: 'uk',
-      url: `${origin}${cleanPathname}`,
-      default: true,
-    },
-    {
-      language: 'ru',
-      url: `${origin}/ru${cleanPathname}`,
-    },
-  ];
+  const cleanPathname = urlObj.pathname.replace(/^\/ru\//, '/');
+  const alternates =
+    urlObj.search.length === 0
+      ? [
+          {
+            language: 'uk',
+            url: `${origin}${cleanPathname}`,
+            default: true,
+          },
+          {
+            language: 'ru',
+            url: `${origin}/ru${cleanPathname}`,
+          },
+        ]
+      : [];
 
   return {
     title: shop?.name,
