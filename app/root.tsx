@@ -62,10 +62,9 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export const links: LinksFunction = () => {
   return [
-    {rel: 'preload', href: styles, as: 'style'},
+    //{rel: 'preload', href: styles, as: 'style'},
     {rel: 'stylesheet', href: styles},
     {rel: 'preconnect', href: 'https://cdn.shopify.com'},
-    {rel: 'preconnect', href: 'https://byte.com.ua'},
     {rel: 'dns-prefetch', href: 'https://www.googletagmanager.com'},
     {rel: 'dns-prefetch', href: 'https://analytics.google.com'},
     {rel: 'dns-prefetch', href: 'https://googleads.g.doubleclick.net'},
