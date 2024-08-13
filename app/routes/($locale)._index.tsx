@@ -14,6 +14,7 @@ import {getHeroPlaceholder} from '~/lib/placeholders';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
 import {translations} from '~/data/translations';
+import {useTranslation} from '~/lib/utils';
 export const headers = routeHeaders;
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -110,16 +111,34 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 };
 
 export default function Homepage() {
-  const {featuredCollections, featuredProducts, language} =
+  const {featuredCollections, featuredProducts} =
     useLoaderData<typeof loader>();
 
-  const locale = language.toLowerCase() as keyof typeof translations;
-  const translation = translations[locale];
-  // TODO: skeletons vs placeholders
-  const skeletons = getHeroPlaceholder([{}, {}, {}]);
-
+  const translation = useTranslation();
   return (
     <>
+      <h1 className="sr-only">Головна сторінка магазину</h1>
+      {featuredCollections && (
+        <Suspense>
+          <Await resolve={featuredCollections}>
+            {(response) => {
+              if (
+                !response ||
+                !response?.collections ||
+                !response?.collections?.nodes
+              ) {
+                return <></>;
+              }
+              return (
+                <FeaturedCollections
+                  collections={response.collections}
+                  title={translation.collections}
+                />
+              );
+            }}
+          </Await>
+        </Suspense>
+      )}
       {featuredProducts && (
         <Suspense>
           <Await resolve={featuredProducts}>
@@ -142,41 +161,6 @@ export default function Homepage() {
           </Await>
         </Suspense>
       )}
-
-      {featuredCollections && (
-        <Suspense>
-          <Await resolve={featuredCollections}>
-            {(response) => {
-              if (
-                !response ||
-                !response?.collections ||
-                !response?.collections?.nodes
-              ) {
-                return <></>;
-              }
-              return (
-                <FeaturedCollections
-                  collections={response.collections}
-                  title={translation.collections}
-                />
-              );
-            }}
-          </Await>
-        </Suspense>
-      )}
-
-      {/*{tertiaryHero && (
-        <Suspense fallback={<Hero {...skeletons[2]} />}>
-          <Await resolve={tertiaryHero}>
-            {(response) => {
-              if (!response || !response?.hero) {
-                return <></>;
-              }
-              return <Hero {...response.hero} />;
-            }}
-          </Await>
-        </Suspense>
-      )}*/}
     </>
   );
 }
@@ -224,17 +208,6 @@ const HOMEPAGE_SEO_QUERY = `#graphql
   ${COLLECTION_CONTENT_FRAGMENT}
 ` as const;
 
-//const COLLECTION_HERO_QUERY = `#graphql
-//  query heroCollectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
-//  @inContext(country: $country, language: $language) {
-//    hero: collection(handle: $handle) {
-//      ...CollectionContent
-//    }
-//  }
-//  ${COLLECTION_CONTENT_FRAGMENT}
-//` as const;
-
-// @see: https://shopify.dev/api/storefront/current/queries/products
 export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
   query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)
   @inContext(country: $country, language: $language) {

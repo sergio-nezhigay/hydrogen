@@ -35,9 +35,10 @@ function root({
   shop: ShopFragment;
   url: Request['url'];
 }): SeoConfig {
+  const baseUrl = 'byte.com.ua';
   return {
     title: shop?.name,
-    titleTemplate: '%s | Hydrogen Demo Store',
+    titleTemplate: `%s | Магазин ${baseUrl}`,
     description: truncate(shop?.description ?? ''),
     handle: '@shopify',
     url,
@@ -117,9 +118,9 @@ function root({
 
 function home(): SeoConfig {
   return {
-    title: 'Головна',
-    titleTemplate: '%s | магазин Byte.com.ua',
-    description: "Інтернет-магазин комп'ютерних перехідників та комплектуючих",
+    //title: 'Головна',
+    //titleTemplate: '%s | магазин Byte.com.ua',
+    //description: "Інтернет-магазин комп'ютерних перехідників та комплектуючих",
     robots: {
       noIndex: false,
       noFollow: false,
