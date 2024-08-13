@@ -27,7 +27,6 @@ import {
 } from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
-
 import {useDrawer, Drawer} from './Drawer';
 
 export type AppliedFilter = {
@@ -61,18 +60,18 @@ export function SortFilter({
     <>
       {isMobile ? (
         <>
-          <div className="flex-between">
+          <div className="flex-between md:hidden">
             <FiltersDrawer filters={filters} appliedFilters={appliedFilters} />
             <SortMenu />
           </div>
 
-          <div className="flex flex-col flex-wrap md:flex-row">
+          <div className="flex flex-col flex-wrap md:flex-row md:hidden">
             <div className="flex-1">{children}</div>
           </div>
         </>
       ) : (
         <>
-          <div className="flex">
+          <div className="flex sm-max:hidden">
             <>
               {appliedFilters.length > 0 && (
                 <AppliedFilters filters={appliedFilters} />
@@ -82,7 +81,7 @@ export function SortFilter({
               <SortMenu />
             </div>
           </div>
-          <div className="flex flex-col flex-wrap md:flex-row">
+          <div className="flex flex-col flex-wrap md:flex-row sm-max:hidden">
             <div className="opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full">
               <Filters filters={filters} />
             </div>
@@ -99,7 +98,10 @@ function Filters({filters}: {filters: Filter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
   const translation = useTranslation();
-  const sortedFilters = filters.sort((a, b) => sortFilters(a, b));
+  const sortedFilters = useMemo(
+    () => filters.sort((a, b) => sortFilters(a, b)),
+    [filters],
+  );
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     const appliedFilter = {
@@ -425,20 +427,16 @@ interface FiltersDrawerProps {
 }
 
 function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
-  const {
-    isOpen: isOpen,
-    openDrawer: onOpen,
-    closeDrawer: onClose,
-  } = useDrawer();
+  const {isOpen, openDrawer, closeDrawer} = useDrawer();
   return (
     <>
       <button
-        onClick={onOpen}
+        onClick={openDrawer}
         className="size-8 flex-center hover:bg-stone-700/5 rounded-md"
       >
         <IconFilters />
       </button>
-      <Drawer open={isOpen} onClose={onClose} openFrom="left">
+      <Drawer open={isOpen ?? false} onClose={closeDrawer} openFrom="left">
         <div className="p-4">
           <div className="min-h-[26px]">
             {appliedFilters && appliedFilters.length > 0 && (

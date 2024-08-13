@@ -1,5 +1,6 @@
 export const translations = {
   uk: {
+    isUkrActive: true,
     buy: 'Купити',
     sold_out: 'Розпродано',
     shipping: 'Доставка',
@@ -54,6 +55,7 @@ export const translations = {
     dev_site: 'Сайт розробника',
   },
   ru: {
+    isUkrActive: false,
     buy: 'Купить',
     sold_out: 'Нет в наличии',
     shipping: 'Доставка',

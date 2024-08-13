@@ -10,7 +10,6 @@ import {Link} from '~/components/Link';
 import {Cart} from '~/components/Cart';
 import {CartLoading} from '~/components/CartLoading';
 import {Input} from '~/components/Input';
-import {Drawer, useDrawer} from '~/components/Drawer';
 
 import {
   IconMenu,
@@ -35,6 +34,7 @@ import LangSelector from '~/modules/LangSelector';
 import BreadCrumbs from '~/modules/BreadCrumbs';
 import clsx from 'clsx';
 import {Phone, Clock, Mail, MapPin} from 'lucide-react';
+import {useDrawer, Drawer} from './Drawer';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -226,41 +226,13 @@ function MobileHeader({
       className={`sticky top-0
        z-40 flex h-nav w-full items-center justify-between gap-4 bg-headerBg text-headerText px-4 md:px-8 py-6 md:py-8 leading-none backdrop-blur-lg  lg:hidden`}
     >
-      <div className="flex w-full items-center justify-start gap-4">
-        <button
-          onClick={openMenu}
-          className="relative flex size-8 items-center justify-center"
-        >
-          <IconMenu />
-        </button>
-        <Form
-          method="get"
-          action={params.locale ? `/${params.locale}/search` : '/search'}
-          className="items-center gap-2 sm:flex"
-        >
-          <button
-            type="submit"
-            className="relative flex size-8 items-center justify-center"
-          >
-            <IconSearch />
-          </button>
-          <Input
-            className={
-              isHome
-                ? 'focus:border-contrast/20 dark:focus:border-primary/20'
-                : 'focus:border-primary/20'
-            }
-            type="search"
-            variant="minisearch"
-            placeholder="Пошук"
-            name="q"
-          />
-        </Form>
-      </div>
+      <button onClick={openMenu} className="relative z-50 flex-center size-8">
+        <IconMenu />
+      </button>
 
       {logoUrl && (
         <Link
-          className="flex size-full grow items-center justify-center self-stretch leading-[3rem] md:leading-[4rem]"
+          className="flex size-full grow items-center justify-center self-stretch leading-[3rem] md:leading-[4rem] absolute-center"
           to="/"
         >
           <Image
@@ -272,9 +244,26 @@ function MobileHeader({
           />
         </Link>
       )}
-
-      <div className="flex w-full items-center justify-end gap-4">
-        <AccountLink className="relative flex size-8 items-center justify-center" />
+      <div className="flex gap-4 z-50">
+        <Form
+          method="get"
+          action={params.locale ? `/${params.locale}/search` : '/search'}
+          className="items-center gap-2 sm:flex"
+        >
+          <Input
+            className="focus:border-primary/20"
+            type="search"
+            variant="minisearch"
+            placeholder="Пошук"
+            name="q"
+          />
+          <button
+            type="submit"
+            className="relative flex size-8 items-center justify-center"
+          >
+            <IconSearch />
+          </button>
+        </Form>
         <CartCount isHome={isHome} openCart={openCart} />
       </div>
     </header>
@@ -299,9 +288,12 @@ function DesktopHeader({
   return (
     <header
       role="banner"
-      className={`bg-headerBg text-headerText ${
-        !isHome && y > 50 && ' shadow-lightHeader'
-      } sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 leading-none backdrop-blur-lg  transition duration-300 lg:flex py-6 `}
+      className={clsx(
+        `bg-headerBg text-headerText sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 leading-none backdrop-blur-lg  transition duration-300 lg:flex py-6`,
+        {
+          'shadow-lightHeader': !isHome && y > 50,
+        },
+      )}
     >
       <div className="container flex-between h-full">
         <div className="flex-center gap-12 h-full">

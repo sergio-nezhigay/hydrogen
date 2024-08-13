@@ -1,22 +1,20 @@
-import {useLocation, useRouteLoaderData} from '@remix-run/react';
+import {useLocation} from '@remix-run/react';
 import clsx from 'clsx';
 
 import {UkrFlag} from '~/components/Icon';
-import {DEFAULT_LOCALE} from '~/lib/utils';
-import type {RootLoader} from '~/root';
+import {useTranslation} from '~/lib/utils';
 
 function LangSelector() {
   const location = useLocation();
   const currentUrl = `${location.pathname}${location.search}`;
-  const rootData = useRouteLoaderData<RootLoader>('root');
-  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
-  const isUkrActive = selectedLocale.language === 'UK';
+
+  const translation = useTranslation();
   const bgClass = 'rounded-md size-8 flex-center';
 
   return (
     <ul className="flex-center">
       <li className="px-2">
-        {!isUkrActive ? (
+        {!translation.isUkrActive ? (
           <a
             href={currentUrl.replace('/ru', '')}
             className="flex-center gap-2 group"
@@ -34,7 +32,7 @@ function LangSelector() {
         )}
       </li>
       <li className="border-l px-2">
-        {isUkrActive ? (
+        {translation.isUkrActive ? (
           <a
             href={'/ru' + currentUrl}
             className={clsx('hover:bg-stone-100/20', bgClass)}
