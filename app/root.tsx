@@ -147,11 +147,6 @@ function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   const data = useRouteLoaderData<typeof loader>('root');
   const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
-  const seoUrl = data?.seo.url ?? '';
-  const baseUrl = new URL(seoUrl).origin;
-  const currentPath = new URL(seoUrl).pathname;
-  const alternateUkLink = seoUrl;
-  const alternateRuLink = `${baseUrl}/ru${currentPath}`;
 
   return (
     <html lang={locale.language}>
@@ -161,8 +156,6 @@ function Layout({children}: {children?: React.ReactNode}) {
         <Meta />
         <Links />
 
-        <link rel="alternate" href={alternateUkLink} hrefLang="uk" />
-        <link rel="alternate" href={alternateRuLink} hrefLang="ru" />
         {/***********************************************/
         /**********  EXAMPLE UPDATE STARTS  ************/}
         <Script src="https://www.googletagmanager.com/gtm.js?id=GTM-WRQRP5RF" />

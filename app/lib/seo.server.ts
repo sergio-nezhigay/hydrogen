@@ -26,7 +26,6 @@ import type {
 import type {ShopFragment} from 'storefrontapi.generated';
 
 import type {JudgemeReviewsData} from './type';
-import {assertNonNullType} from 'graphql';
 
 function root({
   shop,
@@ -36,6 +35,18 @@ function root({
   url: Request['url'];
 }): SeoConfig {
   const baseUrl = 'byte.com.ua';
+  const alternates = [
+    {
+      language: 'uk',
+      url: `${url}/`,
+      default: true,
+    },
+    {
+      language: 'ru',
+      url: `${url}/ru/`,
+    },
+  ];
+
   return {
     title: shop?.name,
     titleTemplate: `%s | Магазин ${baseUrl}`,
@@ -46,6 +57,7 @@ function root({
       noIndex: false,
       noFollow: false,
     },
+    alternates,
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Organization',

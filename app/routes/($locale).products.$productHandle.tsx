@@ -573,7 +573,7 @@ function ProductDetail({
         <>
           <Disclosure.Button className="text-left">
             <div className="flex justify-between">
-              <Text size="lead" as="h4">
+              <Text size="lead" as="h2">
                 {title}
               </Text>
               <IconClose
