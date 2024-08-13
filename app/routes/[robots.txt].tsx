@@ -34,6 +34,7 @@ Disallow: /checkout
 Disallow: /carts
 Disallow: /orders
 Disallow: /search
+Disallow: /ru/ru
 
 User-agent: Pinterest
 Crawl-delay: 1

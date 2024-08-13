@@ -28,6 +28,25 @@ export default {
     executionContext: ExecutionContext,
   ): Promise<Response> {
     try {
+      const url = new URL(request.url);
+      if (url.hostname.startsWith('www.')) {
+        const nonWwwUrl = url.toString().replace('www.', '');
+        return redirect(nonWwwUrl, {status: 301});
+      }
+      if (url.pathname.startsWith('/product/')) {
+        const newPathname = url.pathname.replace(/^\/product\//, '/products/');
+        url.pathname = newPathname;
+        return redirect(url.toString(), {status: 301});
+      }
+      if (url.pathname.startsWith('/category/')) {
+        const newPathname = url.pathname.replace(
+          /^\/category\//,
+          '/collections/',
+        );
+        url.pathname = newPathname;
+        return redirect(url.toString(), {status: 301});
+      }
+
       /**
        * Open a cache instance in the worker and a custom session instance.
        */
@@ -73,19 +92,6 @@ export default {
         setCartId: cartSetIdDefault(),
       });
 
-      //  const url = new URL(request.url);
-      //  if (url.pathname.startsWith('/product/')) {
-      //    const newPathname = url.pathname.replace(/^\/product\//, '/products/');
-      //    url.pathname = newPathname;
-      //    return redirect(url.toString(), {status: 301});
-      //  } else if (url.pathname.startsWith('/category/')) {
-      //    const newPathname = url.pathname.replace(
-      //      /^\/category\//,
-      //      '/collections/',
-      //    );
-      //    url.pathname = newPathname;
-      //    return redirect(url.toString(), {status: 301});
-      //  }
       /**
        * Create a Remix request handler and pass
        * Hydrogen's Storefront client to the loader context.
