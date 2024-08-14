@@ -145,7 +145,7 @@ function home(): SeoConfig {
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
-      name: 'Home page',
+      name: 'Головна сторінка',
     },
   };
 }
@@ -200,8 +200,31 @@ function productJsonLd({
       priceCurrency: variant.price.currencyCode,
       sku: variant?.sku ?? '',
       url: variantUrl.toString(),
+      hasMerchantReturnPolicy: {
+        '@type': 'MerchantReturnPolicy',
+        url: `${origin}/policies/refund-policy`, // Link to the return policy
+      },
     };
   });
+
+  const shippingDetails = {
+    '@type': 'DeliveryChargeSpecification',
+    appliesToDeliveryMethod: {
+      '@type': 'DeliveryMethod',
+      name: 'Standard Shipping',
+    },
+    priceCurrency: 'UAH',
+    price: '50',
+    deliveryTime: {
+      '@type': 'DeliveryTime',
+      maxDeliveryTime: 'P2D',
+    },
+    eligibleRegion: {
+      '@type': 'Place',
+      name: 'Ukraine',
+    },
+  };
+
   const reviews: Review[] = judgemeReviewsData.reviews.map((review) => ({
     '@type': 'Review',
     author: {
@@ -255,8 +278,9 @@ function productJsonLd({
             }
           : undefined,
       review: reviews.length > 0 ? reviews : undefined,
+      shippingDetails,
     },
-  ];
+  ] as any;
 }
 
 function product({
@@ -317,7 +341,7 @@ function collectionJsonLd({
         {
           '@type': 'ListItem',
           position: 1,
-          name: 'Collections',
+          name: 'Колекції',
           item: `${siteUrl.host}/collections`,
         },
         {
@@ -420,8 +444,8 @@ function collectionsJsonLd({
   return {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    name: 'Collections',
-    description: 'All collections',
+    name: 'Колекції',
+    description: 'Всі колекції',
     url,
     mainEntity: {
       '@type': 'ItemList',
@@ -438,9 +462,9 @@ function listCollections({
   url: Request['url'];
 }): SeoConfig {
   return {
-    title: 'Collections',
-    titleTemplate: '%s | Collections',
-    description: 'All hydrogen collections',
+    title: 'Колекції',
+    titleTemplate: '%s | Колекції',
+    description: 'Усі колекції',
     url,
     jsonLd: collectionsJsonLd({collections, url}),
   };
@@ -561,7 +585,8 @@ function policies({
         '@type': 'ListItem',
         position: index + 1,
         name: policy.title,
-        item: `${origin}/policies/${policy.handle}`,
+        item: new URL(`/policies/${policy.handle}`, origin).toString(),
+        //item: `${origin}/policies/${policy.handle}`,
       };
     });
   return {
