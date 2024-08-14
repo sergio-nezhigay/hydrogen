@@ -66,7 +66,7 @@ export function PageLayout({children, layout, locale}: LayoutProps) {
           />
         )}
         <BreadCrumbs />
-        <main role="main" id="mainContent" className="grow">
+        <main id="mainContent" className="grow">
           {children}
         </main>
       </div>
@@ -222,7 +222,6 @@ function MobileHeader({
 
   return (
     <header
-      role="banner"
       className={`sticky top-0
        z-40 flex h-nav w-full items-center justify-between gap-4 bg-headerBg text-headerText px-4 md:px-8 py-6 md:py-8 leading-none backdrop-blur-lg  lg:hidden`}
     >
@@ -287,7 +286,6 @@ function DesktopHeader({
   const {y} = useWindowScroll();
   return (
     <header
-      role="banner"
       className={clsx(
         `bg-headerBg text-headerText sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 leading-none backdrop-blur-lg  transition duration-300 lg:flex py-6`,
         {
@@ -302,10 +300,10 @@ function DesktopHeader({
               <Image
                 height={95}
                 width={164}
-                className="object-fit w-full h-full"
+                className="object-fit w-[100px] h-auto w"
                 src={logoUrl}
                 alt="logo"
-                sizes="auto"
+                sizes="100px"
               />
             </Link>
           )}

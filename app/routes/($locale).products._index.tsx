@@ -2,6 +2,7 @@ import {
   json,
   type MetaArgs,
   type LoaderFunctionArgs,
+  defer,
 } from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import invariant from 'tiny-invariant';
@@ -40,25 +41,26 @@ export async function loader({
 
   invariant(data, 'No data returned from Shopify API');
 
-  const seo = seoPayload.collection({
+  const seo = seoPayload.allProducts({
     url: request.url,
     collection: {
       id: 'all-products',
       title: 'Каталог',
       handle: 'products',
       descriptionHtml: 'All the store products',
-      description: 'All the store products',
+      description: 'Усі товари',
       seo: {
-        title: 'All Products',
-        description: 'All the store products',
+        title: 'Усі товари',
+        description: 'Усі товари магазину',
       },
+
       metafields: [],
       products: data.products,
       updatedAt: '',
     },
   });
 
-  return json({
+  return defer({
     products: data.products,
     seo,
   });

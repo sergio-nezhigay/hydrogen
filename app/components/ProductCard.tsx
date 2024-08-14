@@ -60,10 +60,10 @@ export function ProductCard({
             {image && (
               <Image
                 className="w-full object-cover"
-                sizes="auto"
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw"
                 aspectRatio="4/5"
                 data={image}
-                alt={image.altText || `Picture of ${product.title}`}
+                alt={image.altText || `Зображення ${product.title}`}
                 loading={loading}
               />
             )}

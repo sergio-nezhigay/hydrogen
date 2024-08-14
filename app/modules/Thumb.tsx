@@ -34,7 +34,7 @@ export function Thumb({selected, onClick, item}: PropType) {
             width={100}
             height={100}
             aspectRatio={'1/1'}
-            sizes="auto"
+            sizes="100px"
             className="object-cover w-full h-full"
           />
         )}

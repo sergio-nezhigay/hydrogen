@@ -18,7 +18,6 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
     ],
     imgSrc: [
-      "'self'",
       'https://cdn.shopify.com',
       'https://*.google-analytics.com',
       'https://www.google.com',
@@ -26,7 +25,6 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
     ],
     connectSrc: [
-      "'self'",
       'https://analytics.google.com',
       'https://*.google-analytics.com',
       'https://*.analytics.google.com',

@@ -43,7 +43,6 @@ function root({
           {
             language: 'uk',
             url: `${origin}${cleanPathname}`,
-            default: true,
           },
           {
             language: 'ru',
@@ -394,6 +393,34 @@ function collection({
   };
 }
 
+function allProducts({
+  collection,
+  url,
+}: {
+  collection: CollectionRequiredFields;
+  url: Request['url'];
+}): SeoConfig {
+  return {
+    title: collection?.seo?.title,
+    description: truncate(
+      collection?.seo?.description ?? collection?.description ?? '',
+    ),
+    titleTemplate: '%s',
+    media: {
+      type: 'image',
+      url: collection?.image?.url,
+      height: collection?.image?.height,
+      width: collection?.image?.width,
+      altText: collection?.image?.altText,
+    },
+    robots: {
+      noIndex: true,
+      noFollow: true,
+    },
+    jsonLd: collectionJsonLd({collection, url}),
+  };
+}
+
 function searchResults({
   collection,
   url,
@@ -624,6 +651,7 @@ export const seoPayload = {
   product,
   root,
   searchResults,
+  allProducts,
 };
 
 /**
