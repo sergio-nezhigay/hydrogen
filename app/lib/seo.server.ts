@@ -224,10 +224,6 @@ function productJsonLd({
           addressCountry: 'UA',
         },
         transitTimeLabel: 'Standard Shipping',
-        deliveryMethod: {
-          '@type': 'DeliveryMethod',
-          name: 'Nova Poshta',
-        },
       },
     };
   });

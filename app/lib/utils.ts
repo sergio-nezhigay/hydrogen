@@ -336,6 +336,14 @@ export function customTranslate(label: string) {
       return 'В наявності';
     case 'Out of stock':
       return 'Продано';
+    case 'Shipping Policy':
+      return 'Доставка';
+    case 'Privacy Policy':
+      return 'Умови використання сайту';
+    case 'Terms of Service':
+      return 'Гарантія';
+    case 'Refund Policy':
+      return 'Повернення товару';
     default:
       return label;
   }

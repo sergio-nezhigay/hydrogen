@@ -12,6 +12,7 @@ import {Link} from '~/components/Link';
 import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
 import type {NonNullableFields} from '~/lib/type';
+import {customTranslate} from '~/lib/utils';
 
 export const headers = routeHeaders;
 
@@ -46,20 +47,22 @@ export default function Policies() {
   const {policies} = useLoaderData<typeof loader>();
 
   return (
-    <>
-      <PageHeader heading="Policies" />
+    <div className="container">
+      <PageHeader heading="Правила" />
       <Section padding="x" className="mb-24">
         {policies.map((policy) => {
           return (
             policy && (
               <Heading className="font-normal text-heading" key={policy.id}>
-                <Link to={`/policies/${policy.handle}`}>{policy.title}</Link>
+                <Link to={`/policies/${policy.handle}`}>
+                  {customTranslate(policy.title)}
+                </Link>
               </Heading>
             )
           );
         })}
       </Section>
-    </>
+    </div>
   );
 }
 

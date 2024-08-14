@@ -11,6 +11,7 @@ import {PageHeader, Section} from '~/components/Text';
 import {Button} from '~/components/Button';
 import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
+import {customTranslate, useTranslation} from '~/lib/utils';
 
 export const headers = routeHeaders;
 
@@ -51,6 +52,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 
 export default function Policies() {
   const {policy} = useLoaderData<typeof loader>();
+  const translation = useTranslation();
 
   return (
     <>
@@ -60,7 +62,8 @@ export default function Policies() {
         className="flex-col items-baseline w-full gap-8 md:flex-row"
       >
         <PageHeader
-          heading={policy.title}
+          heading={customTranslate(policy.title)}
+          //  heading={policy.title}
           className="grid items-start flex-grow gap-4 md:sticky top-36 md:w-5/12"
         >
           <Button
@@ -68,7 +71,7 @@ export default function Policies() {
             variant="inline"
             to={'/policies'}
           >
-            &larr; Back to Policies
+            &larr; {translation.back_to_policies}
           </Button>
         </PageHeader>
         <div className="flex-grow w-full md:w-7/12">
