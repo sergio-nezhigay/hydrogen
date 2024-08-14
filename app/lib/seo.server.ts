@@ -193,6 +193,24 @@ function productJsonLd({
       ? 'https://schema.org/InStock'
       : 'https://schema.org/OutOfStock';
 
+    const shippingDetails = {
+      '@type': 'DeliveryChargeSpecification',
+      appliesToDeliveryMethod: {
+        '@type': 'DeliveryMethod',
+        name: 'Standard Shipping',
+      },
+      priceCurrency: 'UAH',
+      price: '50',
+      deliveryTime: {
+        '@type': 'DeliveryTime',
+        maxDeliveryTime: 'P2D',
+      },
+      eligibleRegion: {
+        '@type': 'Place',
+        name: 'Ukraine',
+      },
+    } as any;
+
     return {
       '@type': 'Offer',
       availability,
@@ -204,26 +222,9 @@ function productJsonLd({
         '@type': 'MerchantReturnPolicy',
         url: `${origin}/policies/refund-policy`, // Link to the return policy
       },
+      shippingDetails,
     };
   });
-
-  const shippingDetails = {
-    '@type': 'DeliveryChargeSpecification',
-    appliesToDeliveryMethod: {
-      '@type': 'DeliveryMethod',
-      name: 'Standard Shipping',
-    },
-    priceCurrency: 'UAH',
-    price: '50',
-    deliveryTime: {
-      '@type': 'DeliveryTime',
-      maxDeliveryTime: 'P2D',
-    },
-    eligibleRegion: {
-      '@type': 'Place',
-      name: 'Ukraine',
-    },
-  };
 
   const reviews: Review[] = judgemeReviewsData.reviews.map((review) => ({
     '@type': 'Review',
@@ -278,9 +279,8 @@ function productJsonLd({
             }
           : undefined,
       review: reviews.length > 0 ? reviews : undefined,
-      shippingDetails,
     },
-  ] as any;
+  ];
 }
 
 function product({
