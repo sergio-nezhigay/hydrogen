@@ -193,24 +193,6 @@ function productJsonLd({
       ? 'https://schema.org/InStock'
       : 'https://schema.org/OutOfStock';
 
-    const shippingDetails = {
-      '@type': 'DeliveryChargeSpecification',
-      appliesToDeliveryMethod: {
-        '@type': 'DeliveryMethod',
-        name: 'Standard Shipping',
-      },
-      priceCurrency: 'UAH',
-      price: '50',
-      deliveryTime: {
-        '@type': 'DeliveryTime',
-        maxDeliveryTime: 'P2D',
-      },
-      eligibleRegion: {
-        '@type': 'Place',
-        name: 'Ukraine',
-      },
-    } as any;
-
     return {
       '@type': 'Offer',
       availability,
@@ -220,9 +202,29 @@ function productJsonLd({
       url: variantUrl.toString(),
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
-        url: `${origin}/policies/refund-policy`, // Link to the return policy
+        url: `${origin}/policies/refund-policy`,
       },
-      shippingDetails,
+      shippingDetails: {
+        '@type': 'OfferShippingDetails',
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '50.00',
+          currency: 'UAH',
+        },
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+          businessDays: {
+            '@type': 'OpeningHoursSpecification',
+            opens: 'P1D',
+            closes: 'P2D',
+          },
+        },
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'UA',
+        },
+        transitTimeLabel: 'Standard Shipping',
+      },
     };
   });
 
