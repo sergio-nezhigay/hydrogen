@@ -6,6 +6,7 @@ import {translations} from '~/data/translations';
 import {Star} from '~/components/Icon';
 import {Button} from '~/components/ui/button';
 import {useTranslation} from '~/lib/utils';
+import {star, filledStar} from './StarRating';
 
 interface ReviewFormProps {
   productId: string;
@@ -74,11 +75,7 @@ function StarInput({rating, setRating, locale}: StarInputProps) {
               aria-label={`${index} Star${index > 1 ? 's' : ''}`}
               className="focus:outline-blue-600"
             >
-              <Star
-                fill={
-                  hoverRating >= index || rating >= index ? 'full' : 'empty'
-                }
-              />
+              {hoverRating >= index || rating >= index ? star : filledStar}
             </button>
           </li>
         ))}

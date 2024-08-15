@@ -280,43 +280,43 @@ export function IconFilters(props: IconProps) {
   );
 }
 
-type StarProps = {
-  fill: 'empty' | 'half' | 'full';
-};
+//type StarProps = {
+//  fill: 'empty' | 'half' | 'full';
+//};
 
-export function Star({fill}: StarProps) {
-  let gradientId = 'emptyGradient';
+//export function Star({fill}: StarProps) {
+//  let gradientId = 'emptyGradient';
 
-  if (fill === 'half') {
-    gradientId = 'halfGradient';
-  } else if (fill === 'full') {
-    gradientId = 'fullGradient';
-  }
+//  if (fill === 'half') {
+//    gradientId = 'halfGradient';
+//  } else if (fill === 'full') {
+//    gradientId = 'fullGradient';
+//  }
 
-  return (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <defs>
-        <linearGradient id="halfGradient">
-          <stop offset="50%" stopColor="orange" />
-          <stop offset="50%" stopColor="lightgray" />
-        </linearGradient>
-        <linearGradient id="fullGradient">
-          <stop offset="100%" stopColor="orange" />
-        </linearGradient>
-        <linearGradient id="emptyGradient">
-          <stop offset="100%" stopColor="lightgray" />
-        </linearGradient>
-      </defs>
-      <path
-        fill={`url(#${gradientId})`}
-        d="M12 2.5L14.09 8.26L20 9.27L16 13.14L17.18 19.02L12 16.77L6.82 19.02L8 13.14L4 9.27L9.91 8.26L12 2.5Z"
-      />
-    </svg>
-  );
-}
+//  return (
+//    <svg
+//      width="24"
+//      height="24"
+//      viewBox="0 0 24 24"
+//      fill="none"
+//      xmlns="http://www.w3.org/2000/svg"
+//    >
+//      <defs>
+//        <linearGradient id="halfGradient">
+//          <stop offset="50%" stopColor="orange" />
+//          <stop offset="50%" stopColor="lightgray" />
+//        </linearGradient>
+//        <linearGradient id="fullGradient">
+//          <stop offset="100%" stopColor="orange" />
+//        </linearGradient>
+//        <linearGradient id="emptyGradient">
+//          <stop offset="100%" stopColor="lightgray" />
+//        </linearGradient>
+//      </defs>
+//      <path
+//        fill={`url(#${gradientId})`}
+//        d="M12 2.5L14.09 8.26L20 9.27L16 13.14L17.18 19.02L12 16.77L6.82 19.02L8 13.14L4 9.27L9.91 8.26L12 2.5Z"
+//      />
+//    </svg>
+//  );
+//}
