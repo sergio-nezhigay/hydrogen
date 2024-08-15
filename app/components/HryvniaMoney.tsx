@@ -9,7 +9,7 @@ interface HryvniaMoneyProps {
 
 function HryvniaMoney({data, className}: HryvniaMoneyProps) {
   return (
-    <div className={clsx('font-bold', className)}>
+    <span className={clsx('font-bold', className)}>
       <Money
         data={data!}
         as="span"
@@ -18,7 +18,7 @@ function HryvniaMoney({data, className}: HryvniaMoneyProps) {
         data-test="price"
       />
       <span className="ml-1 text-base">₴</span>
-    </div>
+    </span>
   );
 }
 

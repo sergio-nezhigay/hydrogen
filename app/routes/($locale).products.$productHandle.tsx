@@ -568,7 +568,7 @@ function ProductDetail({
       {({open}) => (
         <>
           <Disclosure.Button className="text-left flex justify-between items-center">
-            <Text size="lead" as="h2" className="inline-block">
+            <Text size="lead" className="inline-block">
               {title}
             </Text>
             <IconClose
