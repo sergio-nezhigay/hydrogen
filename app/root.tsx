@@ -155,15 +155,9 @@ function Layout({children}: {children?: React.ReactNode}) {
         <Meta />
         <Links />
 
-        {/***********************************************/
-        /**********  EXAMPLE UPDATE STARTS  ************/}
         <Script src="https://www.googletagmanager.com/gtm.js?id=GTM-WRQRP5RF" />
-        {/**********   EXAMPLE UPDATE END   ************/
-        /***********************************************/}
       </head>
       <body>
-        {/***********************************************/
-        /**********  EXAMPLE UPDATE STARTS  ************/}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WRQRP5RF"
@@ -175,8 +169,7 @@ function Layout({children}: {children?: React.ReactNode}) {
             }}
           ></iframe>
         </noscript>
-        {/**********   EXAMPLE UPDATE END   ************/
-        /***********************************************/}
+
         {data ? (
           <Analytics.Provider
             cart={data.cart}
@@ -192,12 +185,8 @@ function Layout({children}: {children?: React.ReactNode}) {
             >
               {children}
             </PageLayout>
-            {/***********************************************/
-            /**********  EXAMPLE UPDATE STARTS  ************/}
+
             <GoogleTagManager />
-            {/**********   EXAMPLE UPDATE END   ************/
-            /***********************************************/}
-            {/*<CustomAnalytics />*/}
           </Analytics.Provider>
         ) : (
           children

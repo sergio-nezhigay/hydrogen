@@ -567,18 +567,16 @@ function ProductDetail({
     >
       {({open}) => (
         <>
-          <Disclosure.Button className="text-left">
-            <span className="flex-between">
-              <Text size="lead" as="h2">
-                {title}
-              </Text>
-              <IconClose
-                className={clsx(
-                  'transform-gpu transition-transform duration-200',
-                  !open && 'rotate-45',
-                )}
-              />
-            </span>
+          <Disclosure.Button className="text-left flex justify-between items-center">
+            <Text size="lead" as="h2" className="inline-block">
+              {title}
+            </Text>
+            <IconClose
+              className={clsx(
+                'transform-gpu transition-transform duration-200',
+                !open && 'rotate-45',
+              )}
+            />
           </Disclosure.Button>
 
           <DisclosurePanel

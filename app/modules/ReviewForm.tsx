@@ -3,7 +3,6 @@ import {useState, useEffect} from 'react';
 
 import {Heading, Section, Text} from '~/components/Text';
 import {translations} from '~/data/translations';
-import {Star} from '~/components/Icon';
 import {Button} from '~/components/ui/button';
 import {useTranslation} from '~/lib/utils';
 import {star, filledStar} from './StarRating';

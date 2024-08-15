@@ -1,11 +1,10 @@
 import {useParams, Form, Await, useRouteLoaderData} from '@remix-run/react';
 import useWindowScroll from 'react-use/esm/useWindowScroll';
-import {Disclosure} from '@headlessui/react';
 import {Suspense, useEffect, useMemo} from 'react';
 import {CartForm, Image} from '@shopify/hydrogen';
 
 import {type LayoutQuery} from 'storefrontapi.generated';
-import {Text, Heading, Section} from '~/components/Text';
+import {Text, Section} from '~/components/Text';
 import {Link} from '~/components/Link';
 import {Cart} from '~/components/Cart';
 import {CartLoading} from '~/components/CartLoading';
@@ -13,18 +12,12 @@ import {Input} from '~/components/Input';
 
 import {
   IconMenu,
-  IconCaret,
   IconLogin,
   IconAccount,
   IconBag,
   IconSearch,
 } from '~/components/Icon';
-import {
-  type EnhancedMenu,
-  type ChildEnhancedMenuItem,
-  useIsHomePath,
-  useTranslation,
-} from '~/lib/utils';
+import {type EnhancedMenu, useIsHomePath, useTranslation} from '~/lib/utils';
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 import type {RootLoader} from '~/root';
@@ -476,7 +469,6 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
     <Section
       divider="top"
       as="footer"
-      role="contentinfo"
       padding="y"
       className={`min-h-[25rem] w-full items-start overflow-hidden bg-stone-800 py-8  ${textColor}`}
     >
