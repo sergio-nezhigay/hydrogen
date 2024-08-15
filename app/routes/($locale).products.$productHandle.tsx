@@ -233,72 +233,68 @@ export default function Product() {
             GalleryItemComponent={ProductImage}
             showThumbs={true}
           />
-          <div className=" ">
-            <section className="flex w-full flex-col gap-8 md:mx-auto">
-              <div className="grid gap-2">
-                <Heading as="h1" className="overflow-hidden whitespace-normal ">
-                  {title}
-                </Heading>
-                <div
-                  className={clsx({
-                    'flex-between': reviewNumber > 0,
-                    'flex-end': reviewNumber === 0,
-                  })}
-                >
-                  {reviewNumber > 0 && (
-                    <a
-                      href="#review-list"
-                      className="space-x-2 flex"
-                      onClick={handleScrollToReviews}
-                    >
-                      <StarRating rating={rating} />
-                      <span className="align-top">({reviewNumber})</span>
-                    </a>
-                  )}
+          <div className="flex w-full flex-col gap-8 md:mx-auto">
+            <div className="grid gap-2">
+              <Heading as="h1" className="overflow-hidden whitespace-normal ">
+                {title}
+              </Heading>
+              <div
+                className={clsx({
+                  'flex-between': reviewNumber > 0,
+                  'flex-end': reviewNumber === 0,
+                })}
+              >
+                {reviewNumber > 0 && (
+                  <a
+                    href="#review-list"
+                    className="space-x-2 flex"
+                    onClick={handleScrollToReviews}
+                  >
+                    <StarRating rating={rating} />
+                    <span className="align-top">({reviewNumber})</span>
+                  </a>
+                )}
 
-                  {product.selectedVariant?.sku && (
-                    <span className="text-primary/70">
-                      Код:&nbsp;{product.selectedVariant?.sku}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <Suspense fallback={<ProductForm variants={[]} />}>
-                <Await
-                  errorElement="There was a problem loading related products"
-                  resolve={variants}
-                >
-                  {(resp) => (
-                    <ProductForm
-                      variants={resp.product?.variants.nodes || []}
-                    />
-                  )}
-                </Await>
-              </Suspense>
-              <div className="grid gap-4 py-4">
-                {descriptionHtml && (
-                  <ProductDetail
-                    title={translation.description}
-                    content={descriptionHtml}
-                    isOpen={true}
-                  />
-                )}
-                {shippingPolicy?.body && (
-                  <ProductDetail
-                    title={translation.shipping}
-                    content={getExcerpt(shippingPolicy.body)}
-                    learnMore={`/policies/${shippingPolicy.handle}`}
-                  />
-                )}
-                {refundPolicy?.body && (
-                  <ProductDetail
-                    title={translation.returns}
-                    content={getExcerpt(refundPolicy.body)}
-                    learnMore={`/policies/${refundPolicy.handle}`}
-                  />
+                {product.selectedVariant?.sku && (
+                  <span className="text-primary/70">
+                    Код:&nbsp;{product.selectedVariant?.sku}
+                  </span>
                 )}
               </div>
-            </section>
+            </div>
+            <Suspense fallback={<ProductForm variants={[]} />}>
+              <Await
+                errorElement="There was a problem loading related products"
+                resolve={variants}
+              >
+                {(resp) => (
+                  <ProductForm variants={resp.product?.variants.nodes || []} />
+                )}
+              </Await>
+            </Suspense>
+            <div className="grid gap-4 py-4">
+              {descriptionHtml && (
+                <ProductDetail
+                  title={translation.description}
+                  content={descriptionHtml}
+                  isOpen={true}
+                />
+              )}
+              {shippingPolicy?.body && (
+                <ProductDetail
+                  title={translation.shipping}
+                  content={getExcerpt(shippingPolicy.body)}
+                  learnMore={`/policies/${shippingPolicy.handle}`}
+                />
+              )}
+              {refundPolicy?.body && (
+                <ProductDetail
+                  title={translation.returns}
+                  content={getExcerpt(refundPolicy.body)}
+                  learnMore={`/policies/${refundPolicy.handle}`}
+                />
+              )}
+            </div>
           </div>
         </div>
       </Section>
@@ -572,7 +568,7 @@ function ProductDetail({
       {({open}) => (
         <>
           <Disclosure.Button className="text-left">
-            <div className="flex justify-between">
+            <span className="flex-between">
               <Text size="lead" as="h2">
                 {title}
               </Text>
@@ -582,7 +578,7 @@ function ProductDetail({
                   !open && 'rotate-45',
                 )}
               />
-            </div>
+            </span>
           </Disclosure.Button>
 
           <DisclosurePanel
