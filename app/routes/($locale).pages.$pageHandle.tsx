@@ -41,7 +41,12 @@ export default function Page() {
 
   return (
     <>
-      <Section heading={page.title}>
+      <Section>
+        <PageHeader
+          heading={page.title}
+          variant="allCollections"
+          className="container"
+        />
         <div dangerouslySetInnerHTML={{__html: page.body}} />
       </Section>
     </>

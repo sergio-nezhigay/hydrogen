@@ -75,35 +75,42 @@ export default function AllProducts() {
   const translation = useTranslation();
 
   return (
-    <Section heading="Каталог">
-      <Pagination connection={products}>
-        {({nodes, isLoading, NextLink, PreviousLink}) => {
-          const itemsMarkup = nodes.map((product, i) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              loading={getImageLoadingPriority(i)}
-            />
-          ));
+    <>
+      <Section>
+        <PageHeader
+          heading="Каталог"
+          variant="allCollections"
+          className="container"
+        />
+        <Pagination connection={products}>
+          {({nodes, isLoading, NextLink, PreviousLink}) => {
+            const itemsMarkup = nodes.map((product, i) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                loading={getImageLoadingPriority(i)}
+              />
+            ));
 
-          return (
-            <>
-              <div className="flex items-center justify-center mt-6">
-                <PreviousLink className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary w-full">
-                  {isLoading ? translation.loading : translation.prev}
-                </PreviousLink>
-              </div>
-              <Grid data-test="product-grid">{itemsMarkup}</Grid>
-              <div className="flex items-center justify-center mt-6">
-                <NextLink className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary w-full">
-                  {isLoading ? translation.loading : translation.next}
-                </NextLink>
-              </div>
-            </>
-          );
-        }}
-      </Pagination>
-    </Section>
+            return (
+              <>
+                <div className="flex items-center justify-center mt-6">
+                  <PreviousLink className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary w-full">
+                    {isLoading ? translation.loading : translation.prev}
+                  </PreviousLink>
+                </div>
+                <Grid data-test="product-grid">{itemsMarkup}</Grid>
+                <div className="flex items-center justify-center mt-6">
+                  <NextLink className="inline-block rounded font-medium text-center py-3 px-6 border border-primary/10 bg-contrast text-primary w-full">
+                    {isLoading ? translation.loading : translation.next}
+                  </NextLink>
+                </div>
+              </>
+            );
+          }}
+        </Pagination>
+      </Section>
+    </>
   );
 }
 
