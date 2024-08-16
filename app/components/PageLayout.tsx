@@ -126,7 +126,7 @@ function Header({
 }
 
 function CartDrawer({isOpen, onClose}: {isOpen: boolean; onClose: () => void}) {
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   const rootData = useRouteLoaderData<RootLoader>('root');
   if (!rootData) return null;
 

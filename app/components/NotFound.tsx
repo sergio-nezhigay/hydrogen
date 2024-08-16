@@ -1,19 +1,22 @@
+import {useTranslation} from '~/lib/utils';
 import {Button} from './Button';
 import {FeaturedSection} from './FeaturedSection';
 import {PageHeader, Text} from './Text';
 
 export function NotFound({type = 'page'}: {type?: string}) {
-  const heading = `We’ve lost this ${type}`;
-  const description = `We couldn’t find the ${type} you’re looking for. Try checking the URL or heading back to the home page.`;
+  const {t} = useTranslation();
+  const heading = t('we_lost_this', {type});
+  const description = t('we_couldnt_find', {type});
 
   return (
     <>
-      <PageHeader heading={heading}>
+      <PageHeader heading={heading} className="container">
         <Text width="narrow" as="p">
           {description}
         </Text>
+
         <Button width="auto" variant="secondary" to={'/'}>
-          Take me to the home page
+          {t('take_me_home')}
         </Button>
       </PageHeader>
       <FeaturedSection />

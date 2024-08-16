@@ -446,7 +446,7 @@ export function CartEmpty({
   layout?: Layouts;
   onClose?: () => void;
 }) {
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   const scrollRef = useRef(null);
   const {y} = useScroll(scrollRef);
 

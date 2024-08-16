@@ -86,7 +86,7 @@ function StarInput({rating, setRating, locale}: StarInputProps) {
 
 export function ReviewForm({productId, locale}: ReviewFormProps) {
   const actionData = useActionData<ActionData>();
-  const translation = useTranslation();
+  const {translation} = useTranslation();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');

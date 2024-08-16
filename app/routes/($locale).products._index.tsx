@@ -72,7 +72,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 
 export default function AllProducts() {
   const {products} = useLoaderData<typeof loader>();
-  const translation = useTranslation();
+  const {translation} = useTranslation();
 
   return (
     <>

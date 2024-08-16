@@ -10,7 +10,6 @@ import {
   BreadcrumbSeparator,
 } from '~/components/ui/breadcrumb';
 import {Section} from '~/components/Text';
-
 import {useTranslation} from '~/lib/utils';
 import clsx from 'clsx';
 
@@ -33,9 +32,7 @@ interface Collection {
 interface Product {
   handle: string;
   title: string;
-  collections: {
-    nodes: Collection[];
-  };
+  collections: {nodes: Collection[]};
 }
 
 interface RouteData {
@@ -50,52 +47,54 @@ interface Route {
 
 function BreadCrumbs() {
   const matches = useMatches();
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   const deepestRoute = matches.at(-1) as Route | undefined;
-  // Return null if the current route is the home page
-  if (!deepestRoute?.handle) {
-    return null;
-  }
 
-  const handle = deepestRoute?.handle;
+  // Early return if the current route is the home page or if there's no handle
+  if (!deepestRoute?.handle) return null;
 
+  const {handle, data} = deepestRoute;
   const parsedBreadcrumbType = breadcrumbTypeSchema.safeParse(
     handle?.breadcrumbType,
   );
-  const isValidBreadcrumbType = parsedBreadcrumbType.success;
-  const pages: {href: string; name: string}[] = [{href: '/', name: 'Home'}];
 
-  if (isValidBreadcrumbType) {
-    switch (parsedBreadcrumbType.data) {
-      case 'collections':
+  if (!parsedBreadcrumbType.success) return null;
+
+  // Define the base URL
+  const baseUrl = 'https://byte.com.ua';
+
+  const pages: {href: string; name: string}[] = [
+    {href: `${baseUrl}/`, name: 'Home'},
+  ];
+
+  switch (parsedBreadcrumbType.data) {
+    case 'collections':
+      pages.push({
+        href: `${baseUrl}/collections`,
+        name: translation.collections,
+      });
+      break;
+    case 'collection':
+      pages.push({
+        href: `${baseUrl}/collections/${data?.collection?.handle}`,
+        name: data?.collection?.title || translation.collections,
+      });
+      break;
+    case 'product':
+      const collection = data?.product?.collections.nodes.at(0);
+      if (collection) {
         pages.push({
-          href: '/collections',
-          name: translation.collections,
+          href: `${baseUrl}/collections/${collection.handle}`,
+          name: collection.title,
         });
-        break;
-      case 'collection':
-        pages.push({
-          href: `/collections/${deepestRoute?.data?.collection?.handle}`,
-          name:
-            deepestRoute?.data?.collection?.title || translation.collections,
-        });
-        break;
-      case 'product':
-        const collection = deepestRoute?.data?.product?.collections.nodes.at(0);
-        if (collection) {
-          pages.push({
-            href: `/collections/${collection.handle}`,
-            name: collection.title,
-          });
-        }
-        pages.push({
-          href: `/products/${deepestRoute?.data?.product?.handle ?? ''}`,
-          name: deepestRoute?.data?.product?.title ?? 'Product',
-        });
-        break;
-      default:
-        break;
-    }
+      }
+      pages.push({
+        href: `${baseUrl}/products/${data?.product?.handle ?? ''}`,
+        name: data?.product?.title ?? 'Product',
+      });
+      break;
+    default:
+      break;
   }
 
   return (

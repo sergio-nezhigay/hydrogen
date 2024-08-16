@@ -114,7 +114,7 @@ export default function Homepage() {
   const {featuredCollections, featuredProducts} =
     useLoaderData<typeof loader>();
 
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   return (
     <>
       <h1 className="sr-only">Головна сторінка магазину</h1>

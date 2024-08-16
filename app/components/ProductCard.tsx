@@ -29,7 +29,7 @@ export function ProductCard({
   quickAdd,
 }: ProductCardProps) {
   let cardLabel;
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   const cardProduct: Product = product?.variants
     ? (product as Product)
     : getProductPlaceholder();

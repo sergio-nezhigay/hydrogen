@@ -56,7 +56,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 
 export default function Collections() {
   const {collections} = useLoaderData<typeof loader>();
-  const translation = useTranslation();
+  const {translation} = useTranslation();
 
   return (
     <>

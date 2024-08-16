@@ -213,7 +213,7 @@ export default function Product() {
     useLoaderData<typeof loader>();
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   const rating = judgemeReviewsData?.rating ?? 0;
   const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
   const reviews = judgemeReviewsData?.reviews ?? [];
@@ -365,8 +365,8 @@ export function ProductForm({
 }: {
   variants: ProductVariantFragmentFragment[];
 }) {
-  const {product, storeDomain, locale} = useLoaderData<typeof loader>();
-  const translation = useTranslation();
+  const {product} = useLoaderData<typeof loader>();
+  const {translation} = useTranslation();
   const closeRef = useRef<HTMLButtonElement>(null);
 
   /**
@@ -556,7 +556,7 @@ function ProductDetail({
   learnMore?: string;
   isOpen?: boolean;
 }) {
-  const translation = useTranslation();
+  const {translation} = useTranslation();
 
   return (
     <Disclosure

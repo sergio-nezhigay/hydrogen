@@ -81,7 +81,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 export default function Search() {
   const {searchTerm, products, noResultRecommendations} =
     useLoaderData<typeof loader>();
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   const noResults = products?.nodes?.length === 0;
 
   return (
@@ -155,7 +155,7 @@ function NoResults({
   noResults: boolean;
   recommendations: Promise<null | FeaturedData>;
 }) {
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   return (
     <>
       {noResults && (

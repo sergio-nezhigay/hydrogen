@@ -327,26 +327,31 @@ export function useTranslation() {
   const locale =
     selectedLocale.language.toLowerCase() as keyof typeof translations;
   const translation = translations[locale];
-  return translation;
-}
 
-export function customTranslate(label: string) {
-  switch (label) {
-    case 'In stock':
-      return 'В наявності';
-    case 'Out of stock':
-      return 'Продано';
-    case 'Shipping Policy':
-      return 'Доставка';
-    case 'Privacy Policy':
-      return 'Умови використання сайту';
-    case 'Terms of Service':
-      return 'Гарантія';
-    case 'Refund Policy':
-      return 'Повернення товару';
-    default:
-      return label;
-  }
+  const t = (
+    key: keyof typeof translation | string,
+    variables?: Record<string, string | number>,
+  ): string => {
+    let translatedText = translation[key as keyof typeof translation] as string;
+
+    if (typeof translatedText !== 'string') {
+      translatedText = key;
+    }
+
+    if (variables) {
+      Object.keys(variables).forEach((variable) => {
+        const regex = new RegExp(`{${variable}}`, 'g');
+        translatedText = translatedText.replace(
+          regex,
+          variables[variable].toString(),
+        );
+      });
+    }
+
+    return translatedText;
+  };
+
+  return {t, locale, translation};
 }
 
 export function sortFilters(a: Filter, b: Filter) {

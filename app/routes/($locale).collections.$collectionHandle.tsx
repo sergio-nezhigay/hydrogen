@@ -56,8 +56,20 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     (filters, [key, value]) => {
       if (key.startsWith(FILTER_URL_PREFIX)) {
         const filterKey = key.substring(FILTER_URL_PREFIX.length);
+        let parsedValue;
+
+        try {
+          parsedValue = JSON.parse(value);
+        } catch (error) {
+          console.error(
+            `Failed to parse filter value for key ${filterKey}:`,
+            error,
+          );
+          parsedValue = value;
+        }
+
         filters.push({
-          [filterKey]: JSON.parse(value),
+          [filterKey]: parsedValue,
         });
       }
       return filters;
@@ -148,7 +160,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 export default function Collection() {
   const {collection, collections, appliedFilters} =
     useLoaderData<typeof loader>();
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   const {ref, inView} = useInView();
 
   return (

@@ -206,30 +206,37 @@ export default function App() {
   );
 }
 
-export function ErrorBoundary() {
-  const error = useRouteError();
-  let errorMessage = 'Unknown error';
-  let errorStatus = 500;
+export function ErrorBoundary({error}: {error: Error}) {
+  const routeError = useRouteError();
+  const isRouteError = isRouteErrorResponse(routeError);
 
-  if (isRouteErrorResponse(error)) {
-    errorMessage = error?.data?.message ?? error.data;
-    errorStatus = error.status;
-  } else if (error instanceof Error) {
-    errorMessage = error.message;
+  let title = 'Error';
+  let pageType = 'page';
+
+  if (isRouteError) {
+    title = 'Not found';
+    if (routeError.status === 404) pageType = routeError.data || pageType;
   }
 
   return (
-    <div className="route-error">
-      <h1>Oops</h1>
-      <h2>{errorStatus}</h2>
-      {errorMessage && (
-        <fieldset>
-          <pre>{errorMessage}</pre>
-        </fieldset>
+    <Layout>
+      {isRouteError ? (
+        <>
+          {routeError.status === 404 ? (
+            <NotFound type={pageType} />
+          ) : (
+            <GenericError
+              error={{message: `${routeError.status} ${routeError.data}`}}
+            />
+          )}
+        </>
+      ) : (
+        <GenericError error={error instanceof Error ? error : undefined} />
       )}
-    </div>
+    </Layout>
   );
 }
+
 const LAYOUT_QUERY = `#graphql
   query layout(
     $language: LanguageCode

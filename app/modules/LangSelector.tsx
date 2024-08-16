@@ -8,13 +8,13 @@ function LangSelector() {
   const location = useLocation();
   const currentUrl = `${location.pathname}${location.search}`;
 
-  const translation = useTranslation();
+  const {locale} = useTranslation();
   const bgClass = 'rounded-md size-8 flex-center';
 
   return (
     <ul className="flex-center">
       <li className="px-2">
-        {!translation.isUkrActive ? (
+        {locale === 'ru' ? (
           <a
             href={currentUrl.replace('/ru', '')}
             className="flex-center gap-2 group"
@@ -32,7 +32,7 @@ function LangSelector() {
         )}
       </li>
       <li className="border-l px-2">
-        {translation.isUkrActive ? (
+        {locale === 'uk' ? (
           <a
             href={'/ru' + currentUrl}
             className={clsx('hover:bg-stone-100/20', bgClass)}

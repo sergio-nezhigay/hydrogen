@@ -1,6 +1,5 @@
 export const translations = {
   uk: {
-    isUkrActive: true,
     buy: 'Купити',
     sold_out: 'Розпродано',
     shipping: 'Доставка',
@@ -52,11 +51,20 @@ export const translations = {
     no_items_added_yet: 'Схоже, ви ще нічого не додали, давайте почнемо!',
     continue_shopping: 'Продовжити покупки',
     back_to_policies: 'Повернутися до Правил',
-    copyright: '© 2024 Byte. Всі права захищено. ',
+    copyright: '© 2024 Byte. Всі права захищено.',
     dev_site: 'Сайт розробника',
+    we_lost_this: 'Ми втратили цю {type}',
+    we_couldnt_find:
+      'Ми не змогли знайти {type}, яку ви шукаєте. Спробуйте перевірити URL-адресу або поверніться на головну сторінку.',
+    take_me_home: 'Повернутись на головну сторінку',
+    'In stock': 'В наявності',
+    'Out of stock': 'Продано',
+    'Shipping Policy': 'Доставка',
+    'Privacy Policy': 'Умови використання сайту',
+    'Terms of Service': 'Гарантія',
+    'Refund Policy': 'Повернення товару',
   },
   ru: {
-    isUkrActive: false,
     buy: 'Купить',
     sold_out: 'Нет в наличии',
     shipping: 'Доставка',
@@ -108,7 +116,17 @@ export const translations = {
     no_items_added_yet: 'Похоже, вы еще ничего не добавили, давайте начнем!',
     continue_shopping: 'Продолжить покупки',
     back_to_policies: 'Вернуться к Правилам',
-    copyright: '© 2024 Byte. Все права защищены. ',
+    copyright: '© 2024 Byte. Все права защищены.',
     dev_site: 'Сайт разработчика',
+    we_lost_this: 'Мы потеряли эту {type}',
+    we_couldnt_find:
+      'Мы не смогли найти {type}, которую вы ищете. Попробуйте проверить URL-адрес или вернуться на главную страницу.',
+    take_me_home: 'Вернуться на главную страницу',
+    'In stock': 'В наличии',
+    'Out of stock': 'Продано',
+    'Shipping Policy': 'Доставка',
+    'Privacy Policy': 'Условия использования сайта',
+    'Terms of Service': 'Гарантия',
+    'Refund Policy': 'Возврат товара',
   },
 } as const;

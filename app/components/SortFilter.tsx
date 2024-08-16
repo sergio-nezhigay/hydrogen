@@ -20,7 +20,6 @@ import {Heading, Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
 import {
   DEFAULT_LOCALE,
-  customTranslate,
   sortFilters,
   useTranslation,
   useViewType,
@@ -97,7 +96,7 @@ export function SortFilter({
 function Filters({filters}: {filters: Filter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
-  const translation = useTranslation();
+  const {t, translation} = useTranslation();
   const sortedFilters = useMemo(
     () => filters.sort((a, b) => sortFilters(a, b)),
     [filters],
@@ -143,7 +142,7 @@ function Filters({filters}: {filters: Filter[]}) {
               )}
             </span>
 
-            <span>{customTranslate(option.label)}</span>
+            <span>{t(option.label)}</span>
           </Link>
         );
     }
@@ -195,9 +194,10 @@ function Filters({filters}: {filters: Filter[]}) {
   );
 }
 
-function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
+export function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
+  const {t} = useTranslation();
 
   return (
     <div className="flex items-center flex-wrap gap-2">
@@ -208,7 +208,7 @@ function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
             className="flex px-2 border rounded-full gap hover:bg-slate-100"
             key={filter.label}
           >
-            <span className="flex-grow">{customTranslate(filter.label)}</span>
+            <span className="flex-grow">{t(filter.label)}</span>
             <span>
               <IconXMark />
             </span>
@@ -265,7 +265,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
     [location.search],
   );
 
-  const translation = useTranslation();
+  const {translation} = useTranslation();
   const navigate = useNavigate();
   const [minPrice, setMinPrice] = useState(min);
   const [maxPrice, setMaxPrice] = useState(max);

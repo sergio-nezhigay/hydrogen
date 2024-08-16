@@ -5,6 +5,7 @@ import type {
 import {Section} from '~/components/Text';
 import {ProductCard} from '~/components/ProductCard';
 import {Gallery} from '~/modules/Gallery';
+import {useTranslation} from '~/lib/utils';
 
 const mockProducts = {
   nodes: new Array(12).fill(''),
@@ -16,14 +17,16 @@ type ProductSwimlaneProps = HomepageFeaturedProductsQuery & {
 };
 
 export function ProductSwimlane({
-  title = 'Featured Products',
+  title = 'featured_products',
   products = mockProducts,
   count = 12,
   ...props
 }: ProductSwimlaneProps) {
+  const {t} = useTranslation();
+  const translatedTitle = t(title);
   return (
     <Section
-      heading={title}
+      heading={translatedTitle}
       {...props}
       padding="y"
       display="flex"
