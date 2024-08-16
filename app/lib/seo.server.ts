@@ -197,11 +197,18 @@ function productJsonLd({
       availability,
       price: parseFloat(variant.price.amount),
       priceCurrency: variant.price.currencyCode,
+      priceValidUntil: '2027-12-31',
       sku: variant?.sku ?? '',
       url: variantUrl.toString(),
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
         url: `${origin}/policies/refund-policy`,
+        applicableCountry: {
+          '@type': 'Country',
+          name: 'Ukraine',
+        },
+        returnPolicyCategory:
+          'https://schema.org/MerchantReturnFiniteReturnWindow',
       },
       shippingDetails: {
         '@type': 'OfferShippingDetails',
@@ -217,6 +224,16 @@ function productJsonLd({
             opens: 'P1D',
             closes: 'P2D',
           },
+          transitTime: {
+            '@type': 'ShippingDeliveryTime',
+            minTransitTime: 'P1D',
+            maxTransitTime: 'P2D',
+          },
+          handlingTime: {
+            '@type': 'ShippingDeliveryTime',
+            minHandlingTime: 'P0D',
+            maxHandlingTime: 'P1D',
+          },
         },
         shippingDestination: {
           '@type': 'DefinedRegion',
@@ -225,7 +242,7 @@ function productJsonLd({
         transitTimeLabel: 'Standard Shipping',
       },
     };
-  });
+  }) as any;
 
   const reviews: Review[] = judgemeReviewsData.reviews.map((review) => ({
     '@type': 'Review',
