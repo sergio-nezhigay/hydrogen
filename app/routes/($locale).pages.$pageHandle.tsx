@@ -7,7 +7,7 @@ import {useLoaderData} from '@remix-run/react';
 import invariant from 'tiny-invariant';
 import {getSeoMeta} from '@shopify/hydrogen';
 
-import {PageHeader} from '~/components/Text';
+import {PageHeader, Section} from '~/components/Text';
 import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
 
@@ -41,11 +41,14 @@ export default function Page() {
 
   return (
     <>
-      <PageHeader heading={page.title} className="container"></PageHeader>
-      <div
-        dangerouslySetInnerHTML={{__html: page.body}}
-        className="prose dark:prose-invert container "
+      <PageHeader
+        heading={page.title}
+        variant="allCollections"
+        className="container"
       />
+      <Section>
+        <div dangerouslySetInnerHTML={{__html: page.body}} />
+      </Section>
     </>
   );
 }
