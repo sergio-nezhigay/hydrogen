@@ -84,15 +84,10 @@ export async function action({request, context}: ActionFunctionArgs) {
 
 export async function loader({context, request}: LoaderFunctionArgs) {
   const {cart} = context;
-  const seo = seoPayload.noindex({
-    url: request.url,
-    title: 'Кошик',
-    description: 'Товари в кошику',
-  });
+
   const cartData = await cart.get();
   return json({
     cart: cartData,
-    seo,
   });
 }
 

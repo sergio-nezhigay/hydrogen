@@ -16,7 +16,7 @@ export const loader = ({request}: LoaderFunctionArgs) => {
 function robotsTxtData({url}: {url: string}) {
   const sitemapUrl = url ? `${url}/sitemap.xml` : undefined;
 
-  const disallowPaths = [
+  const basePaths = [
     '/admin',
     '/cart',
     '/orders',
@@ -25,6 +25,11 @@ function robotsTxtData({url}: {url: string}) {
     '/carts',
     '/account',
     '/search',
+  ];
+
+  const disallowPaths = [
+    ...basePaths,
+    ...basePaths.map((path) => `/ru${path}`),
     '/ru/ru',
   ];
 
@@ -33,12 +38,12 @@ function robotsTxtData({url}: {url: string}) {
     .join('\n');
 
   return `
-  User-agent: *
-  ${disallowRules}
-  ${sitemapUrl ? `Sitemap: ${sitemapUrl}` : ''}
+    User-agent: *
+    ${disallowRules}
+    ${sitemapUrl ? `Sitemap: ${sitemapUrl}` : ''}
 
-  # Google adsbot ignores robots.txt unless specifically named!
-  User-agent: adsbot-google
-  ${disallowRules}
-  `.trim();
+    # Google adsbot ignores robots.txt unless specifically named!
+    User-agent: adsbot-google
+    ${disallowRules}
+    `.trim();
 }
