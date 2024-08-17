@@ -27,6 +27,8 @@ import type {ShopFragment} from 'storefrontapi.generated';
 
 import type {JudgemeReviewsData} from './type';
 
+const domain = 'byte.com.ua';
+
 function root({
   shop,
   url,
@@ -48,12 +50,16 @@ function root({
             language: 'ru',
             url: `${origin}/ru${cleanPathname}`,
           },
+          {
+            language: 'x-default',
+            url: `${origin}${cleanPathname}`,
+          },
         ]
       : [];
 
   return {
     title: shop?.name,
-    titleTemplate: `Магазин електроніки %s | ${urlObj.hostname}`,
+    titleTemplate: `%s | ${domain}`,
     description: truncate(shop?.description ?? ''),
     handle: '@shopify',
     url,
@@ -134,9 +140,9 @@ function root({
 
 function home(): SeoConfig {
   return {
-    //title: 'Головна',
-    //titleTemplate: '%s | магазин Byte.com.ua',
-    //description: "Інтернет-магазин комп'ютерних перехідників та комплектуючих",
+    title: 'Byte',
+    titleTemplate: `Магазин електроніки %s | ${domain}`,
+
     robots: {
       noIndex: false,
       noFollow: false,

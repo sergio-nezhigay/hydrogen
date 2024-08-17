@@ -13,6 +13,8 @@ import {Section} from '~/components/Text';
 import {useTranslation} from '~/lib/utils';
 import clsx from 'clsx';
 
+const domain = 'byte.com.ua';
+
 export const breadcrumbTypeSchema = z.enum([
   'collections',
   'collection',
@@ -60,8 +62,7 @@ function BreadCrumbs() {
 
   if (!parsedBreadcrumbType.success) return null;
 
-  // Define the base URL
-  const baseUrl = 'https://byte.com.ua';
+  const baseUrl = 'https://' + domain;
 
   const pages: {href: string; name: string}[] = [
     {href: `${baseUrl}/`, name: 'Home'},
