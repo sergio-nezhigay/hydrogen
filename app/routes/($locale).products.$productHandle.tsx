@@ -80,15 +80,15 @@ async function loadCriticalData({
 
   const judgeme_API_TOKEN = context.env.JUDGEME_PUBLIC_TOKEN;
   const shop_domain = context.env.PUBLIC_STORE_DOMAIN;
-  const judgemeReviewsData = await getJudgemeReviews(
-    judgeme_API_TOKEN,
-    shop_domain,
-    productHandle,
-  );
+  //  const judgemeReviewsData = await getJudgemeReviews(
+  //    judgeme_API_TOKEN,
+  //    shop_domain,
+  //    productHandle,
+  //  );
 
   const selectedOptions = getSelectedProductOptions(request);
 
-  const [{shop, product}] = await Promise.all([
+  const [{shop, product}, judgemeReviewsData] = await Promise.all([
     context.storefront.query(PRODUCT_QUERY, {
       variables: {
         handle: productHandle,
@@ -98,6 +98,7 @@ async function loadCriticalData({
       },
     }),
     // Add other queries here, so that they are loaded in parallel
+    getJudgemeReviews(judgeme_API_TOKEN, shop_domain, productHandle),
   ]);
 
   if (!product?.id) {
