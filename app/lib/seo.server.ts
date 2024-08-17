@@ -53,7 +53,7 @@ function root({
 
   return {
     title: shop?.name,
-    titleTemplate: `%s | ${urlObj.hostname}`,
+    titleTemplate: `Магазин електроніки %s | ${urlObj.hostname}`,
     description: truncate(shop?.description ?? ''),
     handle: '@shopify',
     url,
@@ -394,7 +394,6 @@ function collection({
   url: Request['url'];
 }): SeoConfig {
   return {
-    //title: collection?.seo?.title,
     title: collection?.seo?.title ?? collection?.title ?? '',
     description: truncate(
       collection?.seo?.description ?? collection?.description ?? '',
