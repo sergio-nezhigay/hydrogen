@@ -615,6 +615,25 @@ function policy({
     url,
   };
 }
+function noindex({
+  title,
+  description,
+  url,
+}: {
+  title: string;
+  description: string;
+  url: Request['url'];
+}): SeoConfig {
+  return {
+    description: title,
+    title: title,
+    url,
+    robots: {
+      noIndex: true,
+      noFollow: true,
+    },
+  };
+}
 
 function policies({
   policies,
@@ -669,6 +688,7 @@ export const seoPayload = {
   root,
   searchResults,
   allProducts,
+  noindex,
 };
 
 /**

@@ -10,6 +10,8 @@ import {CartForm, type CartQueryDataReturn, Analytics} from '@shopify/hydrogen';
 import {isLocalPath} from '~/lib/utils';
 import {Cart} from '~/components/Cart';
 import type {RootLoader} from '~/root';
+import {request} from '@playwright/test';
+import {seoPayload} from '~/lib/seo.server';
 
 export async function action({request, context}: ActionFunctionArgs) {
   const {cart} = context;
@@ -80,9 +82,18 @@ export async function action({request, context}: ActionFunctionArgs) {
   );
 }
 
-export async function loader({context}: LoaderFunctionArgs) {
+export async function loader({context, request}: LoaderFunctionArgs) {
   const {cart} = context;
-  return json(await cart.get());
+  const seo = seoPayload.noindex({
+    url: request.url,
+    title: 'Каталог',
+    description: 'Усі товари',
+  });
+  const cartData = await cart.get();
+  return json({
+    cart: cartData,
+    seo,
+  });
 }
 
 export default function CartRoute() {

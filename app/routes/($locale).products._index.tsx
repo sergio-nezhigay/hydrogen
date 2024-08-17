@@ -41,23 +41,10 @@ export async function loader({
 
   invariant(data, 'No data returned from Shopify API');
 
-  const seo = seoPayload.allProducts({
+  const seo = seoPayload.noindex({
     url: request.url,
-    collection: {
-      id: 'all-products',
-      title: 'Каталог',
-      handle: 'products',
-      descriptionHtml: 'All the store products',
-      description: 'Усі товари',
-      seo: {
-        title: 'Усі товари',
-        description: 'Усі товари магазину',
-      },
-
-      metafields: [],
-      products: data.products,
-      updatedAt: '',
-    },
+    title: 'Каталог',
+    description: 'Усі товари',
   });
 
   return defer({
