@@ -86,8 +86,8 @@ export async function loader({context, request}: LoaderFunctionArgs) {
   const {cart} = context;
   const seo = seoPayload.noindex({
     url: request.url,
-    title: 'Каталог',
-    description: 'Усі товари',
+    title: 'Кошик',
+    description: 'Товари в кошику',
   });
   const cartData = await cart.get();
   return json({
