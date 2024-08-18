@@ -26,6 +26,7 @@ import type {
 import type {ShopFragment} from 'storefrontapi.generated';
 
 import type {JudgemeReviewsData} from './type';
+import {getAlternates} from './utils';
 
 const domain = 'byte.com.ua';
 
@@ -36,27 +37,7 @@ function root({
   shop: ShopFragment;
   url: Request['url'];
 }): SeoConfig {
-  const urlObj = new URL(url);
-  const origin = urlObj.origin;
-  const cleanPathname = urlObj.pathname.replace(/^\/ru\//, '/');
-  const alternates =
-    urlObj.search.length === 0
-      ? [
-          {
-            language: 'uk',
-            url: `${origin}${cleanPathname}`,
-          },
-          {
-            language: 'ru',
-            url: `${origin}/ru${cleanPathname}`,
-          },
-          {
-            language: 'x-default',
-            url: `${origin}${cleanPathname}`,
-          },
-        ]
-      : [];
-
+  const alternates = getAlternates(url);
   return {
     title: shop?.name,
     titleTemplate: `%s | ${domain}`,
@@ -138,7 +119,8 @@ function root({
   };
 }
 
-function home(): SeoConfig {
+function home({url}: {url: Request['url']}): SeoConfig {
+  const alternates = getAlternates(url);
   return {
     title: 'Byte',
     titleTemplate: `Магазин електроніки %s | ${domain}`,
@@ -152,6 +134,8 @@ function home(): SeoConfig {
       '@type': 'WebPage',
       name: 'Головна сторінка',
     },
+    alternates,
+    url,
   };
 }
 
@@ -321,11 +305,16 @@ function product({
   const description = truncate(
     product?.seo?.description ?? product?.description ?? '',
   );
+
+  const alternates = getAlternates(url);
+
   return {
     title: product?.seo?.title ?? product?.title,
     description,
     media: selectedVariant?.image,
     jsonLd: productJsonLd({product, selectedVariant, url, judgemeReviewsData}),
+    alternates,
+    url,
   };
 }
 

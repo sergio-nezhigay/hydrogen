@@ -386,3 +386,34 @@ export function useViewType() {
 
   return isMobile;
 }
+
+/**
+ * Generate alternate URLs for different languages
+ * @param url - The full URL of the current page
+ * @returns An array of objects representing alternate language URLs
+ */
+export function getAlternates(
+  url: string,
+): Array<{language: string; url: string}> {
+  const urlObj = new URL(url || '');
+  const origin = urlObj.origin;
+
+  const cleanPathname = urlObj.pathname.replace(/^\/ru\//, '/');
+
+  return urlObj.search.length === 0
+    ? [
+        {
+          language: 'uk',
+          url: `${origin}${cleanPathname}`,
+        },
+        {
+          language: 'ru',
+          url: `${origin}/ru${cleanPathname}`,
+        },
+        {
+          language: 'x-default',
+          url: `${origin}${cleanPathname}`,
+        },
+      ]
+    : [];
+}
