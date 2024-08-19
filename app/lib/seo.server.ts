@@ -110,11 +110,6 @@ function root({
           },
         ],
       },
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: `${url}search?q={search_term}`,
-        query: "required name='search_term'",
-      },
     },
   };
 }
@@ -204,25 +199,33 @@ function productJsonLd({
         '@type': 'OfferShippingDetails',
         shippingRate: {
           '@type': 'MonetaryAmount',
-          value: '50.00',
+          value: 50.0,
           currency: 'UAH',
         },
         deliveryTime: {
           '@type': 'ShippingDeliveryTime',
           businessDays: {
             '@type': 'OpeningHoursSpecification',
-            opens: 'P1D',
-            closes: 'P2D',
+            dayOfWeek: [
+              'https://schema.org/Monday',
+              'https://schema.org/Tuesday',
+              'https://schema.org/Wednesday',
+              'https://schema.org/Thursday',
+              'https://schema.org/Friday',
+            ],
+          },
+
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 0,
+            maxValue: 1,
+            unitCode: 'd',
           },
           transitTime: {
-            '@type': 'ShippingDeliveryTime',
-            minTransitTime: 'P1D',
-            maxTransitTime: 'P2D',
-          },
-          handlingTime: {
-            '@type': 'ShippingDeliveryTime',
-            minHandlingTime: 'P0D',
-            maxHandlingTime: 'P1D',
+            '@type': 'QuantitativeValue',
+            minValue: 1,
+            maxValue: 2,
+            unitCode: 'd',
           },
         },
         shippingDestination: {
