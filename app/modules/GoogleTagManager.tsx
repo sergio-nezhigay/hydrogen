@@ -21,7 +21,6 @@ export function GoogleTagManager() {
     subscribe('page_viewed', (data) => {
       // eslint-disable-next-line no-console
       console.log('CustomAnalytics - Page viewed:', data);
-      //initializeDataLayer();
       window.dataLayer.push({
         event: 'shopify_page_view',
         page: data.url,
@@ -36,7 +35,7 @@ export function GoogleTagManager() {
     subscribe('product_viewed', (data) => {
       // eslint-disable-next-line no-console
       console.log('CustomAnalytics - Product viewed:', data);
-      initializeDataLayer();
+
       if (data.products && data.products.length > 0) {
         const product = data.products[0];
         window.dataLayer.push({
