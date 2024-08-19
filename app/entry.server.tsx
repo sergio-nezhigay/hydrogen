@@ -26,9 +26,9 @@ export default async function handleRequest(
     ],
     connectSrc: [
       'https://analytics.google.com',
+      'https://stats.g.doubleclick.net',
       'https://*.google-analytics.com',
       'https://*.analytics.google.com',
-
       'https://*.googletagmanager.com',
     ],
 
