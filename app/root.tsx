@@ -38,6 +38,7 @@ import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 //import {CustomAnalytics} from './modules/CustomAnalytics';
 import type {translations} from './data/translations';
 import {GoogleTagManager} from './modules/GoogleTagManager';
+import {CustomAnalytics} from './modules/CustomAnalytics';
 
 export type RootLoader = typeof loader;
 
@@ -154,10 +155,10 @@ function Layout({children}: {children?: React.ReactNode}) {
         <Meta />
         <Links />
 
-        <Script src="https://www.googletagmanager.com/gtm.js?id=GTM-WRQRP5RF" />
+        {/*<Script src="https://www.googletagmanager.com/gtm.js?id=GTM-WRQRP5RF" />*/}
       </head>
       <body>
-        <noscript>
+        {/*<noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WRQRP5RF"
             height="0"
@@ -167,7 +168,7 @@ function Layout({children}: {children?: React.ReactNode}) {
               visibility: 'hidden',
             }}
           ></iframe>
-        </noscript>
+        </noscript>*/}
 
         {data ? (
           <Analytics.Provider
@@ -184,8 +185,8 @@ function Layout({children}: {children?: React.ReactNode}) {
             >
               {children}
             </PageLayout>
-
-            <GoogleTagManager />
+            <CustomAnalytics />
+            {/*<GoogleTagManager />*/}
           </Analytics.Provider>
         ) : (
           children
