@@ -339,7 +339,8 @@ function collectionJsonLd({
   url: Request['url'];
   collection: CollectionRequiredFields;
 }): SeoConfig['jsonLd'] {
-  const siteUrl = new URL(url);
+  //  const siteUrl = new URL(url);
+  const origin = new URL(url).origin;
   const itemListElement: CollectionPage['mainEntity'] =
     collection.products.nodes.map((product, index) => {
       return {
@@ -358,7 +359,7 @@ function collectionJsonLd({
           '@type': 'ListItem',
           position: 1,
           name: 'Колекції',
-          item: `${siteUrl.host}/collections`,
+          item: `${origin}/collections`,
         },
         {
           '@type': 'ListItem',
