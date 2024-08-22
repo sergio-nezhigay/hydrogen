@@ -29,6 +29,7 @@ export default {
   ): Promise<Response> {
     try {
       const url = new URL(request.url);
+      console.log('🚀 ~ url:', url);
       if (url.hostname.startsWith('www.')) {
         const nonWwwUrl = url.toString().replace('www.', '');
         return redirect(nonWwwUrl, {status: 301});
