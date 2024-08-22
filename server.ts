@@ -31,7 +31,6 @@ export default {
       const url = new URL(request.url);
       if (url.hostname.startsWith('www.')) {
         const nonWwwUrl = url.pathname.replace('www.', '');
-        //const nonWwwUrl = url.toString().replace('www.', '');
         return redirect(nonWwwUrl, {status: 301});
       }
       if (url.pathname.startsWith('/product/')) {
