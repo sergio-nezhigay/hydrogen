@@ -1,11 +1,8 @@
 import {Script, useAnalytics} from '@shopify/hydrogen';
 import {useEffect} from 'react';
-import {useLoaderData} from '@remix-run/react';
-import type {loader} from '~/root';
 
 export function CustomAnalytics() {
   const {subscribe, canTrack} = useAnalytics();
-  const data = useLoaderData<typeof loader>();
 
   useEffect(() => {
     setTimeout(() => {
@@ -36,7 +33,6 @@ export function CustomAnalytics() {
                 quantity: product.quantity,
                 item_variant: product.variantTitle,
                 item_brand: product.vendor,
-                // Add more product details as needed
               },
             ],
           },
@@ -45,6 +41,22 @@ export function CustomAnalytics() {
     });
     subscribe('collection_viewed', (data) => {
       console.log('CustomAnalytics - Collection viewed:', data);
+      if (data.collection) {
+        window.dataLayer.push({
+          event: 'view_collection',
+          collection: {
+            collection_id: data.collection.id,
+            collection_handle: data.collection.handle,
+          },
+          shop: {
+            shop_id: data.shop?.shopId,
+            language: data.shop?.acceptedLanguage,
+            currency: data.shop?.currency,
+            subchannel_id: data.shop?.hydrogenSubchannelId,
+          },
+          url: data.url,
+        });
+      }
     });
     subscribe('cart_viewed', (data) => {
       console.log('CustomAnalytics - Cart viewed:', data);
