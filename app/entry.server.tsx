@@ -16,6 +16,7 @@ export default async function handleRequest(
       "'self'",
       'https://cdn.shopify.com',
       'https://*.googletagmanager.com',
+      'https://googleads.g.doubleclick.net',
     ],
     imgSrc: [
       'https://cdn.shopify.com',
@@ -37,7 +38,6 @@ export default async function handleRequest(
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
   });
-  //  555
 
   const body = await renderToReadableStream(
     <NonceProvider>
