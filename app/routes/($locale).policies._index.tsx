@@ -49,8 +49,8 @@ export default function Policies() {
 
   return (
     <div className="container">
-      <PageHeader heading="Правила" />
-      <Section padding="x" className="mb-24">
+      <PageHeader heading="Умови  роботи" variant="allCollections" />
+      <Section padding="y" className="mb-24">
         {policies.map((policy) => {
           return (
             policy && (

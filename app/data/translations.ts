@@ -59,9 +59,9 @@ export const translations = {
     take_me_home: 'Повернутись на головну сторінку',
     'In stock': 'В наявності',
     'Out of stock': 'Продано',
-    'Shipping Policy': 'Доставка',
+    'Shipping Policy': 'Умови доставки',
     'Privacy Policy': 'Умови використання сайту',
-    'Terms of Service': 'Гарантія',
+    'Terms of Service': 'Умови обслуговування',
     'Refund Policy': 'Повернення товару',
   },
   ru: {
@@ -124,9 +124,9 @@ export const translations = {
     take_me_home: 'Вернуться на главную страницу',
     'In stock': 'В наличии',
     'Out of stock': 'Продано',
-    'Shipping Policy': 'Доставка',
+    'Shipping Policy': 'Условия доставки',
     'Privacy Policy': 'Условия использования сайта',
-    'Terms of Service': 'Гарантия',
+    'Terms of Service': 'Условия обслуживания',
     'Refund Policy': 'Возврат товара',
   },
 } as const;

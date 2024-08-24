@@ -64,8 +64,7 @@ export default function Policies() {
       >
         <PageHeader
           heading={t(policy.title)}
-          //  heading={policy.title}
-          className="grid items-start flex-grow gap-4 md:sticky top-36 md:w-5/12"
+          className="grid items-start flex-grow gap-4 top-36 md:w-5/12"
         >
           <Button
             className="justify-self-start"
