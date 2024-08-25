@@ -29,11 +29,6 @@ export default {
   ): Promise<Response> {
     try {
       const url = new URL(request.url);
-      //  if (url.hostname.startsWith('www.')) {
-      //    const nonWwwUrl = url.pathname.replace('www.', '');
-      //    url.pathname = nonWwwUrl;
-      //    return redirect(url.toString(), {status: 301});
-      //  }
       if (url.pathname.startsWith('/product/')) {
         const newPathname = url.pathname.replace(/^\/product\//, '/products/');
         url.pathname = newPathname;
