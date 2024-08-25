@@ -22,7 +22,7 @@ import {AccountAddressBook} from '~/components/AccountAddressBook';
 import {Modal} from '~/components/Modal';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {FeaturedCollections} from '~/components/FeaturedCollections';
-import {usePrefixPathWithLocale} from '~/lib/utils';
+import {usePrefixPathWithLocale, useTranslation} from '~/lib/utils';
 import {CACHE_NONE, routeHeaders} from '~/data/cache';
 import {CUSTOMER_DETAILS_QUERY} from '~/graphql/customer-account/CustomerDetailsQuery';
 
@@ -106,13 +106,14 @@ interface AccountType {
 function Account({customer, heading, featuredDataPromise}: AccountType) {
   const orders = flattenConnection(customer.orders);
   const addresses = flattenConnection(customer.addresses);
+  const {t} = useTranslation();
 
   return (
     <>
       <PageHeader heading={heading}>
         <Form method="post" action={usePrefixPathWithLocale('/account/logout')}>
           <button type="submit" className="text-primary/50">
-            Sign out
+            {t('Sign out')}
           </button>
         </Form>
       </PageHeader>

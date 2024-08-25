@@ -13,16 +13,4 @@ export const countries: Localizations = {
     country: 'UA',
     currency: 'UAH',
   },
-  //  '/en-ua': {
-  //    label: 'En-Ukraine',
-  //    language: 'EN',
-  //    country: 'UA',
-  //    currency: 'UAH',
-  //  },
-  //  '/uk-ua': {
-  //    label: 'Uk-Ukraine',
-  //    language: 'UK',
-  //    country: 'UA',
-  //    currency: 'UAH',
-  //  },
 };

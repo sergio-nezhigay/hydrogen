@@ -63,6 +63,7 @@ export const translations = {
     'Privacy Policy': 'Умови використання сайту',
     'Terms of Service': 'Умови обслуговування',
     'Refund Policy': 'Повернення товару',
+    'Sign out': 'Вийти',
   },
   ru: {
     buy: 'Купить',
@@ -128,5 +129,6 @@ export const translations = {
     'Privacy Policy': 'Условия использования сайта',
     'Terms of Service': 'Условия обслуживания',
     'Refund Policy': 'Возврат товара',
+    'Sign out': 'Выйти',
   },
-} as const;
+};
