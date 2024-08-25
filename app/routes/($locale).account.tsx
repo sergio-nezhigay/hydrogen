@@ -109,12 +109,19 @@ function Account({customer, heading, featuredDataPromise}: AccountType) {
   const {t} = useTranslation();
 
   return (
-    <>
+    <div className="container">
       <PageHeader heading={t('Welcome to your account.')}>
         <Form method="post" action={usePrefixPathWithLocale('/account/logout')}>
-          <button type="submit" className="text-primary/50">
+          {/*<button type="submit" className="text-primary/50">
             {t('Sign out')}
-          </button>
+          </button>*/}
+          <Button
+            variant="secondary"
+            type="submit"
+            className="mx-auto block bg-blue-600/50 text-white rounded hover:bg-blue-700/50"
+          >
+            {t('Sign out')}
+          </Button>
         </Form>
       </PageHeader>
       {orders && <AccountOrderHistory orders={orders} />}
@@ -138,7 +145,7 @@ function Account({customer, heading, featuredDataPromise}: AccountType) {
           </Await>
         </Suspense>
       )}
-    </>
+    </div>
   );
 }
 
