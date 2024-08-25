@@ -112,13 +112,10 @@ function Account({customer, heading, featuredDataPromise}: AccountType) {
     <div className="container">
       <PageHeader heading={t('Welcome to your account.')}>
         <Form method="post" action={usePrefixPathWithLocale('/account/logout')}>
-          {/*<button type="submit" className="text-primary/50">
-            {t('Sign out')}
-          </button>*/}
           <Button
             variant="secondary"
             type="submit"
-            className="mx-auto block bg-blue-600/50 text-white rounded hover:bg-blue-700/50"
+            className="mx-auto block bg-blue-600/50 text-white rounded hover:bg-blue-700/50 px-4 py-1"
           >
             {t('Sign out')}
           </Button>

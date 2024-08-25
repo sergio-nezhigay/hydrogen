@@ -68,6 +68,9 @@ export const translations = {
     'Welcome to your account.': 'Ласкаво просимо до вашого акаунта.',
     'View Details': 'Переглянути деталі',
     'Order No': 'Замовлення №',
+    Help: 'Допомога',
+    Account: 'Акаунт',
+    Login: 'Увійти',
   },
   ru: {
     buy: 'Купить',
@@ -138,5 +141,8 @@ export const translations = {
     'Welcome to your account.': 'Добро пожаловать в ваш аккаунт.',
     'View Details': 'Посмотреть детали',
     'Order No': 'Заказ №',
+    Help: 'Помощь',
+    Account: 'Аккаунт',
+    Login: 'Войти',
   },
 };
