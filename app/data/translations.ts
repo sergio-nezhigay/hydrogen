@@ -64,6 +64,10 @@ export const translations = {
     'Terms of Service': 'Умови обслуговування',
     'Refund Policy': 'Повернення товару',
     'Sign out': 'Вийти',
+    'Order History': 'Історія замовлень',
+    'Welcome to your account.': 'Ласкаво просимо до вашого акаунта.',
+    'View Details': 'Переглянути деталі',
+    'Order No': 'Замовлення №',
   },
   ru: {
     buy: 'Купить',
@@ -130,5 +134,9 @@ export const translations = {
     'Terms of Service': 'Условия обслуживания',
     'Refund Policy': 'Возврат товара',
     'Sign out': 'Выйти',
+    'Order History': 'История заказов',
+    'Welcome to your account.': 'Добро пожаловать в ваш аккаунт.',
+    'View Details': 'Посмотреть детали',
+    'Order No': 'Заказ №',
   },
 };

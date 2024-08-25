@@ -110,7 +110,7 @@ function Account({customer, heading, featuredDataPromise}: AccountType) {
 
   return (
     <>
-      <PageHeader heading={heading}>
+      <PageHeader heading={t('Welcome to your account.')}>
         <Form method="post" action={usePrefixPathWithLocale('/account/logout')}>
           <button type="submit" className="text-primary/50">
             {t('Sign out')}
@@ -147,10 +147,11 @@ type OrderCardsProps = {
 };
 
 function AccountOrderHistory({orders}: OrderCardsProps) {
+  const {t} = useTranslation();
   return (
     <div className="mt-6">
       <div className="grid w-full gap-4 p-4 py-6 md:gap-8 md:p-8 lg:p-12">
-        <h2 className="font-bold text-lead">Order History</h2>
+        <h2 className="font-bold text-lead"> {t('Order History')}</h2>
         {orders?.length ? <Orders orders={orders} /> : <EmptyOrders />}
       </div>
     </div>

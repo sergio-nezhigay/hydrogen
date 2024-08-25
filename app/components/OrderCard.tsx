@@ -3,11 +3,11 @@ import {flattenConnection, Image} from '@shopify/hydrogen';
 import type {OrderCardFragment} from 'customer-accountapi.generated';
 import {Heading, Text} from '~/components/Text';
 import {Link} from '~/components/Link';
-import {statusMessage} from '~/lib/utils';
+import {statusMessage, useTranslation} from '~/lib/utils';
 
 export function OrderCard({order}: {order: OrderCardFragment}) {
+  const {t} = useTranslation();
   if (!order?.id) return null;
-
   const [legacyOrderId, key] = order!.id!.split('/').pop()!.split('?');
   const lineItems = flattenConnection(order?.lineItems);
   const fulfillmentStatus = flattenConnection(order?.fulfillments)[0]?.status;
@@ -47,7 +47,7 @@ export function OrderCard({order}: {order: OrderCardFragment}) {
             <dt className="sr-only">Order ID</dt>
             <dd>
               <Text size="fine" color="subtle">
-                Order No. {order.number}
+                {t('Order No')}. {order.number}
               </Text>
             </dd>
             <dt className="sr-only">Order Date</dt>
@@ -82,7 +82,7 @@ export function OrderCard({order}: {order: OrderCardFragment}) {
           prefetch="intent"
         >
           <Text color="subtle" className="ml-3">
-            View Details
+            {t('View Details')}
           </Text>
         </Link>
       </div>
