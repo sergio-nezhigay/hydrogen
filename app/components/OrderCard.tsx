@@ -53,7 +53,7 @@ export function OrderCard({order}: {order: OrderCardFragment}) {
             <dt className="sr-only">Order Date</dt>
             <dd>
               <Text size="fine" color="subtle">
-                {new Date(order.processedAt).toDateString()}
+                {new Date(order.processedAt).toLocaleDateString('uk-UA')}
               </Text>
             </dd>
             {fulfillmentStatus && (
