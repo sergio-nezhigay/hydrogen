@@ -31,6 +31,7 @@ export default async function handleRequest(
       'https://fonts.googleapis.com',
     ],
     connectSrc: [
+      "'self'",
       'https://analytics.google.com',
       'https://stats.g.doubleclick.net',
       'https://*.google-analytics.com',
