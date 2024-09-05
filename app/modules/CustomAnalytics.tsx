@@ -1,8 +1,9 @@
-import {Script, useAnalytics} from '@shopify/hydrogen';
+import {Script, useAnalytics, useNonce} from '@shopify/hydrogen';
 import {useEffect} from 'react';
 
 export function CustomAnalytics() {
   const {subscribe, canTrack} = useAnalytics();
+  const nonce = useNonce();
 
   useEffect(() => {
     setTimeout(() => {
@@ -81,6 +82,7 @@ export function CustomAnalytics() {
     <>
       {/* Initialize GTM container */}
       <Script
+        nonce={nonce}
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `
