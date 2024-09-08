@@ -187,12 +187,14 @@ function CartLines({
 
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
   if (!checkoutUrl) return null;
-  // const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[email]=somebody@store.com`;
+
   const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
-  // const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[email]=somebody2@store.com&checkout[shipping_address][last_name]=Test&checkout[shipping_address][address1]=Test&checkout[shipping_address][city]=Test&checkout[shipping_address][zip]=12345`;
+
+  const checkoutUrlWithCustomData = `${checkoutUrl}?discount=TEST10&checkout[shipping_address][zip]=12345&attribute[referral_code]=MYCODE123&attribute[custom_note]=Special Request`;
+
   return (
     <div className="flex flex-col mt-2">
-      <a href={checkoutUrlWithZipcode} target="_self">
+      <a href={checkoutUrlWithCustomData} target="_self">
         {/* <a href={checkoutUrl} target="_self"> */}
         <Button as="span" width="full">
           Оформити замовлення
