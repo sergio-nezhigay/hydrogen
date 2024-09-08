@@ -190,7 +190,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
 
   const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
 
-  const checkoutUrlWithCustomData = `${checkoutUrl}?discount=TEST10&checkout[shipping_address][zip]=12345&attribute[referral_code]=MYCODE123&attribute[custom_note]=Special Request`;
+  const checkoutUrlWithCustomData = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345&attribute[referral_code]=MYCODE123&attribute[custom_note]=Special Request`;
 
   return (
     <div className="flex flex-col mt-2">
