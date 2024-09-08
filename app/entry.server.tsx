@@ -33,6 +33,7 @@ export default async function handleRequest(
     connectSrc: [
       "'self'",
       'https://analytics.google.com',
+      'https://www.google.com',
       'https://stats.g.doubleclick.net',
       'https://*.google-analytics.com',
       'https://*.analytics.google.com',
