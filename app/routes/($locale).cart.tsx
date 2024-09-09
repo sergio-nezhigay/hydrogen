@@ -52,6 +52,10 @@ export async function action({request, context}: ActionFunctionArgs) {
         ...inputs.buyerIdentity,
       });
       break;
+    case CartForm.ACTIONS.AttributesUpdateInput:
+      result = await cart.updateAttributes(inputs.attributes);
+      break;
+
     default:
       invariant(false, `${action} cart action is not defined`);
   }

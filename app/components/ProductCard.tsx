@@ -10,6 +10,7 @@ import {AddToCartButton} from '~/components/AddToCartButton';
 import {isDiscounted, isNewArrival, useTranslation} from '~/lib/utils';
 import {getProductPlaceholder} from '~/lib/placeholders';
 import HryvniaMoney from '~/components/HryvniaMoney';
+import {UpdateCartAttributes} from './UpdateCartAttributes';
 
 export type ProductCardProps = {
   product: ProductCardFragment;

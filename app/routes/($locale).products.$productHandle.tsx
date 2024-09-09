@@ -42,6 +42,7 @@ import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
 import {Gallery} from '~/modules/Gallery';
+import {UpdateCartAttributes} from '~/components/UpdateCartAttributes';
 
 export const headers = routeHeaders;
 
@@ -538,6 +539,8 @@ export function ProductForm({
                   <span>{translation.buy}</span>
                 </Text>
               </AddToCartButton>
+
+              <UpdateCartAttributes totalIncome={333} />
             </div>
           )}
         </>

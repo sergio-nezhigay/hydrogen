@@ -23,11 +23,18 @@ export function AddToCartButton({
   disabled?: boolean;
   [key: string]: any;
 }) {
+  console.log('🚀 ~ lines:', lines);
   return (
     <CartForm
       route="/cart"
       inputs={{
         lines,
+        attributes: [
+          {
+            key: 'TotalIncome',
+            value: 333,
+          },
+        ],
       }}
       action={CartForm.ACTIONS.LinesAdd}
     >
