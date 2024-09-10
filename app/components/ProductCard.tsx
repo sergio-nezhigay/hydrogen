@@ -10,6 +10,7 @@ import {AddToCartButton} from '~/components/AddToCartButton';
 import {isDiscounted, isNewArrival, useTranslation} from '~/lib/utils';
 import {getProductPlaceholder} from '~/lib/placeholders';
 import HryvniaMoney from '~/components/HryvniaMoney';
+import {meta} from '~/root';
 
 export type ProductCardProps = {
   product: ProductCardFragment;
@@ -34,7 +35,20 @@ export function ProductCard({
     ? (product as Product)
     : getProductPlaceholder();
   if (!cardProduct?.variants?.nodes?.length) return null;
-  const delta = product.metafield?.value || '';
+
+  const delta = product.delta?.value || '';
+  const supplier = product.supplier?.value || '';
+  const meta = {delta, supplier};
+
+  if (quickAdd) {
+    console.log('product:', JSON.stringify(product, null, 4));
+    console.log(
+      '===== LOG product card =====, delta,supplier',
+      delta,
+      supplier,
+    );
+  }
+
   const firstVariant = flattenConnection(cardProduct.variants)[0];
 
   if (!firstVariant) return null;
@@ -107,6 +121,7 @@ export function ProductCard({
           variant="red"
           className="mt-2"
           delta={delta}
+          meta={meta}
         >
           <Text as="span" className="flex-center gap-2">
             {translation.buy}

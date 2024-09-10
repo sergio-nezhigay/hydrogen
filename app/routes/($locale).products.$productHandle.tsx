@@ -381,8 +381,9 @@ export function ProductForm({
     selectedVariant?.price?.amount &&
     selectedVariant?.compareAtPrice?.amount &&
     selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
-  const delta =
-    product.metafield?.value || selectedVariant?.price?.amount || '';
+  const delta = product.delta?.value || selectedVariant?.price?.amount || '';
+  const supplier = product.supplier?.value || '';
+  const meta = {delta, supplier};
 
   const navigate = useNavigate();
 
@@ -532,6 +533,7 @@ export function ProductForm({
                 data-test="add-to-cart"
                 className="sm-max:w-full"
                 delta={delta}
+                meta={meta}
               >
                 <ShoppingCart className="mr-4 size-6" />
                 <Text
@@ -688,9 +690,11 @@ const PRODUCT_QUERY = `#graphql
             handle
         }
       }
-      metafield(namespace: "custom", key: "delta") {
-        namespace
-        key
+
+      delta: metafield(namespace: "custom", key: "delta") {
+        value
+      }
+      supplier: metafield(namespace: "custom", key: "supplier") {
         value
       }
     }

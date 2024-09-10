@@ -14,6 +14,7 @@ export function AddToCartButton({
   width = 'full',
   disabled,
   delta,
+  meta,
   ...props
 }: {
   children: React.ReactNode;
@@ -23,19 +24,22 @@ export function AddToCartButton({
   width?: 'auto' | 'full';
   disabled?: boolean;
   delta: string;
+  meta: {delta: string; supplier: string};
   [key: string]: any;
 }) {
-  console.log(
-    '===== LOG START =====',
-    new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
-  );
   console.log('add to cart button delta:', JSON.stringify(delta, null, 4));
+  console.log('add to cart button delta:', JSON.stringify(meta.delta, null, 4));
+  console.log(
+    'add to cart button delta:',
+    JSON.stringify(meta.supplier, null, 4),
+  );
   return (
     <CartForm
       route="/cart"
       inputs={{
         lines,
-        delta,
+        supplier: meta.supplier,
+        delta: meta.delta,
       }}
       action={CartForm.ACTIONS.LinesAdd}
     >
