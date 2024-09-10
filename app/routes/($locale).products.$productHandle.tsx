@@ -382,6 +382,8 @@ export function ProductForm({
     selectedVariant?.price?.amount &&
     selectedVariant?.compareAtPrice?.amount &&
     selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
+  const delta =
+    product.metafield?.value || selectedVariant?.price?.amount || '0';
 
   const navigate = useNavigate();
 
@@ -530,6 +532,7 @@ export function ProductForm({
                 variant="red"
                 data-test="add-to-cart"
                 className="sm-max:w-full"
+                delta={delta}
               >
                 <ShoppingCart className="mr-4 size-6" />
                 <Text
@@ -643,6 +646,7 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
       title
       handle
     }
+
   }
 `;
 
@@ -686,6 +690,11 @@ const PRODUCT_QUERY = `#graphql
             title
             handle
         }
+      }
+      metafield(namespace: "custom", key: "delta") {
+        namespace
+        key
+        value
       }
     }
     shop {

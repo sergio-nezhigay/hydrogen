@@ -27,6 +27,13 @@ export async function action({request, context}: ActionFunctionArgs) {
   switch (action) {
     case CartForm.ACTIONS.LinesAdd:
       result = await cart.addLines(inputs.lines);
+      const attributes = [
+        {
+          key: 'delta',
+          value: inputs.delta as string,
+        },
+      ];
+      await cart.updateAttributes(attributes);
       break;
     case CartForm.ACTIONS.LinesUpdate:
       result = await cart.updateLines(inputs.lines);
@@ -52,9 +59,6 @@ export async function action({request, context}: ActionFunctionArgs) {
         ...inputs.buyerIdentity,
       });
       break;
-    case CartForm.ACTIONS.AttributesUpdateInput:
-      result = await cart.updateAttributes(inputs.attributes);
-      break;
 
     default:
       invariant(false, `${action} cart action is not defined`);
@@ -63,7 +67,7 @@ export async function action({request, context}: ActionFunctionArgs) {
   /**
    * The Cart ID may change after each mutation. We need to update it each time in the session.
    */
-  const cartId = result.cart.id;
+  //  const cartId = result.cart.id;
   const headers = cart.setCartId(result.cart.id);
 
   const redirectTo = formData.get('redirectTo') ?? null;

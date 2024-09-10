@@ -13,6 +13,7 @@ export function AddToCartButton({
   variant = 'default',
   width = 'full',
   disabled,
+  delta,
   ...props
 }: {
   children: React.ReactNode;
@@ -21,20 +22,15 @@ export function AddToCartButton({
   variant?: 'default' | 'outline' | 'accent' | 'red';
   width?: 'auto' | 'full';
   disabled?: boolean;
+  delta: string;
   [key: string]: any;
 }) {
-  console.log('🚀 ~ lines:', lines);
   return (
     <CartForm
       route="/cart"
       inputs={{
         lines,
-        attributes: [
-          {
-            key: 'TotalIncome',
-            value: 333,
-          },
-        ],
+        delta,
       }}
       action={CartForm.ACTIONS.LinesAdd}
     >
