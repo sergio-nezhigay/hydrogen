@@ -25,6 +25,11 @@ export function AddToCartButton({
   delta: string;
   [key: string]: any;
 }) {
+  console.log(
+    '===== LOG START =====',
+    new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+  );
+  console.log('add to cart button delta:', JSON.stringify(delta, null, 4));
   return (
     <CartForm
       route="/cart"

@@ -54,11 +54,6 @@ export function FeaturedProducts({
   );
 
   useEffect(() => {
-    console.log(
-      '===== LOG START =====',
-      new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
-    );
-    console.log('myVariable:', JSON.stringify(productsApiPath, null, 4));
     load(productsApiPath);
   }, [load, productsApiPath]);
 
