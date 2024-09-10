@@ -34,7 +34,7 @@ export function ProductCard({
     ? (product as Product)
     : getProductPlaceholder();
   if (!cardProduct?.variants?.nodes?.length) return null;
-  const delta = product.metafield?.value || '0';
+  const delta = product.metafield?.value || '';
   const firstVariant = flattenConnection(cardProduct.variants)[0];
 
   if (!firstVariant) return null;

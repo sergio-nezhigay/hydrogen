@@ -27,13 +27,15 @@ export async function action({request, context}: ActionFunctionArgs) {
   switch (action) {
     case CartForm.ACTIONS.LinesAdd:
       result = await cart.addLines(inputs.lines);
-      const attributes = [
-        {
-          key: 'delta',
-          value: inputs.delta as string,
-        },
-      ];
-      await cart.updateAttributes(attributes);
+      const delta = inputs.delta as string;
+      if (delta)
+        await cart.updateAttributes([
+          {
+            key: 'delta',
+            value: inputs.delta as string,
+          },
+        ]);
+
       break;
     case CartForm.ACTIONS.LinesUpdate:
       result = await cart.updateLines(inputs.lines);

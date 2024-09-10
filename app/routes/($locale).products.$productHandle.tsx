@@ -382,7 +382,7 @@ export function ProductForm({
     selectedVariant?.compareAtPrice?.amount &&
     selectedVariant?.price?.amount < selectedVariant?.compareAtPrice?.amount;
   const delta =
-    product.metafield?.value || selectedVariant?.price?.amount || '0';
+    product.metafield?.value || selectedVariant?.price?.amount || '';
 
   const navigate = useNavigate();
 
