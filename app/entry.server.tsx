@@ -11,6 +11,13 @@ export default async function handleRequest(
   remixContext: EntryContext,
   context: AppLoadContext,
 ) {
+  const currentTime = new Date().toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+  console.log(`======= ${currentTime} ======`);
+
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     scriptSrc: [
       "'self'",

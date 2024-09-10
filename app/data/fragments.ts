@@ -72,6 +72,11 @@ export const PRODUCT_CARD_FRAGMENT = `#graphql
         }
       }
     }
+    metafield(namespace: "custom", key: "delta") {
+      namespace
+      key
+      value
+    }
   }
 `;
 

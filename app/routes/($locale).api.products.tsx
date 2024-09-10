@@ -76,6 +76,11 @@ const API_ALL_PRODUCTS_QUERY = `#graphql
     products(first: $count, sortKey: $sortKey, reverse: $reverse, query: $query) {
       nodes {
         ...ProductCard
+        metafield(namespace: "custom", key: "delta") {
+          namespace
+          key
+          value
+        }
       }
     }
   }
