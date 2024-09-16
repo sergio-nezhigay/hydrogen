@@ -31,6 +31,7 @@ function robotsTxtData({url}: {url: string}) {
     ...basePaths,
     ...basePaths.map((path) => `/ru${path}`),
     '/ru/ru',
+    '/*.atom',
   ];
 
   const disallowRules = disallowPaths
