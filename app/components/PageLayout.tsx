@@ -24,10 +24,13 @@ import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
 
 import LangSelector from '~/modules/LangSelector';
-import BreadCrumbs from '~/modules/BreadCrumbs';
+
 import clsx from 'clsx';
 import {Phone, Clock, Mail, MapPin} from 'lucide-react';
 import {useDrawer, Drawer} from './Drawer';
+//import Test from '@playwright/test';
+import BreadCrumbs from '~/modules/BreadCrumbs';
+import {Test} from '~/modules/Test';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -59,6 +62,7 @@ export function PageLayout({children, layout, locale}: LayoutProps) {
           />
         )}
         <BreadCrumbs />
+
         <main id="mainContent" className="grow">
           {children}
         </main>
@@ -137,7 +141,7 @@ function CartDrawer({isOpen, onClose}: {isOpen: boolean; onClose: () => void}) {
       heading={translation.basket}
       openFrom="right"
     >
-      <div className="grid">
+      <div className="grid ">
         <Suspense fallback={<CartLoading />}>
           <Await resolve={rootData?.cart}>
             {(cart) => <Cart layout="drawer" onClose={onClose} cart={cart} />}
@@ -280,7 +284,7 @@ function DesktopHeader({
   return (
     <header
       className={clsx(
-        `bg-headerBg text-headerText sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 leading-none backdrop-blur-lg  transition duration-300 lg:flex py-6`,
+        `bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-700 text-white sticky top-0 z-40 hidden h-nav w-full items-center justify-between gap-8 leading-none backdrop-blur-lg  transition duration-300 lg:flex py-6`,
         {
           'shadow-lightHeader': !isHome && y > 50,
         },
@@ -300,9 +304,9 @@ function DesktopHeader({
               />
             </Link>
           )}
-          <nav className="flex gap-8">
+          {/*<nav className="flex gap-8">
             {/* Top level menu items */}
-            {(menu?.items || []).map((item) => (
+          {/*{(menu?.items || []).map((item) => (
               <Link
                 key={item.id}
                 to={item.to}
@@ -317,8 +321,9 @@ function DesktopHeader({
               >
                 {item.title}
               </Link>
-            ))}
-          </nav>
+            ))}*/}
+          {/*</nav>*/}
+          <Test />
         </div>
         <div className="flex items-center gap-1">
           <Form

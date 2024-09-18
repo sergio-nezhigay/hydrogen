@@ -1,5 +1,6 @@
 import formsPlugin from '@tailwindcss/forms';
 import typographyPlugin from '@tailwindcss/typography';
+import animatePlugin from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -12,8 +13,6 @@ module.exports = {
       padding: {
         DEFAULT: '1rem',
         md: '2rem',
-        //lg: '4rem',
-        //xl: '5rem',
         '2xl': '3rem',
       },
       screens: {
@@ -27,24 +26,24 @@ module.exports = {
     extend: {
       colors: {
         border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'rgb(var(--color-primary))',
-        headerBg: 'var(--color-header-bg)',
-        headerText: 'var(--color-header-text)',
-        primary: 'rgb(var(--color-primary))',
         contrast: 'rgb(var(--color-contrast) / <alpha-value>)',
-        red: 'rgb(var(--color-red) / <alpha-value>)',
-        notice: 'rgb(var(--color-accent) / <alpha-value>)',
-        shopPay: 'rgb(var(--color-shop-pay) / <alpha-value>)',
-        secondary: {
-          DEFAULT: 'var(--secondary)',
-          foreground: 'hsl(var(--secondary-foreground))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: {
+          DEFAULT: 'hsl(var(--card))',
+          foreground: 'hsl(var(--card-foreground))',
         },
-        destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+        popover: {
+          DEFAULT: 'hsl(var(--popover))',
+          foreground: 'hsl(var(--popover-foreground))',
+        },
+        primary: {
+          DEFAULT: 'hsl(var(--primary))',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        secondary: {
+          DEFAULT: 'hsl(var(--secondary))',
+          foreground: 'hsl(var(--secondary-foreground))',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',
@@ -54,14 +53,13 @@ module.exports = {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
-        popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))',
+        destructive: {
+          DEFAULT: 'hsl(var(--destructive))',
+          foreground: 'hsl(var(--destructive-foreground))',
         },
-        card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))',
-        },
+      },
+      backgroundColor: {
+        main: 'var(--background)',
       },
       screens: {
         sm: '32em',
@@ -130,5 +128,5 @@ module.exports = {
       },
     },
   },
-  plugins: [formsPlugin, typographyPlugin, 'tailwindcss-animate'],
+  plugins: [formsPlugin, typographyPlugin, animatePlugin],
 };

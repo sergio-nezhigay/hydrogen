@@ -117,9 +117,7 @@ function BreadCrumbs() {
                   <BreadcrumbLink asChild>
                     <Link
                       to={urlWithPrefix}
-                      className={clsx('hover:text-red', {
-                        'hover:underline': page.name !== 'Home',
-                      })}
+                      className={clsx('hover:text-indigo-600 hover:underline')}
                       prefetch="viewport"
                     >
                       {page.name === 'Home' ? (
