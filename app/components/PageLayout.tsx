@@ -410,11 +410,8 @@ function Badge({
       <>
         <IconBag />
         <div
-          className={`${
-            dark
-              ? 'bg-contrast text-primary dark:bg-primary dark:text-contrast'
-              : 'bg-primary text-contrast'
-          } absolute bottom-1 right-1 flex h-3 w-auto min-w-3 items-center justify-center rounded-full px-0.5 pb-px text-center text-[0.625rem] font-medium leading-none subpixel-antialiased`}
+          className="
+            bg-main text-primary absolute bottom-1 right-1 flex h-3 w-auto min-w-3 items-center justify-center rounded-full px-0.5 pb-px text-center text-[0.625rem] font-medium leading-none subpixel-antialiased"
         >
           <span>{count || 0}</span>
         </div>

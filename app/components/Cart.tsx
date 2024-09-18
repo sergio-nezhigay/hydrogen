@@ -190,17 +190,13 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
 
   const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
 
-  const checkoutUrlWithCustomData = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345&attribute[referral_code]=MYCODE123&attribute[custom_note]=Special Request`;
-
   return (
     <div className="flex flex-col mt-2">
-      <a href={checkoutUrlWithCustomData} target="_self">
-        {/* <a href={checkoutUrl} target="_self"> */}
-        <Button as="span" width="full">
+      <a href={checkoutUrlWithZipcode} target="_self">
+        <Button as="span" width="full" variant="red">
           Оформити замовлення
         </Button>
       </a>
-      {/* @todo: <CartShopPayButton cart={cart} /> */}
     </div>
   );
 }
