@@ -17,7 +17,7 @@ function ReviewList({reviews, title}: ReviewListProps) {
             {reviews.map((review) => (
               <li
                 key={review.id}
-                className="mb-6 rounded-lg border bg-white p-4 shadow-md"
+                className="mb-6 rounded-lg border  p-4 shadow-md"
               >
                 <div className="mb-2 flex items-center justify-between">
                   <div className="flex items-center">
