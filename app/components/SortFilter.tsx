@@ -151,9 +151,9 @@ function Filters({filters}: {filters: Filter[]}) {
   return (
     <>
       <nav className="py-4">
-        <Heading as="h4" size="lead" className="pb-4">
+        {/*<Heading as="h4" size="lead" className="pb-4">
           {translation.filter_by}
-        </Heading>
+        </Heading>*/}
         <div className="divide-y">
           {sortedFilters.map((filter: Filter) => (
             <Disclosure
@@ -174,7 +174,7 @@ function Filters({filters}: {filters: Filter[]}) {
                     <IconCaret direction={open ? 'up' : 'down'} />
                   </Disclosure.Button>
                   <DisclosurePanel key={filter.id}>
-                    <ul key={filter.id} className="py-2">
+                    <ul key={filter.id} className="py-2 text-primary/90">
                       {filter.values?.map((option) => {
                         return (
                           <li key={option.id} className="pb-2">

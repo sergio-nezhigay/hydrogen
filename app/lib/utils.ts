@@ -358,6 +358,8 @@ export function sortFilters(a: Filter, b: Filter) {
   const isAvailability = (id: string) => id.includes('availability');
   const isPrice = (id: string) => id.includes('price');
 
+  if (isAvailability(a.id) && isPrice(b.id)) return -1;
+  if (isPrice(a.id) && isAvailability(b.id)) return 1;
   if (isAvailability(a.id) && !isAvailability(b.id)) return 1;
   if (!isAvailability(a.id) && isAvailability(b.id)) return -1;
   if (isPrice(a.id) && !isPrice(b.id)) return 1;
