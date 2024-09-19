@@ -63,7 +63,7 @@ export function Drawer({
               >
                 <Dialog.Panel className="w-screen max-w-lg text-left align-middle transition-all transform shadow-xl h-screen-dynamic bg-main">
                   <header
-                    className={`sticky top-0 flex items-center px-6 h-nav sm:px-8 md:px-12 ${
+                    className={`sticky bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-700 text-white top-0 flex items-center px-6 h-nav sm:px-8 md:px-12 ${
                       heading ? 'justify-between' : 'justify-end'
                     }`}
                   >
@@ -76,7 +76,7 @@ export function Drawer({
                     )}
                     <button
                       type="button"
-                      className="p-4 -m-4 transition text-primary hover:text-primary/50"
+                      className="p-4 -m-4 transition text-white/90 hover:text-white/50"
                       onClick={onClose}
                       data-test="close-cart"
                     >

@@ -164,17 +164,17 @@ function Filters({filters}: {filters: Filter[]}) {
             >
               {({open}) => (
                 <>
-                  <Disclosure.Button className="flex justify-between w-full py-1">
+                  <Disclosure.Button className="flex justify-between w-full py-4">
                     <Text
                       size="lead"
-                      className="text-primary/70 font-normal  hover:text-indigo-700/70"
+                      className="text-primary/80 font-normal  hover:text-indigo-700/70"
                     >
                       {filter.label}
                     </Text>
                     <IconCaret direction={open ? 'up' : 'down'} />
                   </Disclosure.Button>
                   <DisclosurePanel key={filter.id}>
-                    <ul key={filter.id} className="py-2 text-primary/90">
+                    <ul key={filter.id} className="py-2 text-primary/80">
                       {filter.values?.map((option) => {
                         return (
                           <li key={option.id} className="pb-2">
