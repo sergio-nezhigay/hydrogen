@@ -31,6 +31,7 @@ import {useDrawer, Drawer} from './Drawer';
 //import Test from '@playwright/test';
 import BreadCrumbs from '~/modules/BreadCrumbs';
 import {Test} from '~/modules/Test';
+import {NavigationMenuBlock} from '~/modules/NavigationMenuBlock';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -323,7 +324,7 @@ function DesktopHeader({
               </Link>
             ))}*/}
           {/*</nav>*/}
-          <Test />
+          <NavigationMenuBlock />
         </div>
         <div className="flex items-center gap-1">
           <Form
