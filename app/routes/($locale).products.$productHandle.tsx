@@ -235,7 +235,7 @@ export default function Product() {
             showThumbs={true}
           />
           <div className="flex w-full flex-col gap-8 md:mx-auto">
-            <div className="grid gap-2">
+            <div className="grid gap-2 ">
               <Heading as="h1" className="overflow-hidden whitespace-normal ">
                 {title}
               </Heading>

@@ -15,7 +15,7 @@ export function DotButtons({
   return (
     <>
       {totalButtons > 1 && (
-        <div className="flex-center sm:hidden gap-2 mt-4">
+        <div className="flex-center md:hidden gap-2 my-4">
           {Array.from({length: totalButtons}).map((_, index) => (
             <DotButton
               key={index}

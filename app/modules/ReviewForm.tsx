@@ -119,7 +119,7 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
         <Button
           onClick={handleButtonClick}
           variant="secondary"
-          className="mx-auto block bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="mx-auto block bg-gray-200 text-indigo-700/80 rounded hover:bg-gray-400"
         >
           {translation.leave_a_review}
         </Button>
