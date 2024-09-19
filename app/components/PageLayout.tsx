@@ -124,7 +124,6 @@ function Header({
         title={title}
         openCart={openCart}
         openMenu={openMenu}
-        logoUrl={logoUrl}
       />
     </>
   );
@@ -190,16 +189,12 @@ function MobileHeader({
   isHome,
   openCart,
   openMenu,
-  logoUrl,
 }: {
   title: string;
   isHome: boolean;
   openCart: () => void;
   openMenu: () => void;
-  logoUrl?: string;
 }) {
-  // useHeaderStyleFix(containerStyle, setContainerStyle, isHome);
-
   const params = useParams();
 
   return (
@@ -211,20 +206,20 @@ function MobileHeader({
         <IconMenu />
       </button>
 
-      {logoUrl && (
-        <Link
-          className="flex size-full grow items-center justify-center self-stretch leading-[3rem] md:leading-[4rem] absolute-center"
-          to="/"
-        >
-          <Image
-            width={50}
-            height={40}
-            className="h-10 w-auto"
-            src={logoUrl}
-            alt="logo"
-          />
-        </Link>
-      )}
+      <Link
+        className="flex size-full grow items-center justify-center self-stretch leading-[3rem] md:leading-[4rem] absolute-center"
+        to="/"
+      >
+        <Image
+          width={50}
+          height={40}
+          className="h-10 w-auto"
+          src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/byte-knewave.svg?v=1721458117"
+          alt="logo"
+          sizes="50px"
+        />
+      </Link>
+
       <div className="flex gap-4 z-50">
         <Form
           method="get"

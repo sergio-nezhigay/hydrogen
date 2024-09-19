@@ -150,10 +150,7 @@ function Filters({filters}: {filters: Filter[]}) {
 
   return (
     <>
-      <nav className="py-4">
-        {/*<Heading as="h4" size="lead" className="pb-4">
-          {translation.filter_by}
-        </Heading>*/}
+      <nav className="md:py-4">
         <div className="divide-y">
           {sortedFilters.map((filter: Filter) => (
             <Disclosure
@@ -164,7 +161,7 @@ function Filters({filters}: {filters: Filter[]}) {
             >
               {({open}) => (
                 <>
-                  <Disclosure.Button className="flex justify-between w-full py-4">
+                  <Disclosure.Button className="flex justify-between w-full py-2">
                     <Text
                       size="lead"
                       className="text-primary/80 font-normal  hover:text-indigo-700/70"

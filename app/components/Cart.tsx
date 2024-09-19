@@ -461,8 +461,10 @@ export function CartEmpty({
 
   return (
     <div ref={scrollRef} className={container[layout]} hidden={hidden}>
-      <section className="grid gap-6">
-        <Text format>{translation.no_items_added_yet}</Text>
+      <section className="grid gap-6 py-6">
+        <Text format size="lead">
+          {translation.no_items_added_yet}
+        </Text>
         <div>
           <Button onClick={onClose}>{translation.continue_shopping}</Button>
         </div>

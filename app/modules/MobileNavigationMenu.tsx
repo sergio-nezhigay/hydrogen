@@ -43,6 +43,7 @@ export const MobileNavigationMenu = ({onClose}: MobileNavigationMenuProps) => {
                         <li key={idx}>
                           <Link
                             to={item.to}
+                            prefetch="viewport"
                             className="block p-2 text-gray-700 rounded transition-colors duration-200 hover:bg-gray-200"
                             onClick={(e) => handleLinkClick(e, item.to)}
                           >
@@ -56,6 +57,7 @@ export const MobileNavigationMenu = ({onClose}: MobileNavigationMenuProps) => {
               ) : (
                 <Link
                   to={menuGroup.to!}
+                  prefetch="viewport"
                   className="block p-4 text-gray-700 font-semibold rounded transition-colors duration-200 hover:bg-gray-200"
                   onClick={(e) => handleLinkClick(e, menuGroup.to!)}
                 >
