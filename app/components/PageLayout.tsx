@@ -28,10 +28,10 @@ import LangSelector from '~/modules/LangSelector';
 import clsx from 'clsx';
 import {Phone, Clock, Mail, MapPin} from 'lucide-react';
 import {useDrawer, Drawer} from './Drawer';
-//import Test from '@playwright/test';
 import BreadCrumbs from '~/modules/BreadCrumbs';
-import {Test} from '~/modules/Test';
-import {NavigationMenuBlock} from '~/modules/NavigationMenuBlock';
+
+import {DesktopNavigationMenu} from '~/modules/DesktopNavigationMenu';
+import {MobileNavigationMenu} from '~/modules/MobileNavigationMenu';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -179,24 +179,8 @@ function MenuMobileNav({
   onClose: () => void;
 }) {
   return (
-    <nav className="grid gap-4 p-6 sm:gap-6 sm:px-12 sm:py-8">
-      {/* Top level menu items */}
-      {(menu?.items || []).map((item) => (
-        <span key={item.id} className="block">
-          <Link
-            to={item.to}
-            target={item.target}
-            onClick={onClose}
-            className={({isActive}) =>
-              isActive ? 'pb-1 border-b -mb-px' : 'pb-1'
-            }
-          >
-            <Text as="span" size="copy">
-              {item.title}
-            </Text>
-          </Link>
-        </span>
-      ))}
+    <nav className="">
+      <MobileNavigationMenu onClose={onClose} />
     </nav>
   );
 }
@@ -305,26 +289,8 @@ function DesktopHeader({
               />
             </Link>
           )}
-          {/*<nav className="flex gap-8">
-            {/* Top level menu items */}
-          {/*{(menu?.items || []).map((item) => (
-              <Link
-                key={item.id}
-                to={item.to}
-                target={item.target}
-                prefetch="viewport"
-                className={({isActive}) =>
-                  clsx('pb-1', {
-                    'border-b -mb-px': isActive,
-                    'hover:border-b hover:-mb-px': !isActive,
-                  })
-                }
-              >
-                {item.title}
-              </Link>
-            ))}*/}
-          {/*</nav>*/}
-          <NavigationMenuBlock />
+
+          <DesktopNavigationMenu />
         </div>
         <div className="flex items-center gap-1">
           <Form

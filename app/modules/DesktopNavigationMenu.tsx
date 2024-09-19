@@ -12,34 +12,9 @@ import {
   navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu';
 import {cn} from '~/lib/utils';
+import {navigationData} from '~/data/navigationData';
 
-const navigationData = [
-  {
-    title: 'Перехідники',
-    items: [
-      {to: '/collections/hdmi-av', title: 'HDMI-AV'},
-      {to: '/collections/splitters', title: 'Спліттери'},
-      {to: '/collections/hdmi-vga', title: 'Перехідники HDMI-VGA'},
-    ],
-  },
-  {
-    title: 'Живлення',
-    items: [
-      {to: '/collections/power-cables', title: 'Кабелі живлення'},
-      {to: '/collections/chargers', title: 'Зарядні'},
-    ],
-  },
-  {
-    title: 'Каталог',
-    to: '/products',
-  },
-  {
-    title: 'Контакти',
-    to: '/pages/contact',
-  },
-];
-
-export function NavigationMenuBlock() {
+export function DesktopNavigationMenu() {
   return (
     <div className="text-white">
       <NavigationMenu>
@@ -74,7 +49,7 @@ export function NavigationMenuBlock() {
 
 const SubMenuItem = React.forwardRef<
   React.ElementRef<typeof Link>,
-  React.ComponentPropsWithoutRef<typeof Link>
+  React.ComponentPropsWithoutRef<typeof Link> & {title: string}
 >(({className, title, children, ...props}, ref) => {
   return (
     <li>
@@ -97,4 +72,4 @@ const SubMenuItem = React.forwardRef<
   );
 });
 
-SubMenuItem.displayName = 'ListItem';
+SubMenuItem.displayName = 'SubMenuItem';

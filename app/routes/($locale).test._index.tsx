@@ -1,5 +1,5 @@
 import {PageHeader, Section} from '~/components/Text';
-import {Test} from '~/modules/NavigationMenuBlock';
+import {Test} from '~/modules/DesktopNavigationMenu';
 
 export default function AllProducts() {
   return (
