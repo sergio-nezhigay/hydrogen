@@ -99,7 +99,7 @@ function Filters({filters}: {filters: Filter[]}) {
   const {t, translation} = useTranslation();
   const sortedFilters = useMemo(
     () => filters.sort((a, b) => sortFilters(a, b)),
-    [filters],
+    [],
   );
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
@@ -138,7 +138,7 @@ function Filters({filters}: {filters: Filter[]}) {
           >
             <span className="size-4 inline-block border border-stone-300 rounded-sm group-hover:border-stone-800">
               {isActive && (
-                <Check className="size-4 text-slate-50 bg-headerBg" />
+                <Check className="size-4 text-slate-50 bg-indigo-700/80" />
               )}
             </span>
 
@@ -167,7 +167,7 @@ function Filters({filters}: {filters: Filter[]}) {
                   <Disclosure.Button className="flex justify-between w-full py-1">
                     <Text
                       size="lead"
-                      className="text-secondary font-normal hover:text-red"
+                      className="text-primary/70 font-normal  hover:text-indigo-700/70"
                     >
                       {filter.label}
                     </Text>
@@ -387,9 +387,9 @@ export default function SortMenu() {
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
-    <Menu as="div" className="shrink-0 row-start-1 col-start-2 relative z-10">
+    <Menu as="div" className="shrink-0  row-start-1 col-start-2 relative z-10">
       {/*<Menu as="div" className="relative z-40">*/}
-      <Menu.Button className="flex items-center hover:bg-stone-50 rounded-md py-1">
+      <Menu.Button className="flex items-center  hover:bg-stone-50 rounded-md py-1">
         <span className="px-2">
           <span className="px-2 font-medium">{translation.sort_by}:</span>
           <span>{(activeItem || items[0]).label}</span>
@@ -399,14 +399,14 @@ export default function SortMenu() {
 
       <Menu.Items
         as="nav"
-        className="absolute right-0 flex flex-col p-4 text-right rounded-sm
-        bg-contrast"
+        className="absolute right-0 flex flex-col p-4 text-right shadow-lg rounded-sm
+        bg-main"
       >
         {items.map((item) => (
           <Menu.Item key={item.label}>
             {() => (
               <Link
-                className={`block text-sm pb-2 px-3 hover:font-bold ${
+                className={`whitespace-nowrap block text-sm pb-2 px-3 hover:font-bold ${
                   activeItem?.key === item.key ? 'font-bold' : 'font-normal'
                 }`}
                 to={getSortLink(item.key, params, location)}

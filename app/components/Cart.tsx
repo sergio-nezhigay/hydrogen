@@ -261,7 +261,7 @@ function CartLineItem({line}: {line: CartLine}) {
         display: optimisticData?.action === 'remove' ? 'none' : 'flex',
       }}
     >
-      <div className="flex-shrink">
+      <div className="shrink-0">
         {merchandise.image && (
           <Image
             width={110}

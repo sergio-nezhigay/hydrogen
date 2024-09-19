@@ -464,7 +464,7 @@ export default FooterItem;
 
 const Footer: React.FC<FooterProps> = ({locale}) => {
   const translation = translations[locale];
-  const textColor = 'text-gray-200/80';
+  const textColor = 'text-white/70';
   const linkStyle = `${textColor} ml-2 font-bold`;
 
   return (
@@ -472,9 +472,9 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
       divider="top"
       as="footer"
       padding="y"
-      className={`min-h-[25rem] w-full items-start overflow-hidden bg-stone-800 py-8  ${textColor}`}
+      className={`min-h-[25rem] w-full items-start overflow-hidden bg-gray-900 py-8  ${textColor}`}
     >
-      <ul className="grid list-none grid-cols-1 gap-4 border-t border-gray-700 p-0">
+      <ul className="grid list-none grid-cols-1 gap-4 p-0">
         <FooterItem
           icon={<Phone size={32} />}
           title={translation.phone}
@@ -505,7 +505,7 @@ const Footer: React.FC<FooterProps> = ({locale}) => {
         />
       </ul>
       <p className="mt-4 text-center text-sm text-gray-400">
-        {translation.copyright}
+        {translation.copyright}{' '}
         <a
           href="https://serhii.vercel.app/"
           className="text-gray-300 underline"

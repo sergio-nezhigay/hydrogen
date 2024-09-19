@@ -89,7 +89,7 @@ body {
   .strike {
     position: relative;
     &::before {
-      content: '';
+      content: ' ';
       display: block;
       position: absolute;
       width: 108%;
@@ -97,8 +97,8 @@ body {
       left: -4%;
       top: 50%;
       transform: translateY(-50%);
-      background: rgb(var(--color-primary));
-      box-shadow: 0.5px 0.5px 0px 0.5px rgb(var(--color-contrast));
+      background: hsl(0, 0%, 50%);
+      box-shadow: 0.5px 0.5px 0px 0.5px hsl(0, 0%, 70%);
     }
   }
 
