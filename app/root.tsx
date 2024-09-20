@@ -185,7 +185,7 @@ function Layout({children}: {children?: React.ReactNode}) {
             >
               {children}
             </PageLayout>
-            {/*<CustomAnalytics />*/}
+            <CustomAnalytics />
             {/*<GoogleTagManager />*/}
           </Analytics.Provider>
         ) : (

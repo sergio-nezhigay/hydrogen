@@ -19,7 +19,7 @@ export const MobileNavigationMenu = ({onClose}: MobileNavigationMenuProps) => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 space-y-2">
+    <div className="p-4 space-y-2">
       {navigationData.map((menuGroup, index) => (
         <Disclosure key={index}>
           {({open}) => (
@@ -27,9 +27,9 @@ export const MobileNavigationMenu = ({onClose}: MobileNavigationMenuProps) => {
               {menuGroup.items ? (
                 <>
                   <Disclosure.Button
-                    className={`w-full text-left p-4 font-semibold transition-colors duration-200 ${
-                      open ? 'bg-gray-300' : 'bg-gray-200'
-                    } hover:bg-gray-300`}
+                    className={`w-full text-left p-4 font-bold rounded-md  transition-colors duration-200 ${
+                      open ? 'bg-gray-200 ' : ''
+                    } hover:bg-gray-200`}
                   >
                     {menuGroup.title}
                   </Disclosure.Button>
@@ -58,7 +58,7 @@ export const MobileNavigationMenu = ({onClose}: MobileNavigationMenuProps) => {
                 <Link
                   to={menuGroup.to!}
                   prefetch="viewport"
-                  className="block p-4 text-gray-700 font-semibold rounded transition-colors duration-200 hover:bg-gray-200"
+                  className="block p-4 text-gray-700 rounded transition-colors duration-200 hover:bg-gray-200"
                   onClick={(e) => handleLinkClick(e, menuGroup.to!)}
                 >
                   {menuGroup.title}
