@@ -37,6 +37,7 @@ export default async function handleRequest(
       '*.google.com',
       '*.google.com.ua',
       '*.googleadservices.com',
+      '*.googletagmanager.com',
       'pagead2.googlesyndication.com',
       '*.shopify.com',
     ],
