@@ -24,9 +24,11 @@ export default async function handleRequest(
       'cdn.alireviews.io',
       'cdn.jsdelivr.net',
       '*.alicdn.com',
+      '*.shopify.com',
+      'cdn.shopify.com',
     ],
-    styleSrc: ['self'],
-    connectSrc: ['self', 'analytics.google.com'],
+    styleSrc: ['self', '*.shopify.com', 'cdn.shopify.com'],
+    connectSrc: ['self', 'analytics.google.com', '*.shopify.com'],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
