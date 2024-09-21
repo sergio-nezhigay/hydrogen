@@ -13,6 +13,7 @@ export default async function handleRequest(
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     scriptSrc: [
+      'self',
       'data:',
       '*.youtube.com',
       '*.youtu.be',
@@ -26,6 +27,7 @@ export default async function handleRequest(
       '*.alicdn.com',
       '*.shopify.com',
       'cdn.shopify.com',
+      'localhost:3000',
     ],
     styleSrc: ['self', '*.shopify.com', 'cdn.shopify.com'],
     connectSrc: ['self', 'analytics.google.com', '*.shopify.com'],
