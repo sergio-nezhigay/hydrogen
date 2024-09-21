@@ -22,6 +22,7 @@ export default async function handleRequest(
       '*.google-analytics.com',
       'analytics.google.com',
       '*.googletagmanager.com',
+      'googleads.g.doubleclick.net',
       'cdn.alireviews.io',
       'cdn.jsdelivr.net',
       '*.alicdn.com',
@@ -39,6 +40,7 @@ export default async function handleRequest(
       '*.googleadservices.com',
       '*.googletagmanager.com',
       'pagead2.googlesyndication.com',
+      'googleads.g.doubleclick.net',
       '*.shopify.com',
     ],
     imgSrc: [
@@ -47,6 +49,7 @@ export default async function handleRequest(
       '*.google.com',
       '*.google.com.ua',
       '*.googleadservices.com',
+      'googleads.g.doubleclick.net',
       'pagead2.googlesyndication.com',
       'cdn.shopify.com',
       '*.shopify.com',
