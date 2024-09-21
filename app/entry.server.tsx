@@ -12,18 +12,21 @@ export default async function handleRequest(
   context: AppLoadContext,
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
-    connectSrc: [
+    scriptSrc: [
       'data:',
       '*.youtube.com',
       '*.youtu.be',
       '*.vimeo.com',
       '*.google.com',
       '*.google-analytics.com',
+      'analytics.google.com',
       '*.googletagmanager.com',
       'cdn.alireviews.io',
       'cdn.jsdelivr.net',
       '*.alicdn.com',
     ],
+    styleSrc: ['self'],
+    connectSrc: ['self', 'analytics.google.com'],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
