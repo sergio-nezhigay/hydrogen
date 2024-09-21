@@ -3,6 +3,7 @@ import {Await, NavLink} from '@remix-run/react';
 import {type CartViewPayload, useAnalytics} from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
+import {IconBag} from './Icon';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -47,6 +48,7 @@ export function HeaderMenu({
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
+  console.log('🚀 ~ menu:', menu);
   const className = `header-menu-${viewport}`;
   const {close} = useAside();
 
@@ -149,8 +151,17 @@ function CartBadge({count}: {count: number | null}) {
           url: window.location.href || '',
         } as CartViewPayload);
       }}
+      className="relative flex size-8 items-center justify-center focus:ring-primary/5 hover:bg-stone-100/20 rounded-md"
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      <>
+        <IconBag />
+        <div
+          className="
+            bg-main text-primary absolute bottom-1 right-1 flex h-3 w-auto min-w-3 items-center justify-center rounded-full px-0.5 pb-px text-center text-[0.625rem] font-medium leading-none subpixel-antialiased"
+        >
+          <span>{count || 0}</span>
+        </div>
+      </>
     </a>
   );
 }
