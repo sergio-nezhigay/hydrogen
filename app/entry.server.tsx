@@ -49,6 +49,7 @@ export default async function handleRequest(
       'pagead2.googlesyndication.com',
       'cdn.shopify.com',
       '*.shopify.com',
+      'localhost:3000',
     ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
