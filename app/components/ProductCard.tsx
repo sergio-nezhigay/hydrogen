@@ -40,15 +40,6 @@ export function ProductCard({
   const supplier = product.supplier?.value || '';
   const meta = {delta, supplier};
 
-  if (quickAdd) {
-    console.log('product:', JSON.stringify(product, null, 4));
-    console.log(
-      '===== LOG product card =====, delta,supplier',
-      delta,
-      supplier,
-    );
-  }
-
   const firstVariant = flattenConnection(cardProduct.variants)[0];
 
   if (!firstVariant) return null;

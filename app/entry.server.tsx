@@ -13,7 +13,6 @@ export default async function handleRequest(
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     scriptSrc: [
-      'self',
       'data:',
       '*.youtube.com',
       '*.youtu.be',
@@ -28,9 +27,26 @@ export default async function handleRequest(
       '*.shopify.com',
       'cdn.shopify.com',
       'localhost:3000',
+      'self',
     ],
     styleSrc: ['self', '*.shopify.com', 'cdn.shopify.com'],
-    connectSrc: ['self', 'analytics.google.com', '*.shopify.com'],
+    connectSrc: [
+      'self',
+      'analytics.google.com',
+      '*.google.com',
+      '*.googleadservices.com',
+      'pagead2.googlesyndication.com',
+      '*.shopify.com',
+    ],
+    imgSrc: [
+      'self',
+      'data:',
+      '*.google.com',
+      '*.googleadservices.com',
+      'pagead2.googlesyndication.com',
+      'cdn.shopify.com',
+      '*.shopify.com',
+    ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
