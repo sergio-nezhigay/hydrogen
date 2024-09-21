@@ -1,77 +1,57 @@
+import {useNonce, getShopAnalytics, Analytics} from '@shopify/hydrogen';
+import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
-  defer,
-  type LinksFunction,
-  type LoaderFunctionArgs,
-  type AppLoadContext,
-  type MetaArgs,
-} from '@shopify/remix-oxygen';
-
-import {
-  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration,
-  useRouteLoaderData,
   useRouteError,
+  useRouteLoaderData,
+  ScrollRestoration,
+  isRouteErrorResponse,
   type ShouldRevalidateFunction,
 } from '@remix-run/react';
-import {
-  useNonce,
-  Analytics,
-  getShopAnalytics,
-  getSeoMeta,
-  type SeoConfig,
-  Script,
-} from '@shopify/hydrogen';
-import invariant from 'tiny-invariant';
-
-import {PageLayout} from '~/components/PageLayout';
-import {GenericError} from '~/components/GenericError';
-import {NotFound} from '~/components/NotFound';
 import favicon from '~/assets/favicon.svg';
-import {seoPayload} from '~/lib/seo.server';
-import styles from '~/styles/app.css?url';
-
-import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
-//import {CustomAnalytics} from './modules/CustomAnalytics';
-import type {translations} from './data/translations';
-import {GoogleTagManager} from './modules/GoogleTagManager';
-import {CustomAnalytics} from './modules/CustomAnalytics';
+import resetStyles from '~/styles/reset.css?url';
+import appStyles from '~/styles/app.css?url';
+import {PageLayout} from '~/components/PageLayout';
+import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 
 export type RootLoader = typeof loader;
 
-// This is important to avoid re-fetching root queries on sub-navigations
+/**
+ * This is important to avoid re-fetching root queries on sub-navigations
+ */
 export const shouldRevalidate: ShouldRevalidateFunction = ({
   formMethod,
   currentUrl,
   nextUrl,
+  defaultShouldRevalidate,
 }) => {
   // revalidate when a mutation is performed e.g add to cart, login...
-  if (formMethod && formMethod !== 'GET') {
-    return true;
-  }
+  if (formMethod && formMethod !== 'GET') return true;
 
   // revalidate when manually revalidating via useRevalidator
-  if (currentUrl.toString() === nextUrl.toString()) {
-    return true;
-  }
+  if (currentUrl.toString() === nextUrl.toString()) return true;
 
-  return false;
+  return defaultShouldRevalidate;
 };
 
-export const links: LinksFunction = () => {
+export function links() {
   return [
-    {rel: 'stylesheet', href: styles},
-    {rel: 'preconnect', href: 'https://cdn.shopify.com'},
-    {rel: 'dns-prefetch', href: 'https://www.googletagmanager.com'},
-    {rel: 'dns-prefetch', href: 'https://analytics.google.com'},
-    {rel: 'dns-prefetch', href: 'https://googleads.g.doubleclick.net'},
-    {rel: 'dns-prefetch', href: 'https://monorail-edge.shopifysvc.com'},
+    {rel: 'stylesheet', href: resetStyles},
+    {rel: 'stylesheet', href: appStyles},
+    {
+      rel: 'preconnect',
+      href: 'https://cdn.shopify.com',
+    },
+    {
+      rel: 'preconnect',
+      href: 'https://shop.app',
+    },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
-};
+}
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
@@ -80,48 +60,45 @@ export async function loader(args: LoaderFunctionArgs) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return defer(
-    {
-      ...deferredData,
-      ...criticalData,
+  const {storefront, env} = args.context;
+
+  return defer({
+    ...deferredData,
+    ...criticalData,
+    publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
+    shop: getShopAnalytics({
+      storefront,
+      publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
+    }),
+    consent: {
+      checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
+      storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
+      withPrivacyBanner: true,
+      // localize the privacy banner
+      country: args.context.storefront.i18n.country,
+      language: args.context.storefront.i18n.language,
     },
-    {
-      headers: {
-        'Set-Cookie': await args.context.session.commit(),
-      },
-    },
-  );
+  });
 }
 
 /**
  * Load data necessary for rendering content above the fold. This is the critical data
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
-async function loadCriticalData({request, context}: LoaderFunctionArgs) {
-  const [layout] = await Promise.all([
-    getLayoutData(context),
+async function loadCriticalData({context}: LoaderFunctionArgs) {
+  const {storefront} = context;
+
+  const [header] = await Promise.all([
+    storefront.query(HEADER_QUERY, {
+      cache: storefront.CacheLong(),
+      variables: {
+        headerMenuHandle: 'main-menu', // Adjust to your header menu handle
+      },
+    }),
     // Add other queries here, so that they are loaded in parallel
   ]);
 
-  const seo = seoPayload.root({shop: layout.shop, url: request.url});
-
-  const {storefront, env} = context;
-
-  return {
-    layout,
-    seo,
-    shop: getShopAnalytics({
-      storefront,
-      publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
-    }),
-    consent: {
-      checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN || env.PUBLIC_STORE_DOMAIN,
-      storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
-    },
-    publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
-    selectedLocale: storefront.i18n,
-    JUDGEME_PUBLIC_TOKEN: env.JUDGEME_PUBLIC_TOKEN,
-  };
+  return {header};
 }
 
 /**
@@ -130,63 +107,48 @@ async function loadCriticalData({request, context}: LoaderFunctionArgs) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
-  const {cart, customerAccount, env} = context;
+  const {storefront, customerAccount, cart} = context;
 
+  // defer the footer query (below the fold)
+  const footer = storefront
+    .query(FOOTER_QUERY, {
+      cache: storefront.CacheLong(),
+      variables: {
+        footerMenuHandle: 'footer', // Adjust to your footer menu handle
+      },
+    })
+    .catch((error) => {
+      // Log query errors, but don't throw them so the page can still render
+      console.error(error);
+      return null;
+    });
   return {
-    isLoggedIn: customerAccount.isLoggedIn(),
     cart: cart.get(),
+    isLoggedIn: customerAccount.isLoggedIn(),
+    footer,
   };
 }
 
-export const meta = ({data}: MetaArgs<typeof loader>) => {
-  return getSeoMeta(data!.seo as SeoConfig);
-};
-
-function Layout({children}: {children?: React.ReactNode}) {
+export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
-  const data = useRouteLoaderData<typeof loader>('root');
-  const locale = data?.selectedLocale ?? DEFAULT_LOCALE;
+  const data = useRouteLoaderData<RootLoader>('root');
 
   return (
-    <html lang={locale.language}>
+    <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
-
-        {/*<Script src="https://www.googletagmanager.com/gtm.js?id=GTM-WRQRP5RF" />*/}
       </head>
       <body>
-        {/*<noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-WRQRP5RF"
-            height="0"
-            width="0"
-            style={{
-              display: 'none',
-              visibility: 'hidden',
-            }}
-          ></iframe>
-        </noscript>*/}
-
         {data ? (
           <Analytics.Provider
             cart={data.cart}
             shop={data.shop}
             consent={data.consent}
           >
-            <PageLayout
-              key={`${locale.language}-${locale.country}`}
-              layout={data.layout}
-              locale={
-                locale.language.toLowerCase() as keyof typeof translations
-              }
-            >
-              {children}
-            </PageLayout>
-            <CustomAnalytics />
-            {/*<GoogleTagManager />*/}
+            <PageLayout {...data}>{children}</PageLayout>
           </Analytics.Provider>
         ) : (
           children
@@ -199,125 +161,30 @@ function Layout({children}: {children?: React.ReactNode}) {
 }
 
 export default function App() {
-  return (
-    <Layout>
-      <Outlet />
-    </Layout>
-  );
+  return <Outlet />;
 }
 
-export function ErrorBoundary({error}: {error: Error}) {
-  const routeError = useRouteError();
-  const isRouteError = isRouteErrorResponse(routeError);
+export function ErrorBoundary() {
+  const error = useRouteError();
+  let errorMessage = 'Unknown error';
+  let errorStatus = 500;
 
-  let title = 'Error';
-  let pageType = 'page';
-
-  if (isRouteError) {
-    title = 'Not found';
-    if (routeError.status === 404) pageType = routeError.data || pageType;
+  if (isRouteErrorResponse(error)) {
+    errorMessage = error?.data?.message ?? error.data;
+    errorStatus = error.status;
+  } else if (error instanceof Error) {
+    errorMessage = error.message;
   }
 
   return (
-    <Layout>
-      {isRouteError ? (
-        <>
-          {routeError.status === 404 ? (
-            <NotFound type={pageType} />
-          ) : (
-            <GenericError
-              error={{message: `${routeError.status} ${routeError.data}`}}
-            />
-          )}
-        </>
-      ) : (
-        <GenericError error={error instanceof Error ? error : undefined} />
+    <div className="route-error">
+      <h1>Oops</h1>
+      <h2>{errorStatus}</h2>
+      {errorMessage && (
+        <fieldset>
+          <pre>{errorMessage}</pre>
+        </fieldset>
       )}
-    </Layout>
+    </div>
   );
-}
-
-const LAYOUT_QUERY = `#graphql
-  query layout(
-    $language: LanguageCode
-    $headerMenuHandle: String!
-  ) @inContext(language: $language) {
-    shop {
-      ...Shop
-    }
-    headerMenu: menu(handle: $headerMenuHandle) {
-      ...Menu
-    }
-  }
-  fragment Shop on Shop {
-    id
-    name
-    description
-    primaryDomain {
-      url
-    }
-    brand {
-      logo {
-        image {
-          url
-        }
-      }
-    }
-  }
-  fragment MenuItem on MenuItem {
-    id
-    resourceId
-    tags
-    title
-    type
-    url
-  }
-  fragment ChildMenuItem on MenuItem {
-    ...MenuItem
-  }
-  fragment ParentMenuItem on MenuItem {
-    ...MenuItem
-    items {
-      ...ChildMenuItem
-    }
-  }
-  fragment Menu on Menu {
-    id
-    items {
-      ...ParentMenuItem
-    }
-  }
-` as const;
-
-async function getLayoutData({storefront, env}: AppLoadContext) {
-  const data = await storefront.query(LAYOUT_QUERY, {
-    cache: storefront.CacheLong(),
-    variables: {
-      headerMenuHandle: 'main-menu',
-      language: storefront.i18n.language,
-    },
-  });
-
-  invariant(data, 'No data returned from Shopify API');
-
-  /*
-    Modify specific links/routes (optional)
-    @see: https://shopify.dev/api/storefront/unstable/enums/MenuItemType
-    e.g here we map:
-      - /blogs/news -> /news
-      - /blog/news/blog-post -> /news/blog-post
-      - /collections/all -> /products
-  */
-  const customPrefixes = {BLOG: '', CATALOG: 'products'};
-
-  const headerMenu = data?.headerMenu
-    ? parseMenu(
-        data.headerMenu,
-        data.shop.primaryDomain.url,
-        env,
-        customPrefixes,
-      )
-    : undefined;
-
-  return {shop: data.shop, headerMenu};
 }
