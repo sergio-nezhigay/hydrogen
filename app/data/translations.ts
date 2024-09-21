@@ -44,7 +44,7 @@ export const translations = {
     next: 'Наступна',
     basket: 'Кошик',
     loading: 'Завантаження',
-    no_results: 'Немає результатів, спробуйте інший пошук.',
+    no_results: 'Немає результатів, спробуйте інший пошук...',
     trending_collections: 'Популярні колекції',
     trending_products: 'Популярні товари',
     available: 'Є в наявності',
