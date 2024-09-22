@@ -278,7 +278,10 @@ export function getLocaleFromRequest(request: Request): I18nLocale {
 }
 
 export function usePrefixPathWithLocale(path: string) {
-  const rootData = useRouteLoaderData<RootLoader>('root');
+  // Dummy values for rootData and selectedLocale
+  const rootData = {selectedLocale: {pathPrefix: '/en'}}; // Replace '/en' with any default path prefix
+  const DEFAULT_LOCALE = {pathPrefix: '/default'};
+
   const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
 
   return `${selectedLocale.pathPrefix}${
@@ -286,13 +289,13 @@ export function usePrefixPathWithLocale(path: string) {
   }`;
 }
 
-export function useIsHomePath() {
-  const {pathname} = useLocation();
-  const rootData = useRouteLoaderData<RootLoader>('root');
-  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
-  const strippedPathname = pathname.replace(selectedLocale.pathPrefix, '');
-  return strippedPathname === '/';
-}
+//export function useIsHomePath() {
+//  const {pathname} = useLocation();
+//  const rootData = useRouteLoaderData<RootLoader>('root');
+//  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
+//  const strippedPathname = pathname.replace(selectedLocale.pathPrefix, '');
+//  return strippedPathname === '/';
+//}
 
 export function parseAsCurrency(value: number, locale: I18nLocale) {
   return new Intl.NumberFormat(locale.language + '-' + locale.country, {
@@ -323,10 +326,12 @@ export function isLocalPath(url: string) {
 
 export function useTranslation() {
   const rootData = useRouteLoaderData<RootLoader>('root');
-  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
-  const locale =
-    selectedLocale.language.toLowerCase() as keyof typeof translations;
-  const translation = translations[locale];
+
+  const language = (
+    rootData?.consent.language ?? DEFAULT_LOCALE.language
+  ).toLowerCase() as keyof typeof translations;
+  const translation = translations[language];
+  console.log('🚀 ~ language:', language);
 
   const t = (
     key: keyof typeof translation | string,
@@ -351,7 +356,7 @@ export function useTranslation() {
     return translatedText;
   };
 
-  return {t, locale, translation};
+  return {t, language, translation};
 }
 
 export function sortFilters(a: Filter, b: Filter) {

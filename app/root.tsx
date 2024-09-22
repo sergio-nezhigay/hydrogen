@@ -17,6 +17,7 @@ import appStyles from '~/styles/app.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import {CustomAnalytics} from './modules/CustomAnalytics';
+import {DEFAULT_LOCALE} from './lib/utils';
 
 export type RootLoader = typeof loader;
 
@@ -63,6 +64,7 @@ export async function loader(args: LoaderFunctionArgs) {
 
   const {storefront, env, customerAccount} = args.context;
   const isLoggedInPromise: Promise<boolean> = customerAccount.isLoggedIn();
+  const locale = args.context.storefront.i18n.language ?? DEFAULT_LOCALE;
   return defer({
     ...deferredData,
     ...criticalData,
@@ -80,6 +82,7 @@ export async function loader(args: LoaderFunctionArgs) {
       country: args.context.storefront.i18n.country,
       language: args.context.storefront.i18n.language,
     },
+    selectedLocale: storefront.i18n,
   });
 }
 
@@ -134,9 +137,11 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 export function Layout({children}: {children?: React.ReactNode}) {
   const nonce = useNonce();
   const data = useRouteLoaderData<RootLoader>('root');
+  const language = (data?.consent.language ??
+    DEFAULT_LOCALE.language) as string;
 
   return (
-    <html lang="en">
+    <html lang={language}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />

@@ -5,6 +5,8 @@ import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
 import {DesktopNavigationMenu} from '~/modules/DesktopNavigationMenu';
+import {Image} from '@shopify/hydrogen';
+import LangSelector from '~/modules/LangSelector';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -24,9 +26,22 @@ export function Header({
   const {shop, menu} = header;
   return (
     <header className="header text-white">
-      <div className="container flex">
-        <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-          <strong>{shop.name}</strong>
+      <div className="container flex-center">
+        <NavLink
+          prefetch="intent"
+          to="/"
+          style={activeLinkStyle}
+          className="shrink-0"
+          end
+        >
+          <Image
+            width={50}
+            height={40}
+            className="h-10 w-auto"
+            src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/byte-white.svg?v=1722326712"
+            alt="logo"
+            sizes="50px"
+          />
         </NavLink>
         <HeaderMenu
           menu={menu}
@@ -103,6 +118,9 @@ function HeaderCtas({
   return (
     <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
+
+      <SearchToggle />
+      <LangSelector />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         <Suspense fallback=<IconLogin />>
           <Await resolve={isLoggedIn} errorElement="Sign in">
@@ -110,7 +128,6 @@ function HeaderCtas({
           </Await>
         </Suspense>
       </NavLink>
-      <SearchToggle />
       <CartToggle cart={cart} />
     </nav>
   );

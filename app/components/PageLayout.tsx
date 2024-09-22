@@ -1,5 +1,6 @@
 import {Await, Link} from '@remix-run/react';
-import {Suspense} from 'react';
+import {ReactNode, Suspense} from 'react';
+
 import type {
   CartApiQueryFragment,
   FooterQuery,
@@ -14,6 +15,7 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
+import {translations} from '~/data/translations';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
