@@ -1,129 +1,79 @@
-import {Suspense} from 'react';
-import {Await, NavLink} from '@remix-run/react';
-import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+import {Phone, Clock, Mail, MapPin} from 'lucide-react';
+import {Section} from '~/components/Text';
 
-interface FooterProps {
-  footer: Promise<FooterQuery | null>;
-  header: HeaderQuery;
-  publicStoreDomain: string;
-}
+import React from 'react';
 
-export function Footer({
-  footer: footerPromise,
-  header,
-  publicStoreDomain,
-}: FooterProps) {
+import {EnhancedMenu, useTranslation} from '~/lib/utils';
+
+export const Footer = () => {
+  const {translation} = useTranslation();
+  const textColor = 'text-white/70';
+  const linkStyle = `${textColor} ml-2 font-bold`;
+
   return (
-    <Suspense>
-      <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="footer">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
-              />
-            )}
-          </footer>
-        )}
-      </Await>
-    </Suspense>
+    <Section
+      divider="top"
+      as="footer"
+      padding="y"
+      className={`min-h-[25rem] w-full items-start overflow-hidden bg-gray-900 py-8  ${textColor}`}
+    >
+      <ul className="grid list-none grid-cols-1 gap-4 p-0">
+        <FooterItem
+          icon={<Phone size={32} />}
+          title={translation.phone}
+          content={
+            <a href="tel:+380980059236" className={linkStyle}>
+              (098) 005-9236
+            </a>
+          }
+        />
+        <FooterItem
+          icon={<Clock size={32} />}
+          title={translation.working_hours}
+          content={translation.working_hours_details}
+        />
+        <FooterItem
+          icon={<Mail size={32} />}
+          title="Email"
+          content={
+            <a href="mailto:info@informatica.com.ua" className={linkStyle}>
+              info@informatica.com.ua
+            </a>
+          }
+        />
+        <FooterItem
+          icon={<MapPin size={32} />}
+          title={translation.address}
+          content={<span className="ml-2">{translation.address_details}</span>}
+        />
+      </ul>
+      <p className="mt-4 text-center text-sm text-gray-400">
+        {translation.copyright}{' '}
+        <a
+          href="https://serhii.vercel.app/"
+          className="text-gray-300 underline"
+        >
+          {translation.dev_site}
+        </a>
+      </p>
+    </Section>
   );
-}
-
-function FooterMenu({
-  menu,
-  primaryDomainUrl,
-  publicStoreDomain,
-}: {
-  menu: FooterQuery['menu'];
-  primaryDomainUrl: FooterProps['header']['shop']['primaryDomain']['url'];
-  publicStoreDomain: string;
-}) {
-  return (
-    <nav className="footer-menu" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
-          </a>
-        ) : (
-          <NavLink
-            end
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}
-    </nav>
-  );
-}
-
-const FALLBACK_FOOTER_MENU = {
-  id: 'gid://shopify/Menu/199655620664',
-  items: [
-    {
-      id: 'gid://shopify/MenuItem/461633060920',
-      resourceId: 'gid://shopify/ShopPolicy/23358046264',
-      tags: [],
-      title: 'Privacy Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/privacy-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633093688',
-      resourceId: 'gid://shopify/ShopPolicy/23358013496',
-      tags: [],
-      title: 'Refund Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/refund-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633126456',
-      resourceId: 'gid://shopify/ShopPolicy/23358111800',
-      tags: [],
-      title: 'Shipping Policy',
-      type: 'SHOP_POLICY',
-      url: '/policies/shipping-policy',
-      items: [],
-    },
-    {
-      id: 'gid://shopify/MenuItem/461633159224',
-      resourceId: 'gid://shopify/ShopPolicy/23358079032',
-      tags: [],
-      title: 'Terms of Service',
-      type: 'SHOP_POLICY',
-      url: '/policies/terms-of-service',
-      items: [],
-    },
-  ],
 };
 
-function activeLinkStyle({
-  isActive,
-  isPending,
-}: {
-  isActive: boolean;
-  isPending: boolean;
-}) {
-  return {
-    fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'white',
-  };
+interface FooterItemProps {
+  icon: React.ReactNode;
+  title: string;
+  content: React.ReactNode;
+}
+
+function FooterItem({icon, title, content}: FooterItemProps) {
+  return (
+    <li className="grid grid-cols-[50px_1fr] items-center whitespace-pre py-2">
+      <div className="flex size-8 items-center justify-center">{icon}</div>
+      <div>
+        <strong>{title}:</strong>
+        {content}
+      </div>
+    </li>
+  );
 }

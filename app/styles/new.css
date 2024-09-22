@@ -26,7 +26,7 @@ aside {
   position: fixed;
   right: calc(-1 * var(--aside-width));
   top: 0;
-  transition: transform 200ms ease-in-out;
+  transition: transform 300ms ease-in-out;
 }
 
 aside header {
@@ -79,15 +79,15 @@ aside li {
   background: rgba(0, 0, 0, 0.2);
   bottom: 0;
   left: 0;
-  opacity: 0;
+  opacity: 1;
   pointer-events: none;
   position: fixed;
   right: 0;
   top: 0;
   transition: opacity 400ms ease-in-out;
-  transition: opacity 400ms;
+  transition: visibility 400ms;
   visibility: hidden;
-  z-index: 10;
+  z-index: 20;
 }
 
 .overlay .close-outside {
@@ -160,7 +160,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .header-menu-mobile-toggle {
-  @media (min-width: 48em) {
+  @media (min-width: 768px) {
     display: none;
   }
 }
@@ -174,7 +174,7 @@ button.reset:hover:not(:has(> *)) {
 .header-menu-desktop {
   display: none;
   grid-gap: 1rem;
-  @media (min-width: 45em) {
+  @media (min-width: 768px) {
     display: flex;
     grid-gap: 1rem;
     margin-left: 3rem;

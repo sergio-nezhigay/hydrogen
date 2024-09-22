@@ -15,7 +15,6 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
-import {translations} from '~/data/translations';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -48,11 +47,13 @@ export function PageLayout({
         />
       )}
       <main>{children}</main>
-      <Footer
+      {/*<Footer
         footer={footer}
         header={header}
         publicStoreDomain={publicStoreDomain}
       />
+           <Footer locale={locale} />*/}
+      <Footer />
     </Aside.Provider>
   );
 }
@@ -161,7 +162,7 @@ function MobileMenuAside({
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="MENU">
+      <Aside type="mobile" heading="Меню">
         <HeaderMenu
           menu={header.menu}
           viewport="mobile"

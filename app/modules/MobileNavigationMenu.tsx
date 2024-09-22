@@ -2,21 +2,11 @@
 
 import {Disclosure} from '@headlessui/react';
 import {Link} from '@remix-run/react';
+import {useAside} from '~/components/Aside';
 import {navigationData} from '~/data/navigationData';
 
-interface MobileNavigationMenuProps {
-  onClose?: () => void;
-}
-
-export const MobileNavigationMenu = ({onClose}: MobileNavigationMenuProps) => {
-  const handleLinkClick = (
-    event: React.MouseEvent<HTMLAnchorElement>,
-    to: string,
-  ) => {
-    if (onClose) {
-      onClose();
-    }
-  };
+export const MobileNavigationMenu = () => {
+  const {close} = useAside();
 
   return (
     <div className="p-4 space-y-2">
@@ -45,7 +35,7 @@ export const MobileNavigationMenu = ({onClose}: MobileNavigationMenuProps) => {
                             to={item.to}
                             prefetch="viewport"
                             className="block p-2 text-gray-700 rounded transition-colors duration-200 hover:bg-gray-200"
-                            onClick={(e) => handleLinkClick(e, item.to)}
+                            onClick={close}
                           >
                             {item.title}
                           </Link>
@@ -59,7 +49,7 @@ export const MobileNavigationMenu = ({onClose}: MobileNavigationMenuProps) => {
                   to={menuGroup.to!}
                   prefetch="viewport"
                   className="block p-4 text-gray-700 rounded transition-colors duration-200 hover:bg-gray-200"
-                  onClick={(e) => handleLinkClick(e, menuGroup.to!)}
+                  onClick={close}
                 >
                   {menuGroup.title}
                 </Link>

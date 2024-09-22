@@ -7,6 +7,7 @@ import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
 import {DesktopNavigationMenu} from '~/modules/DesktopNavigationMenu';
 import {Image} from '@shopify/hydrogen';
 import LangSelector from '~/modules/LangSelector';
+import {MobileNavigationMenu} from '~/modules/MobileNavigationMenu';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -67,46 +68,11 @@ export function HeaderMenu({
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
   const className = `header-menu-${viewport}`;
-  const {close} = useAside();
 
   return (
     <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
-        <NavLink
-          end
-          onClick={close}
-          prefetch="intent"
-          style={activeLinkStyle}
-          to="/"
-        >
-          Home
-        </NavLink>
-      )}
-      <DesktopNavigationMenu />
-      {/*{(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
-
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        return (
-          <NavLink
-            className="header-menu-item"
-            end
-            key={item.id}
-            onClick={close}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
-      })}*/}
+      {viewport === 'mobile' && <MobileNavigationMenu />}
+      {viewport === 'desktop' && <DesktopNavigationMenu />}
     </nav>
   );
 }
@@ -117,10 +83,8 @@ function HeaderCtas({
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
     <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
       <LangSelector />
       <SearchToggle />
-
       <NavLink
         prefetch="intent"
         to="/account"
@@ -134,6 +98,7 @@ function HeaderCtas({
         </Suspense>
       </NavLink>
       <CartToggle cart={cart} />
+      <HeaderMenuMobileToggle />
     </nav>
   );
 }
@@ -145,7 +110,7 @@ function HeaderMenuMobileToggle() {
       className="header-menu-mobile-toggle reset"
       onClick={() => open('mobile')}
     >
-      <h3>☰</h3>
+      <h3 className="icon-header hover:bg-stone-100/20">☰</h3>
     </button>
   );
 }

@@ -10,7 +10,7 @@ function LangSelector() {
   const {language} = useTranslation();
 
   return (
-    <ul className="flex-center text-base">
+    <ul className="hidden lg:flex-center text-base">
       <li className="px-2">
         {language === 'ru' ? (
           <a
