@@ -130,4 +130,7 @@ body {
   .flex-end {
     @apply flex justify-end items-center;
   }
+  .test1 {
+    @apply bg-gradient-to-r from-blue-700 via-purple-700 to-indigo-700;
+  }
 }
