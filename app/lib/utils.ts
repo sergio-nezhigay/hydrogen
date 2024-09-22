@@ -331,7 +331,6 @@ export function useTranslation() {
     rootData?.consent.language ?? DEFAULT_LOCALE.language
   ).toLowerCase() as keyof typeof translations;
   const translation = translations[language];
-  console.log('🚀 ~ language:', language);
 
   const t = (
     key: keyof typeof translation | string,

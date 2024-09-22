@@ -15,6 +15,7 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
+import {useTranslation} from '~/lib/utils';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -47,21 +48,17 @@ export function PageLayout({
         />
       )}
       <main>{children}</main>
-      {/*<Footer
-        footer={footer}
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-      />
-           <Footer locale={locale} />*/}
+
       <Footer />
     </Aside.Provider>
   );
 }
 
 function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
+  const {translation} = useTranslation();
   return (
-    <Aside type="cart" heading="CART">
-      <Suspense fallback={<p>Loading cart ...</p>}>
+    <Aside type="cart" heading={translation.basket}>
+      <Suspense fallback={`<p>${translation.loading}...</p>`}>
         <Await resolve={cart}>
           {(cart) => {
             return <CartMain cart={cart} layout="aside" />;
@@ -73,8 +70,9 @@ function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
 }
 
 function SearchAside() {
+  const {translation, t} = useTranslation();
   return (
-    <Aside type="search" heading="SEARCH">
+    <Aside type="search" heading={translation.search}>
       <div className="predictive-search">
         <br />
         <SearchFormPredictive>
@@ -84,12 +82,12 @@ function SearchAside() {
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}
-                placeholder="Search"
+                placeholder={translation.search}
                 ref={inputRef}
                 type="search"
               />
               &nbsp;
-              <button onClick={goToSearch}>Search</button>
+              <button onClick={goToSearch}>{translation.search}</button>
             </>
           )}
         </SearchFormPredictive>
@@ -99,7 +97,7 @@ function SearchAside() {
             const {articles, collections, pages, products, queries} = items;
 
             if (state === 'loading' && term.current) {
-              return <div>Loading...</div>;
+              return <div>${translation.loading}...</div>;
             }
 
             if (!total) {
@@ -138,7 +136,7 @@ function SearchAside() {
                     to={`${SEARCH_ENDPOINT}?q=${term.current}`}
                   >
                     <p>
-                      View all results for <q>{term.current}</q>
+                      {t('View all results for')} <q>{term.current}</q>
                       &nbsp; →
                     </p>
                   </Link>

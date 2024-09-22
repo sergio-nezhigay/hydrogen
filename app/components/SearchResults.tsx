@@ -1,6 +1,7 @@
 import {Link} from '@remix-run/react';
 import {Image, Money, Pagination} from '@shopify/hydrogen';
 import {urlWithTrackingParams, type RegularSearchReturn} from '~/lib/search';
+import {useTranslation} from '~/lib/utils';
 
 type SearchItems = RegularSearchReturn['result']['items'];
 type PartialSearchResult<ItemType extends keyof SearchItems> = Pick<
@@ -100,10 +101,10 @@ function SearchResultsProducts({
   if (!products?.nodes.length) {
     return null;
   }
-
+  const {translation} = useTranslation();
   return (
     <div className="search-result">
-      <h2>Products</h2>
+      <h2>{translation.products}</h2>
       <Pagination connection={products}>
         {({nodes, isLoading, NextLink, PreviousLink}) => {
           const ItemsMarkup = nodes.map((product) => {
@@ -138,7 +139,11 @@ function SearchResultsProducts({
             <div>
               <div>
                 <PreviousLink>
-                  {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+                  {isLoading ? (
+                    translation.loading
+                  ) : (
+                    <span>↑ translation.prev</span>
+                  )}
                 </PreviousLink>
               </div>
               <div>
@@ -147,7 +152,11 @@ function SearchResultsProducts({
               </div>
               <div>
                 <NextLink>
-                  {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+                  {isLoading ? (
+                    translation.loading
+                  ) : (
+                    <span>translation.next ↓</span>
+                  )}
                 </NextLink>
               </div>
             </div>

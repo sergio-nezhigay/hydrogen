@@ -136,7 +136,7 @@ function Filters({filters}: {filters: Filter[]}) {
             to={isActive ? appliedFilterLink : to}
             className="flex-start gap-2 hover:bg-slate-100 px-1 rounded-sm group "
           >
-            <span className="size-4 inline-block border border-stone-300 rounded-sm group-hover:border-stone-800">
+            <span className="size-4 inline-block border border-stone-500 rounded-sm group-hover:border-stone-900">
               {isActive && (
                 <Check className="size-4 text-slate-50 bg-indigo-700/80" />
               )}
