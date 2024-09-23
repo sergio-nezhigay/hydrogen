@@ -6,6 +6,7 @@ import type {
 } from 'storefrontapi.generated';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {useAside} from '~/components/Aside';
+import {useTranslation} from '~/lib/utils';
 
 export function ProductForm({
   product,
@@ -17,6 +18,11 @@ export function ProductForm({
   variants: Array<ProductVariantFragment>;
 }) {
   const {open} = useAside();
+  const {translation} = useTranslation();
+  const delta = product.delta?.value || selectedVariant?.price?.amount || '';
+  const supplier = product.supplier?.value || '';
+  const meta = {delta, supplier};
+
   return (
     <div className="product-form">
       <VariantSelector
@@ -26,7 +32,7 @@ export function ProductForm({
       >
         {({option}) => <ProductOptions key={option.name} option={option} />}
       </VariantSelector>
-      <br />
+
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
@@ -43,8 +49,12 @@ export function ProductForm({
               ]
             : []
         }
+        delta={delta}
+        meta={meta}
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {selectedVariant?.availableForSale
+          ? translation.buy
+          : translation.sold_out}
       </AddToCartButton>
     </div>
   );

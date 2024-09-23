@@ -1,5 +1,6 @@
 import {Money} from '@shopify/hydrogen';
 import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
+import clsx from 'clsx';
 
 export function ProductPrice({
   price,
@@ -12,16 +13,38 @@ export function ProductPrice({
     <div className="product-price">
       {compareAtPrice ? (
         <div className="product-price-on-sale">
-          {price ? <Money data={price} /> : null}
+          {price ? <HryvniaMoney data={price} /> : null}
           <s>
-            <Money data={compareAtPrice} />
+            <HryvniaMoney data={compareAtPrice} />
           </s>
         </div>
       ) : price ? (
-        <Money data={price} />
+        <HryvniaMoney data={price} />
       ) : (
         <span>&nbsp;</span>
       )}
     </div>
   );
 }
+
+interface HryvniaMoneyProps {
+  data: MoneyV2;
+  className?: string;
+}
+
+function HryvniaMoney({data, className}: HryvniaMoneyProps) {
+  return (
+    <span className={clsx('font-bold', className)}>
+      <Money
+        data={data!}
+        as="span"
+        withoutTrailingZeros
+        withoutCurrency
+        data-test="price"
+      />
+      <span className="ml-1 text-base">₴</span>
+    </span>
+  );
+}
+
+export default HryvniaMoney;
