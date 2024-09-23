@@ -405,7 +405,7 @@ button.reset:hover:not(:has(> *)) {
 */
 .product {
   display: grid;
-  @media (min-width: 45em) {
+  @media (min-width: 768px) {
     grid-template-columns: 1fr 1fr;
     grid-gap: 4rem;
   }
@@ -421,9 +421,11 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .product-main {
-  align-self: start;
-  position: sticky;
-  top: 6rem;
+  @media (min-width: 768px) {
+    align-self: start;
+    position: sticky;
+    top: 6rem;
+  }
 }
 
 .product-price-on-sale {
