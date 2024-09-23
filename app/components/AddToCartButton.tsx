@@ -41,6 +41,7 @@ export function AddToCartButton({
             size="lg"
             onClick={onClick}
             disabled={disabled ?? fetcher.state !== 'idle'}
+            className="sm-max:w-full font-bold"
           >
             <ShoppingCart className="mr-4 size-6" />
             {children}
