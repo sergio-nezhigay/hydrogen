@@ -14,7 +14,6 @@ export function Thumb({selected, onClick, item}: PropType) {
     item.__typename === 'MediaImage'
       ? {...item.image, altText: item.alt || 'Product image'}
       : null;
-  console.log('🚀 ~ image:', image);
 
   return (
     <div
@@ -30,13 +29,12 @@ export function Thumb({selected, onClick, item}: PropType) {
         className={`flex items-center justify-center w-full bg-primary/5`}
       >
         {image && (
-          //  <span className="block size-100 bg-red-300">sg</span>
           <Image
             data={image}
-            width={100}
-            height={100}
+            width={70}
+            height={70}
             aspectRatio={'1/1'}
-            sizes="100px"
+            sizes="70px"
             className="object-cover w-full h-full"
           />
         )}
