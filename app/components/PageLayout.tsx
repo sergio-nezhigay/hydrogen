@@ -16,6 +16,7 @@ import {
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 import {useTranslation} from '~/lib/utils';
+import BreadCrumbs from '~/modules/BreadCrumbs';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -47,7 +48,10 @@ export function PageLayout({
           publicStoreDomain={publicStoreDomain}
         />
       )}
-      <main>{children}</main>
+      <main>
+        <BreadCrumbs />
+        {children}
+      </main>
 
       <Footer />
     </Aside.Provider>

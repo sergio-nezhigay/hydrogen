@@ -70,7 +70,7 @@ export async function loader(args: LoaderFunctionArgs) {
 
   const {storefront, env, customerAccount} = args.context;
   const isLoggedInPromise: Promise<boolean> = customerAccount.isLoggedIn();
-  const locale = args.context.storefront.i18n.language ?? DEFAULT_LOCALE;
+
   return defer({
     ...deferredData,
     ...criticalData,
