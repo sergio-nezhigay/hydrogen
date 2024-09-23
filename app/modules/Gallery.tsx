@@ -107,6 +107,7 @@ export function Gallery({
         onButtonClick={scrollTo}
       />
       {/*thumbs*/}
+
       {showThumbs && galleryItems.length > 1 && (
         <Carousel
           setApi={setThumbsCarouselApi}

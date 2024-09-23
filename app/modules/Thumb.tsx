@@ -14,6 +14,7 @@ export function Thumb({selected, onClick, item}: PropType) {
     item.__typename === 'MediaImage'
       ? {...item.image, altText: item.alt || 'Product image'}
       : null;
+  console.log('🚀 ~ image:', image);
 
   return (
     <div
@@ -26,9 +27,10 @@ export function Thumb({selected, onClick, item}: PropType) {
         onClick={onClick}
         onMouseEnter={onClick}
         type="button"
-        className={`block items-center justify-center w-full bg-primary/5`}
+        className={`flex items-center justify-center w-full bg-primary/5`}
       >
         {image && (
+          //  <span className="block size-100 bg-red-300">sg</span>
           <Image
             data={image}
             width={100}
