@@ -2,6 +2,7 @@ import {Suspense} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, Link, useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {ProductFragment} from 'storefrontapi.generated';
+import {MEDIA_FRAGMENT} from '~/data/fragments';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -22,6 +23,7 @@ import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
 import {Disclosure, DisclosurePanel} from '@headlessui/react';
 import {IconClose} from '~/components/Icon';
+import {Gallery} from '~/modules/Gallery';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -155,13 +157,15 @@ function redirectToFirstVariant({
 export default function Product() {
   const {product, shop, variants, judgemeReviewsData} =
     useLoaderData<typeof loader>();
+  console.log('🚀 ~ product:', product);
+  const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
 
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,
     variants,
   );
-  const {title, descriptionHtml} = product;
+
   const {translation} = useTranslation();
   const rating = judgemeReviewsData?.rating ?? 0;
   const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
@@ -176,7 +180,12 @@ export default function Product() {
   return (
     <div className=" container">
       <div className="product">
-        <ProductImage image={selectedVariant?.image} />
+        {/*<ProductImage image={selectedVariant?.image} />*/}
+        <Gallery
+          galleryItems={media.nodes}
+          GalleryItemComponent={ProductImage}
+          showThumbs={true}
+        />
         <div className="product-main">
           <div className="grid gap-2 ">
             <Heading as="h1" className="overflow-hidden whitespace-normal ">
@@ -397,6 +406,11 @@ const PRODUCT_FRAGMENT = `#graphql
       name
       values
     }
+    media(first: 7) {
+      nodes {
+        ...Media
+      }
+    }
     selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
       ...ProductVariant
     }
@@ -422,6 +436,7 @@ const PRODUCT_FRAGMENT = `#graphql
       value
     }
   }
+  ${MEDIA_FRAGMENT}
   ${PRODUCT_VARIANT_FRAGMENT}
 ` as const;
 

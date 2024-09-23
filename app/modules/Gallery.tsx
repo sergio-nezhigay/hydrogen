@@ -13,8 +13,9 @@ import {Thumb} from './Thumb';
 
 import {DotButtons} from './DotButtons';
 import {ProductCardWrapperProps} from '~/components/ProductSwimlane';
-import {ProductImageProps} from '~/routes/($locale).products.$productHandle';
+
 import clsx from 'clsx';
+import {ProductImageProps} from '~/components/ProductImage';
 
 type GalleryProps = {
   galleryItems: any[];
