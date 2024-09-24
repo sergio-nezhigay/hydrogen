@@ -5,6 +5,7 @@ import {
   useEffect,
   useState,
 } from 'react';
+import {X} from 'lucide-react';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -56,10 +57,14 @@ export function Aside({
     >
       <button className="close-outside" onClick={close} />
       <aside>
-        <header>
-          <h3>{heading}</h3>
-          <button className="close reset" onClick={close}>
-            &times;
+        <header className="bg-accent-gradient text-white">
+          <h3 className=" font-bold">{heading}</h3>
+          <button
+            className="hover:opacity-100 opacity-80"
+            onClick={close}
+            aria-label="Close panel"
+          >
+            <X />
           </button>
         </header>
         <main>{children}</main>

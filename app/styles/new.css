@@ -147,13 +147,11 @@ button.reset:hover:not(:has(> *)) {
 * components/Header
 * --------------------------------------------------
 */
+
 .header {
   align-items: center;
-  /*color: var(--color-light);*/
-  background: linear-gradient(to right, #1d4ed8, #6d28d9, #3730a3);
   display: flex;
   height: var(--header-height);
-  /*padding: 0 2rem;*/
   position: sticky;
   top: 0;
   z-index: 1;
@@ -273,16 +271,12 @@ button.reset:hover:not(:has(> *)) {
 * components/Search
 * --------------------------------------------------
 */
-.predictive-search {
-  height: calc(100vh - var(--header-height) - 40px);
-  overflow-y: auto;
-}
 
-.predictive-search-form {
+/*.predictive-search-form {
   background: var(--color-light);
   position: sticky;
   top: 0;
-}
+}*/
 
 .predictive-search-result {
   margin-bottom: 2rem;
@@ -299,6 +293,20 @@ button.reset:hover:not(:has(> *)) {
 .predictive-search-result-item a {
   align-items: center;
   display: flex;
+  padding: 8px;
+  position: relative;
+}
+
+.predictive-search-result-item a {
+  align-items: center;
+  display: flex;
+  padding: 8px;
+  border: 1px solid transparent;
+  transition: color 0.3s ease, border 0.3s ease;
+}
+
+.predictive-search-result-item a:hover {
+  border-image: linear-gradient(to right, #e5e7eb, #d1d5db, #9ca3af) 1;
 }
 
 .predictive-search-result-item a img {

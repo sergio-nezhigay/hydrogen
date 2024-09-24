@@ -7,6 +7,7 @@ import {
   type PredictiveSearchReturn,
 } from '~/lib/search';
 import {useAside} from './Aside';
+import {useTranslation} from '~/lib/utils';
 
 type PredictiveSearchItems = PredictiveSearchReturn['result']['items'];
 
@@ -127,10 +128,10 @@ function SearchResultsPredictiveCollections({
   closeSearch,
 }: PartialPredictiveSearchResult<'collections'>) {
   if (!collections.length) return null;
-
+  const {translation} = useTranslation();
   return (
     <div className="predictive-search-result" key="collections">
-      <h5>Collections</h5>
+      <h5>{translation.collections}</h5>
       <ul>
         {collections.map((collection) => {
           const colllectionUrl = urlWithTrackingParams({
@@ -201,10 +202,10 @@ function SearchResultsPredictiveProducts({
   closeSearch,
 }: PartialPredictiveSearchResult<'products'>) {
   if (!products.length) return null;
-
+  const {translation} = useTranslation();
   return (
     <div className="predictive-search-result" key="products">
-      <h5>Products</h5>
+      <h5>{translation.products}</h5>
       <ul>
         {products.map((product) => {
           const productUrl = urlWithTrackingParams({

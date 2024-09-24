@@ -1,5 +1,5 @@
 import {Await, Link} from '@remix-run/react';
-import {ReactNode, Suspense} from 'react';
+import {Suspense} from 'react';
 
 import type {
   CartApiQueryFragment,
@@ -75,13 +75,13 @@ function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
 
 function SearchAside() {
   const {translation, t} = useTranslation();
+
   return (
     <Aside type="search" heading={translation.search}>
-      <div className="predictive-search">
-        <br />
+      <div className="h-[calc(100vh_-_var(--header-height)_-_40px)] overflow-y-auto">
         <SearchFormPredictive>
           {({fetchResults, goToSearch, inputRef}) => (
-            <>
+            <div className="flex gap-2 items-center">
               <input
                 name="q"
                 onChange={fetchResults}
@@ -89,10 +89,15 @@ function SearchAside() {
                 placeholder={translation.search}
                 ref={inputRef}
                 type="search"
+                className="w-full px-4 py-2 border rounded-md focus:outline-0 focus:ring-transparent"
               />
-              &nbsp;
-              <button onClick={goToSearch}>{translation.search}</button>
-            </>
+              <button
+                onClick={goToSearch}
+                className="px-4 py-2 bg-accent-gradient text-white rounded-md opacity-90 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-indigo-700"
+              >
+                {translation.search}
+              </button>
+            </div>
           )}
         </SearchFormPredictive>
 
@@ -101,7 +106,7 @@ function SearchAside() {
             const {articles, collections, pages, products, queries} = items;
 
             if (state === 'loading' && term.current) {
-              return <div>${translation.loading}...</div>;
+              return <div>{t('loading')}...</div>;
             }
 
             if (!total) {
@@ -134,14 +139,15 @@ function SearchAside() {
                   closeSearch={closeSearch}
                   term={term}
                 />
+
                 {term.current && total ? (
                   <Link
                     onClick={closeSearch}
                     to={`${SEARCH_ENDPOINT}?q=${term.current}`}
+                    className="block mt-4 text-indigo-600 hover:underline hover:text-indigo-800"
                   >
                     <p>
-                      {t('View all results for')} <q>{term.current}</q>
-                      &nbsp; →
+                      {t('View all results for')} <q>{term.current}</q> &nbsp; →
                     </p>
                   </Link>
                 ) : null}

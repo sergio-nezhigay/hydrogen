@@ -62,6 +62,10 @@ module.exports = {
       backgroundColor: {
         main: 'var(--background)',
       },
+      backgroundImage: {
+        'accent-gradient':
+          'linear-gradient(to right, #1d4ed8, #6d28d9, #3730a3)',
+      },
       screens: {
         sm: '32em',
         md: '48em',

@@ -26,7 +26,7 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header text-white">
+    <header className="header bg-accent-gradient text-white">
       <div className="container flex-center">
         <NavLink
           prefetch="intent"
