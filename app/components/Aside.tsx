@@ -1,4 +1,10 @@
-import {createContext, type ReactNode, useContext, useState} from 'react';
+import {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -28,6 +34,19 @@ export function Aside({
 }) {
   const {type: activeType, close} = useAside();
   const expanded = type === activeType;
+  useEffect(() => {
+    if (expanded) {
+      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.style.paddingRight = `17px`;
+    } else {
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.paddingRight = '';
+    }
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.documentElement.style.paddingRight = '';
+    };
+  }, [expanded]);
 
   return (
     <div

@@ -1,9 +1,14 @@
 import {useOptimisticCart} from '@shopify/hydrogen';
-import {Link} from '@remix-run/react';
+
+import {Text} from '~/components/Text';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {CartLineItem} from '~/components/CartLineItem';
 import {CartSummary} from './CartSummary';
+import {Button} from '~/components/Button';
+import {FeaturedProducts} from './FeaturedProducts';
+
+import {useTranslation} from '~/lib/utils';
 
 export type CartLayout = 'page' | 'aside';
 
@@ -52,17 +57,38 @@ function CartEmpty({
   layout?: CartMainProps['layout'];
 }) {
   const {close} = useAside();
+  const {translation} = useTranslation();
+
   return (
     <div hidden={hidden}>
-      <br />
-      <p>
-        Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
-        started!
-      </p>
-      <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
-        Continue shopping →
-      </Link>
+      <section className="grid gap-6 py-6">
+        <Text format size="lead">
+          {translation.no_items_added_yet}
+        </Text>
+        <div>
+          <Button onClick={close}>{translation.continue_shopping}</Button>
+        </div>
+      </section>
+      <section className="grid gap-8">
+        <FeaturedProducts
+          count={2}
+          heading={translation.trending_products}
+          layout="drawer"
+          onClose={close}
+          sortKey="BEST_SELLING"
+        />
+      </section>
     </div>
+    //<div hidden={hidden}>
+    //  <br />
+    //  <p>
+    //    Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
+    //    started!
+    //  </p>
+    //  <br />
+    //  <Link to="/collections" onClick={close} prefetch="viewport">
+    //    Continue shopping →
+    //  </Link>
+    //</div>
   );
 }
