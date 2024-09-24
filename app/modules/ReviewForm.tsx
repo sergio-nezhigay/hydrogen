@@ -2,14 +2,12 @@ import {Form, useActionData} from '@remix-run/react';
 import {useState, useEffect} from 'react';
 
 import {Heading, Section, Text} from '~/components/Text';
-import {translations} from '~/data/translations';
 import {Button} from '~/components/ui/button';
 import {useTranslation} from '~/lib/utils';
 import {star, filledStar} from './StarRating';
 
 interface ReviewFormProps {
   productId: string;
-  locale: keyof typeof translations;
 }
 
 interface ActionData {
@@ -20,12 +18,11 @@ interface ActionData {
 interface StarInputProps {
   rating: number;
   setRating: (rating: number) => void;
-  locale: keyof typeof translations;
 }
 
-function StarInput({rating, setRating, locale}: StarInputProps) {
+function StarInput({rating, setRating}: StarInputProps) {
   const [hoverRating, setHoverRating] = useState<number>(0);
-  const translation = translations[locale];
+  const {translation} = useTranslation();
   const handleStarClick = (index: number) => {
     setRating(index);
   };
@@ -74,7 +71,7 @@ function StarInput({rating, setRating, locale}: StarInputProps) {
               aria-label={`${index} Star${index > 1 ? 's' : ''}`}
               className="focus:outline-blue-600"
             >
-              {hoverRating >= index || rating >= index ? star : filledStar}
+              {hoverRating >= index || rating >= index ? filledStar : star}
             </button>
           </li>
         ))}
@@ -84,7 +81,7 @@ function StarInput({rating, setRating, locale}: StarInputProps) {
   );
 }
 
-export function ReviewForm({productId, locale}: ReviewFormProps) {
+export function ReviewForm({productId}: ReviewFormProps) {
   const actionData = useActionData<ActionData>();
   const {translation} = useTranslation();
 
@@ -163,7 +160,7 @@ export function ReviewForm({productId, locale}: ReviewFormProps) {
                 className="w-full p-2 border border-gray-300 rounded"
               />
             </div>
-            <StarInput rating={rating} setRating={setRating} locale={locale} />
+            <StarInput rating={rating} setRating={setRating} />
             <div className="mb-4">
               <label htmlFor="body" className="block text-lg mb-2">
                 {translation.review_body}

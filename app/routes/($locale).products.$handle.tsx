@@ -2,11 +2,12 @@ import {Suspense} from 'react';
 import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, Link, useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {ProductFragment} from 'storefrontapi.generated';
-import {MEDIA_FRAGMENT} from '~/data/fragments';
+import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {
   getSelectedProductOptions,
   Analytics,
   useOptimisticVariant,
+  Storefront,
 } from '@shopify/hydrogen';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import {getVariantUrl} from '~/lib/variants';
@@ -15,7 +16,7 @@ import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {Heading, Section, Text} from '~/components/Text';
 import {getExcerpt, useTranslation} from '~/lib/utils';
-import {getJudgemeReviews} from '~/lib/judgeme';
+import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
 import {seoPayload} from '~/lib/seo.server';
 import clsx from 'clsx';
 import {StarRating} from '~/modules/StarRating';
@@ -24,6 +25,9 @@ import ReviewList from '~/modules/ReviewList';
 import {Disclosure, DisclosurePanel} from '@headlessui/react';
 import {IconClose} from '~/components/Icon';
 import {Gallery} from '~/modules/Gallery';
+import {ProductSwimlane} from '~/components/ProductSwimlane';
+import {Skeleton} from '~/components/Skeleton';
+import invariant from 'tiny-invariant';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -31,6 +35,48 @@ export const meta: MetaFunction<typeof loader> = ({data}) => {
 
 export const handle = {
   breadcrumbType: 'product',
+};
+
+export const action = async ({request, context}: LoaderFunctionArgs) => {
+  const formData = await request.formData();
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const rating = parseInt(formData.get('rating') as string);
+  const title = name; // to make simpler
+  const body = formData.get('body') as string;
+  const productId = formData.get('productId') as string;
+
+  if (!name || !email || !rating || !title || !body) {
+    return {error: 'All fields are required'};
+  }
+
+  // Extract the numeric product ID from the global ID
+  const numericProductId = productId.split('/').pop();
+  if (!numericProductId) {
+    return {error: 'Invalid product ID'};
+  }
+
+  try {
+    await addJudgemeReview({
+      api_token: context.env.JUDGEME_PUBLIC_TOKEN,
+      shop_domain: context.env.PUBLIC_STORE_DOMAIN,
+      id: parseInt(numericProductId),
+      email,
+      name,
+      rating,
+      title,
+      body,
+    });
+
+    return {success: true};
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error submitting review:', error);
+    return {
+      error:
+        'There was an error submitting your review. Please try again later.',
+    };
+  }
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -73,6 +119,8 @@ async function loadCriticalData({
     throw new Response(null, {status: 404});
   }
 
+  const recommended = getRecommendedProducts(context.storefront, product.id);
+
   const firstVariant = product.variants.nodes[0];
   const firstVariantIsDefault = Boolean(
     firstVariant.selectedOptions.find(
@@ -99,6 +147,7 @@ async function loadCriticalData({
 
   return {
     product,
+    recommended,
     shop,
     seo,
     judgemeReviewsData,
@@ -155,9 +204,8 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const {product, shop, variants, judgemeReviewsData} =
+  const {product, shop, variants, judgemeReviewsData, recommended} =
     useLoaderData<typeof loader>();
-  console.log('🚀 ~ product:', product);
   const {media, title, vendor, descriptionHtml} = product;
   const {shippingPolicy, refundPolicy} = shop;
 
@@ -178,121 +226,135 @@ export default function Product() {
   };
 
   return (
-    <div className=" container">
-      <div className="product">
-        {/*<ProductImage image={selectedVariant?.image} />*/}
-        <Gallery
-          galleryItems={media.nodes}
-          GalleryItemComponent={ProductImage}
-          showThumbs={true}
-        />
-        <div className="product-main">
-          <div className="grid gap-2 ">
-            <Heading as="h1" className="overflow-hidden whitespace-normal ">
-              {title}
-            </Heading>
-            <div
-              className={clsx({
-                'flex-between': reviewNumber > 0,
-                'flex-end': reviewNumber === 0,
-              })}
-            >
-              {reviewNumber > 0 && (
-                <a
-                  href="#review-list"
-                  className="space-x-2 flex"
-                  onClick={handleScrollToReviews}
-                >
-                  <StarRating rating={rating} />
-                  <span className="align-top">({reviewNumber})</span>
-                </a>
-              )}
-
-              {product.selectedVariant?.sku && (
-                <span className="text-primary/70">
-                  Код:&nbsp;{product.selectedVariant?.sku}
-                </span>
-              )}
-            </div>
-          </div>
-          <div className="md:flex-start gap-8">
-            <div className="sm-max:mb-4">
-              <p className="mb-1">{translation.available}</p>
-              <ProductPrice
-                price={selectedVariant?.price}
-                compareAtPrice={selectedVariant?.compareAtPrice}
-              />
-            </div>
-
-            <Suspense
-              fallback={
-                <ProductForm
-                  product={product}
-                  selectedVariant={selectedVariant}
-                  variants={[]}
-                />
-              }
-            >
-              <Await
-                errorElement="There was a problem loading product variants"
-                resolve={variants}
+    <>
+      <Section heading="Опис товару" padding="y" headingClassName="sr-only">
+        <div className="product">
+          <Gallery
+            galleryItems={media.nodes}
+            GalleryItemComponent={ProductImage}
+            showThumbs={true}
+          />
+          <div className="product-main">
+            <div className="grid gap-2 ">
+              <Heading as="h1" className="overflow-hidden whitespace-normal ">
+                {title}
+              </Heading>
+              <div
+                className={clsx({
+                  'flex-between': reviewNumber > 0,
+                  'flex-end': reviewNumber === 0,
+                })}
               >
-                {(data) => (
+                {reviewNumber > 0 && (
+                  <a
+                    href="#review-list"
+                    className="space-x-2 flex"
+                    onClick={handleScrollToReviews}
+                  >
+                    <StarRating rating={rating} />
+                    <span className="align-top">({reviewNumber})</span>
+                  </a>
+                )}
+
+                {product.selectedVariant?.sku && (
+                  <span className="text-primary/70">
+                    Код:&nbsp;{product.selectedVariant?.sku}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="md:flex-start gap-8">
+              <div className="sm-max:mb-4">
+                <p className="mb-1">{translation.available}</p>
+                <ProductPrice
+                  price={selectedVariant?.price}
+                  compareAtPrice={selectedVariant?.compareAtPrice}
+                />
+              </div>
+
+              <Suspense
+                fallback={
                   <ProductForm
                     product={product}
                     selectedVariant={selectedVariant}
-                    variants={data?.product?.variants.nodes || []}
+                    variants={[]}
                   />
-                )}
-              </Await>
-            </Suspense>
-          </div>
-          <div className="grid gap-4 py-4">
-            {descriptionHtml && (
-              <ProductDetail
-                title={translation.description}
-                content={descriptionHtml}
-                isOpen={true}
-              />
-            )}
-            {shippingPolicy?.body && (
-              <ProductDetail
-                title={translation.shipping}
-                content={getExcerpt(shippingPolicy.body)}
-                learnMore={`/policies/${shippingPolicy.handle}`}
-              />
-            )}
-            {refundPolicy?.body && (
-              <ProductDetail
-                title={translation.returns}
-                content={getExcerpt(refundPolicy.body)}
-                learnMore={`/policies/${refundPolicy.handle}`}
-              />
-            )}
+                }
+              >
+                <Await
+                  errorElement="There was a problem loading product variants"
+                  resolve={variants}
+                >
+                  {(data) => (
+                    <ProductForm
+                      product={product}
+                      selectedVariant={selectedVariant}
+                      variants={data?.product?.variants.nodes || []}
+                    />
+                  )}
+                </Await>
+              </Suspense>
+            </div>
+            <div className="grid gap-4 py-4">
+              {descriptionHtml && (
+                <ProductDetail
+                  title={translation.description}
+                  content={descriptionHtml}
+                  isOpen={true}
+                />
+              )}
+              {shippingPolicy?.body && (
+                <ProductDetail
+                  title={translation.shipping}
+                  content={getExcerpt(shippingPolicy.body)}
+                  learnMore={`/policies/${shippingPolicy.handle}`}
+                />
+              )}
+              {refundPolicy?.body && (
+                <ProductDetail
+                  title={translation.returns}
+                  content={getExcerpt(refundPolicy.body)}
+                  learnMore={`/policies/${refundPolicy.handle}`}
+                />
+              )}
+            </div>
           </div>
         </div>
-        <Analytics.ProductView
-          data={{
-            products: [
-              {
-                id: product.id,
-                title: product.title,
-                price: selectedVariant?.price.amount || '0',
-                vendor: product.vendor,
-                variantId: selectedVariant?.id || '',
-                variantTitle: selectedVariant?.title || '',
-                quantity: 1,
-              },
-            ],
-          }}
-        />
-      </div>
+      </Section>
 
+      <Suspense fallback={<Skeleton className="h-32" />}>
+        <Await
+          errorElement="There was a problem loading related products"
+          resolve={recommended}
+        >
+          {(products) => (
+            <ProductSwimlane
+              title={translation.also_interested}
+              products={products}
+            />
+          )}
+        </Await>
+      </Suspense>
       <div id="review-list">
         <ReviewList reviews={reviews} title={translation.reviews} />
-        <ReviewForm productId={product.id} locale={'ru'} />
+        <ReviewForm productId={product.id} />
       </div>
-    </div>
+      <Analytics.ProductView
+        data={{
+          products: [
+            {
+              id: product.id,
+              title: product.title,
+              price: selectedVariant?.price.amount || '0',
+              vendor: product.vendor,
+              variantId: selectedVariant?.id || '',
+              variantTitle: selectedVariant?.title || '',
+              quantity: 1,
+            },
+          ],
+        }}
+      />
+    </>
   );
 }
 
@@ -355,6 +417,51 @@ function ProductDetail({
       )}
     </Disclosure>
   );
+}
+
+const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+  query productRecommendations(
+    $productId: ID!
+    $count: Int
+    $country: CountryCode
+    $language: LanguageCode
+  ) @inContext(country: $country, language: $language) {
+    recommended: productRecommendations(productId: $productId) {
+      ...ProductCard
+    }
+    additional: products(first: $count, sortKey: BEST_SELLING) {
+      nodes {
+        ...ProductCard
+      }
+    }
+  }
+  ${PRODUCT_CARD_FRAGMENT}
+` as const;
+
+async function getRecommendedProducts(
+  storefront: Storefront,
+  productId: string,
+) {
+  const products = await storefront.query(RECOMMENDED_PRODUCTS_QUERY, {
+    variables: {productId, count: 6},
+  });
+
+  invariant(products, 'No data returned from Shopify API');
+
+  const mergedProducts = (products.recommended ?? [])
+    .concat(products.additional.nodes)
+    .filter(
+      (value, index, array) =>
+        array.findIndex((value2) => value2.id === value.id) === index,
+    );
+
+  const originalProduct = mergedProducts.findIndex(
+    (item) => item.id === productId,
+  );
+
+  mergedProducts.splice(originalProduct, 1);
+
+  return {nodes: mergedProducts};
 }
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
