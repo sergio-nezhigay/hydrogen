@@ -22,7 +22,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
       <h4 id="summary-heading" className="sr-only">
         Підсумок замовлення
       </h4>
-      <dl className="cart-subtotal">
+      <dl className="flex items-center justify-between font-medium">
         <Text as="dt">Підсума</Text>
         <Text as="dd" data-test="subtotal">
           {cost?.subtotalAmount?.amount ? (
