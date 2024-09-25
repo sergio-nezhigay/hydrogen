@@ -6,8 +6,10 @@ import {json, type ActionFunctionArgs} from '@shopify/remix-oxygen';
 import {CartMain} from '~/components/CartMain';
 import type {RootLoader} from '~/root';
 
+import {useTranslation} from '~/lib/utils';
+
 export const meta: MetaFunction = () => {
-  return [{title: `Hydrogen | Cart`}];
+  return [{title: `Кошик`}];
 };
 
 export async function action({request, context}: ActionFunctionArgs) {
@@ -27,6 +29,20 @@ export async function action({request, context}: ActionFunctionArgs) {
   switch (action) {
     case CartForm.ACTIONS.LinesAdd:
       result = await cart.addLines(inputs.lines);
+      const attributes = [];
+      if (inputs.delta) {
+        attributes.push({
+          key: 'delta',
+          value: inputs.delta as string,
+        });
+      }
+      if (inputs.supplier) {
+        attributes.push({
+          key: 'supplier',
+          value: inputs.supplier as string,
+        });
+      }
+      await cart.updateAttributes(attributes);
       break;
     case CartForm.ACTIONS.LinesUpdate:
       result = await cart.updateLines(inputs.lines);
@@ -97,20 +113,25 @@ export async function action({request, context}: ActionFunctionArgs) {
 export default function Cart() {
   const rootData = useRouteLoaderData<RootLoader>('root');
   if (!rootData) return null;
+  const {translation} = useTranslation();
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
-      <Suspense fallback={<p>Loading cart ...</p>}>
-        <Await
-          resolve={rootData.cart}
-          errorElement={<div>An error occurred</div>}
-        >
-          {(cart) => {
-            return <CartMain layout="page" cart={cart} />;
-          }}
-        </Await>
-      </Suspense>
-    </div>
+    <section>
+      <div className="container mx-auto">
+        <h1 className="whitespace-pre-wrap max-w-prose font-bold text-lead px-6 md:px-8 lg:px-12 py-6">
+          {translation.basket}
+        </h1>
+        <Suspense fallback={`${translation.loading}...`}>
+          <Await
+            resolve={rootData.cart}
+            errorElement={<div>An error occurred</div>}
+          >
+            {(cart) => {
+              return <CartMain layout="page" cart={cart} />;
+            }}
+          </Await>
+        </Suspense>
+      </div>
+    </section>
   );
 }

@@ -30,7 +30,7 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
   const withDiscount =
     cart &&
     Boolean(cart?.discountCodes?.filter((code) => code.applicable)?.length);
-  const className1 = `cart-main ${withDiscount ? 'with-discount' : ''}`;
+
   const cartHasItems = cart?.totalQuantity! > 0;
 
   const className = `${
@@ -42,16 +42,14 @@ export function CartMain({layout, cart: originalCart}: CartMainProps) {
   return (
     <div className={className}>
       <CartEmpty hidden={linesCount} layout={layout} />
-      <div className="flex-col flex-between">
-        <div aria-labelledby="cart-lines">
-          <ul>
-            {(cart?.lines?.nodes ?? []).map((line) => (
-              <CartLineItem key={line.id} line={line} layout={layout} />
-            ))}
-          </ul>
-        </div>
-        {cartHasItems && <CartSummary cart={cart} layout={layout} />}
-      </div>
+
+      <ul className="space-y-8">
+        {(cart?.lines?.nodes ?? []).map((line) => (
+          <CartLineItem key={line.id} line={line} layout={layout} />
+        ))}
+      </ul>
+
+      {cartHasItems && <CartSummary cart={cart} layout={layout} />}
     </div>
   );
 }

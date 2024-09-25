@@ -5,6 +5,7 @@ import {useRef} from 'react';
 import {FetcherWithComponents} from '@remix-run/react';
 import {Text, Heading} from '~/components/Text';
 import {HryvniaMoney} from '~/components/HryvniaMoney';
+import {Button} from '~/components/Button';
 
 type CartSummaryProps = {
   cart: OptimisticCart<CartApiQueryFragment | null>;
@@ -14,11 +15,12 @@ type CartSummaryProps = {
 export function CartSummary({cart, layout}: CartSummaryProps) {
   const className =
     layout === 'page'
-      ? 'sticky top-nav grid gap-6 p-4 md:px-6 md:translate-y-4 bg-primary/5 rounded w-full'
-      : 'grid gap-4 p-6 border-t md:px-12';
+      ? 'sticky grid gap-6 p-4 md:px-6 bg-primary/5 rounded w-full'
+      : 'grid gap-4 border-t w-full';
   const cost = cart.cost;
+
   return (
-    <div aria-labelledby="cart-summary" className={className}>
+    <section aria-labelledby="cart-summary" className={className}>
       <h4 id="summary-heading" className="sr-only">
         Підсумок замовлення
       </h4>
@@ -32,21 +34,25 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
           )}
         </Text>
       </dl>
-      <CartDiscounts discountCodes={cart.discountCodes} />
-      <CartGiftCard giftCardCodes={cart.appliedGiftCards} />
+      {/*<CartDiscounts discountCodes={cart.discountCodes} />
+      <CartGiftCard giftCardCodes={cart.appliedGiftCards} />*/}
       <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
-    </div>
+    </section>
   );
 }
+
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   if (!checkoutUrl) return null;
 
+  const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
+
   return (
-    <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+    <div className="flex mt-2 ">
+      <a href={checkoutUrlWithZipcode} target="_self" className="w-full">
+        <Button as="span" width="full" variant="red">
+          Оформити замовлення
+        </Button>
       </a>
-      <br />
     </div>
   );
 }

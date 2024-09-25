@@ -88,7 +88,7 @@ function CartLineQuantity({line}: {line: CartLine}) {
   const buttonStyle =
     'size-8 transition text-primary/50 hover:text-primary disabled:text-primary/10 text-lg font-bold';
   return (
-    <div className="flex-center gap-2">
+    <div className="flex-start gap-2">
       <small>
         {translation.quantity}: {quantity} &nbsp;&nbsp;
       </small>
