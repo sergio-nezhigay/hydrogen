@@ -1,17 +1,14 @@
-import {Await, useRouteLoaderData} from '@remix-run/react';
-import invariant from 'tiny-invariant';
-import {
-  type LoaderFunctionArgs,
-  type ActionFunctionArgs,
-  json,
-} from '@shopify/remix-oxygen';
-import {CartForm, type CartQueryDataReturn, Analytics} from '@shopify/hydrogen';
-
-import {isLocalPath} from '~/lib/utils';
-import {Cart} from '~/components/Cart';
+import {Await, type MetaFunction, useRouteLoaderData} from '@remix-run/react';
+import {Suspense} from 'react';
+import type {CartQueryDataReturn} from '@shopify/hydrogen';
+import {CartForm} from '@shopify/hydrogen';
+import {json, type ActionFunctionArgs} from '@shopify/remix-oxygen';
+import {CartMain} from '~/components/CartMain';
 import type {RootLoader} from '~/root';
-import {request} from '@playwright/test';
-import {seoPayload} from '~/lib/seo.server';
+
+export const meta: MetaFunction = () => {
+  return [{title: `Hydrogen | Cart`}];
+};
 
 export async function action({request, context}: ActionFunctionArgs) {
   const {cart} = context;
@@ -19,7 +16,10 @@ export async function action({request, context}: ActionFunctionArgs) {
   const formData = await request.formData();
 
   const {action, inputs} = CartForm.getFormInput(formData);
-  invariant(action, 'No cartAction defined');
+
+  if (!action) {
+    throw new Error('No action provided');
+  }
 
   let status = 200;
   let result: CartQueryDataReturn;
@@ -27,20 +27,6 @@ export async function action({request, context}: ActionFunctionArgs) {
   switch (action) {
     case CartForm.ACTIONS.LinesAdd:
       result = await cart.addLines(inputs.lines);
-      const attributes = [];
-      if (inputs.delta) {
-        attributes.push({
-          key: 'delta',
-          value: inputs.delta as string,
-        });
-      }
-      if (inputs.supplier) {
-        attributes.push({
-          key: 'supplier',
-          value: inputs.supplier as string,
-        });
-      }
-      await cart.updateAttributes(attributes);
       break;
     case CartForm.ACTIONS.LinesUpdate:
       result = await cart.updateLines(inputs.lines);
@@ -48,7 +34,7 @@ export async function action({request, context}: ActionFunctionArgs) {
     case CartForm.ACTIONS.LinesRemove:
       result = await cart.removeLines(inputs.lineIds);
       break;
-    case CartForm.ACTIONS.DiscountCodesUpdate:
+    case CartForm.ACTIONS.DiscountCodesUpdate: {
       const formDiscountCode = inputs.discountCode;
 
       // User inputted discount code
@@ -61,64 +47,70 @@ export async function action({request, context}: ActionFunctionArgs) {
 
       result = await cart.updateDiscountCodes(discountCodes);
       break;
-    case CartForm.ACTIONS.BuyerIdentityUpdate:
+    }
+    case CartForm.ACTIONS.GiftCardCodesUpdate: {
+      const formGiftCardCode = inputs.giftCardCode;
+
+      // User inputted gift card code
+      const giftCardCodes = (
+        formGiftCardCode ? [formGiftCardCode] : []
+      ) as string[];
+
+      // Combine gift card codes already applied on cart
+      giftCardCodes.push(...inputs.giftCardCodes);
+
+      result = await cart.updateGiftCardCodes(giftCardCodes);
+      break;
+    }
+    case CartForm.ACTIONS.BuyerIdentityUpdate: {
       result = await cart.updateBuyerIdentity({
         ...inputs.buyerIdentity,
       });
       break;
-
+    }
     default:
-      invariant(false, `${action} cart action is not defined`);
+      throw new Error(`${action} cart action is not defined`);
   }
 
-  /**
-   * The Cart ID may change after each mutation. We need to update it each time in the session.
-   */
-  //  const cartId = result.cart.id;
-  const headers = cart.setCartId(result.cart.id);
+  const cartId = result?.cart?.id;
+  const headers = cartId ? cart.setCartId(result.cart.id) : new Headers();
+  const {cart: cartResult, errors} = result;
 
   const redirectTo = formData.get('redirectTo') ?? null;
-  if (typeof redirectTo === 'string' && isLocalPath(redirectTo)) {
+  if (typeof redirectTo === 'string') {
     status = 303;
     headers.set('Location', redirectTo);
   }
 
-  const {cart: cartResult, errors, userErrors} = result;
-
-  headers.append('Set-Cookie', await context.session.commit());
-
   return json(
     {
       cart: cartResult,
-      userErrors,
       errors,
+      analytics: {
+        cartId,
+      },
     },
     {status, headers},
   );
 }
 
-export async function loader({context, request}: LoaderFunctionArgs) {
-  const {cart} = context;
-
-  const cartData = await cart.get();
-  return json({
-    cart: cartData,
-  });
-}
-
-export default function CartRoute() {
+export default function Cart() {
   const rootData = useRouteLoaderData<RootLoader>('root');
   if (!rootData) return null;
 
-  // @todo: finish on a separate PR
   return (
-    <>
-      <div className="grid w-full gap-8 p-6 py-8 md:p-8 lg:p-12 justify-items-start">
-        <Await resolve={rootData?.cart}>
-          {(cart) => <Cart layout="page" cart={cart} />}
+    <div className="cart">
+      <h1>Cart</h1>
+      <Suspense fallback={<p>Loading cart ...</p>}>
+        <Await
+          resolve={rootData.cart}
+          errorElement={<div>An error occurred</div>}
+        >
+          {(cart) => {
+            return <CartMain layout="page" cart={cart} />;
+          }}
         </Await>
-      </div>
-      <Analytics.CartView />
-    </>
+      </Suspense>
+    </div>
   );
 }

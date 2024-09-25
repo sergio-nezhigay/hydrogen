@@ -66,7 +66,7 @@ function ProductOptions({option}: {option: VariantOption}) {
               to={to}
               style={{
                 border: isActive ? '1px solid black' : '1px solid transparent',
-                opacity: isAvailable ? 1 : 0.3,
+                opacity: isAvailable ? 1 : 0.35,
               }}
             >
               {value}

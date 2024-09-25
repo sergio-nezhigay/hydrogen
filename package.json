@@ -67,6 +67,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.20.0",
     "eslint-plugin-hydrogen": "0.12.2",
+    "@tailwindcss/vite": "4.0.0-alpha.17",
     "postcss": "^8.4.21",
     "postcss-import": "^15.1.0",
     "postcss-preset-env": "^8.2.0",
