@@ -6,6 +6,8 @@ import {Link} from '@remix-run/react';
 import {ProductPrice} from './ProductPrice';
 import {useAside} from './Aside';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
+import {useTranslation} from '~/lib/utils';
+import {IconRemove} from './Icon';
 
 type CartLine = OptimisticCartLine<CartApiQueryFragment>;
 
@@ -26,7 +28,7 @@ export function CartLineItem({
   const {close} = useAside();
 
   return (
-    <li key={id} className="cart-line">
+    <li key={id} className="flex gap-4">
       {image && (
         <Image
           alt={title}
@@ -35,6 +37,7 @@ export function CartLineItem({
           height={100}
           loading="lazy"
           width={100}
+          className="block h-full"
         />
       )}
 
@@ -54,13 +57,16 @@ export function CartLineItem({
         </Link>
         <ProductPrice price={line?.cost?.totalAmount} />
         <ul>
-          {selectedOptions.map((option) => (
-            <li key={option.name}>
-              <small>
-                {option.name}: {option.value}
-              </small>
-            </li>
-          ))}
+          {selectedOptions.map((option) => {
+            if (option.value === 'Default Title') return null;
+            return (
+              <li key={option.name}>
+                <small>
+                  {option.name}: {option.value}
+                </small>
+              </li>
+            );
+          })}
         </ul>
         <CartLineQuantity line={line} />
       </div>
@@ -74,31 +80,36 @@ export function CartLineItem({
  * hasn't yet responded that it was successfully added to the cart.
  */
 function CartLineQuantity({line}: {line: CartLine}) {
+  const {translation} = useTranslation();
   if (!line || typeof line?.quantity === 'undefined') return null;
   const {id: lineId, quantity, isOptimistic} = line;
   const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
   const nextQuantity = Number((quantity + 1).toFixed(0));
-
+  const buttonStyle =
+    'size-8 transition text-primary/50 hover:text-primary disabled:text-primary/10 text-lg font-bold';
   return (
-    <div className="cart-line-quantity">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
+    <div className="flex-center gap-2">
+      <small>
+        {translation.quantity}: {quantity} &nbsp;&nbsp;
+      </small>
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
           aria-label="Decrease quantity"
           disabled={quantity <= 1 || !!isOptimistic}
           name="decrease-quantity"
           value={prevQuantity}
+          className={buttonStyle}
         >
           <span>&#8722; </span>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
       <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
         <button
           aria-label="Increase quantity"
           name="increase-quantity"
           value={nextQuantity}
           disabled={!!isOptimistic}
+          className={buttonStyle}
         >
           <span>&#43;</span>
         </button>
@@ -127,8 +138,13 @@ function CartLineRemoveButton({
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button disabled={disabled} type="submit">
-        Remove
+      <button
+        disabled={disabled}
+        type="submit"
+        className="flex opacity-70 hover:opacity-100"
+      >
+        <span className="sr-only">Видалити</span>
+        <IconRemove aria-hidden="true" />
       </button>
     </CartForm>
   );
@@ -142,12 +158,14 @@ function CartLineUpdateButton({
   lines: CartLineUpdateInput[];
 }) {
   return (
-    <CartForm
-      route="/cart"
-      action={CartForm.ACTIONS.LinesUpdate}
-      inputs={{lines}}
-    >
-      {children}
-    </CartForm>
+    <div className="flex-center border rounded">
+      <CartForm
+        route="/cart"
+        action={CartForm.ACTIONS.LinesUpdate}
+        inputs={{lines}}
+      >
+        {children}
+      </CartForm>
+    </div>
   );
 }

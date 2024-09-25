@@ -1,8 +1,10 @@
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import type {CartLayout} from '~/components/CartMain';
 import {CartForm, Money, type OptimisticCart} from '@shopify/hydrogen';
-import { useRef } from 'react';
-import { FetcherWithComponents } from '@remix-run/react';
+import {useRef} from 'react';
+import {FetcherWithComponents} from '@remix-run/react';
+import {Text, Heading} from '~/components/Text';
+import {HryvniaMoney} from '~/components/HryvniaMoney';
 
 type CartSummaryProps = {
   cart: OptimisticCart<CartApiQueryFragment | null>;
@@ -11,20 +13,24 @@ type CartSummaryProps = {
 
 export function CartSummary({cart, layout}: CartSummaryProps) {
   const className =
-    layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
-
+    layout === 'page'
+      ? 'sticky top-nav grid gap-6 p-4 md:px-6 md:translate-y-4 bg-primary/5 rounded w-full'
+      : 'grid gap-4 p-6 border-t md:px-12';
+  const cost = cart.cost;
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
+      <h4 id="summary-heading" className="sr-only">
+        Підсумок замовлення
+      </h4>
       <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
-          {cart.cost?.subtotalAmount?.amount ? (
-            <Money data={cart.cost?.subtotalAmount} />
+        <Text as="dt">Підсума</Text>
+        <Text as="dd" data-test="subtotal">
+          {cost?.subtotalAmount?.amount ? (
+            <HryvniaMoney data={cost?.subtotalAmount} />
           ) : (
             '-'
           )}
-        </dd>
+        </Text>
       </dl>
       <CartDiscounts discountCodes={cart.discountCodes} />
       <CartGiftCard giftCardCodes={cart.appliedGiftCards} />
@@ -110,7 +116,8 @@ function CartGiftCard({
 }) {
   const appliedGiftCardCodes = useRef<string[]>([]);
   const giftCardCodeInput = useRef<HTMLInputElement>(null);
-  const codes: string[] = giftCardCodes?.map(({lastCharacters}) => `***${lastCharacters}`) || [];
+  const codes: string[] =
+    giftCardCodes?.map(({lastCharacters}) => `***${lastCharacters}`) || [];
 
   function saveAppliedCode(code: string) {
     const formattedCode = code.replace(/\s/g, ''); // Remove spaces
@@ -141,9 +148,17 @@ function CartGiftCard({
       </dl>
 
       {/* Show an input to apply a discount */}
-      <UpdateGiftCardForm giftCardCodes={appliedGiftCardCodes.current} saveAppliedCode={saveAppliedCode}>
+      <UpdateGiftCardForm
+        giftCardCodes={appliedGiftCardCodes.current}
+        saveAppliedCode={saveAppliedCode}
+      >
         <div>
-          <input type="text" name="giftCardCode" placeholder="Gift card code" ref={giftCardCodeInput} />
+          <input
+            type="text"
+            name="giftCardCode"
+            placeholder="Gift card code"
+            ref={giftCardCodeInput}
+          />
           &nbsp;
           <button type="submit">Apply</button>
         </div>

@@ -9,7 +9,7 @@ import {Button} from '~/components/Button';
 import {AddToCartButton} from '~/components/AddToCartButton';
 import {isDiscounted, isNewArrival, useTranslation} from '~/lib/utils';
 import {getProductPlaceholder} from '~/lib/placeholders';
-import HryvniaMoney from '~/components/HryvniaMoney';
+import {HryvniaMoney} from '~/components/HryvniaMoney';
 
 export type ProductCardProps = {
   product: ProductCardFragment;

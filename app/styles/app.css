@@ -228,17 +228,6 @@ button.reset:hover:not(:has(> *)) {
   max-height: calc(100vh - var(--cart-aside-summary-height-with-discount));
 }
 
-.cart-line {
-  display: flex;
-  padding: 0.75rem 0;
-}
-
-.cart-line img {
-  height: 100%;
-  display: block;
-  margin-right: 0.75rem;
-}
-
 .cart-summary-page {
   position: relative;
 }
@@ -250,10 +239,6 @@ button.reset:hover:not(:has(> *)) {
   padding-top: 0.75rem;
   position: absolute;
   width: calc(var(--aside-width) - 40px);
-}
-
-.cart-line-quantity {
-  display: flex;
 }
 
 .cart-discount {

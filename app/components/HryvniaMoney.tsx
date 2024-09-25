@@ -1,17 +1,17 @@
 import {Money} from '@shopify/hydrogen';
-import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
+
 import clsx from 'clsx';
 
 interface HryvniaMoneyProps {
-  data: MoneyV2;
+  data: any;
   className?: string;
 }
 
-function HryvniaMoney({data, className}: HryvniaMoneyProps) {
+export function HryvniaMoney({data, className}: HryvniaMoneyProps) {
   return (
     <span className={clsx('font-bold', className)}>
       <Money
-        data={data!}
+        data={data}
         as="span"
         withoutTrailingZeros
         withoutCurrency
@@ -21,5 +21,3 @@ function HryvniaMoney({data, className}: HryvniaMoneyProps) {
     </span>
   );
 }
-
-export default HryvniaMoney;

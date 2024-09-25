@@ -23,8 +23,7 @@ import {Link} from '~/components/Link';
 import {IconRemove} from '~/components/Icon';
 import {FeaturedProducts} from '~/components/FeaturedProducts';
 import {getInputStyleClasses, useTranslation} from '~/lib/utils';
-
-import HryvniaMoney from './HryvniaMoney';
+import {HryvniaMoney} from '~/components/HryvniaMoney';
 
 type Layouts = 'page' | 'drawer';
 

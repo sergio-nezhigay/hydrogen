@@ -29,7 +29,7 @@ module.exports = {
         border: 'hsl(var(--border))',
         contrast: 'rgb(var(--color-contrast) / <alpha-value>)',
         background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        foreground: 'var(--foreground)',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
