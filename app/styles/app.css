@@ -15,9 +15,9 @@ img {
 /*
 * --------------------------------------------------
 * components/Aside
-* --------------------------------------------------
+* -----------------search---------------------------------
 */
-aside {
+/*aside {
   background: var(--color-light);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
   height: 100vh;
@@ -27,9 +27,9 @@ aside {
   right: calc(-1 * var(--aside-width));
   top: 0;
   transition: transform 300ms ease-in-out;
-}
+}*/
 
-aside header {
+/*aside header {
   align-items: center;
   border-bottom: 1px solid var(--color-dark);
   display: flex;
@@ -40,8 +40,8 @@ aside header {
 
 aside header h3 {
   margin: 0;
-}
-
+}*/
+/*
 aside header .close {
   font-weight: bold;
   opacity: 0.8;
@@ -117,7 +117,7 @@ aside li {
   pointer-events: auto;
   visibility: visible;
 }
-/* reveal aside */
+
 .overlay.expanded aside {
   transform: translateX(calc(var(--aside-width) * -1));
 }
@@ -140,7 +140,7 @@ button.reset:not(:has(> *)) {
 button.reset:hover:not(:has(> *)) {
   text-decoration: underline;
   cursor: pointer;
-}
+}*/
 
 /*
 * --------------------------------------------------
@@ -195,7 +195,7 @@ button.reset:hover:not(:has(> *)) {
 * components/Footer
 * --------------------------------------------------
 */
-.footer {
+/*.footer {
   background: var(--color-dark);
   margin-top: auto;
 }
@@ -209,17 +209,17 @@ button.reset:hover:not(:has(> *)) {
 
 .footer-menu a {
   color: var(--color-light);
-}
+}*/
 
 /*
 * --------------------------------------------------
 * components/Cart
 * --------------------------------------------------
 */
-.cart-main {
+/*.cart-main {
   height: 100%;
   max-height: calc(100vh);
-  /*max-height: calc(100vh - var(--cart-aside-summary-height));*/
+
   overflow-y: auto;
   width: auto;
 }
@@ -250,7 +250,7 @@ button.reset:hover:not(:has(> *)) {
 .cart-subtotal {
   align-items: center;
   display: flex;
-}
+}*/
 /*
 * --------------------------------------------------
 * components/Search
@@ -291,7 +291,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .predictive-search-result-item a:hover {
-  border-image: linear-gradient(to right, #e5e7eb, #d1d5db, #9ca3af) 1;
+  border-image: linear-gradient(to left, #eef0f3, #dfe2e6, #cacfd7) 1;
 }
 
 .predictive-search-result-item a img {

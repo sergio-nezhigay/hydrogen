@@ -13,6 +13,7 @@ import {
 } from '~/lib/search';
 import {SearchForm} from '~/components/SearchForm';
 import {SearchResults} from '~/components/SearchResults';
+import {useTranslation} from '~/lib/utils';
 
 export const meta: MetaFunction = () => {
   return [{title: `Hydrogen | Search`}];
@@ -39,41 +40,55 @@ export async function loader({request, context}: LoaderFunctionArgs) {
 export default function SearchPage() {
   const {type, term, result, error} = useLoaderData<typeof loader>();
   if (type === 'predictive') return null;
+  const {translation} = useTranslation();
 
   return (
-    <div className="search">
-      <h1>Search</h1>
-      <SearchForm>
-        {({inputRef}) => (
-          <>
-            <input
-              defaultValue={term}
-              name="q"
-              placeholder="Search…"
-              ref={inputRef}
-              type="search"
-            />
-            &nbsp;
-            <button type="submit">Search</button>
-          </>
-        )}
-      </SearchForm>
-      {error && <p style={{color: 'red'}}>{error}</p>}
-      {!term || !result?.total ? (
-        <SearchResults.Empty />
-      ) : (
-        <SearchResults result={result} term={term}>
-          {({articles, pages, products, term}) => (
-            <div>
-              <SearchResults.Products products={products} term={term} />
-              <SearchResults.Pages pages={pages} term={term} />
-              <SearchResults.Articles articles={articles} term={term} />
+    <section>
+      <div className="container mx-auto search max-w-2xl">
+        <h1 className="whitespace-pre-wrap max-w-prose font-bold text-lead px-6 md:px-8 lg:px-12 py-6">
+          {translation.search}
+        </h1>
+
+        <SearchForm>
+          {({inputRef}) => (
+            <div className="flex-center gap-4 mb-4">
+              <input
+                defaultValue={term}
+                name="q"
+                placeholder={`${translation.search}...`}
+                ref={inputRef}
+                type="search"
+                className="w-full px-4 py-2 border rounded-md focus:outline-0 focus:ring-transparent"
+              />
+
+              <button
+                type="submit"
+                className="px-4 py-2 bg-accent-gradient text-white rounded-md opacity-90 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-indigo-700"
+              >
+                {translation.search}
+              </button>
             </div>
           )}
-        </SearchResults>
-      )}
-      <Analytics.SearchView data={{searchTerm: term, searchResults: result}} />
-    </div>
+        </SearchForm>
+        {error && <p style={{color: 'red'}}>{error}</p>}
+        {!term || !result?.total ? (
+          <SearchResults.Empty />
+        ) : (
+          <SearchResults result={result} term={term}>
+            {({articles, pages, products, term}) => (
+              <div>
+                <SearchResults.Products products={products} term={term} />
+                <SearchResults.Pages pages={pages} term={term} />
+                <SearchResults.Articles articles={articles} term={term} />
+              </div>
+            )}
+          </SearchResults>
+        )}
+        <Analytics.SearchView
+          data={{searchTerm: term, searchResults: result}}
+        />
+      </div>
+    </section>
   );
 }
 

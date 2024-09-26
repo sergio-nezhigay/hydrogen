@@ -41,7 +41,7 @@ function SearchResultsArticles({
 
   return (
     <div className="search-result">
-      <h2>Articles</h2>
+      <h2>Статті</h2>
       <div>
         {articles?.nodes?.map((article) => {
           const articleUrl = urlWithTrackingParams({
@@ -51,8 +51,8 @@ function SearchResultsArticles({
           });
 
           return (
-            <div className="search-results-item" key={article.id}>
-              <Link prefetch="intent" to={articleUrl}>
+            <div className="predictive-search-result-item" key={article.id}>
+              <Link prefetch="intent" to={articleUrl} className="flex">
                 {article.title}
               </Link>
             </div>
@@ -71,7 +71,7 @@ function SearchResultsPages({term, pages}: PartialSearchResult<'pages'>) {
 
   return (
     <div className="search-result">
-      <h2>Pages</h2>
+      <h2>Сторінки</h2>
       <div>
         {pages?.nodes?.map((page) => {
           const pageUrl = urlWithTrackingParams({
@@ -81,7 +81,7 @@ function SearchResultsPages({term, pages}: PartialSearchResult<'pages'>) {
           });
 
           return (
-            <div className="search-results-item" key={page.id}>
+            <div className="predictive-search-result-item" key={page.id}>
               <Link prefetch="intent" to={pageUrl}>
                 {page.title}
               </Link>
@@ -104,7 +104,7 @@ function SearchResultsProducts({
   const {translation} = useTranslation();
   return (
     <div className="search-result">
-      <h2>{translation.products}</h2>
+      <h2 className="font-bold mb-4 opacity-80">{translation.products}</h2>
       <Pagination connection={products}>
         {({nodes, isLoading, NextLink, PreviousLink}) => {
           const ItemsMarkup = nodes.map((product) => {
@@ -115,8 +115,8 @@ function SearchResultsProducts({
             });
 
             return (
-              <div className="search-results-item" key={product.id}>
-                <Link prefetch="intent" to={productUrl}>
+              <div className="predictive-search-result-item" key={product.id}>
+                <Link to={productUrl} className="flex" prefetch="viewport">
                   {product.variants.nodes[0].image && (
                     <Image
                       data={product.variants.nodes[0].image}
@@ -142,7 +142,7 @@ function SearchResultsProducts({
                   {isLoading ? (
                     translation.loading
                   ) : (
-                    <span>↑ translation.prev</span>
+                    <span>↑ {translation.prev}</span>
                   )}
                 </PreviousLink>
               </div>
@@ -155,7 +155,7 @@ function SearchResultsProducts({
                   {isLoading ? (
                     translation.loading
                   ) : (
-                    <span>translation.next ↓</span>
+                    <span>{translation.next} ↓</span>
                   )}
                 </NextLink>
               </div>

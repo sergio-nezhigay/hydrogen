@@ -1451,60 +1451,6 @@ export type AllProductsQuery = {
   };
 };
 
-export type PaginatedProductsSearchQueryVariables = StorefrontAPI.Exact<{
-  country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
-  endCursor?: StorefrontAPI.InputMaybe<
-    StorefrontAPI.Scalars['String']['input']
-  >;
-  first?: StorefrontAPI.InputMaybe<StorefrontAPI.Scalars['Int']['input']>;
-  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
-  last?: StorefrontAPI.InputMaybe<StorefrontAPI.Scalars['Int']['input']>;
-  searchTerm?: StorefrontAPI.InputMaybe<
-    StorefrontAPI.Scalars['String']['input']
-  >;
-  startCursor?: StorefrontAPI.InputMaybe<
-    StorefrontAPI.Scalars['String']['input']
-  >;
-}>;
-
-export type PaginatedProductsSearchQuery = {
-  products: {
-    nodes: Array<
-      Pick<
-        StorefrontAPI.Product,
-        'id' | 'title' | 'publishedAt' | 'handle' | 'vendor'
-      > & {
-        variants: {
-          nodes: Array<
-            Pick<StorefrontAPI.ProductVariant, 'id' | 'availableForSale'> & {
-              image?: StorefrontAPI.Maybe<
-                Pick<
-                  StorefrontAPI.Image,
-                  'url' | 'altText' | 'width' | 'height'
-                >
-              >;
-              price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-              compareAtPrice?: StorefrontAPI.Maybe<
-                Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
-              >;
-              selectedOptions: Array<
-                Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
-              >;
-              product: Pick<StorefrontAPI.Product, 'handle' | 'title'>;
-            }
-          >;
-        };
-        delta?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'value'>>;
-        supplier?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Metafield, 'value'>>;
-      }
-    >;
-    pageInfo: Pick<
-      StorefrontAPI.PageInfo,
-      'startCursor' | 'endCursor' | 'hasNextPage' | 'hasPreviousPage'
-    >;
-  };
-};
-
 export type SearchProductFragment = {__typename: 'Product'} & Pick<
   StorefrontAPI.Product,
   'handle' | 'id' | 'publishedAt' | 'title' | 'trackingParameters' | 'vendor'
@@ -1841,10 +1787,6 @@ interface GeneratedQueryTypes {
   '#graphql\n  query AllProducts(\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {\n      nodes {\n        ...ProductCard\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n        image {\n          url\n          altText\n          width\n          height\n        }\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n        selectedOptions {\n          name\n          value\n        }\n        product {\n          handle\n          title\n        }\n      }\n    }\n    delta: metafield(namespace: "custom", key: "delta") {\n        value\n    }\n    supplier: metafield(namespace: "custom", key: "supplier") {\n        value\n    }\n  }\n\n': {
     return: AllProductsQuery;
     variables: AllProductsQueryVariables;
-  };
-  '#graphql\n  query PaginatedProductsSearch(\n    $country: CountryCode\n    $endCursor: String\n    $first: Int\n    $language: LanguageCode\n    $last: Int\n    $searchTerm: String\n    $startCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(\n      first: $first,\n      last: $last,\n      before: $startCursor,\n      after: $endCursor,\n      sortKey: RELEVANCE,\n      query: $searchTerm\n    ) {\n      nodes {\n        ...ProductCard\n      }\n      pageInfo {\n        startCursor\n        endCursor\n        hasNextPage\n        hasPreviousPage\n      }\n    }\n  }\n\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n        image {\n          url\n          altText\n          width\n          height\n        }\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n        selectedOptions {\n          name\n          value\n        }\n        product {\n          handle\n          title\n        }\n      }\n    }\n    delta: metafield(namespace: "custom", key: "delta") {\n        value\n    }\n    supplier: metafield(namespace: "custom", key: "supplier") {\n        value\n    }\n  }\n\n': {
-    return: PaginatedProductsSearchQuery;
-    variables: PaginatedProductsSearchQueryVariables;
   };
   '#graphql\n    query RegularSearch(\n      $country: CountryCode\n      $endCursor: String\n      $first: Int\n      $language: LanguageCode\n      $last: Int\n      $term: String!\n      $startCursor: String\n    ) @inContext(country: $country, language: $language) {\n      articles: search(\n        query: $term,\n        types: [ARTICLE],\n        first: $first,\n      ) {\n        nodes {\n          ...on Article {\n            ...SearchArticle\n          }\n        }\n      }\n      pages: search(\n        query: $term,\n        types: [PAGE],\n        first: $first,\n      ) {\n        nodes {\n          ...on Page {\n            ...SearchPage\n          }\n        }\n      }\n      products: search(\n        after: $endCursor,\n        before: $startCursor,\n        first: $first,\n        last: $last,\n        query: $term,\n        sortKey: RELEVANCE,\n        types: [PRODUCT],\n        unavailableProducts: HIDE,\n      ) {\n        nodes {\n          ...on Product {\n            ...SearchProduct\n          }\n        }\n        pageInfo {\n          ...PageInfoFragment\n        }\n      }\n    }\n    #graphql\n    fragment SearchProduct on Product {\n      __typename\n      handle\n      id\n      publishedAt\n      title\n      trackingParameters\n      vendor\n      variants(first: 1) {\n        nodes {\n          id\n          image {\n            url\n            altText\n            width\n            height\n          }\n          price {\n            amount\n            currencyCode\n          }\n          compareAtPrice {\n            amount\n            currencyCode\n          }\n          selectedOptions {\n            name\n            value\n          }\n          product {\n            handle\n            title\n          }\n        }\n      }\n    }\n  \n    #graphql\n    fragment SearchPage on Page {\n       __typename\n       handle\n      id\n      title\n      trackingParameters\n    }\n  \n    #graphql\n    fragment SearchArticle on Article {\n      __typename\n      handle\n      id\n      title\n      trackingParameters\n    }\n  \n    #graphql\n    fragment PageInfoFragment on PageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  \n  ': {
     return: RegularSearchQuery;

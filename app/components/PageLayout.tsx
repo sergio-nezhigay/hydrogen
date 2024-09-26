@@ -78,7 +78,7 @@ function SearchAside() {
 
   return (
     <Aside type="search" heading={translation.search}>
-      <div className="sm-max:h-[calc(100vh_-_var(--header-height)_-_320px)] overflow-y-auto">
+      <div className="sm-max:h-[calc(100vh_-_var(--header-height)_-_350px)] overflow-y-auto">
         <SearchFormPredictive>
           {({fetchResults, goToSearch, inputRef}) => (
             <div className="flex gap-2 items-center">
