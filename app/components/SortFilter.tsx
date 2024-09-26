@@ -2,7 +2,8 @@ import type {SyntheticEvent} from 'react';
 import {useMemo, useState} from 'react';
 import {Menu, Disclosure, DisclosurePanel} from '@headlessui/react';
 import type {Location} from '@remix-run/react';
-import {Check} from 'lucide-react';
+import {Check, X} from 'lucide-react';
+
 import {
   Link,
   useLocation,
@@ -16,7 +17,7 @@ import type {
   ProductFilter,
 } from '@shopify/hydrogen/storefront-api-types';
 
-import {Heading, Text} from '~/components/Text';
+import {Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
 import {
   DEFAULT_LOCALE,
@@ -26,7 +27,15 @@ import {
 } from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
-import {useDrawer, Drawer} from './Drawer';
+
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from './ui/sheet';
 
 export type AppliedFilter = {
   label: string;
@@ -385,7 +394,6 @@ export default function SortMenu() {
 
   return (
     <Menu as="div" className="shrink-0  row-start-1 col-start-2 relative z-10">
-      {/*<Menu as="div" className="relative z-40">*/}
       <Menu.Button className="flex items-center  hover:bg-stone-50 rounded-md py-1">
         <span className="px-2">
           <span className="px-2 font-medium">{translation.sort_by}:</span>
@@ -424,17 +432,18 @@ interface FiltersDrawerProps {
 }
 
 function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
-  const {isOpen, openDrawer, closeDrawer} = useDrawer();
   return (
-    <>
-      <button
-        onClick={openDrawer}
-        className="size-8 flex-center hover:bg-stone-700/5 rounded-md"
-      >
-        <IconFilters />
-      </button>
-      <Drawer open={isOpen ?? false} onClose={closeDrawer} openFrom="left">
-        <div className="p-4">
+    <Sheet>
+      <SheetTrigger asChild>
+        <button className="size-8 flex-center hover:bg-stone-700/5 rounded-md">
+          <IconFilters />
+        </button>
+      </SheetTrigger>
+      <SheetContent side="left" className="p-4 bg-white">
+        <SheetHeader>
+          <SheetTitle>Фільтр</SheetTitle>
+        </SheetHeader>
+        <div className="">
           <div className="min-h-[26px]">
             {appliedFilters && appliedFilters.length > 0 && (
               <AppliedFilters filters={appliedFilters} />
@@ -443,7 +452,17 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
 
           <Filters filters={filters} />
         </div>
-      </Drawer>
-    </>
+
+        <SheetClose
+          asChild
+          className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary"
+        >
+          <button type="submit">
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </button>
+        </SheetClose>
+      </SheetContent>
+    </Sheet>
   );
 }

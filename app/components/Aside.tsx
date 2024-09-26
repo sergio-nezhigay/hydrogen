@@ -1,16 +1,9 @@
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import {createContext, type ReactNode, useContext, useState} from 'react';
 import {X} from 'lucide-react';
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from './ui/sheet';
