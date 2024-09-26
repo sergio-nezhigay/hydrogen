@@ -6,6 +6,14 @@ import {
   useState,
 } from 'react';
 import {X} from 'lucide-react';
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from './ui/sheet';
 
 type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
 type AsideContextValue = {
@@ -34,42 +42,31 @@ export function Aside({
   heading: React.ReactNode;
 }) {
   const {type: activeType, close} = useAside();
-  const expanded = type === activeType;
-  useEffect(() => {
-    if (expanded) {
-      document.documentElement.style.overflow = 'hidden';
-      document.documentElement.style.paddingRight = `17px`;
-    } else {
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.paddingRight = '';
-    }
-    return () => {
-      document.documentElement.style.overflow = '';
-      document.documentElement.style.paddingRight = '';
-    };
-  }, [expanded]);
 
   return (
-    <div
-      aria-modal
-      className={`overlay ${expanded ? 'expanded' : ''}`}
-      role="dialog"
-    >
-      <button className="close-outside" onClick={close} />
-      <aside>
-        <header className="bg-accent-gradient text-white">
-          <h3 className=" font-bold">{heading}</h3>
-          <button
-            className="hover:opacity-100 opacity-80"
-            onClick={close}
-            aria-label="Close panel"
-          >
-            <X />
+    <Sheet open={type === activeType}>
+      <SheetContent
+        className="bg-white"
+        onEscapeKeyDown={close}
+        onPointerDownOutside={close}
+        onInteractOutside={close}
+      >
+        <SheetHeader>
+          <SheetTitle>{heading}</SheetTitle>
+        </SheetHeader>
+        <div className="py-8"> {children}</div>
+
+        <SheetClose
+          asChild
+          className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary"
+        >
+          <button type="submit" onClick={close}>
+            <X className="h-4 w-4" onClick={close} />
+            <span className="sr-only">Close</span>
           </button>
-        </header>
-        <main>{children}</main>
-      </aside>
-    </div>
+        </SheetClose>
+      </SheetContent>
+    </Sheet>
   );
 }
 
