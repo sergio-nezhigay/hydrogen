@@ -15,7 +15,7 @@ import {
   SheetTitle,
 } from './ui/sheet';
 
-type AsideType = 'search' | 'cart' | 'mobile' | 'closed';
+type AsideType = 'search' | 'cart' | 'mobile' | 'closed' | 'filter';
 type AsideContextValue = {
   type: AsideType;
   open: (mode: AsideType) => void;
