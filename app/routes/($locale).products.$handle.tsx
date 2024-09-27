@@ -322,7 +322,7 @@ export default function Product() {
         </div>
       </Section>
 
-      {/*<Suspense fallback={<Skeleton className="h-32" />}>
+      <Suspense fallback={<Skeleton className="h-32" />}>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}
@@ -334,7 +334,7 @@ export default function Product() {
             />
           )}
         </Await>
-      </Suspense>*/}
+      </Suspense>
       <div id="review-list">
         <ReviewList reviews={reviews} title={translation.reviews} />
         <ReviewForm productId={product.id} />
