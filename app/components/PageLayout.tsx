@@ -20,7 +20,7 @@ import BreadCrumbs from '~/modules/BreadCrumbs';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
-  footer: Promise<FooterQuery | null>;
+
   header: HeaderQuery;
   isLoggedIn: Promise<boolean>;
   publicStoreDomain: string;
@@ -30,7 +30,7 @@ interface PageLayoutProps {
 export function PageLayout({
   cart,
   children = null,
-  footer,
+
   header,
   isLoggedIn,
   publicStoreDomain,

@@ -217,8 +217,9 @@ function redirectToFirstVariant({
 
 export default function Product() {
   const rootData = useRouteLoaderData<RootLoader>('root');
-  const shop = rootData?.header?.shop;
-  const {shippingPolicy, refundPolicy} = shop;
+
+  const shippingPolicy = rootData?.header?.shop?.shippingPolicy;
+  const refundPolicy = rootData?.header?.shop?.refundPolicy;
 
   const {product, variants, judgemeReviewsData, recommended} =
     useLoaderData<typeof loader>();

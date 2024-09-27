@@ -20,7 +20,7 @@ import resetStyles from '~/styles/reset.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from '~/components/PageLayout';
-import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import {HEADER_QUERY} from '~/lib/fragments';
 import {CustomAnalytics} from './modules/CustomAnalytics';
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import {seoPayload} from './lib/seo.server';
@@ -101,7 +101,7 @@ export async function loader(args: LoaderFunctionArgs) {
 async function loadCriticalData({context, request}: LoaderFunctionArgs) {
   const {storefront} = context;
 
-  const [header, layout] = await Promise.all([
+  const [header] = await Promise.all([
     storefront.query(HEADER_QUERY, {
       cache: storefront.CacheLong(),
       variables: {
@@ -109,12 +109,11 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
       },
     }),
     // Add other queries here, so that they are loaded in parallel
-    getLayoutData(context),
+    //getLayoutData(context),
   ]);
   const shop = header?.shop;
-  console.log('🚀 ~ shop:', shop);
   const seo = seoPayload.root({shop, url: request.url});
-  console.log('🚀 ~ seo:', seo);
+
   //  console.log(
   //    '===== LOG START =====',
   //    new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
@@ -129,25 +128,10 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
-  const {storefront, cart} = context;
-
-  // defer the footer query (below the fold)
-  const footer = storefront
-    .query(FOOTER_QUERY, {
-      cache: storefront.CacheLong(),
-      variables: {
-        footerMenuHandle: 'footer', // Adjust to your footer menu handle
-      },
-    })
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-      console.error(error);
-      return null;
-    });
+  const {cart} = context;
 
   return {
     cart: cart.get(),
-    footer,
   };
 }
 
@@ -219,28 +203,28 @@ const LAYOUT_QUERY = `#graphql
     $language: LanguageCode
     $headerMenuHandle: String!
   ) @inContext(language: $language) {
-    shop {
-      ...Shop
-    }
+    #shop {
+    #  ...Shop
+    #}
     headerMenu: menu(handle: $headerMenuHandle) {
       ...Menu
     }
   }
-  fragment Shop on Shop {
-    id
-    name
-    description
-    primaryDomain {
-      url
-    }
-    brand {
-      logo {
-        image {
-          url
-        }
-      }
-    }
-  }
+#  fragment Shop on Shop {
+#    id
+#    name
+#    description
+#    primaryDomain {
+#      url
+#    }
+#    brand {
+#      logo {
+#        image {
+#          url
+#        }
+#      }
+#    }
+#  }
   fragment MenuItem on MenuItem {
     id
     resourceId
@@ -266,35 +250,35 @@ const LAYOUT_QUERY = `#graphql
   }
 ` as const;
 
-async function getLayoutData({storefront, env}: AppLoadContext) {
-  const data = await storefront.query(LAYOUT_QUERY, {
-    cache: storefront.CacheLong(),
-    variables: {
-      headerMenuHandle: 'main-menu',
-      language: storefront.i18n.language,
-    },
-  });
+//async function getLayoutData({storefront, env}: AppLoadContext) {
+//  const data = await storefront.query(LAYOUT_QUERY, {
+//    cache: storefront.CacheLong(),
+//    variables: {
+//      headerMenuHandle: 'main-menu',
+//      language: storefront.i18n.language,
+//    },
+//  });
 
-  invariant(data, 'No data returned from Shopify API');
+//  invariant(data, 'No data returned from Shopify API');
 
-  /*
-      Modify specific links/routes (optional)
-      @see: https://shopify.dev/api/storefront/unstable/enums/MenuItemType
-      e.g here we map:
-        - /blogs/news -> /news
-        - /blog/news/blog-post -> /news/blog-post
-        - /collections/all -> /products
-    */
-  const customPrefixes = {BLOG: '', CATALOG: 'products'};
+//  /*
+//      Modify specific links/routes (optional)
+//      @see: https://shopify.dev/api/storefront/unstable/enums/MenuItemType
+//      e.g here we map:
+//        - /blogs/news -> /news
+//        - /blog/news/blog-post -> /news/blog-post
+//        - /collections/all -> /products
+//    */
+//  const customPrefixes = {BLOG: '', CATALOG: 'products'};
 
-  const headerMenu = data?.headerMenu
-    ? parseMenu(
-        data.headerMenu,
-        data.shop.primaryDomain.url,
-        env,
-        customPrefixes,
-      )
-    : undefined;
+//  const headerMenu = data?.headerMenu
+//    ? parseMenu(
+//        data.headerMenu,
+//        data.shop.primaryDomain.url,
+//        env,
+//        customPrefixes,
+//      )
+//    : undefined;
 
-  return {shop: data.shop, headerMenu};
-}
+//  return {shop: data.shop, headerMenu};
+//}
