@@ -111,7 +111,15 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
     // Add other queries here, so that they are loaded in parallel
     getLayoutData(context),
   ]);
-  const seo = seoPayload.root({shop: layout.shop, url: request.url});
+  const shop = header?.shop;
+  console.log('🚀 ~ shop:', shop);
+  const seo = seoPayload.root({shop, url: request.url});
+  console.log('🚀 ~ seo:', seo);
+  //  console.log(
+  //    '===== LOG START =====',
+  //    new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+  //  );
+  //  console.log('header:', JSON.stringify(header, null, 4));
   return {header, seo};
 }
 

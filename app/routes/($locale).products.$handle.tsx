@@ -1,6 +1,17 @@
 import {Suspense} from 'react';
-import {defer, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, Link, useLoaderData, type MetaFunction} from '@remix-run/react';
+import {
+  defer,
+  MetaArgs,
+  redirect,
+  type LoaderFunctionArgs,
+} from '@shopify/remix-oxygen';
+import {
+  Await,
+  Link,
+  useLoaderData,
+  useRouteLoaderData,
+  type MetaFunction,
+} from '@remix-run/react';
 import type {ProductFragment} from 'storefrontapi.generated';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {
@@ -8,6 +19,7 @@ import {
   Analytics,
   useOptimisticVariant,
   Storefront,
+  getSeoMeta,
 } from '@shopify/hydrogen';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import {getVariantUrl} from '~/lib/variants';
@@ -28,9 +40,10 @@ import {Gallery} from '~/modules/Gallery';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
 import invariant from 'tiny-invariant';
+import {RootLoader} from '~/root';
 
-export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
+export const meta = ({matches}: MetaArgs<typeof loader>) => {
+  return getSeoMeta(...matches.map((match) => (match.data as any).seo));
 };
 
 export const handle = {
@@ -107,7 +120,7 @@ async function loadCriticalData({
   const judgeme_API_TOKEN = context.env.JUDGEME_PUBLIC_TOKEN;
   const shop_domain = context.env.PUBLIC_STORE_DOMAIN;
 
-  const [{product, shop}, judgemeReviewsData] = await Promise.all([
+  const [{product}, judgemeReviewsData] = await Promise.all([
     storefront.query(PRODUCT_QUERY, {
       variables: {handle, selectedOptions: getSelectedProductOptions(request)},
     }),
@@ -148,7 +161,6 @@ async function loadCriticalData({
   return {
     product,
     recommended,
-    shop,
     seo,
     judgemeReviewsData,
   };
@@ -204,10 +216,13 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const {product, shop, variants, judgemeReviewsData, recommended} =
-    useLoaderData<typeof loader>();
-  const {media, title, vendor, descriptionHtml} = product;
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  const shop = rootData?.header?.shop;
   const {shippingPolicy, refundPolicy} = shop;
+
+  const {product, variants, judgemeReviewsData, recommended} =
+    useLoaderData<typeof loader>();
+  const {media, title, descriptionHtml} = product;
 
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,
@@ -556,20 +571,6 @@ const PRODUCT_QUERY = `#graphql
   ) @inContext(country: $country, language: $language) {
     product(handle: $handle) {
       ...Product
-    }
-    shop {
-      name
-      primaryDomain {
-        url
-      }
-      shippingPolicy {
-        body
-        handle
-      }
-      refundPolicy {
-        body
-        handle
-      }
     }
   }
   ${PRODUCT_FRAGMENT}

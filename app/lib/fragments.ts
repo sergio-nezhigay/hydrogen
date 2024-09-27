@@ -196,6 +196,14 @@ export const HEADER_QUERY = `#graphql
     primaryDomain {
       url
     }
+    shippingPolicy {
+      body
+      handle
+    }
+    refundPolicy {
+      body
+      handle
+    }
     brand {
       logo {
         image {
