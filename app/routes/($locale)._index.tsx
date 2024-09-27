@@ -3,23 +3,24 @@ import {
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {Suspense, useEffect} from 'react';
-import {Await, useLoaderData, useLocation} from '@remix-run/react';
+import {Suspense} from 'react';
+import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
 
 import {FeaturedCollections} from '~/components/FeaturedCollections';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
-import {getHeroPlaceholder} from '~/lib/placeholders';
+
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
-import {translations} from '~/data/translations';
+
 import {useTranslation} from '~/lib/utils';
+import {Skeleton} from '~/components/Skeleton';
 export const headers = routeHeaders;
 
 export async function loader(args: LoaderFunctionArgs) {
   const {params, context} = args;
-  const {language, country} = context.storefront.i18n;
+  const {language} = context.storefront.i18n;
 
   if (
     params.locale &&
@@ -118,44 +119,31 @@ export default function Homepage() {
   return (
     <>
       <h1 className="sr-only">Головна сторінка магазину</h1>
+      {/*<Skeleton className="my-4 h-screen w-full aspect-[3/4]" />*/}
       {featuredCollections && (
-        <Suspense>
+        <Suspense
+          fallback={<Skeleton className="mt-20 mb-12 w-full h-[250px]" />}
+        >
           <Await resolve={featuredCollections}>
             {(response) => {
-              if (
-                !response ||
-                !response?.collections ||
-                !response?.collections?.nodes
-              ) {
-                return <></>;
-              }
-              return (
-                <FeaturedCollections
-                  collections={response.collections}
-                  title={translation.collections}
-                />
+              return response?.collections?.nodes ? (
+                <FeaturedCollections collections={response.collections} />
+              ) : (
+                <Skeleton className="my-4 w-full h-[250px]" />
               );
             }}
           </Await>
         </Suspense>
       )}
+
       {featuredProducts && (
-        <Suspense>
+        <Suspense fallback={<Skeleton className="my-12 w-full h-[300px]" />}>
           <Await resolve={featuredProducts}>
             {(response) => {
-              if (
-                !response ||
-                !response?.products ||
-                !response?.products?.nodes
-              ) {
-                return <></>;
-              }
-              return (
-                <ProductSwimlane
-                  products={response.products}
-                  title={translation.featured_products}
-                  count={4}
-                />
+              return response?.products?.nodes ? (
+                <ProductSwimlane products={response.products} />
+              ) : (
+                <Skeleton className="my-4 w-full h-[300px]" />
               );
             }}
           </Await>
