@@ -423,3 +423,33 @@ export function getAlternates(
       ]
     : [];
 }
+
+export const formatDateForTimeTag = (isoString: string) => {
+  const [datePart] = isoString.split('T');
+
+  const [year, month, day] = datePart.split('-').map(Number);
+
+  const monthNames = [
+    'січня',
+    'лютого',
+    'березня',
+    'квітня',
+    'травня',
+    'червня',
+    'липня',
+    'серпня',
+    'вересня',
+    'жовтня',
+    'листопада',
+    'грудня',
+  ];
+
+  const displayDate = `${day} ${monthNames[month - 1]} ${year} р.`;
+
+  const dateTime = isoString;
+
+  return {
+    dateTime,
+    displayDate,
+  };
+};

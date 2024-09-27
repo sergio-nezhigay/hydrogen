@@ -231,15 +231,6 @@ export function getHeroPlaceholder(heros: any[]) {
   });
 }
 
-// get product info placeholder data
-export function getProductInfoPlaceholder() {
-  function getMultipleRandom(arr: any[], infos: number) {
-    const shuffled = [...arr].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, infos);
-  }
-  return getMultipleRandom(PLACEHOLDERS.PRODUCT_INFO, 3);
-}
-
 export function getProductPlaceholder(): Product {
   return PLACEHOLDERS.PRODUCT as unknown as Product;
 }
