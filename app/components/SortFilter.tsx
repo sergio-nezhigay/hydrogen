@@ -19,12 +19,7 @@ import type {
 
 import {Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
-import {
-  DEFAULT_LOCALE,
-  sortFilters,
-  useTranslation,
-  useViewType,
-} from '~/lib/utils';
+import {DEFAULT_LOCALE, sortFilters, useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
 
@@ -63,41 +58,39 @@ export function SortFilter({
   appliedFilters = [],
   children,
 }: SortFilterProps) {
-  const isMobile = useViewType();
+  //  const isMobile = useViewType();
   return (
     <>
-      {isMobile ? (
-        <>
-          <div className="flex-between md:hidden">
-            <FiltersDrawer filters={filters} appliedFilters={appliedFilters} />
+      {/*{isMobile ? (*/}
+      <div className=" md:hidden">
+        <div className="flex-between">
+          <FiltersDrawer filters={filters} appliedFilters={appliedFilters} />
+          <SortMenu />
+        </div>
+
+        <div className="flex flex-col flex-wrap md:flex-row">
+          <div className="flex-1">{children}</div>
+        </div>
+      </div>
+
+      <div className="sm-max:hidden">
+        <div className="flex ">
+          <>
+            {appliedFilters.length > 0 && (
+              <AppliedFilters filters={appliedFilters} />
+            )}
+          </>
+          <div className="ml-auto">
             <SortMenu />
           </div>
-
-          <div className="flex flex-col flex-wrap md:flex-row md:hidden">
-            <div className="flex-1">{children}</div>
+        </div>
+        <div className="flex flex-col flex-wrap md:flex-row">
+          <div className="opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full">
+            <Filters filters={filters} />
           </div>
-        </>
-      ) : (
-        <>
-          <div className="flex sm-max:hidden">
-            <>
-              {appliedFilters.length > 0 && (
-                <AppliedFilters filters={appliedFilters} />
-              )}
-            </>
-            <div className="ml-auto">
-              <SortMenu />
-            </div>
-          </div>
-          <div className="flex flex-col flex-wrap md:flex-row sm-max:hidden">
-            <div className="opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full">
-              <Filters filters={filters} />
-            </div>
-
-            <div className="flex-1">{children}</div>
-          </div>
-        </>
-      )}
+          <div className="flex-1">{children}</div>
+        </div>
+      </div>
     </>
   );
 }
