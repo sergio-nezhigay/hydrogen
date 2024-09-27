@@ -1,7 +1,14 @@
-import {useNonce, getShopAnalytics, Analytics} from '@shopify/hydrogen';
+import {
+  useNonce,
+  getShopAnalytics,
+  Analytics,
+  getSeoMeta,
+  SeoConfig,
+} from '@shopify/hydrogen';
 import {
   AppLoadContext,
   defer,
+  MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
 import {
@@ -24,9 +31,12 @@ import {HEADER_QUERY} from '~/lib/fragments';
 import {CustomAnalytics} from './modules/CustomAnalytics';
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import {seoPayload} from './lib/seo.server';
-import invariant from 'tiny-invariant';
 
 export type RootLoader = typeof loader;
+
+export const meta = ({data}: MetaArgs<typeof loader>) => {
+  return getSeoMeta(data!.seo as SeoConfig);
+};
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
