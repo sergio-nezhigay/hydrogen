@@ -18,9 +18,10 @@ import {
   Scripts,
   useRouteError,
   useRouteLoaderData,
-  ScrollRestoration,
   isRouteErrorResponse,
   type ShouldRevalidateFunction,
+  LiveReload,
+  ScrollRestoration,
 } from '@remix-run/react';
 import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css?url';
@@ -31,6 +32,8 @@ import {HEADER_QUERY} from '~/lib/fragments';
 import {CustomAnalytics} from './modules/CustomAnalytics';
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import {seoPayload} from './lib/seo.server';
+import {GenericError} from './components/GenericError';
+import {NotFound} from './components/NotFound';
 
 export type RootLoader = typeof loader;
 
@@ -174,6 +177,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
+        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
@@ -183,27 +187,38 @@ export default function App() {
   return <Outlet />;
 }
 
-export function ErrorBoundary() {
-  const error = useRouteError();
-  let errorMessage = 'Unknown error';
-  let errorStatus = 500;
+export function ErrorBoundary({error}: {error: Error}) {
+  const routeError = useRouteError();
+  const isRouteError = isRouteErrorResponse(routeError);
+  const nonce = useNonce();
 
-  if (isRouteErrorResponse(error)) {
-    errorMessage = error?.data?.message ?? error.data;
-    errorStatus = error.status;
-  } else if (error instanceof Error) {
-    errorMessage = error.message;
+  let title = 'Error';
+  let pageType = 'page';
+
+  if (isRouteError) {
+    title = 'Not found';
+    if (routeError.status === 404) pageType = routeError.data || pageType;
   }
 
   return (
-    <div className="route-error">
-      <h1>Oops</h1>
-      <h2>{errorStatus}</h2>
-      {errorMessage && (
-        <fieldset>
-          <pre>{errorMessage}</pre>
-        </fieldset>
+    <div>
+      {isRouteError ? (
+        <>
+          {routeError.status === 404 ? (
+            <NotFound type={pageType} />
+          ) : (
+            <GenericError
+              error={{message: `${routeError.status} ${routeError.data}`}}
+            />
+          )}
+        </>
+      ) : (
+        <GenericError error={error instanceof Error ? error : undefined} />
       )}
+
+      <ScrollRestoration nonce={nonce} />
+      <Scripts nonce={nonce} />
+      <LiveReload nonce={nonce} />
     </div>
   );
 }
