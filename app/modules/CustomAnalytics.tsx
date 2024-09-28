@@ -3,7 +3,7 @@ import {useEffect} from 'react';
 
 export function CustomAnalytics() {
   const {subscribe, canTrack} = useAnalytics();
-  //  const nonce = useNonce();
+  const nonce = useNonce();
 
   useEffect(() => {
     setTimeout(() => {
@@ -82,7 +82,7 @@ export function CustomAnalytics() {
     <>
       {/* Initialize GTM container */}
       <Script
-        //nonce={nonce}
+        nonce={nonce}
         suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `
