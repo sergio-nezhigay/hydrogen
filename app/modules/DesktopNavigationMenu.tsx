@@ -16,7 +16,7 @@ import {navigationData} from '~/data/navigationData';
 
 export function DesktopNavigationMenu() {
   return (
-    <div className="text-white">
+    <div className="text-white hidden md:flex ml-6">
       <NavigationMenu>
         <NavigationMenuList>
           {navigationData.map((menu, index) => (

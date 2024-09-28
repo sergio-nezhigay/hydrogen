@@ -9,7 +9,7 @@ export const MobileNavigationMenu = () => {
   const {close} = useAside();
 
   return (
-    <div className="p-4 space-y-2">
+    <div className="p-4 space-y-2 flex flex-col test">
       {navigationData.map((menuGroup, index) => (
         <Disclosure key={index}>
           {({open}) => (

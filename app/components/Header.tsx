@@ -67,13 +67,11 @@ export function HeaderMenu({
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
-  const className = `header-menu-${viewport}`;
-
   return (
-    <nav className={className} role="navigation">
+    <>
       {viewport === 'mobile' && <MobileNavigationMenu />}
       {viewport === 'desktop' && <DesktopNavigationMenu />}
-    </nav>
+    </>
   );
 }
 
@@ -106,11 +104,8 @@ function HeaderCtas({
 function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
-    <button
-      className="header-menu-mobile-toggle reset"
-      onClick={() => open('mobile')}
-    >
-      <h3 className="icon-header hover:bg-stone-100/20">☰</h3>
+    <button className="md:hidden reset" onClick={() => open('mobile')}>
+      <span className="icon-header hover:bg-stone-100/20 text-xl">☰</span>
     </button>
   );
 }
@@ -152,7 +147,7 @@ function CartBadge({count}: {count: number | null}) {
           className="
             bg-main text-primary absolute bottom-1 right-1 flex h-3 w-auto min-w-3 items-center justify-center rounded-full px-0.5 pb-px text-center text-[0.625rem] font-medium leading-none subpixel-antialiased"
         >
-          <span>{count || 0}</span>
+          <div className="size-2">{count || 0}</div>
         </div>
       </>
     </a>

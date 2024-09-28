@@ -157,13 +157,13 @@ button.reset:hover:not(:has(> *)) {
   z-index: 1;
 }
 
-.header-menu-mobile-toggle {
+/*.header-menu-mobile-toggle {
   @media (min-width: 768px) {
     display: none;
   }
-}
+}*/
 
-.header-menu-mobile {
+/*.header-menu-mobile {
   display: flex;
   flex-direction: column;
   grid-gap: 1rem;
@@ -177,7 +177,7 @@ button.reset:hover:not(:has(> *)) {
     grid-gap: 1rem;
     margin-left: 3rem;
   }
-}
+}*/
 
 .header-menu-item {
   cursor: pointer;
