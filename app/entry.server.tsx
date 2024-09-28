@@ -24,11 +24,17 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
       'https://*.g.doubleclick.net',
       'https://*.google.com',
+      'https://*.googleadservices.com',
     ],
     connectSrc: [
       'https://*.google-analytics.com',
       'https://*.analytics.google.com',
       'https://*.googletagmanager.com',
+      'https://*.googleadservices.com',
+    ],
+    frameSrc: [
+      'https://www.googletagmanager.com',
+      'https://td.doubleclick.net',
     ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
