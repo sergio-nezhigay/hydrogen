@@ -427,7 +427,10 @@ interface FiltersDrawerProps {
 function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
   return (
     <Sheet>
-      <SheetTrigger>
+      <SheetTrigger
+        aria-controls={undefined}
+        className="size-10 flex-center hover:bg-stone-700/5 rounded-md"
+      >
         <IconFilters />
       </SheetTrigger>
       {/*<SheetTrigger asChild>
