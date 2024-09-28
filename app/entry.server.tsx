@@ -34,6 +34,7 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
       'https://*.googleadservices.com',
       'https://*.google.com.ua',
+      'https://*.google.com',
     ],
     frameSrc: [
       'https://www.googletagmanager.com',
