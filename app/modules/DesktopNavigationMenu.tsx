@@ -1,7 +1,8 @@
-'use client';
+//'use client';
 
 import * as React from 'react';
 import {Link} from '@remix-run/react';
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,15 +20,19 @@ export function DesktopNavigationMenu() {
     <div className="text-white hidden md:flex ml-6">
       <NavigationMenu>
         <NavigationMenuList>
-          {navigationData.map((menu, index) => (
-            <NavigationMenuItem key={index}>
+          {navigationData.map((menu) => (
+            <NavigationMenuItem key={menu.title}>
               {menu.items ? (
                 <>
                   <NavigationMenuTrigger>{menu.title}</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
-                      {menu.items.map((item, i) => (
-                        <SubMenuItem key={i} to={item.to} title={item.title} />
+                      {menu.items.map((item) => (
+                        <SubMenuItem
+                          key={item.title}
+                          to={item.to}
+                          title={item.title}
+                        />
                       ))}
                     </ul>
                   </NavigationMenuContent>

@@ -1,7 +1,8 @@
-'use client';
+//'use client';
 
 import {Disclosure} from '@headlessui/react';
 import {Link} from '@remix-run/react';
+
 import {useAside} from '~/components/Aside';
 import {navigationData} from '~/data/navigationData';
 
@@ -10,8 +11,8 @@ export const MobileNavigationMenu = () => {
 
   return (
     <div className="p-4 space-y-2 flex flex-col test">
-      {navigationData.map((menuGroup, index) => (
-        <Disclosure key={index}>
+      {navigationData.map((menuGroup) => (
+        <Disclosure key={menuGroup.title}>
           {({open}) => (
             <>
               {menuGroup.items ? (
@@ -29,8 +30,8 @@ export const MobileNavigationMenu = () => {
                     }`}
                   >
                     <ul className="pl-4 space-y-1">
-                      {menuGroup.items.map((item, idx) => (
-                        <li key={idx}>
+                      {menuGroup.items.map((item) => (
+                        <li key={item.title}>
                           <Link
                             to={item.to}
                             prefetch="viewport"

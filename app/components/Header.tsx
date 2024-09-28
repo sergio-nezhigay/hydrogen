@@ -1,13 +1,15 @@
 import {Suspense} from 'react';
 import {Await, NavLink} from '@remix-run/react';
 import {type CartViewPayload, useAnalytics} from '@shopify/hydrogen';
-import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
-import {useAside} from '~/components/Aside';
-import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
-import {DesktopNavigationMenu} from '~/modules/DesktopNavigationMenu';
 import {Image} from '@shopify/hydrogen';
-import LangSelector from '~/modules/LangSelector';
+
+import {DesktopNavigationMenu} from '~/modules/DesktopNavigationMenu';
 import {MobileNavigationMenu} from '~/modules/MobileNavigationMenu';
+import LangSelector from '~/modules/LangSelector';
+import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
+
+import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
+import {useAside} from './Aside';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -27,7 +29,7 @@ export function Header({
   const {shop, menu} = header;
   return (
     <header className="header bg-accent-gradient text-white">
-      <div className="container flex-center">
+      <div className="flex-center container ">
         <NavLink
           prefetch="intent"
           to="/"
