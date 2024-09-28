@@ -17,6 +17,7 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://*.googletagmanager.com',
       'googleads.g.doubleclick.net',
+      'https://*.google.com.ua',
     ],
     imgSrc: [
       'https://cdn.shopify.com',
@@ -24,6 +25,7 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
       'https://*.g.doubleclick.net',
       'https://*.google.com',
+      'https://*.google.com.ua',
       'https://*.googleadservices.com',
     ],
     connectSrc: [
@@ -31,6 +33,7 @@ export default async function handleRequest(
       'https://*.analytics.google.com',
       'https://*.googletagmanager.com',
       'https://*.googleadservices.com',
+      'https://*.google.com.ua',
     ],
     frameSrc: [
       'https://www.googletagmanager.com',
