@@ -427,11 +427,17 @@ interface FiltersDrawerProps {
 function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
   return (
     <Sheet>
-      <SheetTrigger asChild>
-        <button className="size-8 flex-center hover:bg-stone-700/5 rounded-md">
+      <SheetTrigger>
+        <IconFilters />
+      </SheetTrigger>
+      {/*<SheetTrigger asChild>
+        <button
+          aria-controls={undefined}
+          className="size-8 flex-center hover:bg-stone-700/5 rounded-md"
+        >
           <IconFilters />
         </button>
-      </SheetTrigger>
+      </SheetTrigger>*/}
       <SheetContent side="left" className="p-4 bg-white">
         <SheetHeader>
           <SheetTitle>Фільтр</SheetTitle>
