@@ -60,10 +60,10 @@ export function ProductCard({
         prefetch="viewport"
       >
         <div className={clsx('grid gap-4', className)}>
-          <div className="card-image aspect-[4/5] bg-primary/5">
+          <div className="card-image bg-primary/5">
             {image && (
               <Image
-                className="w-full object-cover"
+                className="w-full object-cover test"
                 sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw"
                 aspectRatio="4/5"
                 data={image}

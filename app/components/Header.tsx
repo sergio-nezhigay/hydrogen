@@ -80,7 +80,7 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="header-ctas" role="navigation">
+    <nav className="header-ctas">
       <LangSelector />
       <SearchToggle />
       <NavLink
