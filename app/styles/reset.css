@@ -61,7 +61,7 @@ pre {
   white-space: pre-wrap;
 }
 
-body {
+/*body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -69,16 +69,16 @@ body {
 
 body > main {
   margin: 0 1rem 1rem 1rem;
-}
+}*/
 
-section {
+/*section {
   padding: 1rem 0;
   @media (min-width: 768px) {
     padding: 2rem 0;
   }
-}
+}*/
 
-fieldset {
+/*fieldset {
   display: flex;
   flex-direction: column;
   margin-bottom: 0.5rem;
@@ -90,16 +90,16 @@ form {
   @media (min-width: 768px) {
     max-width: 400px;
   }
-}
+}*/
 
-input {
+/*input {
   border-radius: 4px;
   border: 1px solid #000;
   font-size: 1rem;
   margin-bottom: 0.5rem;
   margin-top: 0.25rem;
   padding: 0.5rem;
-}
+}*/
 
 legend {
   font-weight: 600;
