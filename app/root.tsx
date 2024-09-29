@@ -177,7 +177,6 @@ export function Layout({children}: {children?: React.ReactNode}) {
         )}
         <ScrollRestoration nonce={nonce} />
         <Scripts nonce={nonce} />
-        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
@@ -218,7 +217,6 @@ export function ErrorBoundary({error}: {error: Error}) {
 
       <ScrollRestoration nonce={nonce} />
       <Scripts nonce={nonce} />
-      <LiveReload nonce={nonce} />
     </div>
   );
 }
