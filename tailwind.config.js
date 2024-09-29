@@ -4,11 +4,12 @@ import animatePlugin from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ['class'],
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   prefix: '',
   theme: {
     container: {
-      center: true,
+      center: 'true',
       padding: {
         DEFAULT: '1rem',
         md: '1rem',
@@ -71,12 +72,28 @@ module.exports = {
         lg: '64em',
         xl: '80em',
         '2xl': '96em',
-        'sm-max': {max: '48em'},
-        'sm-only': {min: '32em', max: '48em'},
-        'md-only': {min: '48em', max: '64em'},
-        'lg-only': {min: '64em', max: '80em'},
-        'xl-only': {min: '80em', max: '96em'},
-        '2xl-only': {min: '96em'},
+        'sm-max': {
+          max: '48em',
+        },
+        'sm-only': {
+          min: '32em',
+          max: '48em',
+        },
+        'md-only': {
+          min: '48em',
+          max: '64em',
+        },
+        'lg-only': {
+          min: '64em',
+          max: '80em',
+        },
+        'xl-only': {
+          min: '80em',
+          max: '96em',
+        },
+        '2xl-only': {
+          min: '96em',
+        },
       },
       spacing: {
         nav: 'var(--height-nav)',

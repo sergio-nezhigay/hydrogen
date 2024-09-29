@@ -1,5 +1,9 @@
 import {useRouteLoaderData} from '@remix-run/react';
-import type {Filter, MoneyV2} from '@shopify/hydrogen/storefront-api-types';
+import type {
+  Filter,
+  MoneyV2,
+  ShopPolicy,
+} from '@shopify/hydrogen/storefront-api-types';
 import type {FulfillmentStatus} from '@shopify/hydrogen/customer-account-api-types';
 import typographicBase from 'typographic-base';
 import type {ClassValue} from 'clsx';
@@ -451,3 +455,53 @@ export const formatDateForTimeTag = (isoString: string) => {
     displayDate,
   };
 };
+
+type PolicyType = Pick<ShopPolicy, 'handle' | 'body'> | null | undefined;
+
+interface ProductDetailsInput {
+  descriptionHtml?: string;
+  shippingPolicy: PolicyType;
+  refundPolicy: PolicyType;
+  translation: Record<string, string>;
+}
+
+interface ProductDetailItem {
+  title: string;
+  content: string;
+  learnMore?: string;
+}
+
+export function formatProductDetails({
+  descriptionHtml,
+  shippingPolicy,
+  refundPolicy,
+  translation,
+}: ProductDetailsInput): ProductDetailItem[] {
+  const details: ProductDetailItem[] = [];
+
+  if (descriptionHtml) {
+    details.push({
+      title: translation.description,
+      content: descriptionHtml,
+      learnMore: '',
+    });
+  }
+
+  if (shippingPolicy?.body) {
+    details.push({
+      title: translation.shipping,
+      content: getExcerpt(shippingPolicy.body),
+      learnMore: `/policies/${shippingPolicy.handle}`,
+    });
+  }
+
+  if (refundPolicy?.body) {
+    details.push({
+      title: translation.returns,
+      content: getExcerpt(refundPolicy.body),
+      learnMore: `/policies/${refundPolicy.handle}`,
+    });
+  }
+
+  return details;
+}

@@ -1,14 +1,14 @@
+import type {SeoConfig} from '@shopify/hydrogen';
 import {
   useNonce,
   getShopAnalytics,
   Analytics,
   getSeoMeta,
-  SeoConfig,
 } from '@shopify/hydrogen';
-import {
-  AppLoadContext,
-  defer,
+import {defer} from '@shopify/remix-oxygen';
+import type {
   MetaArgs,
+  AppLoadContext,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
 import {
@@ -23,12 +23,14 @@ import {
   LiveReload,
   ScrollRestoration,
 } from '@remix-run/react';
+
 import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css?url';
-import tailwindCss from './styles/tailwind.css?url';
 import appStyles from '~/styles/app.css?url';
+import tailwindCss from '~/styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {HEADER_QUERY} from '~/lib/fragments';
+
 import {CustomAnalytics} from './modules/CustomAnalytics';
 import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
 import {seoPayload} from './lib/seo.server';

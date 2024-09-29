@@ -1,46 +1,42 @@
 import {Suspense} from 'react';
-import {
-  defer,
-  MetaArgs,
-  redirect,
-  type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
-import {
-  Await,
-  Link,
-  useLoaderData,
-  useRouteLoaderData,
-  type MetaFunction,
-} from '@remix-run/react';
-import type {ProductFragment} from 'storefrontapi.generated';
-import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
+import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
+import {defer, redirect} from '@shopify/remix-oxygen';
+//import type {MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {Await, Link, useLoaderData, useRouteLoaderData} from '@remix-run/react';
+import type {Storefront} from '@shopify/hydrogen';
 import {
   getSelectedProductOptions,
   Analytics,
   useOptimisticVariant,
-  Storefront,
   getSeoMeta,
 } from '@shopify/hydrogen';
 import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
+import clsx from 'clsx';
+import invariant from 'tiny-invariant';
+
+import type {ProductFragment} from 'storefrontapi.generated';
+import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {getVariantUrl} from '~/lib/variants';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {Heading, Section, Text} from '~/components/Text';
-import {getExcerpt, useTranslation} from '~/lib/utils';
+import {formatProductDetails, useTranslation} from '~/lib/utils';
 import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
 import {seoPayload} from '~/lib/seo.server';
-import clsx from 'clsx';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import ReviewList from '~/modules/ReviewList';
-import {Disclosure, DisclosurePanel} from '@headlessui/react';
-import {IconClose} from '~/components/Icon';
 import {Gallery} from '~/modules/Gallery';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
-import invariant from 'tiny-invariant';
-import {RootLoader} from '~/root';
+import type {RootLoader} from '~/root';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '~/components/ui/accordion';
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -183,6 +179,8 @@ function loadDeferredData({context, params}: LoaderFunctionArgs) {
     })
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
+      // eslint-disable-next-line eslint-comments/disable-enable-pair
+      /* eslint-disable no-console */
       console.error(error);
       return null;
     });
@@ -240,6 +238,13 @@ export default function Product() {
       .getElementById('review-list')
       ?.scrollIntoView({behavior: 'smooth'});
   };
+
+  const details = formatProductDetails({
+    descriptionHtml,
+    shippingPolicy,
+    refundPolicy,
+    translation,
+  });
 
   return (
     <>
@@ -312,27 +317,7 @@ export default function Product() {
               </Suspense>
             </div>
             <div className="grid gap-4 py-4">
-              {descriptionHtml && (
-                <ProductDetail
-                  title={translation.description}
-                  content={descriptionHtml}
-                  isOpen={true}
-                />
-              )}
-              {shippingPolicy?.body && (
-                <ProductDetail
-                  title={translation.shipping}
-                  content={getExcerpt(shippingPolicy.body)}
-                  learnMore={`/policies/${shippingPolicy.handle}`}
-                />
-              )}
-              {refundPolicy?.body && (
-                <ProductDetail
-                  title={translation.returns}
-                  content={getExcerpt(refundPolicy.body)}
-                  learnMore={`/policies/${refundPolicy.handle}`}
-                />
-              )}
+              {descriptionHtml && <ProductDetail items={details} />}
             </div>
           </div>
         </div>
@@ -374,64 +359,42 @@ export default function Product() {
   );
 }
 
-function ProductDetail({
-  title,
-  content,
-  learnMore,
-  isOpen = false,
-}: {
+interface ProductDetailItem {
   title: string;
   content: string;
   learnMore?: string;
-  isOpen?: boolean;
-}) {
+}
+
+interface ProductDetailProps {
+  items: ProductDetailItem[];
+}
+
+export function ProductDetail({items}: ProductDetailProps) {
   const {translation} = useTranslation();
 
   return (
-    <Disclosure
-      key={title}
-      defaultOpen={isOpen}
-      as="div"
-      className="grid w-full gap-2"
-    >
-      {({open}) => (
-        <>
-          <Disclosure.Button className="text-left flex justify-between items-center">
+    <Accordion type="single" collapsible defaultValue="item-1">
+      {items.map((item, index) => (
+        <AccordionItem value={`item-${index + 1}`} key={item.title}>
+          <AccordionTrigger className="text-left flex justify-between items-center">
             <Text size="lead" className="inline-block">
-              {title}
+              {item.title}
             </Text>
-            <IconClose
-              className={clsx(
-                'transform-gpu transition-transform duration-200',
-                !open && 'rotate-45',
-              )}
-            />
-          </Disclosure.Button>
-
-          <DisclosurePanel
-            transition
-            className={
-              'grid gap-2 pb-4 pt-2 origin-top transition duration-200 ease-out data-[closed]:-translate-y-8 data-[closed]:opacity-0'
-            }
-          >
-            <div
-              //  className="prose dark:prose-invert"
-              dangerouslySetInnerHTML={{__html: content}}
-            />
-            {learnMore && (
-              <div className="">
-                <Link
-                  className="border-b border-primary/30 pb-px text-primary/50"
-                  to={learnMore}
-                >
-                  {translation.learn_more}
-                </Link>
-              </div>
+          </AccordionTrigger>
+          <AccordionContent className="grid gap-2 pb-4 pt-2">
+            <div dangerouslySetInnerHTML={{__html: item.content}} />
+            {item.learnMore && (
+              <Link
+                className="border-b border-primary/30 pb-px text-primary/50"
+                to={item.learnMore}
+              >
+                {translation.learn_more}
+              </Link>
             )}
-          </DisclosurePanel>
-        </>
-      )}
-    </Disclosure>
+          </AccordionContent>
+        </AccordionItem>
+      ))}
+    </Accordion>
   );
 }
 
