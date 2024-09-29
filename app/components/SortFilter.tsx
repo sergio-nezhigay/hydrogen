@@ -382,10 +382,10 @@ export default function SortMenu({className}: {className: string}) {
       key: 'newest',
     },
   ];
-  const activeItem = items.find((item) => item.key === params.get('sort'));
+  //  const activeItem = items.find((item) => item.key === params.get('sort'));
 
   const [value, setValue] = useState(false);
-  const [item, setItem] = useState(items[0].label);
+  const [activeLabel, setActiveLabel] = useState(items[0].label);
 
   return (
     <Accordion
@@ -403,19 +403,19 @@ export default function SortMenu({className}: {className: string}) {
           onClick={() => setValue(!value)}
         >
           <span className="px-2 font-medium">{translation.sort_by}:</span>
-          <span>{item || ''}</span>
+          <span>{activeLabel || ''}</span>
         </AccordionTrigger>
         <AccordionContent className="flex flex-col p-4 shadow-lg rounded-sm bg-main">
           {items.map((item) => (
             <Link
               key={item.key}
               className={`whitespace-nowrap block text-sm pb-2 px-3 hover:text-blue-700 ${
-                activeItem?.key === item.key ? 'font-bold' : 'font-normal'
+                activeLabel === item.label ? 'font-bold' : 'font-normal'
               }`}
               to={getSortLink(item.key, params, location)}
               onClick={() => {
                 setValue(false);
-                setItem(item.label);
+                setActiveLabel(item.label);
               }}
             >
               {item.label}
