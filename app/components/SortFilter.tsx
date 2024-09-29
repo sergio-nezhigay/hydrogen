@@ -1,9 +1,7 @@
 import type {SyntheticEvent} from 'react';
 import {useMemo, useState} from 'react';
-import {Menu, Disclosure, DisclosurePanel} from '@headlessui/react';
 import type {Location} from '@remix-run/react';
-import {Check, X} from 'lucide-react';
-
+import {Check, Menu, X} from 'lucide-react';
 import {
   Link,
   useLocation,
@@ -16,7 +14,14 @@ import type {
   Filter,
   ProductFilter,
 } from '@shopify/hydrogen/storefront-api-types';
+import clsx from 'clsx';
 
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '~/components/ui/accordion';
 import {Text} from '~/components/Text';
 import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
 import {DEFAULT_LOCALE, sortFilters, useTranslation} from '~/lib/utils';
@@ -61,27 +66,27 @@ export function SortFilter({
   //  const isMobile = useViewType();
   return (
     <>
-      {/*{isMobile ? (*/}
+      {/*mobile*/}
       <div className=" md:hidden">
-        <div className="flex-between">
+        <div className="relative">
           <FiltersDrawer filters={filters} appliedFilters={appliedFilters} />
-          <SortMenu />
+          <SortMenu className="" />
         </div>
 
         <div className="flex flex-col flex-wrap md:flex-row">
           <div className="flex-1">{children}</div>
         </div>
       </div>
-
+      {/*desktop*/}
       <div className="sm-max:hidden">
-        <div className="flex ">
+        <div className="flex min-h-9">
           <>
             {appliedFilters.length > 0 && (
               <AppliedFilters filters={appliedFilters} />
             )}
           </>
-          <div className="ml-auto">
-            <SortMenu />
+          <div className="ml-auto relative">
+            <SortMenu className="" />
           </div>
         </div>
         <div className="flex flex-col flex-wrap md:flex-row">
@@ -98,11 +103,8 @@ export function SortFilter({
 function Filters({filters}: {filters: Filter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
-  const {t, translation} = useTranslation();
-  const sortedFilters = useMemo(
-    () => filters.sort((a, b) => sortFilters(a, b)),
-    [],
-  );
+  const {t} = useTranslation();
+  const sortedFilters = filters.sort((a, b) => sortFilters(a, b));
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     const appliedFilter = {
@@ -136,7 +138,7 @@ function Filters({filters}: {filters: Filter[]}) {
           <Link
             prefetch="intent"
             to={isActive ? appliedFilterLink : to}
-            className="flex-start gap-2 hover:bg-slate-100 px-1 rounded-sm group "
+            className="flex-start gap-2 hover:bg-slate-100 p-1 rounded-sm group "
           >
             <span className="size-4 inline-block border border-stone-500 rounded-sm group-hover:border-stone-900">
               {isActive && (
@@ -154,25 +156,22 @@ function Filters({filters}: {filters: Filter[]}) {
     <>
       <nav className="md:py-4">
         <div className="divide-y">
-          {sortedFilters.map((filter: Filter) => (
-            <Disclosure
-              defaultOpen={true}
-              as="div"
-              key={filter.id}
-              className="w-full"
-            >
-              {({open}) => (
+          <Accordion
+            type="multiple"
+            defaultValue={sortedFilters.map((filter) => filter.label)}
+          >
+            {sortedFilters.map((filter: Filter) => (
+              <AccordionItem key={filter.id} value={filter.label}>
                 <>
-                  <Disclosure.Button className="flex justify-between w-full py-2">
+                  <AccordionTrigger className="flex justify-between w-full py-2">
                     <Text
                       size="lead"
                       className="text-primary/80 font-normal  hover:text-indigo-700/70"
                     >
                       {filter.label}
                     </Text>
-                    <IconCaret direction={open ? 'up' : 'down'} />
-                  </Disclosure.Button>
-                  <DisclosurePanel key={filter.id}>
+                  </AccordionTrigger>
+                  <AccordionContent key={filter.id}>
                     <ul key={filter.id} className="py-2 text-primary/80">
                       {filter.values?.map((option) => {
                         return (
@@ -182,11 +181,11 @@ function Filters({filters}: {filters: Filter[]}) {
                         );
                       })}
                     </ul>
-                  </DisclosurePanel>
+                  </AccordionContent>
                 </>
-              )}
-            </Disclosure>
-          ))}
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </nav>
     </>
@@ -356,7 +355,7 @@ function filterInputToParams(
   return params;
 }
 
-export default function SortMenu() {
+export default function SortMenu({className}: {className: string}) {
   const [params] = useSearchParams();
   const location = useLocation();
   const rootData = useRouteLoaderData<RootLoader>('root');
@@ -385,37 +384,46 @@ export default function SortMenu() {
   ];
   const activeItem = items.find((item) => item.key === params.get('sort'));
 
-  return (
-    <Menu as="div" className="shrink-0  row-start-1 col-start-2 relative z-10">
-      <Menu.Button className="flex items-center  hover:bg-stone-50 rounded-md py-1">
-        <span className="px-2">
-          <span className="px-2 font-medium">{translation.sort_by}:</span>
-          <span>{(activeItem || items[0]).label}</span>
-        </span>
-        <IconCaret />
-      </Menu.Button>
+  const [value, setValue] = useState(false);
+  const [item, setItem] = useState(items[0].label);
 
-      <Menu.Items
-        as="nav"
-        className="absolute right-0 flex flex-col p-4 text-right shadow-lg rounded-sm
-        bg-main"
-      >
-        {items.map((item) => (
-          <Menu.Item key={item.label}>
-            {() => (
-              <Link
-                className={`whitespace-nowrap block text-sm pb-2 px-3 hover:font-bold ${
-                  activeItem?.key === item.key ? 'font-bold' : 'font-normal'
-                }`}
-                to={getSortLink(item.key, params, location)}
-              >
-                {item.label}
-              </Link>
-            )}
-          </Menu.Item>
-        ))}
-      </Menu.Items>
-    </Menu>
+  return (
+    <Accordion
+      type="single"
+      className={clsx(
+        'absolute right-0 top-0 z-10 whitespace-nowrap bg-white',
+        className,
+      )}
+      collapsible
+      value={value ? 'open' : 'closed'}
+    >
+      <AccordionItem value="open" className="border-0">
+        <AccordionTrigger
+          className="flex items-center hover:bg-stone-50 rounded-md py-1 w-full"
+          onClick={() => setValue(!value)}
+        >
+          <span className="px-2 font-medium">{translation.sort_by}:</span>
+          <span>{item || ''}</span>
+        </AccordionTrigger>
+        <AccordionContent className="flex flex-col p-4 shadow-lg rounded-sm bg-main">
+          {items.map((item) => (
+            <Link
+              key={item.key}
+              className={`whitespace-nowrap block text-sm pb-2 px-3 hover:text-blue-700 ${
+                activeItem?.key === item.key ? 'font-bold' : 'font-normal'
+              }`}
+              to={getSortLink(item.key, params, location)}
+              onClick={() => {
+                setValue(false);
+                setItem(item.label);
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   );
 }
 
