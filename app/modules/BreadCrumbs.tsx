@@ -4,8 +4,9 @@ import {
   Link,
   useLocation,
 } from '@remix-run/react';
-import {z} from 'zod';
 import {Home} from 'lucide-react';
+import clsx from 'clsx';
+
 import {
   Breadcrumb,
   BreadcrumbList,
@@ -15,15 +16,9 @@ import {
 } from '~/components/ui/breadcrumb';
 import {Section} from '~/components/Text';
 import {useTranslation} from '~/lib/utils';
-import clsx from 'clsx';
-import {RootLoader} from '~/root';
+import type {RootLoader} from '~/root';
 
-export const breadcrumbTypeSchema = z.enum([
-  'collections',
-  'collection',
-  'product',
-]);
-export type TBreadcrumbType = z.infer<typeof breadcrumbTypeSchema>;
+export type TBreadcrumbType = 'collections' | 'collection' | 'product';
 
 interface RouteHandle {
   breadcrumbType?: TBreadcrumbType;
@@ -52,7 +47,6 @@ interface Route {
 
 function BreadCrumbs() {
   const matches = useMatches();
-
   const {translation} = useTranslation();
   const deepestRoute = matches.at(-1) as Route | undefined;
   const rootData = useRouteLoaderData<RootLoader>('root');
@@ -65,14 +59,19 @@ function BreadCrumbs() {
 
   const {handle, data} = deepestRoute;
 
-  const parsedBreadcrumbType = breadcrumbTypeSchema.safeParse(
-    handle?.breadcrumbType,
-  );
-  if (!parsedBreadcrumbType.success) return null;
+  const breadcrumbType: TBreadcrumbType | null = [
+    'collections',
+    'collection',
+    'product',
+  ].includes(handle?.breadcrumbType ?? '')
+    ? (handle?.breadcrumbType as TBreadcrumbType)
+    : null;
+
+  if (!breadcrumbType) return null;
 
   const pages: {href: string; name: string}[] = [{href: '/', name: 'Home'}];
 
-  switch (parsedBreadcrumbType.data) {
+  switch (breadcrumbType) {
     case 'collections':
       pages.push({
         href: '/collections',

@@ -33,7 +33,6 @@
     "@shopify/oxygen-workers-types": "^4.1.4",
     "@shopify/remix-oxygen": "^2.0.8",
     "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "embla-carousel-react": "^8.1.7",
     "graphql": "^16.6.0",
@@ -45,7 +44,6 @@
     "react-intersection-observer": "^9.4.1",
     "react-use": "^17.4.0",
     "schema-dts": "^1.1.0",
-    "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "tiny-invariant": "^1.2.0",
     "typographic-base": "^1.0.4"
@@ -66,6 +64,7 @@
     "@types/eslint": "^8.4.10",
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.20.0",
     "eslint-plugin-hydrogen": "0.12.2",
@@ -74,6 +73,7 @@
     "postcss-preset-env": "^8.2.0",
     "prettier": "^2.8.4",
     "rimraf": "^3.0.2",
+    "tailwind-merge": "^2.5.2",
     "tailwindcss": "^3.3.0",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",
@@ -81,5 +81,10 @@
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "overrides": {
+    "class-variance-authority": {
+      "clsx": "^2.1.1"
+    }
   }
 }

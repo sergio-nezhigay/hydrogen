@@ -1,4 +1,4 @@
-import {useLocation, useRouteLoaderData} from '@remix-run/react';
+import {useRouteLoaderData} from '@remix-run/react';
 import type {Filter, MoneyV2} from '@shopify/hydrogen/storefront-api-types';
 import type {FulfillmentStatus} from '@shopify/hydrogen/customer-account-api-types';
 import typographicBase from 'typographic-base';
@@ -13,9 +13,9 @@ import type {
 } from 'storefrontapi.generated';
 import type {RootLoader} from '~/root';
 import {countries} from '~/data/countries';
+import {translations} from '~/data/translations';
 
 import type {I18nLocale} from './type';
-import {translations} from '~/data/translations';
 
 type EnhancedMenuItemProps = {
   to: string;
@@ -371,8 +371,6 @@ export function sortFilters(a: Filter, b: Filter) {
 
   return 1;
 }
-
-import {useState, useEffect} from 'react';
 
 //export function useViewType() {
 //  const [isMobile, setIsMobile] = useState<boolean>(() =>
