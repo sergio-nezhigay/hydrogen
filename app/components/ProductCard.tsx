@@ -108,8 +108,6 @@ export function ProductCard({
               merchandiseId: firstVariant.id,
             },
           ]}
-          variant="red"
-          className="mt-2"
           delta={delta}
           meta={meta}
         >

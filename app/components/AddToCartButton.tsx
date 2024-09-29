@@ -1,7 +1,8 @@
 import {type FetcherWithComponents} from '@remix-run/react';
 import {CartForm, type OptimisticCartLineInput} from '@shopify/hydrogen';
-import {Button} from './ui/button';
 import {ShoppingCart} from 'lucide-react';
+
+import {Button} from './ui/button';
 
 export function AddToCartButton({
   analytics,
@@ -20,12 +21,6 @@ export function AddToCartButton({
   delta: string;
   meta: {delta: string; supplier: string};
 }) {
-  console.log('add to cart button delta:', JSON.stringify(delta, null, 4));
-  console.log('add to cart button delta:', JSON.stringify(meta.delta, null, 4));
-  console.log(
-    'add to cart button delta:',
-    JSON.stringify(meta.supplier, null, 4),
-  );
   return (
     <CartForm route="/cart" inputs={{lines}} action={CartForm.ACTIONS.LinesAdd}>
       {(fetcher: FetcherWithComponents<any>) => (
