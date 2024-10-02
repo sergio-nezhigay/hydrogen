@@ -162,7 +162,11 @@ export default function Collection() {
     useLoaderData<typeof loader>();
   const {translation} = useTranslation();
   const {ref, inView} = useInView();
-
+  console.log(
+    '===== LOG START =====',
+    new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+  );
+  console.log('collection:', JSON.stringify(collection, null, 4));
   return (
     <>
       <PageHeader heading={collection.title} className="container">
