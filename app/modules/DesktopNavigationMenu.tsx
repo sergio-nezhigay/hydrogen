@@ -14,7 +14,6 @@ import {
 } from '~/components/ui/navigation-menu';
 import {cn} from '~/lib/utils';
 import {navigationData} from '~/data/navigationData';
-//import {navigationData} from '~/data/navigationData';
 
 export function DesktopNavigationMenu() {
   const [offset, setOffset] = React.useState<number | null>(null);
@@ -39,9 +38,9 @@ export function DesktopNavigationMenu() {
   }, [activeTrigger, value]);
 
   return (
-    <div className="text-white hidden md:flex mx-auto">
+    <div className="text-white hidden lg:flex mx-auto">
       <NavigationMenu value={value} onValueChange={setValue}>
-        <NavigationMenuList ref={listRef}>
+        <NavigationMenuList ref={listRef} className="lg-only:space-x-0">
           {navigationData.map((menu) => (
             <NavigationMenuItem key={menu.title} value={menu.title}>
               {menu.items ? (
@@ -58,7 +57,7 @@ export function DesktopNavigationMenu() {
                     {menu.title}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid gap-3 p-4 md:w-[400px] lg:min-w-[600px] lg:grid-cols-2">
+                    <div className="grid gap-3 p-4 lg:w-[350px] xl:w-[600px] xl:grid-cols-2">
                       {menu.items.map((subItem) => (
                         <NavigationMenuLink key={subItem.title} asChild>
                           <Link
@@ -91,7 +90,7 @@ export function DesktopNavigationMenu() {
             })}
             style={{
               transform:
-                offset !== null && offset > 300
+                offset !== null
                   ? `translateX(calc(${offset}px - var(--radix-navigation-menu-viewport-width) / 2 ))`
                   : undefined,
               width: 'var(--radix-navigation-menu-viewport-width)',

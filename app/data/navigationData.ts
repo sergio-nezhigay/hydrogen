@@ -291,10 +291,10 @@ export const navigationData: MenuGroup[] = [
       },
     ],
   },
-  {
-    title: 'Каталог',
-    to: '/products',
-  },
+  //  {
+  //    title: 'Каталог',
+  //    to: '/products',
+  //  },
   {
     title: 'Контакти',
     to: '/pages/contact',

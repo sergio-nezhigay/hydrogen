@@ -2,6 +2,7 @@ import {Suspense} from 'react';
 import {Await, NavLink} from '@remix-run/react';
 import {type CartViewPayload, useAnalytics} from '@shopify/hydrogen';
 import {Image} from '@shopify/hydrogen';
+import {Phone} from 'lucide-react';
 
 import {DesktopNavigationMenu} from '~/modules/DesktopNavigationMenu';
 import {MobileNavigationMenu} from '~/modules/MobileNavigationMenu';
@@ -10,6 +11,11 @@ import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 
 import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
 import {useAside} from './Aside';
+
+const phone = {
+  full: '+38 (099) 381-5288',
+  display: '(099) 381-5288',
+};
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -27,32 +33,44 @@ export function Header({
   publicStoreDomain,
 }: HeaderProps) {
   const {shop, menu} = header;
+
   return (
-    <header className="header bg-accent-gradient text-white">
-      <div className="flex-center container ">
-        <NavLink
-          prefetch="intent"
-          to="/"
-          style={activeLinkStyle}
-          className="shrink-0"
-          end
-        >
-          <Image
-            width={50}
-            height={40}
-            className="h-14 w-auto"
-            src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/byte-white.svg?v=1722326712"
-            alt="logo"
-            sizes="50px"
+    <header className="flex sticky top-0 z-10  items-center bg-accent-gradient text-white  h-20 lg:h-[118px] ">
+      <div className="flex-between container ">
+        <div>
+          <a
+            href={`tel:${phone.full}`}
+            className="text-white hover:bg-stone-100/20 hidden lg:block mb-2 p-1 rounded-md"
+          >
+            {phone.display}
+          </a>
+          <NavLink
+            prefetch="intent"
+            to="/"
+            style={activeLinkStyle}
+            className="shrink-0"
+            end
+          >
+            <Image
+              width={0}
+              height={0}
+              className="h-7 sm:h-10 md:h-14 w-auto"
+              src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/byte-white.svg?v=1722326712"
+              alt="logo"
+              sizes="50px"
+            />
+          </NavLink>
+        </div>
+
+        <div className="flex flex-col gap-3 ">
+          <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+          <HeaderMenu
+            menu={menu}
+            viewport="desktop"
+            primaryDomainUrl={header.shop.primaryDomain.url}
+            publicStoreDomain={publicStoreDomain}
           />
-        </NavLink>
-        <HeaderMenu
-          menu={menu}
-          viewport="desktop"
-          primaryDomainUrl={header.shop.primaryDomain.url}
-          publicStoreDomain={publicStoreDomain}
-        />
-        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+        </div>
       </div>
     </header>
   );
@@ -84,6 +102,15 @@ function HeaderCtas({
   return (
     <nav className="header-ctas">
       <LangSelector />
+
+      <a
+        href={`tel:${phone.full}`}
+        className="icon-header hover:bg-stone-100/20 flex items-center lg:hidden "
+      >
+        <Phone size={20} />
+        <span className="sr-only">Телефонуйте нам {phone.display}</span>
+      </a>
+
       <SearchToggle />
       <NavLink
         prefetch="intent"
@@ -106,7 +133,7 @@ function HeaderCtas({
 function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
-    <button className="md:hidden reset" onClick={() => open('mobile')}>
+    <button className="lg:hidden reset" onClick={() => open('mobile')}>
       <span className="icon-header hover:bg-stone-100/20 text-xl">☰</span>
     </button>
   );

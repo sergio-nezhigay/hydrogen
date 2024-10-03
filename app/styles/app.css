@@ -3,7 +3,7 @@
   --cart-aside-summary-height-with-discount: 300px;
   --cart-aside-summary-height: 250px;
   --grid-item-width: 355px;
-  --header-height: 64px;
+  --header-height: 114px;
   --color-dark: #000;
   --color-light: #fff;
 }
@@ -148,14 +148,14 @@ button.reset:hover:not(:has(> *)) {
 * --------------------------------------------------
 */
 
-.header {
-  align-items: center;
+/*.header {
+  align-items: start;
+  padding-top: 10px;
   display: flex;
-  height: var(--header-height);
   position: sticky;
   top: 0;
   z-index: 1;
-}
+}*/
 
 /*.header-menu-mobile-toggle {
   @media (min-width: 768px) {
