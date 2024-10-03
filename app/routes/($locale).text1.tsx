@@ -24,17 +24,17 @@ export default function App() {
       const triggerRect = activeTrigger.getBoundingClientRect();
       const listRect = list.getBoundingClientRect();
 
-      // Calculate the offset based on the trigger's position
-      const offsetValue = triggerRect.left - listRect.left;
+      const offsetValue =
+        triggerRect.left - listRect.left + triggerRect.width / 2;
+
       setOffset(offsetValue);
     } else {
-      setOffset(null); // Reset offset if there's no active trigger or value is empty
+      setOffset(null);
     }
   }, [activeTrigger, value]);
 
   return (
     <>
-      <h1>offset is {offset}</h1>{' '}
       <NavigationMenu
         value={value}
         onValueChange={setValue}
@@ -77,9 +77,13 @@ export default function App() {
           <NavigationMenuViewport
             style={{
               display: offset === null ? 'none' : undefined,
-              transform: `translateX(${offset}px)`,
+              transform:
+                offset !== null
+                  ? `translateX(calc(${offset}px - var(--radix-navigation-menu-viewport-width) / 2 ))`
+                  : undefined,
+
               top: '100%',
-              //width: '200px',
+
               width: 'var(--radix-navigation-menu-viewport-width)',
               transition: 'all 0.5s ease',
               backgroundColor: 'red',
