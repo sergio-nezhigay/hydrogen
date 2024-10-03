@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from '@remix-run/react';
 
 import {
   NavigationMenu,
@@ -8,9 +9,12 @@ import {
   NavigationMenuContent,
   NavigationMenuViewport,
   NavigationMenuIndicator,
-} from '~/components/ui/navigation-menu'; // Adjust the import based on your file structure
+  NavigationMenuLink,
+} from '~/components/ui/navigation-menu';
+import {cn} from '~/lib/utils';
+import {navigationData} from '~/data/navigationData'; // Ensure this imports correctly
 
-export default function App() {
+export default function DesktopNavigationMenu() {
   const [offset, setOffset] = React.useState<number | null>(null);
   const listRef = React.useRef<HTMLUListElement>(null);
   const [value, setValue] = React.useState<string | undefined>(undefined);
@@ -34,63 +38,75 @@ export default function App() {
   }, [activeTrigger, value]);
 
   return (
-    <>
+    <div className="text-white hidden md:flex ml-6">
       <NavigationMenu
         value={value}
         onValueChange={setValue}
         className="mx-auto"
       >
         <NavigationMenuList ref={listRef}>
-          {['one', 'two', 'three loooong', 'four', 'asdfgefg', 'f'].map(
-            (item) => (
-              <NavigationMenuItem key={item} value={item}>
-                <NavigationMenuTrigger
-                  ref={(node) => {
-                    if (item === value && activeTrigger !== node) {
-                      setActiveTrigger(node);
-                    }
-                    return node;
-                  }}
-                >
-                  {item}
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <button>{item} contentcontent</button>
-                </NavigationMenuContent>
-              </NavigationMenuItem>
-            ),
-          )}
+          {navigationData.map((menu) => (
+            <NavigationMenuItem key={menu.title} value={menu.title}>
+              {menu.items ? (
+                <>
+                  <NavigationMenuTrigger
+                    ref={(node) => {
+                      if (menu.title === value && activeTrigger !== node) {
+                        setActiveTrigger(node);
+                      }
+                      return node;
+                    }}
+                  >
+                    {menu.title}
+                  </NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-2">
+                      {menu.items.map((subItem) => (
+                        <NavigationMenuLink key={subItem.title} asChild>
+                          <Link
+                            to={subItem.to}
+                            className={cn('block p-2 hover:bg-gray-200')}
+                          >
+                            {subItem.title}
+                          </Link>
+                        </NavigationMenuLink>
+                      ))}
+                    </div>
+                  </NavigationMenuContent>
+                </>
+              ) : (
+                <NavigationMenuLink asChild>
+                  <Link
+                    to={menu.to}
+                    className={cn('block p-2 hover:bg-gray-200')}
+                  >
+                    {menu.title}
+                  </Link>
+                </NavigationMenuLink>
+              )}
+            </NavigationMenuItem>
+          ))}
           <NavigationMenuIndicator />
         </NavigationMenuList>
 
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: '100%',
-            width: '100%',
-            backgroundColor: 'yellow',
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
+        <div className="absolute left-0 top-full w-full bg-yellow-500 flex justify-center">
           <NavigationMenuViewport
+            className={cn(
+              `transition-all duration-500 ease-in-out bg-red-200 top-full`,
+              {
+                hidden: offset === null,
+              },
+            )}
             style={{
-              display: offset === null ? 'none' : undefined,
               transform:
                 offset !== null
                   ? `translateX(calc(${offset}px - var(--radix-navigation-menu-viewport-width) / 2 ))`
                   : undefined,
-
-              top: '100%',
-
               width: 'var(--radix-navigation-menu-viewport-width)',
-              transition: 'all 0.5s ease',
-              backgroundColor: 'red',
             }}
           />
         </div>
       </NavigationMenu>
-    </>
+    </div>
   );
 }
