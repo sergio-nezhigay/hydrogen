@@ -35,12 +35,12 @@ export function Header({
   const {shop, menu} = header;
 
   return (
-    <header className="flex sticky top-0 z-10  items-center bg-accent-gradient text-white  h-20 lg:h-[118px] ">
+    <header className="flex sticky top-0 z-50  items-center bg-accent-gradient text-white  h-20 lg:h-[118px] ">
       <div className="flex-between container ">
-        <div>
+        <div className="shrink-0">
           <a
             href={`tel:${phone.full}`}
-            className="text-white hover:bg-stone-100/20 hidden lg:block mb-2 p-1 rounded-md"
+            className="text-white hover:bg-stone-100/20 hidden lg:block mb-2 p-1 rounded-md font-bold xl:text-lg"
           >
             {phone.display}
           </a>

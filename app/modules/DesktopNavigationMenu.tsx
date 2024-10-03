@@ -31,14 +31,16 @@ export function DesktopNavigationMenu() {
       const offsetValue =
         triggerRect.left - listRect.left + triggerRect.width / 2;
 
-      setOffset(offsetValue);
+      setOffset(offsetValue < 700 ? offsetValue : 700);
     } else {
       setOffset(null);
     }
   }, [activeTrigger, value]);
+  const topMenuStyle = 'font-bold xl:text-lg lg-only:px-3';
 
   return (
     <div className="text-white hidden lg:flex mx-auto">
+      {/*<h1>offset {offset}</h1>*/}
       <NavigationMenu value={value} onValueChange={setValue}>
         <NavigationMenuList ref={listRef} className="lg-only:space-x-0">
           {navigationData.map((menu) => (
@@ -52,12 +54,12 @@ export function DesktopNavigationMenu() {
                       }
                       return node;
                     }}
-                    className="font-bold "
+                    className={topMenuStyle}
                   >
                     {menu.title}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <div className="grid gap-3 p-4 lg:w-[350px] xl:w-[600px] xl:grid-cols-2">
+                    <div className="grid gap-3 p-4 lg:w-[300px] xl:w-[600px] xl:grid-cols-2">
                       {menu.items.map((subItem) => (
                         <NavigationMenuLink key={subItem.title} asChild>
                           <Link
@@ -72,8 +74,11 @@ export function DesktopNavigationMenu() {
                   </NavigationMenuContent>
                 </>
               ) : (
-                <NavigationMenuLink asChild className="font-bold ">
-                  <Link to={menu.to} className={navigationMenuTriggerStyle()}>
+                <NavigationMenuLink asChild>
+                  <Link
+                    to={menu.to}
+                    className={cn(navigationMenuTriggerStyle(), topMenuStyle)}
+                  >
                     {menu.title}
                   </Link>
                 </NavigationMenuLink>
@@ -85,7 +90,7 @@ export function DesktopNavigationMenu() {
 
         <div className="absolute left-0 top-full w-full  flex justify-center">
           <NavigationMenuViewport
-            className={cn(`top-full`, {
+            className={cn(`top-full bg-white`, {
               hidden: offset === null,
             })}
             style={{

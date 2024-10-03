@@ -69,7 +69,7 @@ export const navigationData: MenuGroup[] = [
       },
       {
         title: 'VGA-HDMI',
-        to: '/collections/vga-hdmi',
+        to: '/collections/hdmi-vga',
       },
       {
         title: 'VGA-DVI',
