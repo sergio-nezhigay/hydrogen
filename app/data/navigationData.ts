@@ -16,91 +16,279 @@ type MenuGroup =
 
 export const navigationData: MenuGroup[] = [
   {
+    title: 'HDMI',
+    items: [
+      {
+        title: 'HDMI-HDMI',
+        to: '/collections/hdmi_cable',
+      },
+      {
+        title: 'HDMI-DVI',
+        to: '/collections/cable_hdmi_dvi',
+      },
+      {
+        title: 'HDMI-VGA',
+        to: '/collections/hdmi-vga',
+      },
+      {
+        title: 'HDMI-RCA',
+        to: '/collections/perehodnik-hdmi-rca',
+      },
+      {
+        title: 'HDMI-DisplayPort',
+        to: '/collections/kabeli-hdmi-displayport',
+      },
+      {
+        title: 'HDMI-miniDisplayPort',
+        to: '/collections/kabeli-hdmi-mini-displayport',
+      },
+      {
+        title: 'HDMI-micro',
+        to: '/collections/hdmi-micro',
+      },
+      {
+        title: 'HDMI-mini',
+        to: '/collections/hdmi-mini',
+      },
+      {
+        title: 'HDMI-SCART',
+        to: '/collections/hdmi-scart',
+      },
+      {
+        title: 'HDMI розгалужувачі',
+        to: '/collections/hdmi-splitter',
+      },
+    ],
+  },
+  {
+    title: 'VGA',
+    items: [
+      {
+        title: 'VGA-VGA',
+        to: '/collections/cable_vga',
+      },
+      {
+        title: 'VGA-HDMI',
+        to: '/collections/vga-hdmi',
+      },
+      {
+        title: 'VGA-DVI',
+        to: '/collections/vga-dvi',
+      },
+      {
+        title: 'VGA-DisplayPort',
+        to: '/collections/perekhodniki-vga-displayport',
+      },
+      {
+        title: 'VGA-miniDisplayPort',
+        to: '/collections/perekhodniki-vga-mini-displayport',
+      },
+      {
+        title: 'VGA-RCA',
+        to: '/collections/vga-rca',
+      },
+      {
+        title: 'VGA-USB',
+        to: '/collections/vga-usb',
+      },
+      {
+        title: 'VGA розгалужувачі',
+        to: '/collections/vga-splitter',
+      },
+    ],
+  },
+  {
+    title: 'DisplayPort',
+    items: [
+      {
+        title: 'DisplayPort-DisplayPort',
+        to: '/collections/displayport',
+      },
+      {
+        title: 'DisplayPort-HDMI',
+        to: '/collections/displayport-hdmi',
+      },
+      {
+        title: 'DisplayPort-DVI',
+        to: '/collections/displayport-dvi',
+      },
+      {
+        title: 'DisplayPort-VGA',
+        to: '/collections/perekhodniki-vga-displayport',
+      },
+      {
+        title: 'miniDisplayPort-DVI',
+        to: '/collections/minidp-dvi',
+      },
+      {
+        title: 'miniDisplayPort-HDMI',
+        to: '/collections/mini-displayport-hdmi',
+      },
+      {
+        title: 'miniDisplayPort-VGA',
+        to: '/collections/perekhodniki-vga-mini-displayport',
+      },
+    ],
+  },
+  {
+    title: 'DVI',
+    items: [
+      {
+        title: 'DVI-DVI',
+        to: '/collections/dvi_cable',
+      },
+      {
+        title: 'DVI-HDMI',
+        to: '/collections/cable_hdmi_dvi',
+      },
+      {
+        title: 'DVI-DisplayPort',
+        to: '/collections/displayport-dvi',
+      },
+      {
+        title: 'DVI-miniDisplayPort',
+        to: '/collections/minidp-dvi',
+      },
+      {
+        title: 'DVI-VGA',
+        to: '/collections/vga-dvi',
+      },
+    ],
+  },
+  {
+    title: 'RCA',
+    items: [
+      {
+        title: 'RCA-RCA',
+        to: '/collections/cabel-rca',
+      },
+      {
+        title: 'RCA-HDMI',
+        to: '/collections/perehodnik-hdmi-rca',
+      },
+      {
+        title: 'RCA-optical',
+        to: '/collections/rca-optical',
+      },
+      {
+        title: 'RCA-3.5mm',
+        to: '/collections/rca-35mm',
+      },
+      {
+        title: 'RCA-VGA',
+        to: '/collections/vga-rca',
+      },
+      {
+        title: 'RCA-SCART',
+        to: '/collections/rca-scart',
+      },
+    ],
+  },
+  {
+    title: 'USB',
+    items: [
+      {
+        title: 'USB кабелі',
+        to: '/collections/kabeli-usb',
+      },
+      {
+        title: 'USB Type C',
+        to: '/collections/usb-type-c',
+      },
+      {
+        title: 'USB-LPT',
+        to: '/collections/lpt_usb_perehodnik',
+      },
+      {
+        title: 'USB-RS232',
+        to: '/collections/perehonhik_com_usb',
+      },
+      {
+        title: 'USB OTG',
+        to: '/collections/usb_otg',
+      },
+      {
+        title: 'USB flash',
+        to: '/collections/fleshki',
+      },
+      {
+        title: 'USB-VGA',
+        to: '/collections/vga-usb',
+      },
+      {
+        title: 'USB розгалужувачі',
+        to: '/collections/koncentratory-usb',
+      },
+    ],
+  },
+  {
     title: 'Комплектуючі',
     items: [
-      {to: '/collections/pamyat', title: "Пам'ять оперативна"},
-      {to: '/collections/ssd', title: 'SSD диски'},
-      {to: '/collections/hdd', title: 'Жорсткі диски'},
       {
-        to: '/collections/karmany-dlja-hdd',
+        title: 'Пам’ять оперативна',
+        to: '/collections/pamyat',
+      },
+      {
+        title: 'Процесори',
+        to: '/collections/cpu',
+      },
+      {
+        title: 'SSD диски',
+        to: '/collections/ssd',
+      },
+      {
+        title: 'Жорсткі диски',
+        to: '/collections/hdd',
+      },
+      {
         title: 'Кишені для жорсткого диска',
+        to: '/collections/karmany-dlja-hdd',
       },
-      {to: '/collections/cpu', title: 'Процесори'},
-      {to: '/collections/termopasta', title: 'Термопасти'},
-      {to: '/collections/bloki_pitaniya', title: 'Блоки живлення для ПК'},
       {
-        to: '/collections/power-bank',
+        title: 'Блоки живлення для ПК',
+        to: '/collections/bloki_pitaniya',
+      },
+      {
+        title: 'Зарядні пристрої',
+        to: '/collections/power',
+      },
+      {
+        title: 'Мережеві фільтри',
+        to: '/collections/power_filters',
+      },
+      {
+        title: 'Термопасти',
+        to: '/collections/termopasta',
+      },
+      {
         title: 'Зовнішні акумулятори (Power Bank)',
+        to: '/collections/power-bank',
       },
-      {to: '/collections/power_filters', title: 'Мережеві фільтри'},
     ],
   },
   {
-    title: 'Кабелі HDMI',
+    title: 'Інше',
     items: [
-      {to: '/collections/hdmi_cable', title: 'HDMI-HDMI'},
-      {to: '/collections/hdmi-mini', title: 'HDMI-mini'},
-      {to: '/collections/hdmi-micro', title: 'HDMI-micro'},
-      {to: '/collections/kabeli-hdmi-displayport', title: 'HDMI-DisplayPort'},
-      {to: '/collections/hdmi-vga', title: 'HDMI-VGA'},
-      {to: '/collections/hdmi-scart', title: 'HDMI-SCART'},
-      {to: '/collections/perehodnik-hdmi-rca', title: 'HDMI-RCA'},
       {
-        to: '/collections/kabeli-hdmi-mini-displayport',
-        title: 'HDMI-miniDisplayPort',
+        title: 'Аксесуари',
+        to: '/collections/other_accs',
       },
-      {to: '/collections/cable_hdmi_dvi', title: 'DVI-HDMI'},
-    ],
-  },
-  {
-    title: 'Кабелі VGA',
-    items: [
-      {to: '/collections/cable_vga', title: 'VGA-VGA'},
       {
-        to: '/collections/perekhodniki-vga-mini-displayport',
-        title: 'VGA-miniDisplayPort',
+        title: 'Misc',
+        to: '/collections/misc',
       },
-      {to: '/collections/vga-rca', title: 'VGA-RCA'},
-      {to: '/collections/vga-dvi', title: 'VGA-DVI'},
       {
-        to: '/collections/perekhodniki-vga-displayport',
-        title: 'DisplayPort-VGA',
+        title: 'Різне',
+        to: '/collections/another',
       },
-      {to: '/collections/vga-splitter', title: 'VGA розгалужувачі'},
-    ],
-  },
-  {
-    title: 'Кабелі USB',
-    items: [
-      {to: '/collections/kabeli-usb', title: 'USB кабелі'},
-      {to: '/collections/usb_otg', title: 'USB OTG'},
-      {to: '/collections/usb-type-c', title: 'USB Type C'},
-      {to: '/collections/fleshki', title: 'USB flash'},
-      {to: '/collections/vga-usb', title: 'USB-VGA'},
-      {to: '/collections/perehonhik_com_usb', title: 'USB-RS232'},
-      {to: '/collections/lpt_usb_perehodnik', title: 'USB-LPT'},
-      {to: '/collections/koncentratory-usb', title: 'USB розгалужувачі'},
-    ],
-  },
-  {
-    title: 'Аксесуари та різне',
-    items: [
-      {to: '/collections/ekran_proektora', title: 'Проекційні екрани'},
       {
-        to: '/collections/krepleniya-dlya-proektorov',
-        title: 'Кронштейни для проекторів',
+        title: 'Кабелі інші',
+        to: '/collections/cable',
       },
-      {to: '/collections/interaktivniye_doski', title: 'Інтерактивні дошки'},
-      {to: '/collections/other_accs', title: 'Аксесуари'},
-      {to: '/collections/dvi_cable', title: 'DVI-DVI'},
-      {to: '/collections/displayport-dvi', title: 'DVI-DisplayPort'},
-      {to: '/collections/cabel-rca', title: 'RCA-RCA'},
-      {to: '/collections/rca-35mm', title: 'RCA-3.5mm'},
-      {to: '/collections/rca-scart', title: 'RCA-SCART'},
-      {to: '/collections/rca-optical', title: 'RCA-optical'},
-      {to: '/collections/misc', title: 'Misc'},
-      {to: '/collections/cable', title: 'Кабелі інші'},
-      {to: '/collections/another', title: 'Різне'},
+      {
+        title: 'Патч кабелі',
+        to: '/collections/patch_cable',
+      },
     ],
   },
   {

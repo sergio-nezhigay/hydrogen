@@ -14,6 +14,7 @@ import {
 } from '~/components/ui/navigation-menu';
 import {cn} from '~/lib/utils';
 import {navigationData} from '~/data/navigationData';
+//import {navigationData} from '~/data/navigationData';
 
 export function DesktopNavigationMenu() {
   const [offset, setOffset] = React.useState<number | null>(null);
@@ -52,6 +53,7 @@ export function DesktopNavigationMenu() {
                       }
                       return node;
                     }}
+                    className="font-bold "
                   >
                     {menu.title}
                   </NavigationMenuTrigger>
@@ -71,7 +73,7 @@ export function DesktopNavigationMenu() {
                   </NavigationMenuContent>
                 </>
               ) : (
-                <NavigationMenuLink asChild>
+                <NavigationMenuLink asChild className="font-bold ">
                   <Link to={menu.to} className={navigationMenuTriggerStyle()}>
                     {menu.title}
                   </Link>
