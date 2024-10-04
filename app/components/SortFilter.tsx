@@ -1,7 +1,7 @@
 import type {SyntheticEvent} from 'react';
 import {useMemo, useState} from 'react';
 import type {Location} from '@remix-run/react';
-import {Check, Menu, X} from 'lucide-react';
+import {Check, X} from 'lucide-react';
 import {
   Link,
   useLocation,
@@ -27,11 +27,20 @@ import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
 import {DEFAULT_LOCALE, sortFilters, useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  navigationMenuTriggerStyle,
+} from '~/components/ui/navigation-menu';
 
 import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -175,7 +184,9 @@ function Filters({filters}: {filters: Filter[]}) {
                   <AccordionContent key={filter.id}>
                     <ul key={filter.id} className="py-2 text-primary/80">
                       {filter.values
-                        ?.filter(({count}) => count > 0)
+                        ?.filter(
+                          ({count, id}) => count > 0 || id.includes('price'),
+                        )
                         .map((option) => {
                           return (
                             <li key={option.id} className="pb-2">
@@ -366,6 +377,7 @@ export default function SortMenu({className}: {className: string}) {
   const locale =
     selectedLocale.language.toLowerCase() as keyof typeof translations;
   const translation = translations[locale];
+
   const items: {label: string; key: SortParam}[] = [
     {label: translation.featured, key: 'featured'},
     {
@@ -376,57 +388,42 @@ export default function SortMenu({className}: {className: string}) {
       label: translation.price_high_low ?? 'Price: High - Low',
       key: 'price-high-low',
     },
-    {
-      label: translation.best_selling ?? 'Best Selling',
-      key: 'best-selling',
-    },
-    {
-      label: translation.newest ?? 'Newest',
-      key: 'newest',
-    },
+    {label: translation.best_selling ?? 'Best Selling', key: 'best-selling'},
+    {label: translation.newest ?? 'Newest', key: 'newest'},
   ];
-  //  const activeItem = items.find((item) => item.key === params.get('sort'));
 
-  const [value, setValue] = useState(false);
-  const [activeLabel, setActiveLabel] = useState(items[0].label);
+  const activeSortKey = params.get('sort') ?? items[0].key;
+  const activeLabel =
+    items.find((item) => item.key === activeSortKey)?.label || items[0].label;
 
   return (
-    <Accordion
-      type="single"
+    <NavigationMenu
       className={clsx(
-        'absolute right-0 top-0 z-10 whitespace-nowrap bg-white',
+        'absolute right-0 top-0 z-10 whitespace-nowrap bg-main',
         className,
       )}
-      collapsible
-      value={value ? 'open' : 'closed'}
     >
-      <AccordionItem value="open" className="border-0">
-        <AccordionTrigger
-          className="flex items-center hover:bg-stone-50 rounded-md py-1 w-full"
-          onClick={() => setValue(!value)}
-        >
-          <span className="px-2 font-medium">{translation.sort_by}:</span>
-          <span>{activeLabel || ''}</span>
-        </AccordionTrigger>
-        <AccordionContent className="flex flex-col p-4 shadow-lg rounded-sm bg-main">
-          {items.map((item) => (
-            <Link
-              key={item.key}
-              className={`whitespace-nowrap block text-sm pb-2 px-3 hover:text-blue-700 ${
-                activeLabel === item.label ? 'font-bold' : 'font-normal'
-              }`}
-              to={getSortLink(item.key, params, location)}
-              onClick={() => {
-                setValue(false);
-                setActiveLabel(item.label);
-              }}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className="">
+            <span className="px-2 font-medium">{translation.sort_by}:</span>
+            {/*<span>{activeLabel}</span>*/}
+          </NavigationMenuTrigger>
+          <NavigationMenuContent className="flex flex-col p-4 shadow-lg rounded-sm bg-main">
+            {items.map((item) => (
+              <NavigationMenuItem key={item.key}>
+                <Link
+                  to={getSortLink(item.key, params, location)}
+                  className={navigationMenuTriggerStyle()}
+                >
+                  {item.label}
+                </Link>
+              </NavigationMenuItem>
+            ))}
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 }
 
@@ -452,9 +449,10 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
           <IconFilters />
         </button>
       </SheetTrigger>*/}
-      <SheetContent side="left" className="p-4 bg-white overflow-y-scroll ">
+      <SheetContent side="left" className="p-4 bg-main overflow-y-scroll ">
         <SheetHeader>
           <SheetTitle>Фільтр</SheetTitle>
+          <SheetDescription className="sr-only">Фільтр</SheetDescription>
         </SheetHeader>
         <div className="">
           <div className="min-h-[26px]">

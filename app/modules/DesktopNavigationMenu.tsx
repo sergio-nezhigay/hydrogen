@@ -90,7 +90,7 @@ export function DesktopNavigationMenu() {
 
         <div className="absolute left-0 top-full w-full  flex justify-center">
           <NavigationMenuViewport
-            className={cn(`top-full bg-white`, {
+            className={cn(`top-full bg-main`, {
               hidden: offset === null,
             })}
             style={{

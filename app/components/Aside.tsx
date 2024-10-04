@@ -1,9 +1,11 @@
 import {createContext, type ReactNode, useContext, useState} from 'react';
 import {X} from 'lucide-react';
+
 import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from './ui/sheet';
@@ -39,13 +41,14 @@ export function Aside({
   return (
     <Sheet open={type === activeType}>
       <SheetContent
-        className="bg-white"
+        className="bg-main"
         onEscapeKeyDown={close}
         onPointerDownOutside={close}
         onInteractOutside={close}
       >
         <SheetHeader>
           <SheetTitle>{heading}</SheetTitle>
+          <SheetDescription className="sr-only">{heading}</SheetDescription>
         </SheetHeader>
         <div className="py-8"> {children}</div>
 

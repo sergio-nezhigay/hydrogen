@@ -127,7 +127,7 @@ export function ReviewForm({productId}: ReviewFormProps) {
           </Heading>
           <Form
             method="post"
-            className="p-4 border rounded-lg shadow-md bg-white w-full max-w-lg mx-auto"
+            className="p-4 border rounded-lg shadow-md bg-main w-full max-w-lg mx-auto"
           >
             <input type="hidden" name="productId" value={productId} />
             <div className="mb-4">
