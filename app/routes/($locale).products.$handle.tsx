@@ -387,7 +387,7 @@ export function ProductDetail({items}: ProductDetailProps) {
             <div dangerouslySetInnerHTML={{__html: item.content}} />
             {item.learnMore && (
               <Link
-                className="border-b border-primary/30 pb-px text-primary/50"
+                className="underline border-primary/30 pb-px text-primary/50 w-fit hover:text-indigo-600"
                 to={item.learnMore}
               >
                 {translation.learn_more}

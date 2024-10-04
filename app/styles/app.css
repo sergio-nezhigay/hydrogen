@@ -486,7 +486,7 @@ button.reset:hover:not(:has(> *)) {
   display: inline-block;
 }
 
-.card-image {
+/*.card-image {
   @apply relative flex items-center justify-center overflow-clip rounded;
   &::before {
     content: ' ';
@@ -495,4 +495,4 @@ button.reset:hover:not(:has(> *)) {
   img {
     @apply aspect-[inherit] w-full object-cover;
   }
-}
+}*/

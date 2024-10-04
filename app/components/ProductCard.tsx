@@ -53,14 +53,14 @@ export function ProductCard({
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 group">
       <Link
         onClick={onClick}
         to={`/products/${product.handle}`}
         prefetch="viewport"
       >
         <div className={clsx('grid gap-4', className)}>
-          <div className="card-image bg-primary/5">
+          <div className="card-image bg-primary/5 group-hover:shadow-hover transition-shadow duration-300">
             {image && (
               <Image
                 className="w-full object-cover test"
@@ -79,9 +79,9 @@ export function ProductCard({
               {cardLabel}
             </Text>
           </div>
-          <div className="grid gap-1 sm-max:px-2">
+          <div className="grid gap-1 sm-max:px-2 transition-colors duration-300  group-hover:text-indigo-600 ">
             <Text
-              className="w-full truncate line-clamp-1 md:line-clamp-2 hover:text-red"
+              className="w-full truncate line-clamp-2 lg:line-clamp-3 group-hover:underline"
               as="h3"
             >
               {product.title}
