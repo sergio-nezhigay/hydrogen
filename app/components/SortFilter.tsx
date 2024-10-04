@@ -23,18 +23,16 @@ import {
   AccordionTrigger,
 } from '~/components/ui/accordion';
 import {Text} from '~/components/Text';
-import {IconFilters, IconCaret, IconXMark} from '~/components/Icon';
-import {DEFAULT_LOCALE, sortFilters, useTranslation} from '~/lib/utils';
+import {IconFilters, IconXMark} from '~/components/Icon';
+import {cn, DEFAULT_LOCALE, sortFilters, useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
 import {translations} from '~/data/translations';
 import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuTrigger,
-  NavigationMenuContent,
-  navigationMenuTriggerStyle,
-} from '~/components/ui/navigation-menu';
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '~/components/ui/dropdown-menu';
 
 import {
   Sheet,
@@ -45,6 +43,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet';
+import {navigationMenuTriggerStyle} from './ui/navigation-menu';
 
 export type AppliedFilter = {
   label: string;
@@ -77,9 +76,9 @@ export function SortFilter({
     <>
       {/*mobile*/}
       <div className=" md:hidden">
-        <div className="relative">
+        <div className="flex-between">
           <FiltersDrawer filters={filters} appliedFilters={appliedFilters} />
-          <SortMenu className="" />
+          <SortMenu />
         </div>
 
         <div className="flex flex-col flex-wrap md:flex-row">
@@ -88,14 +87,13 @@ export function SortFilter({
       </div>
       {/*desktop*/}
       <div className="sm-max:hidden">
-        <div className="flex min-h-9">
-          <>
-            {appliedFilters.length > 0 && (
-              <AppliedFilters filters={appliedFilters} />
-            )}
-          </>
+        <div className="flex min-h-9 mb-2">
+          {appliedFilters.length > 0 && (
+            <AppliedFilters filters={appliedFilters} />
+          )}
+
           <div className="ml-auto relative">
-            <SortMenu className="" />
+            <SortMenu />
           </div>
         </div>
         <div className="flex flex-col flex-wrap md:flex-row">
@@ -369,14 +367,10 @@ function filterInputToParams(
   return params;
 }
 
-export default function SortMenu({className}: {className: string}) {
-  const [params] = useSearchParams();
+export default function SortMenu({className}: {className?: string}) {
   const location = useLocation();
-  const rootData = useRouteLoaderData<RootLoader>('root');
-  const selectedLocale = rootData?.selectedLocale ?? DEFAULT_LOCALE;
-  const locale =
-    selectedLocale.language.toLowerCase() as keyof typeof translations;
-  const translation = translations[locale];
+  const navigate = useNavigate();
+  const {translation} = useTranslation();
 
   const items: {label: string; key: SortParam}[] = [
     {label: translation.featured, key: 'featured'},
@@ -392,38 +386,27 @@ export default function SortMenu({className}: {className: string}) {
     {label: translation.newest ?? 'Newest', key: 'newest'},
   ];
 
-  const activeSortKey = params.get('sort') ?? items[0].key;
-  const activeLabel =
-    items.find((item) => item.key === activeSortKey)?.label || items[0].label;
+  const [params] = useSearchParams();
+  const activeItem = items.find((item) => item.key === params.get('sort'));
 
   return (
-    <NavigationMenu
-      className={clsx(
-        'absolute right-0 top-0 z-10 whitespace-nowrap bg-main',
-        className,
-      )}
-    >
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className="">
-            <span className="px-2 font-medium">{translation.sort_by}:</span>
-            {/*<span>{activeLabel}</span>*/}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent className="flex flex-col p-4 shadow-lg rounded-sm bg-main">
-            {items.map((item) => (
-              <NavigationMenuItem key={item.key}>
-                <Link
-                  to={getSortLink(item.key, params, location)}
-                  className={navigationMenuTriggerStyle()}
-                >
-                  {item.label}
-                </Link>
-              </NavigationMenuItem>
-            ))}
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+    <DropdownMenu>
+      <DropdownMenuTrigger
+        className={cn(navigationMenuTriggerStyle(), 'focus:bg-main border')}
+      >
+        {translation.sort_by}: {activeItem?.label}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="">
+        {items.map((item) => (
+          <DropdownMenuItem
+            key={item.key}
+            onClick={() => navigate(getSortLink(item.key, params, location))}
+          >
+            {item.label}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 

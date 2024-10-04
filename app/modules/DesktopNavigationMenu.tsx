@@ -85,14 +85,21 @@ export function DesktopNavigationMenu() {
               )}
             </NavigationMenuItem>
           ))}
-          <NavigationMenuIndicator />
+          <NavigationMenuIndicator
+            className={cn(`transition-transform duration-500 ease-in-out `, {
+              hidden: offset === null,
+            })}
+          />
         </NavigationMenuList>
 
         <div className="absolute left-0 top-full w-full  flex justify-center">
           <NavigationMenuViewport
-            className={cn(`top-full bg-main`, {
-              hidden: offset === null,
-            })}
+            className={cn(
+              `transition-transform duration-500 ease-in-out top-full bg-main`,
+              {
+                hidden: offset === null,
+              },
+            )}
             style={{
               transform:
                 offset !== null
