@@ -166,7 +166,10 @@ export default function Collection() {
     '===== LOG START =====',
     new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
   );
-  console.log('collection:', JSON.stringify(collection, null, 4));
+  console.log(
+    'collection.products:',
+    JSON.stringify(collection.products, null, 4),
+  );
   return (
     <>
       <PageHeader heading={collection.title} className="container">
@@ -255,6 +258,24 @@ function ProductsLoadedOnScroll({
 }) {
   const navigate = useNavigate();
 
+  const sortProducts = (products: any[]) => {
+    return products.sort((a, b) => {
+      const isAInStock = a.variants.nodes[0].availableForSale;
+      const isBInStock = b.variants.nodes[0].availableForSale;
+
+      if (isAInStock && !isBInStock) {
+        return -1;
+      }
+      if (!isAInStock && isBInStock) {
+        return 1;
+      }
+
+      return 0;
+    });
+  };
+
+  const sortedNodes = sortProducts(nodes);
+
   useEffect(() => {
     if (inView && hasNextPage) {
       navigate(nextPageUrl, {
@@ -267,7 +288,7 @@ function ProductsLoadedOnScroll({
 
   return (
     <Grid layout="products" data-test="product-grid">
-      {nodes.map((product: any, i: number) => (
+      {sortedNodes.map((product: any, i: number) => (
         <ProductCard
           key={product.id}
           product={product}

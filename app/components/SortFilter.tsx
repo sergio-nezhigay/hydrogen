@@ -147,6 +147,7 @@ function Filters({filters}: {filters: Filter[]}) {
             </span>
 
             <span>{t(option.label)}</span>
+            <span>({option.count})</span>
           </Link>
         );
     }
@@ -449,7 +450,7 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
           <IconFilters />
         </button>
       </SheetTrigger>*/}
-      <SheetContent side="left" className="p-4 bg-white">
+      <SheetContent side="left" className="p-4 bg-white overflow-y-scroll ">
         <SheetHeader>
           <SheetTitle>Фільтр</SheetTitle>
         </SheetHeader>
