@@ -286,7 +286,9 @@ export default function Product() {
             </div>
             <div className="md:flex-start gap-8">
               <div className="sm-max:mb-4">
-                <p className="mb-1">{translation.available}</p>
+                {selectedVariant.availableForSale && (
+                  <p className="mb-1">{translation.available}</p>
+                )}
                 <ProductPrice
                   price={selectedVariant?.price}
                   compareAtPrice={selectedVariant?.compareAtPrice}
