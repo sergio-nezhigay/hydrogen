@@ -174,13 +174,15 @@ function Filters({filters}: {filters: Filter[]}) {
                   </AccordionTrigger>
                   <AccordionContent key={filter.id}>
                     <ul key={filter.id} className="py-2 text-primary/80">
-                      {filter.values?.map((option) => {
-                        return (
-                          <li key={option.id} className="pb-2">
-                            {filterMarkup(filter, option)}
-                          </li>
-                        );
-                      })}
+                      {filter.values
+                        ?.filter(({count}) => count > 0)
+                        .map((option) => {
+                          return (
+                            <li key={option.id} className="pb-2">
+                              {filterMarkup(filter, option)}
+                            </li>
+                          );
+                        })}
                     </ul>
                   </AccordionContent>
                 </>

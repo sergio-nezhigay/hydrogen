@@ -12,11 +12,11 @@ import type {
   ProductFilter,
 } from '@shopify/hydrogen/storefront-api-types';
 import {
-  Pagination,
   flattenConnection,
   getPaginationVariables,
   Analytics,
   getSeoMeta,
+  Pagination,
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
 
@@ -77,20 +77,21 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     [] as ProductFilter[],
   );
 
-  const {collection, collections} = await context.storefront.query(
-    COLLECTION_QUERY,
-    {
-      variables: {
-        ...paginationVariables,
-        handle: collectionHandle,
-        filters,
-        sortKey,
-        reverse,
-        country: context.storefront.i18n.country,
-        language: context.storefront.i18n.language,
-      },
+  filters.push({
+    available: true,
+  });
+
+  const {collection} = await context.storefront.query(COLLECTION_QUERY, {
+    variables: {
+      ...paginationVariables,
+      handle: collectionHandle,
+      filters,
+      sortKey,
+      reverse,
+      country: context.storefront.i18n.country,
+      language: context.storefront.i18n.language,
     },
-  );
+  });
 
   if (!collection) {
     throw new Response('collection', {status: 404});
@@ -148,7 +149,7 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
   return json({
     collection,
     appliedFilters,
-    collections: flattenConnection(collections),
+    //collections: flattenConnection(collections),
     seo,
   });
 }
@@ -158,18 +159,10 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 };
 
 export default function Collection() {
-  const {collection, collections, appliedFilters} =
-    useLoaderData<typeof loader>();
+  const {collection, appliedFilters} = useLoaderData<typeof loader>();
   const {translation} = useTranslation();
   const {ref, inView} = useInView();
-  console.log(
-    '===== LOG START =====',
-    new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
-  );
-  console.log(
-    'collection.products:',
-    JSON.stringify(collection.products, null, 4),
-  );
+
   return (
     <>
       <PageHeader heading={collection.title} className="container">
@@ -189,9 +182,13 @@ export default function Collection() {
         headingClassName="sr-only"
       >
         <SortFilter
-          filters={collection.products.filters as Filter[]}
-          appliedFilters={appliedFilters}
-          collections={collections}
+          filters={(collection.products.filters as Filter[]).filter(
+            ({id}) => !id.includes('availability'),
+          )}
+          appliedFilters={appliedFilters.filter(
+            ({filter}) => !filter.available,
+          )}
+          //  collections={collections}
         >
           <Pagination connection={collection.products}>
             {({
@@ -258,24 +255,6 @@ function ProductsLoadedOnScroll({
 }) {
   const navigate = useNavigate();
 
-  const sortProducts = (products: any[]) => {
-    return products.sort((a, b) => {
-      const isAInStock = a.variants.nodes[0].availableForSale;
-      const isBInStock = b.variants.nodes[0].availableForSale;
-
-      if (isAInStock && !isBInStock) {
-        return -1;
-      }
-      if (!isAInStock && isBInStock) {
-        return 1;
-      }
-
-      return 0;
-    });
-  };
-
-  const sortedNodes = sortProducts(nodes);
-
   useEffect(() => {
     if (inView && hasNextPage) {
       navigate(nextPageUrl, {
@@ -288,7 +267,7 @@ function ProductsLoadedOnScroll({
 
   return (
     <Grid layout="products" data-test="product-grid">
-      {sortedNodes.map((product: any, i: number) => (
+      {nodes.map((product: any, i: number) => (
         <ProductCard
           key={product.id}
           product={product}
@@ -321,13 +300,7 @@ const COLLECTION_QUERY = `#graphql
         description
         title
       }
-      image {
-        id
-        url
-        width
-        height
-        altText
-      }
+
       products(
         first: $first,
         last: $last,
