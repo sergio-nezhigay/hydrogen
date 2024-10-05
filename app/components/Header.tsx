@@ -40,7 +40,7 @@ export function Header({
         <div className="shrink-0">
           <a
             href={`tel:${phone.full}`}
-            className="text-white hover:bg-stone-100/20 hidden lg:block mb-2 p-1 rounded-md font-bold xl:text-lg"
+            className="text-white hover:bg-stone-100/20 hidden lg:block mb-2 p-1 rounded-md xl:text-lg"
           >
             {phone.display}
           </a>
