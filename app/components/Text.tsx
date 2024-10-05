@@ -121,7 +121,7 @@ export function Section({
 }) {
   const paddings = {
     x: 'px-6 md:px-8 lg:px-12',
-    y: 'py-4',
+    y: 'py-2',
     swimlane: 'pt-4 md:pt-8 lg:pt-12 md:pb-4 lg:pb-8',
     gallery: 'py-6 md:py-8 lg:py-12',
     all: 'px-6 pt-6 md:px-8 md:pt-8 lg:px-12 lg:pt-12 md:pb-4 lg:pb-8',
@@ -182,7 +182,7 @@ export function PageHeader({
   [key: string]: any;
 }) {
   const variants: Record<string, string> = {
-    default: 'grid w-full gap-8 py-4 justify-items-start',
+    default: 'grid w-full gap-8 py-2 justify-items-start',
     blogPost:
       'grid md:text-center w-full gap-4 p-6 py-8 md:p-8 lg:p-12 md:justify-items-center',
     allCollections:

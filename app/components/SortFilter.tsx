@@ -14,7 +14,6 @@ import type {
   Filter,
   ProductFilter,
 } from '@shopify/hydrogen/storefront-api-types';
-import clsx from 'clsx';
 
 import {
   Accordion,
@@ -33,6 +32,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '~/components/ui/dropdown-menu';
+import {ScrollArea} from '~/components/ui/scroll-area';
 
 import {
   Sheet,
@@ -87,7 +87,7 @@ export function SortFilter({
       </div>
       {/*desktop*/}
       <div className="sm-max:hidden">
-        <div className="flex min-h-9 mb-2">
+        <div className="flex min-h-8 mb-2">
           {appliedFilters.length > 0 && (
             <AppliedFilters filters={appliedFilters} />
           )}
@@ -96,11 +96,11 @@ export function SortFilter({
             <SortMenu />
           </div>
         </div>
-        <div className="flex flex-col flex-wrap md:flex-row">
-          <div className="opacity-100 min-w-full md:min-w-[240px] md:w-[240px] md:pr-8 max-h-full">
+        <div className="flex flex-col flex-wrap md:flex-row ">
+          <aside className=" min-w-full md:min-w-[240px] md:w-1/5 md:pr-8 max-h-full">
             <Filters filters={filters} />
-          </div>
-          <div className="flex-1">{children}</div>
+          </aside>
+          <div className="flex-1 md:w-4/5 ml-auto">{children}</div>
         </div>
       </div>
     </>
@@ -175,31 +175,28 @@ function Filters({filters}: {filters: Filter[]}) {
             {sortedFilters.map((filter: Filter) => (
               <AccordionItem key={filter.id} value={filter.label}>
                 <>
-                  <AccordionTrigger className="flex justify-between w-full py-2">
-                    <Text
-                      size="lead"
-                      className="font-medium hover:text-indigo-700/70"
-                    >
-                      {filter.label}
-                    </Text>
+                  <AccordionTrigger className="transition-colors flex justify-between w-full py-2 font-medium hover:text-indigo-700/80 hover:bg-transparent">
+                    {filter.label}
                   </AccordionTrigger>
-                  <AccordionContent
-                    key={filter.id}
-                    className="max-h-[400px] overflow-y-auto"
-                  >
-                    <ul key={filter.id} className="py-2">
-                      {filter.values
-                        ?.filter(
-                          ({count, id}) => count > 0 || id.includes('price'),
-                        )
-                        .map((option) => {
-                          return (
-                            <li key={option.id} className="pb-2">
-                              {filterMarkup(filter, option)}
-                            </li>
-                          );
-                        })}
-                    </ul>
+                  <AccordionContent key={filter.id} asChild>
+                    <ScrollArea className="flex flex-col max-h-80 overflow-y-auto">
+                      <ul key={filter.id} className="py-2">
+                        {filter.values
+                          ?.filter(
+                            ({count, id}) => count > 0 || id.includes('price'),
+                          )
+                          .sort((a, b) =>
+                            a.label.localeCompare(b.label) ? -1 : 1,
+                          )
+                          .map((option) => {
+                            return (
+                              <li key={option.id} className="pb-2">
+                                {filterMarkup(filter, option)}
+                              </li>
+                            );
+                          })}
+                      </ul>
+                    </ScrollArea>
                   </AccordionContent>
                 </>
               </AccordionItem>
@@ -328,7 +325,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
         <span>{translation.from}</span>
         <input
           name="minPrice"
-          className="text-black w-full"
+          className="w-full border-border"
           type="number"
           value={minPrice ?? ''}
           placeholder={'₴'}
@@ -339,7 +336,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
         <span>{translation.to}</span>
         <input
           name="maxPrice"
-          className="text-black w-full"
+          className="w-full border-border"
           type="number"
           value={maxPrice ?? ''}
           placeholder={'₴'}
@@ -432,12 +429,15 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
         <IconFilters />
       </SheetTrigger>
 
-      <SheetContent side="left" className="p-4 bg-main overflow-y-scroll ">
+      <SheetContent side="left" className="bg-main">
         <SheetHeader>
           <SheetTitle>Фільтр</SheetTitle>
           <SheetDescription className="sr-only">Фільтр</SheetDescription>
         </SheetHeader>
-        <div className="">
+        <ScrollArea
+          className="flex flex-col overflow-y-auto p-4"
+          style={{maxHeight: 'calc(100vh - 100px)'}}
+        >
           <div className="min-h-[26px]">
             {appliedFilters && appliedFilters.length > 0 && (
               <AppliedFilters filters={appliedFilters} />
@@ -445,7 +445,7 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
           </div>
 
           <Filters filters={filters} />
-        </div>
+        </ScrollArea>
 
         <SheetClose
           asChild

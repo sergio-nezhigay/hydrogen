@@ -270,6 +270,14 @@ export const navigationData: MenuGroup[] = [
     title: 'Інше',
     items: [
       {
+        title: 'Проекційні екрани',
+        to: '/collections/ekran_proektora',
+      },
+      {
+        title: 'Кронштейни для проекторів',
+        to: '/collections/krepleniya-dlya-proektorov',
+      },
+      {
         title: 'Аксесуари',
         to: '/collections/other_accs',
       },
