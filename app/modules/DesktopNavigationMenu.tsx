@@ -36,7 +36,7 @@ export function DesktopNavigationMenu() {
       setOffset(null);
     }
   }, [activeTrigger, value]);
-  const topMenuStyle = 'font-bold xl:text-lg lg-only:px-3';
+  const topMenuStyle = 'font-medium uppercase xl:text-lg lg-only:px-3';
 
   return (
     <div className="text-white hidden lg:flex mx-auto">

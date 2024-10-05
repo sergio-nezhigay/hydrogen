@@ -113,7 +113,7 @@ module.exports = {
           'system-ui',
           '-apple-system',
           'BlinkMacSystemFont',
-          '"Segoe UI"',
+          //  '"Segoe UI"',
           'Roboto',
           '"Helvetica Neue"',
           'Arial',

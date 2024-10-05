@@ -147,14 +147,18 @@ function Filters({filters}: {filters: Filter[]}) {
             to={isActive ? appliedFilterLink : to}
             className="flex-start gap-2 hover:bg-slate-100 p-1 rounded-sm group "
           >
-            <span className="size-4 inline-block border border-stone-500 rounded-sm group-hover:border-stone-900">
-              {isActive && (
-                <Check className="size-4 text-slate-50 bg-indigo-700/80" />
+            <Check
+              className={cn(
+                'inline-block border transition-colors duration-150  rounded-sm group-hover:border-stone-900 size-4 text-slate-50  ',
+                {
+                  'bg-indigo-700/80 border-indigo-700/80': isActive,
+                  ' border-stone-900 border-opacity-50': !isActive,
+                },
               )}
-            </span>
+            />
 
             <span>{t(option.label)}</span>
-            <span>({option.count})</span>
+            <span className="opacity-60">({option.count})</span>
           </Link>
         );
     }
@@ -174,13 +178,16 @@ function Filters({filters}: {filters: Filter[]}) {
                   <AccordionTrigger className="flex justify-between w-full py-2">
                     <Text
                       size="lead"
-                      className="text-primary/80 font-normal  hover:text-indigo-700/70"
+                      className="font-medium hover:text-indigo-700/70"
                     >
                       {filter.label}
                     </Text>
                   </AccordionTrigger>
-                  <AccordionContent key={filter.id}>
-                    <ul key={filter.id} className="py-2 text-primary/80">
+                  <AccordionContent
+                    key={filter.id}
+                    className="max-h-[400px] overflow-y-auto"
+                  >
+                    <ul key={filter.id} className="py-2">
                       {filter.values
                         ?.filter(
                           ({count, id}) => count > 0 || id.includes('price'),
@@ -424,14 +431,7 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
       >
         <IconFilters />
       </SheetTrigger>
-      {/*<SheetTrigger asChild>
-        <button
-          aria-controls={undefined}
-          className="size-8 flex-center hover:bg-stone-700/5 rounded-md"
-        >
-          <IconFilters />
-        </button>
-      </SheetTrigger>*/}
+
       <SheetContent side="left" className="p-4 bg-main overflow-y-scroll ">
         <SheetHeader>
           <SheetTitle>Фільтр</SheetTitle>

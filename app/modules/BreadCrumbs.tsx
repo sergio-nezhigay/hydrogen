@@ -111,7 +111,7 @@ function BreadCrumbs() {
               : new URL(`${page.href}`, baseUrl).href;
 
             return (
-              <BreadcrumbItem key={page.name} className="text-primary">
+              <BreadcrumbItem key={page.name}>
                 {idx < pages.length - 1 ? (
                   <BreadcrumbLink asChild>
                     <Link
