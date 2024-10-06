@@ -63,7 +63,7 @@ export function ProductCard({
           <div className="card-image aspect-square group-hover:shadow-hover transition-shadow duration-300">
             {image && (
               <Image
-                className="w-full object-contain"
+                className="w-full h-full object-contain"
                 sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw"
                 data={image}
                 alt={image.altText || `Зображення ${product.title}`}
