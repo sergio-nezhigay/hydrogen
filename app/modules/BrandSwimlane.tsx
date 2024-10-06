@@ -84,7 +84,7 @@ export type BrandCardWrapperProps = {
 
 function BrandCardWrapper({itemData}: BrandCardWrapperProps) {
   return (
-    <div className="w-full flex-center">
+    <div className="w-full flex-center hover:shadow-hover ">
       <Link to={`/search?q=vendor:${itemData.alt}`}>
         <Image
           src={itemData.src}

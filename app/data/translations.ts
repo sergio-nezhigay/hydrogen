@@ -19,6 +19,7 @@ export const translations = {
     email: 'Електронна пошта',
     enter_shipping_address: 'Введіть адресу доставки',
     featured: 'Рекомендовані',
+    featured_brands: 'Рекомендовані бренди',
     featured_products: 'Рекомендовані товари',
     filter_by: 'Фільтрувати за',
     find: 'Знайти',
@@ -73,6 +74,9 @@ export const translations = {
     working_hours: 'Робочі години',
     working_hours_details: `\n\tПонеділок – П'ятниця: 10:00 - 18:00\n\tСубота, Неділя – Вихідні`,
     your_rating: 'Ваша оцінка',
+    hero_title: 'Відкрийте найкращі комп’ютерні компоненти та адаптери',
+    hero_description: 'Ваш універсальний магазин для якісних продуктів.',
+    hero_button: 'Зателефонуйте нам за консультацією',
   },
   ru: {
     Account: 'Аккаунт',
@@ -95,6 +99,7 @@ export const translations = {
     enter_shipping_address: 'Введите адрес доставки',
     featured: 'Рекомендуемые',
     featured_products: 'Рекомендуемые товары',
+    featured_brands: 'Рекомендуемые бренды',
     filter_by: 'Фильтровать по',
     find: 'Найти',
     from: 'от',
@@ -148,5 +153,9 @@ export const translations = {
     working_hours: 'Рабочие часы',
     working_hours_details: `\n\tПонедельник – Пятница: 10:00 - 18:00\n\tСуббота, Воскресенье – Выходные`,
     your_rating: 'Ваша оценка',
+    hero_title:
+      'Откройте для себя лучшие компьютерные комплектующие и адаптеры',
+    hero_description: 'Ваш универсальный магазин для качественных товаров.',
+    hero_button: 'Позвоните нам за советом',
   },
 };

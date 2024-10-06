@@ -119,7 +119,6 @@ export default function Homepage() {
   const {translation} = useTranslation();
   return (
     <>
-      <h1 className="sr-only">Головна сторінка магазину</h1>
       <HeroSection />
       <BrandSwimlane />
       {/*<Skeleton className="my-4 h-screen w-full aspect-[3/4]" />*/}

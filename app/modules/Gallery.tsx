@@ -105,11 +105,7 @@ export function Gallery({
       </Carousel>
       {/*dots*/}
       <DotButtons
-        totalButtons={
-          galleryItems.length % 2 === 0
-            ? galleryItems.length
-            : galleryItems.length - 1
-        }
+        totalButtons={galleryItems.length}
         activeIndex={currentIndex}
         onButtonClick={scrollTo}
       />
