@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react';
 import {Image} from '@shopify/hydrogen';
 
-import {useTranslation} from '~/lib/utils';
+import {cn, useTranslation} from '~/lib/utils';
 import {Link} from '~/components/Link';
 const phoneNumber = '+380507025777';
 
@@ -12,20 +12,21 @@ export function HeroSection() {
   useEffect(() => {
     setIsVisible(true);
   }, []);
+  const buttonStyle =
+    'inline-block px-6 py-3 mt-4 bg-white/90 text-indigo-800 rounded-lg hover:bg-indigo-700 hover:text-white transition-color';
 
   return (
-    <section className="relative w-full h-full min-h-[400px]  lg:h-[700px] flex-center text-white">
+    <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[700px] flex sm-max:content-start md:content-center align-center sm-max:pt-[200px]  md:flex-center text-white">
       <Image
         src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/58-DALL_E_2024-10-06_11.15.19.webp?v=1728204762"
-        width={0}
-        height={0}
-        crop="bottom"
+        //crop="bottom"
         className="absolute inset-0 h-full object-cover object-[center_90%]"
         alt="Комп'ютер майбутнього"
+        sizes="100vw"
       />
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-stone-700 via-stone-900 to-stone-800 opacity-50 lg:opacity-50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-stone-700 via-stone-900 to-stone-800 opacity-80 lg:opacity-50" />
 
       {/* Content */}
       <div className="relative z-10 text-center px-4">
@@ -56,13 +57,13 @@ export function HeroSection() {
         >
           <a
             href={`tel:${phoneNumber}`}
-            className="md:hidden inline-block px-6 py-3 mt-4 bg-white text-indigo-800 rounded-lg hover:bg-indigo-700 hover:text-white transition-all duration-500 ease-in-out"
+            className={cn('md:hidden ', buttonStyle)}
           >
             {translation.hero_button}
           </a>
           <Link
             to={`/pages/contact`}
-            className="sm-max:hidden inline-block px-6 py-3 mt-4 bg-white text-indigo-800 rounded-lg hover:bg-indigo-700 hover:text-white transition-all duration-500 ease-in-out"
+            className={cn('sm-max:hidden ', buttonStyle)}
           >
             {translation.hero_button}
           </Link>

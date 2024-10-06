@@ -1,5 +1,6 @@
-import {MediaFragment} from 'storefrontapi.generated';
 import {Image} from '@shopify/hydrogen';
+
+import type {MediaFragment} from 'storefrontapi.generated';
 
 export type ProductImageProps = {
   itemData: MediaFragment;
