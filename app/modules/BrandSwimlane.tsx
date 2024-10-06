@@ -80,6 +80,7 @@ export function BrandSwimlane({
 
 export type BrandCardWrapperProps = {
   itemData: Brand;
+  index: number;
 };
 
 function BrandCardWrapper({itemData}: BrandCardWrapperProps) {
@@ -91,7 +92,7 @@ function BrandCardWrapper({itemData}: BrandCardWrapperProps) {
           alt={itemData.alt}
           width={200}
           height={130}
-          className="w-full max-w-[200px] h-auto object-contain"
+          className="w-full  h-auto object-contain"
         />
       </Link>
     </div>

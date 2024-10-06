@@ -79,6 +79,11 @@ export function Gallery({
     return null;
   }
 
+  const dotsNumber =
+    galleryItems[0].__typename === 'MediaImage'
+      ? galleryItems.length
+      : galleryItems.length - 1; // when slides are shown in pairs
+
   return (
     <div className="w-full md:px-12">
       <Carousel
@@ -105,7 +110,7 @@ export function Gallery({
       </Carousel>
       {/*dots*/}
       <DotButtons
-        totalButtons={galleryItems.length}
+        totalButtons={dotsNumber}
         activeIndex={currentIndex}
         onButtonClick={scrollTo}
       />
