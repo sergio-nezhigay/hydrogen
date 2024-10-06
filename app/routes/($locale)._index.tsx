@@ -15,6 +15,7 @@ import {routeHeaders} from '~/data/cache';
 import {useTranslation} from '~/lib/utils';
 import {Skeleton} from '~/components/Skeleton';
 import {HeroSection} from '~/modules/Hero';
+import {BrandSwimlane} from '~/modules/BrandSwimlane';
 
 export const headers = routeHeaders;
 
@@ -120,25 +121,11 @@ export default function Homepage() {
     <>
       <h1 className="sr-only">Головна сторінка магазину</h1>
       <HeroSection />
+      <BrandSwimlane />
       {/*<Skeleton className="my-4 h-screen w-full aspect-[3/4]" />*/}
-      {featuredCollections && (
-        <Suspense
-          fallback={<Skeleton className="mt-20 mb-12 w-full h-[250px]" />}
-        >
-          <Await resolve={featuredCollections}>
-            {(response) => {
-              return response?.collections?.nodes ? (
-                <FeaturedCollections collections={response.collections} />
-              ) : (
-                <Skeleton className="my-4 w-full h-[250px]" />
-              );
-            }}
-          </Await>
-        </Suspense>
-      )}
 
       {featuredProducts && (
-        <Suspense fallback={<Skeleton className="my-12 w-full h-[300px]" />}>
+        <Suspense fallback={<p></p>}>
           <Await resolve={featuredProducts}>
             {(response) => {
               return response?.products?.nodes ? (

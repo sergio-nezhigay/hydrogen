@@ -1,4 +1,6 @@
-import {useState, useEffect, useCallback, FC} from 'react';
+import type {FC} from 'react';
+import {useState, useEffect, useCallback} from 'react';
+import clsx from 'clsx';
 
 import {
   Carousel,
@@ -8,18 +10,19 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from '~/components/ui/carousel';
+import type {ProductCardWrapperProps} from '~/components/ProductSwimlane';
+import type {ProductImageProps} from '~/components/ProductImage';
 
 import {Thumb} from './Thumb';
-
 import {DotButtons} from './DotButtons';
-import {ProductCardWrapperProps} from '~/components/ProductSwimlane';
-
-import clsx from 'clsx';
-import {ProductImageProps} from '~/components/ProductImage';
+import type {BrandCardWrapperProps} from './BrandSwimlane';
 
 type GalleryProps = {
   galleryItems: any[];
-  GalleryItemComponent: FC<ProductCardWrapperProps> | FC<ProductImageProps>;
+  GalleryItemComponent:
+    | FC<ProductCardWrapperProps>
+    | FC<ProductImageProps>
+    | FC<BrandCardWrapperProps>;
   itemClasses?: string;
   showThumbs?: boolean;
 };
@@ -102,7 +105,11 @@ export function Gallery({
       </Carousel>
       {/*dots*/}
       <DotButtons
-        totalButtons={galleryItems.length}
+        totalButtons={
+          galleryItems.length % 2 === 0
+            ? galleryItems.length
+            : galleryItems.length - 1
+        }
         activeIndex={currentIndex}
         onButtonClick={scrollTo}
       />
