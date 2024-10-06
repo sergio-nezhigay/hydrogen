@@ -60,12 +60,11 @@ export function ProductCard({
         prefetch="viewport"
       >
         <div className={clsx('grid gap-4', className)}>
-          <div className="card-image bg-primary/5 group-hover:shadow-hover transition-shadow duration-300">
+          <div className="card-image aspect-square group-hover:shadow-hover transition-shadow duration-300">
             {image && (
               <Image
-                className="w-full object-cover test"
+                className="w-full object-contain"
                 sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw"
-                aspectRatio="4/5"
                 data={image}
                 alt={image.altText || `Зображення ${product.title}`}
                 loading={loading}
