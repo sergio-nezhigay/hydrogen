@@ -10,12 +10,12 @@ import {getSeoMeta} from '@shopify/hydrogen';
 import {FeaturedCollections} from '~/components/FeaturedCollections';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
-
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
-
 import {useTranslation} from '~/lib/utils';
 import {Skeleton} from '~/components/Skeleton';
+import {HeroSection} from '~/modules/Hero';
+
 export const headers = routeHeaders;
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -119,6 +119,7 @@ export default function Homepage() {
   return (
     <>
       <h1 className="sr-only">Головна сторінка магазину</h1>
+      <HeroSection />
       {/*<Skeleton className="my-4 h-screen w-full aspect-[3/4]" />*/}
       {featuredCollections && (
         <Suspense
