@@ -4,6 +4,7 @@ import type {HomepageFeaturedCollectionsQuery} from 'storefrontapi.generated';
 import {Heading, Section} from '~/components/Text';
 import {Grid} from '~/components/Grid';
 import {Link} from '~/components/Link';
+import {useTranslation} from '~/lib/utils';
 
 type FeaturedCollectionsProps = HomepageFeaturedCollectionsQuery & {
   title?: string;
@@ -12,16 +13,18 @@ type FeaturedCollectionsProps = HomepageFeaturedCollectionsQuery & {
 
 export function FeaturedCollections({
   collections,
-  title = 'Collections',
+  title = 'trending_collections',
   ...props
 }: FeaturedCollectionsProps) {
+  const {t} = useTranslation();
+
   const haveCollections = collections?.nodes?.length > 0;
   if (!haveCollections) return null;
 
   const collectionsWithImage = collections.nodes.filter((item) => item.image);
 
   return (
-    <Section {...props} heading={title} padding="y">
+    <Section {...props} heading={t(title)} padding="y">
       <Grid items={collectionsWithImage.length}>
         {collectionsWithImage.map((collection) => {
           return (
@@ -29,9 +32,10 @@ export function FeaturedCollections({
               key={collection.id}
               to={`/collections/${collection.handle}`}
               prefetch="viewport"
+              className="group "
             >
               <div className="grid gap-4">
-                <div className="card-image bg-primary/5 aspect-[3/2]">
+                <div className="card-image bg-primary/5 aspect-[3/2] group-hover:shadow-hover transition-shadow duration-300">
                   {collection?.image && (
                     <Image
                       alt={`Image of ${collection.title}`}
@@ -41,7 +45,10 @@ export function FeaturedCollections({
                     />
                   )}
                 </div>
-                <Heading size="copy" className="hover:text-red">
+                <Heading
+                  size="copy"
+                  className="transition-colors duration-300  group-hover:text-indigo-600 group-hover:underline"
+                >
                   {collection.title}
                 </Heading>
               </div>

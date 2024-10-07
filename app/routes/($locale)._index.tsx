@@ -67,7 +67,14 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
   const {language, country} = context.storefront.i18n;
-
+  const collectionIds = [
+    'gid://shopify/Collection/496623911228',
+    'gid://shopify/Collection/496623780156',
+    'gid://shopify/Collection/496623714620',
+    'gid://shopify/Collection/496625287484',
+    'gid://shopify/Collection/496624271676',
+    //'gid://shopify/Collection/496624730428',
+  ];
   const featuredProducts = context.storefront
     .query(HOMEPAGE_FEATURED_PRODUCTS_QUERY, {
       variables: {
@@ -82,7 +89,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
     })
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
-      // eslint-disable-next-line no-console
+
       console.error(error);
       return null;
     });
@@ -92,11 +99,12 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       variables: {
         country,
         language,
+        ids: collectionIds,
       },
     })
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
-      // eslint-disable-next-line no-console
+
       console.error(error);
       return null;
     });
@@ -122,6 +130,21 @@ export default function Homepage() {
       <HeroSection />
       <BrandSwimlane />
       {/*<Skeleton className="my-4 h-screen w-full aspect-[3/4]" />*/}
+      {featuredCollections && (
+        <Suspense
+          fallback={<Skeleton className="mt-20 mb-12 w-full h-[250px]" />}
+        >
+          <Await resolve={featuredCollections}>
+            {(response) => {
+              return response?.nodes ? (
+                <FeaturedCollections collections={response} />
+              ) : (
+                <Skeleton className="my-4 w-full h-[250px]" />
+              );
+            }}
+          </Await>
+        </Suspense>
+      )}
 
       {featuredProducts && (
         <Suspense fallback={<p></p>}>
@@ -197,13 +220,11 @@ export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
 
 // @see: https://shopify.dev/api/storefront/current/queries/collections
 export const FEATURED_COLLECTIONS_QUERY = `#graphql
-  query homepageFeaturedCollections($country: CountryCode, $language: LanguageCode)
+  query homepageFeaturedCollections($country: CountryCode, $language: LanguageCode, $ids: [ID!]!)
   @inContext(country: $country, language: $language) {
-    collections(
-      first: 6,
-      sortKey: UPDATED_AT
-    ) {
-      nodes {
+    nodes(ids: $ids) {
+      id
+      ... on Collection {
         id
         title
         handle

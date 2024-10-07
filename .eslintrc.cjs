@@ -8,6 +8,7 @@ module.exports = {
     'plugin:hydrogen/typescript',
   ],
   rules: {
+    'no-console': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/naming-convention': 'off',
     'hydrogen/prefer-image-component': 'off',

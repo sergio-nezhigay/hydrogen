@@ -100,6 +100,7 @@ export const translations = {
     featured: 'Рекомендуемые',
     featured_products: 'Рекомендуемые товары',
     featured_brands: 'Рекомендуемые бренды',
+
     filter_by: 'Фильтровать по',
     find: 'Найти',
     from: 'от',
