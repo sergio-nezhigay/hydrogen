@@ -1,60 +1,68 @@
 import {Image} from '@shopify/hydrogen';
+import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 
-import type {HomepageFeaturedCollectionsQuery} from 'storefrontapi.generated';
 import {Heading, Section} from '~/components/Text';
 import {Grid} from '~/components/Grid';
 import {Link} from '~/components/Link';
 import {useTranslation} from '~/lib/utils';
+import type {
+  HomepageFeaturedCollectionsQuery,
+  //  Collection,
+} from 'storefrontapi.generated';
 
 type FeaturedCollectionsProps = HomepageFeaturedCollectionsQuery & {
   title?: string;
-  [key: string]: any;
 };
 
+// Type guard to check if the node is a Collection
+function isCollection(node: any): node is Collection {
+  return node && typeof node.handle === 'string' && node.image;
+}
+
 export function FeaturedCollections({
-  collections,
   title = 'trending_collections',
+  nodes,
   ...props
 }: FeaturedCollectionsProps) {
   const {t} = useTranslation();
 
-  const haveCollections = collections?.nodes?.length > 0;
-  if (!haveCollections) return null;
+  // Filter out any non-collections or collections without images
+  const collectionsWithImage = nodes?.filter(isCollection) || [];
 
-  const collectionsWithImage = collections.nodes.filter((item) => item.image);
+  if (collectionsWithImage.length === 0) {
+    return null; // If none of the collections have images, don't render anything.
+  }
 
   return (
     <Section {...props} heading={t(title)} padding="y">
       <Grid items={collectionsWithImage.length}>
-        {collectionsWithImage.map((collection) => {
-          return (
-            <Link
-              key={collection.id}
-              to={`/collections/${collection.handle}`}
-              prefetch="viewport"
-              className="group "
-            >
-              <div className="grid gap-4">
-                <div className="card-image bg-primary/5 aspect-[3/2] group-hover:shadow-hover transition-shadow duration-300">
-                  {collection?.image && (
-                    <Image
-                      alt={`Image of ${collection.title}`}
-                      data={collection.image}
-                      sizes="(max-width: 32em) 100vw, 33vw"
-                      aspectRatio="3/2"
-                    />
-                  )}
-                </div>
-                <Heading
-                  size="copy"
-                  className="transition-colors duration-300  group-hover:text-indigo-600 group-hover:underline"
-                >
-                  {collection.title}
-                </Heading>
+        {collectionsWithImage.map((collection) => (
+          <Link
+            key={collection.id}
+            to={`/collections/${collection.handle}`}
+            prefetch="viewport"
+            className="group"
+          >
+            <div className="grid gap-4">
+              <div className="card-image bg-primary/5 aspect-[3/2] group-hover:shadow-hover transition-shadow duration-300">
+                {collection?.image && (
+                  <Image
+                    alt={`Image of ${collection.title}`}
+                    data={collection.image}
+                    sizes="(max-width: 768px) 100vw, (max-width: 768px) 33vw, 20vw"
+                    aspectRatio="3/2"
+                  />
+                )}
               </div>
-            </Link>
-          );
-        })}
+              <Heading
+                size="copy"
+                className="transition-colors duration-300 group-hover:text-indigo-600 group-hover:underline"
+              >
+                {collection.title}
+              </Heading>
+            </div>
+          </Link>
+        ))}
       </Grid>
     </Section>
   );

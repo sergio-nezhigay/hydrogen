@@ -612,18 +612,53 @@ export type HomepageFeaturedProductsQuery = {
 export type HomepageFeaturedCollectionsQueryVariables = StorefrontAPI.Exact<{
   country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
   language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
+  ids:
+    | Array<StorefrontAPI.Scalars['ID']['input']>
+    | StorefrontAPI.Scalars['ID']['input'];
 }>;
 
 export type HomepageFeaturedCollectionsQuery = {
-  collections: {
-    nodes: Array<
-      Pick<StorefrontAPI.Collection, 'id' | 'title' | 'handle'> & {
-        image?: StorefrontAPI.Maybe<
-          Pick<StorefrontAPI.Image, 'altText' | 'width' | 'height' | 'url'>
-        >;
-      }
-    >;
-  };
+  nodes: Array<
+    StorefrontAPI.Maybe<
+      | Pick<StorefrontAPI.AppliedGiftCard, 'id'>
+      | Pick<StorefrontAPI.Article, 'id'>
+      | Pick<StorefrontAPI.Blog, 'id'>
+      | Pick<StorefrontAPI.Cart, 'id'>
+      | Pick<StorefrontAPI.CartLine, 'id'>
+      | (Pick<StorefrontAPI.Collection, 'id' | 'title' | 'handle'> & {
+          image?: StorefrontAPI.Maybe<
+            Pick<StorefrontAPI.Image, 'altText' | 'width' | 'height' | 'url'>
+          >;
+        })
+      | Pick<StorefrontAPI.Comment, 'id'>
+      | Pick<StorefrontAPI.Company, 'id'>
+      | Pick<StorefrontAPI.CompanyContact, 'id'>
+      | Pick<StorefrontAPI.CompanyLocation, 'id'>
+      | Pick<StorefrontAPI.ComponentizableCartLine, 'id'>
+      | Pick<StorefrontAPI.ExternalVideo, 'id'>
+      | Pick<StorefrontAPI.GenericFile, 'id'>
+      | Pick<StorefrontAPI.Location, 'id'>
+      | Pick<StorefrontAPI.MailingAddress, 'id'>
+      | Pick<StorefrontAPI.Market, 'id'>
+      | Pick<StorefrontAPI.MediaImage, 'id'>
+      | Pick<StorefrontAPI.MediaPresentation, 'id'>
+      | Pick<StorefrontAPI.Menu, 'id'>
+      | Pick<StorefrontAPI.MenuItem, 'id'>
+      | Pick<StorefrontAPI.Metafield, 'id'>
+      | Pick<StorefrontAPI.Metaobject, 'id'>
+      | Pick<StorefrontAPI.Model3d, 'id'>
+      | Pick<StorefrontAPI.Order, 'id'>
+      | Pick<StorefrontAPI.Page, 'id'>
+      | Pick<StorefrontAPI.Product, 'id'>
+      | Pick<StorefrontAPI.ProductOption, 'id'>
+      | Pick<StorefrontAPI.ProductOptionValue, 'id'>
+      | Pick<StorefrontAPI.ProductVariant, 'id'>
+      | Pick<StorefrontAPI.Shop, 'id'>
+      | Pick<StorefrontAPI.ShopPolicy, 'id'>
+      | Pick<StorefrontAPI.UrlRedirect, 'id'>
+      | Pick<StorefrontAPI.Video, 'id'>
+    >
+  >;
 };
 
 export type ApiAllProductsQueryVariables = StorefrontAPI.Exact<{
@@ -1691,11 +1726,11 @@ interface GeneratedQueryTypes {
     return: SeoCollectionContentQuery;
     variables: SeoCollectionContentQueryVariables;
   };
-  '#graphql\n  query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)\n  @inContext(country: $country, language: $language) {\n    products(first: 8) {\n      nodes {\n        ...ProductCard\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n        image {\n          url\n          altText\n          width\n          height\n        }\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n        selectedOptions {\n          name\n          value\n        }\n        product {\n          handle\n          title\n        }\n      }\n    }\n    delta: metafield(namespace: "custom", key: "delta") {\n        value\n    }\n    supplier: metafield(namespace: "custom", key: "supplier") {\n        value\n    }\n  }\n\n': {
+  '#graphql\n  query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)\n  @inContext(country: $country, language: $language) {\n    products(first: 8, query: "available_for_sale:true") {\n      nodes {\n        ...ProductCard\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n        image {\n          url\n          altText\n          width\n          height\n        }\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n        selectedOptions {\n          name\n          value\n        }\n        product {\n          handle\n          title\n        }\n      }\n    }\n    delta: metafield(namespace: "custom", key: "delta") {\n        value\n    }\n    supplier: metafield(namespace: "custom", key: "supplier") {\n        value\n    }\n  }\n\n': {
     return: HomepageFeaturedProductsQuery;
     variables: HomepageFeaturedProductsQueryVariables;
   };
-  '#graphql\n  query homepageFeaturedCollections($country: CountryCode, $language: LanguageCode)\n  @inContext(country: $country, language: $language) {\n    collections(\n      first: 6,\n      sortKey: UPDATED_AT\n    ) {\n      nodes {\n        id\n        title\n        handle\n        image {\n          altText\n          width\n          height\n          url\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  query homepageFeaturedCollections($country: CountryCode, $language: LanguageCode, $ids: [ID!]!)\n  @inContext(country: $country, language: $language) {\n    nodes(ids: $ids) {\n      id\n      ... on Collection {\n        id\n        title\n        handle\n        image {\n          altText\n          width\n          height\n          url\n        }\n      }\n    }\n  }\n': {
     return: HomepageFeaturedCollectionsQuery;
     variables: HomepageFeaturedCollectionsQueryVariables;
   };
@@ -1747,7 +1782,7 @@ interface GeneratedQueryTypes {
     return: ProductVariantsQuery;
     variables: ProductVariantsQueryVariables;
   };
-  '#graphql\n  query AllProducts(\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {\n      nodes {\n        ...ProductCard\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n        image {\n          url\n          altText\n          width\n          height\n        }\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n        selectedOptions {\n          name\n          value\n        }\n        product {\n          handle\n          title\n        }\n      }\n    }\n    delta: metafield(namespace: "custom", key: "delta") {\n        value\n    }\n    supplier: metafield(namespace: "custom", key: "supplier") {\n        value\n    }\n  }\n\n': {
+  '#graphql\n  query AllProducts(\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor ) {\n      nodes {\n        ...ProductCard\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n        image {\n          url\n          altText\n          width\n          height\n        }\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n        selectedOptions {\n          name\n          value\n        }\n        product {\n          handle\n          title\n        }\n      }\n    }\n    delta: metafield(namespace: "custom", key: "delta") {\n        value\n    }\n    supplier: metafield(namespace: "custom", key: "supplier") {\n        value\n    }\n  }\n\n': {
     return: AllProductsQuery;
     variables: AllProductsQueryVariables;
   };

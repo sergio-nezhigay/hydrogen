@@ -12,39 +12,47 @@ export function HeroSection() {
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
   const buttonStyle =
-    'inline-block px-6 py-3 mt-4 bg-white/90 text-indigo-800 rounded-lg hover:bg-indigo-700 hover:text-white transition-color';
+    'font-bold inline-block px-6 py-3 mt-4 bg-white/90 text-indigo-900 rounded-lg hover:bg-indigo-700 hover:text-white transition-color';
+
+  // Multiple shadow text border effect
+  const textShadowStyle = {
+    textShadow: `
+      0.05em 0 black,
+      0 0.05em black,
+      -0.05em 0 black,
+      0 -0.05em black,
+      -0.05em -0.05em black,
+      -0.05em 0.05em black,
+      0.05em -0.05em black,
+      0.05em 0.05em black
+    `,
+  };
 
   return (
-    <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[700px] flex sm-max:content-start md:content-center align-center sm-max:pt-[200px]  md:flex-center text-white">
+    <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[700px] flex sm-max:content-start md:content-center align-center sm-max:pt-[200px] md:flex-center text-white">
       <Image
-        src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/58-DALL_E_2024-10-06_11.15.19.webp?v=1728204762"
-        //crop="bottom"
+        src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/snapedit_1728325634815_1.webp?v=1728325873"
         className="absolute inset-0 h-full object-cover object-[center_90%]"
         alt="Комп'ютер майбутнього"
         sizes="100vw"
       />
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-stone-700 via-stone-900 to-stone-800 opacity-80 lg:opacity-50" />
+      <div className="absolute inset-0 bg-gradient-to-b from-stone-600 via-stone-900 to-stone-600 opacity-40 lg:opacity-30" />
 
       {/* Content */}
       <div className="relative z-10 text-center px-4">
         <h1
-          className={`text-3xl lg:text-5xl transform font-bold transition-all duration-300 ease-in-out ${
-            isVisible
-              ? 'opacity-100  translate-y-0'
-              : 'opacity-0  translate-y-4'
-          }`}
+          className={`text-3xl lg:text-5xl transform font-bold transition-all duration-300 ease-in-out`}
+          style={textShadowStyle}
         >
           {translation.hero_title}
         </h1>
         <p
-          className={`text-sm lg:text-lg text-gray-200 transform transition-all duration-300 ease-in-out delay-300 ${
-            isVisible
-              ? 'opacity-100  translate-y-0'
-              : 'opacity-0  translate-y-4'
-          }`}
+          className={`text-xl lg:text-4xl text-gray-200 transform transition-all duration-300 ease-in-out delay-300`}
+          style={textShadowStyle}
         >
           {translation.hero_description}
         </p>

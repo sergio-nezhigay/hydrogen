@@ -16,6 +16,7 @@ import {useTranslation} from '~/lib/utils';
 import {Skeleton} from '~/components/Skeleton';
 import {HeroSection} from '~/modules/Hero';
 import {BrandSwimlane} from '~/modules/BrandSwimlane';
+import type {HomepageFeaturedCollectionsQuery} from 'storefrontapi.generated';
 
 export const headers = routeHeaders;
 
@@ -95,7 +96,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
     });
 
   const featuredCollections = context.storefront
-    .query(FEATURED_COLLECTIONS_QUERY, {
+    .query(HOMEPAGE_FEATURED_COLLECTIONS_QUERY, {
       variables: {
         country,
         language,
@@ -136,8 +137,9 @@ export default function Homepage() {
         >
           <Await resolve={featuredCollections}>
             {(response) => {
-              return response?.nodes ? (
-                <FeaturedCollections collections={response} />
+              const collections = response?.nodes || [];
+              return collections.length > 0 ? (
+                <FeaturedCollections nodes={collections} />
               ) : (
                 <Skeleton className="my-4 w-full h-[250px]" />
               );
@@ -219,7 +221,7 @@ export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
 ` as const;
 
 // @see: https://shopify.dev/api/storefront/current/queries/collections
-export const FEATURED_COLLECTIONS_QUERY = `#graphql
+export const HOMEPAGE_FEATURED_COLLECTIONS_QUERY = `#graphql
   query homepageFeaturedCollections($country: CountryCode, $language: LanguageCode, $ids: [ID!]!)
   @inContext(country: $country, language: $language) {
     nodes(ids: $ids) {
