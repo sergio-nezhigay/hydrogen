@@ -1,13 +1,15 @@
 import {Link, useFetcher, type Fetcher} from '@remix-run/react';
 import {Image, Money} from '@shopify/hydrogen';
-import React, {useRef, useEffect} from 'react';
+import React, {useRef, useEffect, useTransition} from 'react';
+
 import {
   getEmptyPredictiveSearchResult,
   urlWithTrackingParams,
   type PredictiveSearchReturn,
 } from '~/lib/search';
-import {useAside} from './Aside';
 import {useTranslation} from '~/lib/utils';
+
+import {useAside} from './Aside';
 
 type PredictiveSearchItems = PredictiveSearchReturn['result']['items'];
 
@@ -127,8 +129,8 @@ function SearchResultsPredictiveCollections({
   collections,
   closeSearch,
 }: PartialPredictiveSearchResult<'collections'>) {
-  if (!collections.length) return null;
   const {translation} = useTranslation();
+  if (!collections.length) return null;
   return (
     <div className="predictive-search-result" key="collections">
       <h5>{translation.collections}</h5>
@@ -201,8 +203,8 @@ function SearchResultsPredictiveProducts({
   products,
   closeSearch,
 }: PartialPredictiveSearchResult<'products'>) {
-  if (!products.length) return null;
   const {translation} = useTranslation();
+  if (!products.length) return null;
   return (
     <div className="predictive-search-result" key="products">
       <h5>{translation.products}</h5>
@@ -217,7 +219,7 @@ function SearchResultsPredictiveProducts({
           const image = product?.variants?.nodes?.[0].image;
           return (
             <li className="predictive-search-result-item" key={product.id}>
-              <Link to={productUrl} onClick={closeSearch} prefetch="">
+              <Link to={productUrl} onClick={closeSearch}>
                 {image && (
                   <Image
                     alt={image.altText ?? ''}
@@ -282,13 +284,14 @@ function SearchResultsPredictiveEmpty({
 }: {
   term: React.MutableRefObject<string>;
 }) {
+  const {translation} = useTranslation();
   if (!term.current) {
     return null;
   }
 
   return (
     <p>
-      No results found for <q>{term.current}</q>
+      {translation.no_results_for} <q>{term.current}</q>
     </p>
   );
 }

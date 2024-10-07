@@ -24,6 +24,8 @@ export function ProductSwimlane({
 }: ProductSwimlaneProps) {
   const {t} = useTranslation();
   const translatedTitle = t(title);
+  console.log('featuredProducts=', products);
+
   return (
     <Section
       heading={translatedTitle}

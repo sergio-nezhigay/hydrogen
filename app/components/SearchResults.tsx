@@ -1,5 +1,6 @@
 import {Link} from '@remix-run/react';
 import {Image, Money, Pagination} from '@shopify/hydrogen';
+
 import {urlWithTrackingParams, type RegularSearchReturn} from '~/lib/search';
 import {useTranslation} from '~/lib/utils';
 
@@ -98,10 +99,10 @@ function SearchResultsProducts({
   term,
   products,
 }: PartialSearchResult<'products'>) {
+  const {translation} = useTranslation();
   if (!products?.nodes.length) {
     return null;
   }
-  const {translation} = useTranslation();
   return (
     <div className="search-result">
       <h2 className="font-bold mb-4 opacity-80">{translation.products}</h2>
@@ -169,5 +170,6 @@ function SearchResultsProducts({
 }
 
 function SearchResultsEmpty() {
-  return <p>No results, try a different search.</p>;
+  const {translation} = useTranslation();
+  return <p>{translation.no_results}</p>;
 }

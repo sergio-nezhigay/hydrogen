@@ -49,7 +49,7 @@ export function ProductCard({
   } else if (isDiscounted(price as MoneyV2, compareAtPrice as MoneyV2)) {
     cardLabel = 'Розпродаж';
   } else if (isNewArrival(product.publishedAt)) {
-    cardLabel = 'Новинка';
+    cardLabel = '';
   }
 
   return (

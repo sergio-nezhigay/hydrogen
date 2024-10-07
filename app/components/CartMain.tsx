@@ -4,11 +4,11 @@ import {Text} from '~/components/Text';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useAside} from '~/components/Aside';
 import {CartLineItem} from '~/components/CartLineItem';
-import {CartSummary} from './CartSummary';
-import {Button} from '~/components/Button';
-import {FeaturedProducts} from './FeaturedProducts';
-
 import {useTranslation} from '~/lib/utils';
+
+import {Button} from './ui/button';
+import {CartSummary} from './CartSummary';
+import {FeaturedProducts} from './FeaturedProducts';
 
 export type CartLayout = 'page' | 'aside';
 
