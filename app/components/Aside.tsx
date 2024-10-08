@@ -50,7 +50,7 @@ export function Aside({
           <SheetTitle>{heading}</SheetTitle>
           <SheetDescription className="sr-only">{heading}</SheetDescription>
         </SheetHeader>
-        <div className="py-8"> {children}</div>
+        {children}
 
         <SheetClose
           asChild

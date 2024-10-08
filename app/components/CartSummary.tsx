@@ -1,8 +1,9 @@
-import type {CartApiQueryFragment} from 'storefrontapi.generated';
-import type {CartLayout} from '~/components/CartMain';
 import {CartForm, Money, type OptimisticCart} from '@shopify/hydrogen';
 import {useRef} from 'react';
-import {FetcherWithComponents} from '@remix-run/react';
+import type {FetcherWithComponents} from '@remix-run/react';
+
+import type {CartLayout} from '~/components/CartMain';
+import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {Text, Heading} from '~/components/Text';
 import {HryvniaMoney} from '~/components/HryvniaMoney';
 import {Button} from '~/components/Button';
@@ -25,7 +26,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
         Підсумок замовлення
       </h4>
       <dl className="flex items-center justify-between font-medium">
-        <Text as="dt">Підсума</Text>
+        <Text as="dt">Сума</Text>
         <Text as="dd" data-test="subtotal">
           {cost?.subtotalAmount?.amount ? (
             <HryvniaMoney data={cost?.subtotalAmount} />

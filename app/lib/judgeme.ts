@@ -1,4 +1,10 @@
-import type {JudgemeProductData, JudgemeReviewsData} from './type';
+import {data} from '@remix-run/server-runtime/dist/single-fetch';
+
+import type {
+  JudgemeProductData,
+  JudgemeReview,
+  JudgemeReviewsData,
+} from './type';
 
 async function getInternalIdByHandle(
   api_token: string,
@@ -102,3 +108,32 @@ export async function addJudgemeReview({
 
   return response.json();
 }
+
+export const getAllShopReviews = async (
+  api_token: string,
+  shop_domain: string,
+  perPage = 20,
+  page = 1,
+) => {
+  try {
+    // Construct the API URL with pagination
+    const apiUrl =
+      `https://judge.me/api/v1/reviews?` +
+      new URLSearchParams({
+        api_token,
+        shop_domain,
+        per_page: perPage.toString(),
+        page: page.toString(),
+      });
+
+    const response = await fetch(apiUrl);
+    const data = (await response.json()) as JudgemeReviewsData;
+    console.log('🚀 ~ raw data length:', JSON.stringify(data.reviews.length));
+    const list = data.reviews.filter((review) => !review.hidden);
+
+    return list;
+  } catch (error) {
+    console.error('Error fetching shop reviews:', error);
+    return null;
+  }
+};

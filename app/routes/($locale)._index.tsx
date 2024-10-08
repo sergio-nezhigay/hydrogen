@@ -15,6 +15,9 @@ import {routeHeaders} from '~/data/cache';
 import {Skeleton} from '~/components/Skeleton';
 import {HeroSection} from '~/modules/Hero';
 import {BrandSwimlane} from '~/modules/BrandSwimlane';
+import {getAllShopReviews} from '~/lib/judgeme';
+import type {ReviewSwimlaneProps} from '~/modules/ReviewSwimlane';
+import {ReviewSwimlane} from '~/modules/ReviewSwimlane';
 
 export const headers = routeHeaders;
 
@@ -108,10 +111,21 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       return null;
     });
 
+  const shopReviews = getAllShopReviews(
+    context.env.JUDGEME_PUBLIC_TOKEN,
+    context.env.PUBLIC_STORE_DOMAIN,
+    10, // perPage
+    1, // page
+  ).catch((error) => {
+    console.error('Error fetching shop reviews:', error);
+    return null;
+  });
+
   return {
     featuredProducts,
     featuredCollections,
-    language,
+    shopReviews,
+    //language,
   };
 }
 
@@ -120,7 +134,7 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 };
 
 export default function Homepage() {
-  const {featuredCollections, featuredProducts} =
+  const {featuredCollections, featuredProducts, shopReviews} =
     useLoaderData<typeof loader>();
 
   return (
@@ -154,6 +168,25 @@ export default function Homepage() {
               ) : (
                 <Skeleton className="my-4 w-full h-[300px]" />
               );
+            }}
+          </Await>
+        </Suspense>
+      )}
+
+      {shopReviews && (
+        <Suspense
+          fallback={
+            <Skeleton className="my-4 w-full h-[300px]">
+              Loading Reviews...
+            </Skeleton>
+          }
+        >
+          <Await resolve={shopReviews}>
+            {(reviews) => {
+              if (!reviews) {
+                return <span>Review loading error</span>;
+              }
+              return <ReviewSwimlane reviews={reviews} />;
             }}
           </Await>
         </Suspense>

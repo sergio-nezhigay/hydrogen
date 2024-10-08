@@ -16,13 +16,15 @@ import type {ProductImageProps} from '~/components/ProductImage';
 import {Thumb} from './Thumb';
 import {DotButtons} from './DotButtons';
 import type {BrandCardWrapperProps} from './BrandSwimlane';
+import type {ReviewCardWrapperProps} from './ReviewSwimlane';
 
 type GalleryProps = {
   galleryItems: any[];
   GalleryItemComponent:
     | FC<ProductCardWrapperProps>
     | FC<ProductImageProps>
-    | FC<BrandCardWrapperProps>;
+    | FC<BrandCardWrapperProps>
+    | FC<ReviewCardWrapperProps>;
   itemClasses?: string;
   showThumbs?: boolean;
 };
