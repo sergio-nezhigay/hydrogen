@@ -137,3 +137,34 @@ export const getAllShopReviews = async (
     return null;
   }
 };
+
+//export const getAllReviewsPage = async (
+//  api_token: string,
+//  shop_domain: string,
+//  page = 1,
+//  review_type: 'product-reviews' | 'shop-reviews' = 'product-reviews',
+//) => {
+//  try {
+//    // Construct the API URL with pagination and review type
+//    const apiUrl =
+//      `https://judge.me/api/v1/widgets/all_reviews_page?` +
+//      new URLSearchParams({
+//        api_token,
+//        shop_domain,
+//        page: page.toString(),
+//        review_type,
+//      });
+
+//    const response = await fetch(apiUrl);
+//    if (!response.ok) {
+//      throw new Error(`Failed to fetch all reviews: ${response.statusText}`);
+//    }
+
+//    const data = await response.json();
+
+//    return data; // You can modify how you handle the data based on your needs
+//  } catch (error) {
+//    console.error('Error fetching all reviews page:', error);
+//    return null;
+//  }
+//};

@@ -3,6 +3,8 @@ import type {JudgemeReview} from '~/lib/type';
 import {useTranslation} from '~/lib/utils';
 import {Gallery} from '~/modules/Gallery';
 
+import {StarRating} from './StarRating';
+
 export type ReviewSwimlaneProps = {
   title?: string;
   reviews: JudgemeReview[];
@@ -10,17 +12,16 @@ export type ReviewSwimlaneProps = {
 };
 
 export function ReviewSwimlane({
-  title = 'Customer Reviews',
+  title = 'Reviews',
   reviews = [],
   count = 12,
   ...props
 }: ReviewSwimlaneProps) {
-  const {t} = useTranslation();
-  const translatedTitle = t(title);
+  const {translation} = useTranslation();
 
   return (
     <Section
-      heading={translatedTitle}
+      heading={translation.reviews}
       {...props}
       padding="y"
       display="flex"
@@ -40,16 +41,33 @@ export type ReviewCardWrapperProps = {
   itemData: JudgemeReview;
 };
 
-function ReviewCardWrapper({itemData}: ReviewCardWrapperProps) {
+function ReviewCardWrapper({itemData, index}: ReviewCardWrapperProps) {
+  console.log('🚀 ~ itemData:', itemData);
+  const productBaseUrl = 'https://byte.com.ua/products/';
+  const title = itemData.title;
   return (
-    <div className="review-card p-4 border rounded-lg shadow">
-      <h3 className="review-title font-bold">{itemData.title || 'Untitled'}</h3>
-      <p className="review-body">{itemData.body}</p>
-      <span className="review-rating">Rating: {itemData.rating} / 5</span>
-      <p className="reviewer-name text-sm">By: {itemData.reviewer.name}</p>
-      <p className="reviewer-name text-sm">
-        hidden: {itemData.hidden ? 'hidden' : 'visible'}
+    <div key={index} className="min-h-[250px] p-4 border rounded-lg shadow">
+      {/* Display product title and clickable link if handle is available */}
+      {itemData.product_handle && itemData.product_title && (
+        <h3 className="product-title font-medium text-lg">
+          <a
+            href={`${productBaseUrl}${itemData.product_handle}`}
+            className="text-blue-600 hover:underline"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {itemData.product_title}
+          </a>
+        </h3>
+      )}
+
+      {title && <h3 className="review-title font-bold">title {title}</h3>}
+
+      <p className="font-bold text-base">
+        reviewer.name {itemData.reviewer.name}
       </p>
+      <p className="review-body">body {itemData.body}</p>
+      <StarRating rating={itemData.rating} />
     </div>
   );
 }
