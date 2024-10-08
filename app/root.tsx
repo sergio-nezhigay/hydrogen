@@ -19,7 +19,6 @@ import {
   useRouteLoaderData,
   isRouteErrorResponse,
   type ShouldRevalidateFunction,
-  LiveReload,
   ScrollRestoration,
 } from '@remix-run/react';
 
@@ -31,7 +30,7 @@ import {PageLayout} from '~/components/PageLayout';
 import {HEADER_QUERY} from '~/lib/fragments';
 
 import {CustomAnalytics} from './modules/CustomAnalytics';
-import {DEFAULT_LOCALE, parseMenu} from './lib/utils';
+import {DEFAULT_LOCALE} from './lib/utils';
 import {seoPayload} from './lib/seo.server';
 import {GenericError} from './components/GenericError';
 import {NotFound} from './components/NotFound';
@@ -105,12 +104,6 @@ export async function loader(args: LoaderFunctionArgs) {
       language: args.context.storefront.i18n.language,
     },
     selectedLocale: storefront.i18n,
-    judgeme: {
-      shopDomain: env.JUDGEME_SHOP_DOMAIN,
-      publicToken: env.JUDGEME_PUBLIC_TOKEN,
-      cdnHost: env.JUDGEME_CDN_HOST,
-      delay: 500,
-    },
   });
 }
 

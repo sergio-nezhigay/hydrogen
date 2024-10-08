@@ -19,7 +19,6 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
       'googleads.g.doubleclick.net',
       'https://*.google.com.ua',
-      "'unsafe-inline'",
     ],
     imgSrc: [
       'https://cdn.shopify.com',
