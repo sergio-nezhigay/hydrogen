@@ -14,10 +14,12 @@ export default async function handleRequest(
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     scriptSrc: [
       "'self'",
+      'https://cdn.judge.me/',
       'https://cdn.shopify.com',
       'https://*.googletagmanager.com',
       'googleads.g.doubleclick.net',
       'https://*.google.com.ua',
+      "'unsafe-inline'",
     ],
     imgSrc: [
       'https://cdn.shopify.com',
@@ -29,6 +31,7 @@ export default async function handleRequest(
       'https://*.googleadservices.com',
     ],
     connectSrc: [
+      'https://cdn.judge.me/',
       'https://*.google-analytics.com',
       'https://*.analytics.google.com',
       'https://*.googletagmanager.com',
@@ -54,7 +57,6 @@ export default async function handleRequest(
       nonce,
       signal: request.signal,
       onError(error) {
-        // eslint-disable-next-line no-console
         console.error(error);
         responseStatusCode = 500;
       },

@@ -4,8 +4,13 @@ import {
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
-import {Await, useLoaderData} from '@remix-run/react';
+import {Await, useLoaderData, useRouteLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
+import {
+  JudgemeAllReviewsCount,
+  JudgemeCarousel,
+  useJudgeme,
+} from '@judgeme/shopify-hydrogen';
 
 import {FeaturedCollections} from '~/components/FeaturedCollections';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
@@ -17,6 +22,7 @@ import {Skeleton} from '~/components/Skeleton';
 import {HeroSection} from '~/modules/Hero';
 import {BrandSwimlane} from '~/modules/BrandSwimlane';
 import type {HomepageFeaturedCollectionsQuery} from 'storefrontapi.generated';
+import type {RootLoader} from '~/root';
 
 export const headers = routeHeaders;
 
@@ -124,10 +130,19 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 export default function Homepage() {
   const {featuredCollections, featuredProducts} =
     useLoaderData<typeof loader>();
+  const rootData = useRouteLoaderData<RootLoader>('root');
+  useJudgeme(rootData.judgeme);
+  console.log('🚀 ~ rootData:', JSON.stringify(rootData?.judgeme));
 
-  const {translation} = useTranslation();
   return (
     <>
+      <div className="test judge">
+        {' '}
+        <JudgemeAllReviewsCount />
+        {/*<JudgemeVerifiedBadge id={id:"gid://shopify/Product/9708824166716"} />*/}
+        <JudgemeCarousel />
+      </div>
+
       <HeroSection />
       <BrandSwimlane />
       {/*<Skeleton className="my-4 h-screen w-full aspect-[3/4]" />*/}

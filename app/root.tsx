@@ -5,10 +5,9 @@ import {
   Analytics,
   getSeoMeta,
 } from '@shopify/hydrogen';
-import {defer} from '@shopify/remix-oxygen';
-import type {
-  MetaArgs,
-  AppLoadContext,
+import {
+  defer,
+  type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
 import {
@@ -106,6 +105,12 @@ export async function loader(args: LoaderFunctionArgs) {
       language: args.context.storefront.i18n.language,
     },
     selectedLocale: storefront.i18n,
+    judgeme: {
+      shopDomain: env.JUDGEME_SHOP_DOMAIN,
+      publicToken: env.JUDGEME_PUBLIC_TOKEN,
+      cdnHost: env.JUDGEME_CDN_HOST,
+      delay: 500,
+    },
   });
 }
 
