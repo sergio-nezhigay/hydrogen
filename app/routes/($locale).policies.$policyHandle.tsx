@@ -7,11 +7,12 @@ import {useLoaderData} from '@remix-run/react';
 import invariant from 'tiny-invariant';
 import {getSeoMeta} from '@shopify/hydrogen';
 
-import {PageHeader, Section} from '~/components/Text';
+import {Section} from '~/components/Text';
 import {Button} from '~/components/Button';
 import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
-import {useTranslation} from '~/lib/utils';
+import {cn, useTranslation} from '~/lib/utils';
+import {navigationMenuTriggerStyle} from '~/components/ui/navigation-menu';
 
 export const headers = routeHeaders;
 
@@ -57,23 +58,17 @@ export default function Policies() {
 
   return (
     <>
-      <Section
-        padding="all"
-        display="flex"
-        className="flex-col items-baseline w-full gap-8 md:flex-row"
-      >
-        <PageHeader
-          heading={t(policy.title)}
-          className="grid items-start flex-grow gap-4 top-36 md:w-5/12"
+      <Section heading={t(policy.title)} padding="y" useH1 className="py-8">
+        <Button
+          className={cn(
+            navigationMenuTriggerStyle(),
+            'justify-self-start bg-stone-50',
+          )}
+          variant="inline"
+          to={'/policies'}
         >
-          <Button
-            className="justify-self-start"
-            variant="inline"
-            to={'/policies'}
-          >
-            &larr; {translation.back_to_policies}
-          </Button>
-        </PageHeader>
+          &larr; {translation.back_to_policies}
+        </Button>
         <div className="flex-grow w-full md:w-7/12">
           <div
             dangerouslySetInnerHTML={{__html: policy.body}}

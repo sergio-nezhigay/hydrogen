@@ -2,8 +2,9 @@ import {Section} from '~/components/Text';
 import type {JudgemeReview} from '~/lib/type';
 import {useTranslation} from '~/lib/utils';
 import {Gallery} from '~/modules/Gallery';
+import {Link} from '~/components/Link';
 
-import {StarRating} from './StarRating';
+import {ReviewCard} from './ReviewList'; // Import the ReviewCard component
 
 export type ReviewSwimlaneProps = {
   title?: string;
@@ -30,7 +31,7 @@ export function ReviewSwimlane({
       <Gallery
         galleryItems={reviews.slice(0, count)}
         GalleryItemComponent={ReviewCardWrapper}
-        itemClasses="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+        itemClasses="pl-4 lg:basis-1/2 xl:basis-1/3"
       />
     </Section>
   );
@@ -42,32 +43,21 @@ export type ReviewCardWrapperProps = {
 };
 
 function ReviewCardWrapper({itemData, index}: ReviewCardWrapperProps) {
-  console.log('🚀 ~ itemData:', itemData);
-  const productBaseUrl = 'https://byte.com.ua/products/';
-  const title = itemData.title;
+  const productBaseUrl = '/products/';
   return (
-    <div key={index} className="min-h-[250px] p-4 border rounded-lg shadow">
-      {/* Display product title and clickable link if handle is available */}
+    <div key={index} className="p-4 border rounded-lg shadow h-full">
       {itemData.product_handle && itemData.product_title && (
-        <h3 className="product-title font-medium text-lg">
-          <a
-            href={`${productBaseUrl}${itemData.product_handle}`}
+        <h3 className="font-medium text-lg">
+          <Link
+            to={`${productBaseUrl}${itemData.product_handle}`}
             className="text-blue-600 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
           >
             {itemData.product_title}
-          </a>
+          </Link>
         </h3>
       )}
 
-      {title && <h3 className="review-title font-bold">title {title}</h3>}
-
-      <p className="font-bold text-base">
-        reviewer.name {itemData.reviewer.name}
-      </p>
-      <p className="review-body">body {itemData.body}</p>
-      <StarRating rating={itemData.rating} />
+      <ReviewCard review={itemData} />
     </div>
   );
 }

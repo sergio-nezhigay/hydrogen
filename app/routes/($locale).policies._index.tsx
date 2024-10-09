@@ -12,7 +12,8 @@ import {Link} from '~/components/Link';
 import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
 import type {NonNullableFields} from '~/lib/type';
-import {useTranslation} from '~/lib/utils';
+import {cn, useTranslation} from '~/lib/utils';
+import {navigationMenuTriggerStyle} from '~/components/ui/navigation-menu';
 
 export const headers = routeHeaders;
 
@@ -48,20 +49,28 @@ export default function Policies() {
   const {t} = useTranslation();
 
   return (
-    <div className="container">
-      <PageHeader heading="Умови  роботи" variant="allCollections" />
-      <Section padding="y" className="mb-24">
+    <Section
+      heading="Умови  роботи"
+      headingClassName="text-center mx-auto"
+      padding="y"
+      useH1
+      className="py-8"
+    >
+      <ul className="flex-col">
         {policies.map((policy) => {
           return (
             policy && (
-              <Heading className="font-normal text-heading" key={policy.id}>
+              <li
+                className={cn(navigationMenuTriggerStyle(), 'flex mx-auto')}
+                key={policy.id}
+              >
                 <Link to={`/policies/${policy.handle}`}>{t(policy.title)}</Link>
-              </Heading>
+              </li>
             )
           );
         })}
-      </Section>
-    </div>
+      </ul>
+    </Section>
   );
 }
 

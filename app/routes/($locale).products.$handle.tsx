@@ -1,7 +1,6 @@
 import {Suspense} from 'react';
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
 import {defer, redirect} from '@shopify/remix-oxygen';
-//import type {MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Await, Link, useLoaderData, useRouteLoaderData} from '@remix-run/react';
 import type {Storefront} from '@shopify/hydrogen';
 import {
@@ -26,7 +25,7 @@ import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
 import {seoPayload} from '~/lib/seo.server';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
-import ReviewList from '~/modules/ReviewList';
+//import ReviewList from '~/modules/ReviewList';
 import {Gallery} from '~/modules/Gallery';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
@@ -37,6 +36,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/ui/accordion';
+import {ReviewList} from '~/modules/ReviewList';
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -79,7 +79,6 @@ export const action = async ({request, context}: LoaderFunctionArgs) => {
 
     return {success: true};
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.error('Error submitting review:', error);
     return {
       error:
@@ -179,8 +178,7 @@ function loadDeferredData({context, params}: LoaderFunctionArgs) {
     })
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
-      // eslint-disable-next-line eslint-comments/disable-enable-pair
-      /* eslint-disable no-console */
+
       console.error(error);
       return null;
     });
@@ -371,31 +369,40 @@ interface ProductDetailProps {
   items: ProductDetailItem[];
 }
 
+function compareLearnmore(a: ProductDetailItem, b: ProductDetailItem) {
+  if (a.learnMore && a.learnMore.length > 0) return -1;
+  if (b.learnMore && b.learnMore.length > 0) return 1;
+
+  return 0;
+}
+
 export function ProductDetail({items}: ProductDetailProps) {
   const {translation} = useTranslation();
 
   return (
-    <Accordion type="single" collapsible defaultValue="item-1">
-      {items.map((item, index) => (
-        <AccordionItem value={`item-${index + 1}`} key={item.title}>
-          <AccordionTrigger className="text-left flex justify-between items-center">
-            <Text size="lead" className="inline-block">
-              {item.title}
-            </Text>
-          </AccordionTrigger>
-          <AccordionContent className="grid gap-2 pb-4 pt-2">
-            <div dangerouslySetInnerHTML={{__html: item.content}} />
-            {item.learnMore && (
-              <Link
-                className="underline border-primary/30 pb-px text-primary/50 w-fit hover:text-indigo-600"
-                to={item.learnMore}
-              >
-                {translation.learn_more}
-              </Link>
-            )}
-          </AccordionContent>
-        </AccordionItem>
-      ))}
+    <Accordion type="single" collapsible defaultValue="item-3">
+      {items
+        .sort((a, b) => compareLearnmore(a, b))
+        .map((item, index) => (
+          <AccordionItem value={`item-${index + 1}`} key={item.title}>
+            <AccordionTrigger className="text-left flex justify-between items-center">
+              <Text size="lead" className="inline-block">
+                {item.title}
+              </Text>
+            </AccordionTrigger>
+            <AccordionContent className="grid gap-2 pb-4 pt-2">
+              <div dangerouslySetInnerHTML={{__html: item.content}} />
+              {item.learnMore && (
+                <Link
+                  className="underline border-primary/30 pb-px text-primary/50 w-fit hover:text-indigo-600"
+                  to={item.learnMore}
+                >
+                  {translation.learn_more}
+                </Link>
+              )}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
     </Accordion>
   );
 }

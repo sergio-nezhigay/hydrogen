@@ -21,11 +21,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/components/ui/accordion';
-import {Text} from '~/components/Text';
 import {IconFilters, IconXMark} from '~/components/Icon';
-import {cn, DEFAULT_LOCALE, sortFilters, useTranslation} from '~/lib/utils';
-import type {RootLoader} from '~/root';
-import {translations} from '~/data/translations';
+import {cn, sortFilters, useTranslation} from '~/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuTrigger,

@@ -6,7 +6,7 @@ export const translations = {
     also_interested: 'Також вас можуть зацікавити',
     applied_filters: 'Застосовані фільтри',
     available: 'Є в наявності',
-    back_to_policies: 'Повернутися до Правил',
+    back_to_policies: 'Переглянути все',
     basket: 'Кошик',
     best_selling: 'Найпопулярніші',
     buy: 'Купити',

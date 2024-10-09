@@ -106,6 +106,7 @@ export function Section({
   display = 'grid',
   heading,
   headingClassName,
+  useH1 = false,
   padding = 'all',
   ...props
 }: {
@@ -116,6 +117,7 @@ export function Section({
   display?: 'grid' | 'flex';
   heading?: string;
   headingClassName?: string;
+  useH1?: boolean;
   padding?: 'x' | 'y' | 'swimlane' | 'all' | 'gallery';
   [key: string]: any;
 }) {
@@ -152,6 +154,7 @@ export function Section({
       <div className="container">
         {heading && (
           <Heading
+            as={useH1 ? 'h1' : 'h2'}
             size="heading"
             className={clsx(
               padding === 'y' ? paddings['x'] : '',

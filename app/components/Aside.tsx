@@ -1,6 +1,8 @@
 import {createContext, type ReactNode, useContext, useState} from 'react';
 import {X} from 'lucide-react';
 
+import {ScrollArea} from '~/components/ui/scroll-area';
+
 import {
   Sheet,
   SheetClose,
@@ -37,7 +39,8 @@ export function Aside({
   heading: React.ReactNode;
 }) {
   const {type: activeType, close} = useAside();
-
+  const isCart = type === 'cart';
+  const scrollStyle = isCart ? 'none' : 'calc(100vh - 100px)';
   return (
     <Sheet open={type === activeType}>
       <SheetContent
@@ -45,12 +48,18 @@ export function Aside({
         onEscapeKeyDown={close}
         onPointerDownOutside={close}
         onInteractOutside={close}
+        side={isCart ? 'rightFull' : 'right'}
       >
         <SheetHeader>
           <SheetTitle>{heading}</SheetTitle>
           <SheetDescription className="sr-only">{heading}</SheetDescription>
         </SheetHeader>
-        {children}
+        <ScrollArea
+          className="flex flex-col overflow-y-auto"
+          style={{maxHeight: scrollStyle}}
+        >
+          {children}
+        </ScrollArea>
 
         <SheetClose
           asChild

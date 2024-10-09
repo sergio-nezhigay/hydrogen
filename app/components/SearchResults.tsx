@@ -2,7 +2,9 @@ import {Link} from '@remix-run/react';
 import {Image, Money, Pagination} from '@shopify/hydrogen';
 
 import {urlWithTrackingParams, type RegularSearchReturn} from '~/lib/search';
-import {useTranslation} from '~/lib/utils';
+import {cn, useTranslation} from '~/lib/utils';
+
+import {navigationMenuTriggerStyle} from './ui/navigation-menu';
 
 type SearchItems = RegularSearchReturn['result']['items'];
 type PartialSearchResult<ItemType extends keyof SearchItems> = Pick<
@@ -139,7 +141,9 @@ function SearchResultsProducts({
           return (
             <div>
               <div>
-                <PreviousLink>
+                <PreviousLink
+                  className={cn(navigationMenuTriggerStyle(), 'bg-slate-50')}
+                >
                   {isLoading ? (
                     translation.loading
                   ) : (
@@ -152,7 +156,9 @@ function SearchResultsProducts({
                 <br />
               </div>
               <div>
-                <NextLink>
+                <NextLink
+                  className={cn(navigationMenuTriggerStyle(), 'bg-slate-50')}
+                >
                   {isLoading ? (
                     translation.loading
                   ) : (
