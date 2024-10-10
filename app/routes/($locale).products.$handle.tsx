@@ -417,7 +417,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     recommended: productRecommendations(productId: $productId) {
       ...ProductCard
     }
-    additional: products(first: $count, sortKey: BEST_SELLING) {
+    additional: products(first: $count, query: "available_for_sale:true",sortKey: BEST_SELLING) {
       nodes {
         ...ProductCard
       }
