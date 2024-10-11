@@ -32,18 +32,12 @@ export function HeroSection() {
 
   return (
     <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[700px] flex sm-max:content-start md:content-center align-center sm-max:pt-[200px] md:flex-center text-white">
-      <picture>
-        <source
-          media="(min-width: 768px)"
-          srcSet="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-desktop-narrow-compressed.webp?v=1728656179"
-        />
-        <Image
-          src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-mobile-compressed.webp?v=1728656179"
-          className="absolute inset-0 h-full object-cover object-[center_90%]"
-          alt="Комп'ютер майбутнього"
-          sizes="100vw"
-        />
-      </picture>
+      <Image
+        src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/snapedit_1728325634815_1.webp?v=1728325873"
+        className="absolute inset-0 h-full object-cover object-[center_90%]"
+        alt="Комп'ютер майбутнього"
+        sizes="100vw"
+      />
 
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-stone-600 via-stone-900 to-stone-600 opacity-40 lg:opacity-30" />
