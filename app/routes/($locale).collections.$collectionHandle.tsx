@@ -120,7 +120,6 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
         );
       });
       if (!foundValue) {
-        // eslint-disable-next-line no-console
         console.error('Could not find filter value for filter', filter);
         return null;
       }
@@ -162,7 +161,7 @@ export default function Collection() {
   const {collection, appliedFilters} = useLoaderData<typeof loader>();
   const {translation} = useTranslation();
   const {ref, inView} = useInView();
-
+  console.log(collection.products.nodes);
   return (
     <>
       <PageHeader heading={collection.title} className="container">
@@ -181,52 +180,56 @@ export default function Collection() {
         heading={collection.title}
         headingClassName="sr-only"
       >
-        <SortFilter
-          filters={(collection.products.filters as Filter[]).filter(
-            ({id}) => !id.includes('availability'),
-          )}
-          appliedFilters={appliedFilters.filter(
-            ({filter}) => !filter.available,
-          )}
-          //  collections={collections}
-        >
-          <Pagination connection={collection.products}>
-            {({
-              nodes,
-              isLoading,
-              PreviousLink,
-              NextLink,
-              nextPageUrl,
-              hasNextPage,
-              state,
-            }) => (
-              <>
-                <div className="flex items-center justify-center mb-6">
-                  <Button as={PreviousLink} variant="secondary" width="full">
-                    {isLoading ? translation.loading : translation.prev}
-                  </Button>
-                </div>
-                <ProductsLoadedOnScroll
-                  nodes={nodes}
-                  inView={inView}
-                  nextPageUrl={nextPageUrl}
-                  hasNextPage={hasNextPage}
-                  state={state}
-                />
-                <div className="flex items-center justify-center mt-6">
-                  <Button
-                    ref={ref}
-                    as={NextLink}
-                    variant="secondary"
-                    width="full"
-                  >
-                    {isLoading ? translation.loading : translation.next}
-                  </Button>
-                </div>
-              </>
+        {collection.products.nodes.length > 0 ? (
+          <SortFilter
+            filters={(collection.products.filters as Filter[]).filter(
+              ({id}) => !id.includes('availability'),
             )}
-          </Pagination>
-        </SortFilter>
+            appliedFilters={appliedFilters.filter(
+              ({filter}) => !filter.available,
+            )}
+            //  collections={collections}
+          >
+            <Pagination connection={collection.products}>
+              {({
+                nodes,
+                isLoading,
+                PreviousLink,
+                NextLink,
+                nextPageUrl,
+                hasNextPage,
+                state,
+              }) => (
+                <>
+                  <div className="flex items-center justify-center mb-6">
+                    <Button as={PreviousLink} variant="secondary" width="full">
+                      {isLoading ? translation.loading : translation.prev}
+                    </Button>
+                  </div>
+                  <ProductsLoadedOnScroll
+                    nodes={nodes}
+                    inView={inView}
+                    nextPageUrl={nextPageUrl}
+                    hasNextPage={hasNextPage}
+                    state={state}
+                  />
+                  <div className="flex items-center justify-center mt-6">
+                    <Button
+                      ref={ref}
+                      as={NextLink}
+                      variant="secondary"
+                      width="full"
+                    >
+                      {isLoading ? translation.loading : translation.next}
+                    </Button>
+                  </div>
+                </>
+              )}
+            </Pagination>
+          </SortFilter>
+        ) : (
+          ''
+        )}
       </Section>
       <Analytics.CollectionView
         data={{

@@ -180,7 +180,9 @@ function Filters({filters}: {filters: Filter[]}) {
                       <ul key={filter.id} className="py-2">
                         {filter.values
                           ?.filter(
-                            ({count, id}) => count > 0 || id.includes('price'),
+                            ({count, id, label}) =>
+                              (count > 0 || id.includes('price')) &&
+                              label !== 'Informatica',
                           )
                           .sort((a, b) =>
                             a.label.localeCompare(b.label) ? -1 : 1,

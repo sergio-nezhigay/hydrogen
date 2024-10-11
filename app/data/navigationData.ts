@@ -106,7 +106,7 @@ export const navigationData: MenuGroup[] = [
       },
       {
         title: 'DisplayPort-HDMI',
-        to: '/collections/displayport-hdmi',
+        to: '/collections/kabeli-hdmi-displayport',
       },
       {
         title: 'DisplayPort-DVI',
@@ -122,7 +122,7 @@ export const navigationData: MenuGroup[] = [
       },
       {
         title: 'miniDisplayPort-HDMI',
-        to: '/collections/mini-displayport-hdmi',
+        to: '/collections/kabeli-hdmi-mini-displayport',
       },
       {
         title: 'miniDisplayPort-VGA',
@@ -196,10 +196,6 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/usb-type-c',
       },
       {
-        title: 'USB-LPT',
-        to: '/collections/lpt_usb_perehodnik',
-      },
-      {
         title: 'USB-RS232',
         to: '/collections/perehonhik_com_usb',
       },
@@ -211,10 +207,7 @@ export const navigationData: MenuGroup[] = [
         title: 'USB flash',
         to: '/collections/fleshki',
       },
-      {
-        title: 'USB-VGA',
-        to: '/collections/vga-usb',
-      },
+
       {
         title: 'USB розгалужувачі',
         to: '/collections/koncentratory-usb',
@@ -227,10 +220,6 @@ export const navigationData: MenuGroup[] = [
       {
         title: 'Пам’ять оперативна',
         to: '/collections/pamyat',
-      },
-      {
-        title: 'Процесори',
-        to: '/collections/cpu',
       },
       {
         title: 'SSD диски',
@@ -278,31 +267,24 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/krepleniya-dlya-proektorov',
       },
       {
+        title: 'Оптичні перехідники',
+        to: '/collections/optical',
+      },
+      {
         title: 'Аксесуари',
         to: '/collections/other_accs',
       },
       {
-        title: 'Misc',
-        to: '/collections/misc',
-      },
-      {
-        title: 'Різне',
-        to: '/collections/another',
+        title: 'Патч кабелі',
+        to: '/collections/kabeli-rj45',
       },
       {
         title: 'Кабелі інші',
         to: '/collections/cable',
       },
-      {
-        title: 'Патч кабелі',
-        to: '/collections/patch_cable',
-      },
     ],
   },
-  //  {
-  //    title: 'Каталог',
-  //    to: '/products',
-  //  },
+
   {
     title: 'Контакти',
     to: '/pages/contact',
