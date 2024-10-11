@@ -219,6 +219,7 @@ export default function Product() {
 
   const {product, variants, judgemeReviewsData, recommended} =
     useLoaderData<typeof loader>();
+
   const {media, title, descriptionHtml} = product;
 
   const selectedVariant = useOptimisticVariant(
@@ -336,6 +337,23 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
+      <Suspense fallback={<Skeleton className="h-32" />}>
+        <Await
+          errorElement="There was a problem loading related products"
+          resolve={recommended}
+        >
+          {(products) => (
+            <>
+              {products.complementaryNodes.length > 0 && (
+                <ProductSwimlane
+                  title={translation.complementary_products}
+                  products={{nodes: products.complementaryNodes}}
+                />
+              )}
+            </>
+          )}
+        </Await>
+      </Suspense>
       <div id="review-list">
         <ReviewList reviews={reviews} title={translation.reviews} />
         <ReviewForm productId={product.id} />
@@ -417,6 +435,9 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     recommended: productRecommendations(productId: $productId) {
       ...ProductCard
     }
+    complementary: productRecommendations(productId: $productId, intent: COMPLEMENTARY) {
+      ...ProductCard
+    }
     additional: products(first: $count, query: "available_for_sale:true",sortKey: BEST_SELLING) {
       nodes {
         ...ProductCard
@@ -439,17 +460,20 @@ async function getRecommendedProducts(
   const mergedProducts = (products.recommended ?? [])
     .concat(products.additional.nodes)
     .filter(
-      (value, index, array) =>
+      (value: {id: any}, index: any, array: any[]) =>
         array.findIndex((value2) => value2.id === value.id) === index,
     );
 
   const originalProduct = mergedProducts.findIndex(
-    (item) => item.id === productId,
+    (item: {id: string}) => item.id === productId,
   );
 
   mergedProducts.splice(originalProduct, 1);
 
-  return {nodes: mergedProducts};
+  return {
+    nodes: mergedProducts,
+    complementaryNodes: products.complementary ?? [],
+  };
 }
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql

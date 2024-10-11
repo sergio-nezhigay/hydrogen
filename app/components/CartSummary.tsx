@@ -7,6 +7,7 @@ import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {Text, Heading} from '~/components/Text';
 import {HryvniaMoney} from '~/components/HryvniaMoney';
 import {Button} from '~/components/Button';
+import {useTranslation} from '~/lib/utils';
 
 type CartSummaryProps = {
   cart: OptimisticCart<CartApiQueryFragment | null>;
@@ -19,6 +20,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
       ? 'sticky grid gap-6 p-4 md:px-6 bg-primary/5 rounded w-full'
       : 'grid gap-4 border-t w-full';
   const cost = cart.cost;
+  const {translation} = useTranslation();
 
   return (
     <section aria-labelledby="cart-summary" className={className}>
@@ -26,7 +28,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
         Підсумок замовлення
       </h4>
       <dl className="flex items-center justify-between font-medium">
-        <Text as="dt">Сума</Text>
+        <Text as="dt">{translation.subtotal}</Text>
         <Text as="dd" data-test="subtotal">
           {cost?.subtotalAmount?.amount ? (
             <HryvniaMoney data={cost?.subtotalAmount} />
@@ -43,6 +45,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
 }
 
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
+  const {translation} = useTranslation();
   if (!checkoutUrl) return null;
 
   const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
@@ -51,7 +54,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
     <div className="flex mt-2 ">
       <a href={checkoutUrlWithZipcode} target="_self" className="w-full">
         <Button as="span" width="full" variant="red">
-          Оформити замовлення
+          {translation.make_order}
         </Button>
       </a>
     </div>
