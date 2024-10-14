@@ -99,6 +99,8 @@ export async function addJudgemeReview({
       rating,
       title,
       body,
+      verified_buyer: true,
+      review_type: 'product',
     }),
   });
 
