@@ -7,10 +7,6 @@ import {useTranslation} from '~/lib/utils';
 
 import {star, filledStar} from './StarRating';
 
-interface ReviewFormProps {
-  productId: string;
-}
-
 interface ActionData {
   success?: boolean;
   error?: string;
@@ -82,20 +78,22 @@ function StarInput({rating, setRating}: StarInputProps) {
   );
 }
 
-export function ReviewForm({productId}: ReviewFormProps) {
+interface ReviewFormProps {
+  productId: string;
+  name?: string;
+  email?: string;
+}
+
+export function ReviewForm({productId, name, email}: ReviewFormProps) {
   const actionData = useActionData<ActionData>();
   const {translation} = useTranslation();
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [rating, setRating] = useState<number>(0);
   const [body, setBody] = useState('');
   const [formVisible, setFormVisible] = useState(false);
 
   useEffect(() => {
     if (actionData?.success) {
-      setName('');
-      setEmail('');
       setRating(0);
       setBody('');
       setFormVisible(false);
@@ -132,37 +130,46 @@ export function ReviewForm({productId}: ReviewFormProps) {
             className="p-4 border rounded-lg shadow-md bg-main w-full max-w-lg mx-auto"
           >
             <input type="hidden" name="productId" value={productId} />
-            <div className="mb-4">
-              <label htmlFor="name" className="block text-lg mb-2">
-                {translation.name}
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                aria-required="true"
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-lg mb-2">
-                {translation.email}
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                aria-required="true"
-                className="w-full p-2 border border-gray-300 rounded"
-              />
-            </div>
+
+            {/* Conditionally render hidden fields if name and email are provided */}
+            {name ? (
+              <input type="hidden" name="name" value={name} />
+            ) : (
+              <div className="mb-4">
+                <label htmlFor="name" className="block text-lg mb-2">
+                  {translation.name}
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  aria-required="true"
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+            )}
+
+            {email ? (
+              <input type="hidden" name="email" value={email} />
+            ) : (
+              <div className="mb-4">
+                <label htmlFor="email" className="block text-lg mb-2">
+                  {translation.email}
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  aria-required="true"
+                  className="w-full p-2 border border-gray-300 rounded"
+                />
+              </div>
+            )}
+
             <StarInput rating={rating} setRating={setRating} />
+
             <div className="mb-4">
               <label htmlFor="body" className="block text-lg mb-2">
                 {translation.review_body}
@@ -177,6 +184,7 @@ export function ReviewForm({productId}: ReviewFormProps) {
                 className="w-full p-2 border border-gray-300 rounded"
               ></textarea>
             </div>
+
             <Button
               type="submit"
               className="w-full p-3 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -184,11 +192,13 @@ export function ReviewForm({productId}: ReviewFormProps) {
               {translation.submit_review}
             </Button>
           </Form>
+
           {actionData?.error && (
             <Text as="p" className="text-red-500 text-center mt-4" role="alert">
               {actionData.error}
             </Text>
           )}
+
           {actionData?.success && (
             <Text
               as="p"

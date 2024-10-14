@@ -1509,6 +1509,25 @@ export type AllProductsQuery = {
   };
 };
 
+export type GetProductQueryVariables = StorefrontAPI.Exact<{
+  id: StorefrontAPI.Scalars['ID']['input'];
+}>;
+
+export type GetProductQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'id' | 'title'> & {
+      images: {
+        edges: Array<{
+          node: Pick<
+            StorefrontAPI.Image,
+            'url' | 'altText' | 'height' | 'width'
+          >;
+        }>;
+      };
+    }
+  >;
+};
+
 export type SearchProductFragment = {__typename: 'Product'} & Pick<
   StorefrontAPI.Product,
   'handle' | 'id' | 'publishedAt' | 'title' | 'trackingParameters' | 'vendor'
@@ -1845,6 +1864,10 @@ interface GeneratedQueryTypes {
   '#graphql\n  query AllProducts(\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor ) {\n      nodes {\n        ...ProductCard\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment ProductCard on Product {\n    id\n    title\n    publishedAt\n    handle\n    vendor\n    variants(first: 1) {\n      nodes {\n        id\n        availableForSale\n        image {\n          url\n          altText\n          width\n          height\n        }\n        price {\n          amount\n          currencyCode\n        }\n        compareAtPrice {\n          amount\n          currencyCode\n        }\n        selectedOptions {\n          name\n          value\n        }\n        product {\n          handle\n          title\n        }\n      }\n    }\n    delta: metafield(namespace: "custom", key: "delta") {\n        value\n    }\n    supplier: metafield(namespace: "custom", key: "supplier") {\n        value\n    }\n  }\n\n': {
     return: AllProductsQuery;
     variables: AllProductsQueryVariables;
+  };
+  '#graphql\n  query GetProduct($id: ID!) {\n    product(id: $id) {\n      id\n      title\n      images(first: 1) {\n        edges {\n        node {\n          url\n          altText\n          height\n          width\n        }\n      }\n      }\n    }\n  }\n': {
+    return: GetProductQuery;
+    variables: GetProductQueryVariables;
   };
   '#graphql\n    query RegularSearch(\n      $country: CountryCode\n      $endCursor: String\n      $first: Int\n      $language: LanguageCode\n      $last: Int\n      $term: String!\n      $startCursor: String\n    ) @inContext(country: $country, language: $language) {\n      articles: search(\n        query: $term,\n        types: [ARTICLE],\n        first: $first,\n      ) {\n        nodes {\n          ...on Article {\n            ...SearchArticle\n          }\n        }\n      }\n      pages: search(\n        query: $term,\n        types: [PAGE],\n        first: $first,\n      ) {\n        nodes {\n          ...on Page {\n            ...SearchPage\n          }\n        }\n      }\n      products: search(\n        after: $endCursor,\n        before: $startCursor,\n        first: $first,\n        last: $last,\n        query: $term,\n        sortKey: RELEVANCE,\n        types: [PRODUCT],\n        unavailableProducts: HIDE,\n      ) {\n        nodes {\n          ...on Product {\n            ...SearchProduct\n          }\n        }\n        pageInfo {\n          ...PageInfoFragment\n        }\n      }\n    }\n    #graphql\n    fragment SearchProduct on Product {\n      __typename\n      handle\n      id\n      publishedAt\n      title\n      trackingParameters\n      vendor\n      variants(first: 1) {\n        nodes {\n          id\n          image {\n            url\n            altText\n            width\n            height\n          }\n          price {\n            amount\n            currencyCode\n          }\n          compareAtPrice {\n            amount\n            currencyCode\n          }\n          selectedOptions {\n            name\n            value\n          }\n          product {\n            handle\n            title\n          }\n        }\n      }\n    }\n  \n    #graphql\n    fragment SearchPage on Page {\n       __typename\n       handle\n      id\n      title\n      trackingParameters\n    }\n  \n    #graphql\n    fragment SearchArticle on Article {\n      __typename\n      handle\n      id\n      title\n      trackingParameters\n    }\n  \n    #graphql\n    fragment PageInfoFragment on PageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n  \n  ': {
     return: RegularSearchQuery;
