@@ -354,10 +354,11 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
-      <div id="review-list">
-        <ReviewList reviews={reviews} title={translation.reviews} />
-        <ReviewForm productId={product.id} />
-      </div>
+
+      <ReviewList reviews={reviews} title={translation.reviews} />
+
+      <ReviewForm productId={product.id} />
+
       <Analytics.ProductView
         data={{
           products: [

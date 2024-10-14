@@ -51,19 +51,19 @@ export function HeroSection() {
       {/* Content */}
       <div className="relative z-10 text-center px-4">
         <h1
-          className={`text-3xl lg:text-5xl transform font-bold transition-all duration-300 ease-in-out`}
+          className={`text-3xl lg:text-5xl transform font-bold transition-all duration-300 ease-in-out sm-max:mb-10`}
           style={textShadowStyle}
         >
           {translation.hero_title}
         </h1>
         <p
-          className={`text-xl lg:text-4xl text-gray-200 transform transition-all duration-300 ease-in-out delay-300`}
+          className={`text-xl lg:text-4xl sm-max:max-w-[200px] mx-auto text-gray-200 transform transition-all duration-300 ease-in-out delay-300 sm-max:mb-10`}
           style={textShadowStyle}
         >
           {translation.hero_description}
         </p>
         <div
-          className={`transition-all duration-1000 ease-in-out delay-1000 ${
+          className={` mx-auto transition-all duration-1000 ease-in-out delay-1000 ${
             isVisible
               ? 'opacity-100  translate-y-0'
               : 'opacity-0  translate-y-4'

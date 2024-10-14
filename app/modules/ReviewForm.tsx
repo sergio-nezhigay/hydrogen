@@ -4,6 +4,7 @@ import {useState, useEffect} from 'react';
 import {Heading, Section, Text} from '~/components/Text';
 import {Button} from '~/components/ui/button';
 import {useTranslation} from '~/lib/utils';
+
 import {star, filledStar} from './StarRating';
 
 interface ReviewFormProps {
@@ -111,6 +112,7 @@ export function ReviewForm({productId}: ReviewFormProps) {
       headingClassName="sr-only"
       padding="y"
       className="pb-6"
+      id="review-form"
     >
       {!formVisible ? (
         <Button
