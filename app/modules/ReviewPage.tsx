@@ -9,9 +9,9 @@ import type {LoaderData} from '~/types/review';
 
 export function ReviewPage() {
   const data = useLoaderData<LoaderData>();
-  console.log('🚀 ~ data:', data);
+
   const actionData = useActionData<typeof action>();
-  console.log('🚀 ~ actionData:', actionData);
+
   const {translation} = useTranslation();
   if (!data) return <p>No data error</p>;
 
@@ -27,7 +27,7 @@ export function ReviewPage() {
           useH1
           className="py-8"
         >
-          <div className="w-20 mx-auto">
+          <div className="w-20 mx-auto mb-4">
             <Image
               data={product.images.edges[0].node}
               sizes="auto"
