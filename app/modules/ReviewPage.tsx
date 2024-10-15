@@ -1,21 +1,28 @@
 import {useLoaderData} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
 
+import {Section} from '~/components/Text';
+import {useTranslation} from '~/lib/utils';
 import {ReviewForm} from '~/modules/ReviewForm';
 import type {LoaderData} from '~/types/review';
 
 export function ReviewPage() {
   const data = useLoaderData<LoaderData>();
-
+  const {translation} = useTranslation();
   if (!data) return <p>No data error</p>;
 
   const {mode, product, formData} = data;
 
   return (
-    <div className="p-4">
-      {product && (
-        <>
-          <h1 className="text-xl font-bold mb-4">{product.title}</h1>
+    <>
+      {product?.title && (
+        <Section
+          heading={product.title}
+          headingClassName="text-center mx-auto"
+          padding="y"
+          useH1
+          className="py-8"
+        >
           <div className="w-20 mx-auto">
             <Image
               data={product.images.edges[0].node}
@@ -24,39 +31,36 @@ export function ReviewPage() {
               aspectRatio="1/1"
             />
           </div>
-        </>
-      )}
 
-      {mode === 'SENT' && (
-        <Message
-          type="success"
-          text="Thank you for sending your review! It will help us and our customers."
-        />
-      )}
+          {mode === 'SENT' && (
+            <Message type="success" text={translation.review_thanks_message} />
+          )}
 
-      {mode === 'PARAM_ERROR' && (
-        <Message
-          type="error"
-          text="Error: Missing required parameters. Please check your input."
-        />
-      )}
+          {mode === 'PARAM_ERROR' && (
+            <Message
+              type="error"
+              text="Error: Missing required parameters. Please check your input."
+            />
+          )}
 
-      {mode === 'SEND_ERROR' && (
-        <Message
-          type="error"
-          text="Error: There was an issue sending your review. Please try again later."
-        />
-      )}
+          {mode === 'SEND_ERROR' && (
+            <Message
+              type="error"
+              text="Error: There was an issue sending your review. Please try again later."
+            />
+          )}
 
-      {mode === 'GATHER' && formData && (
-        <ReviewForm
-          productId={formData.productId}
-          name={formData.name}
-          email={formData.email}
-          isInitialVisible={true}
-        />
+          {mode === 'GATHER' && formData && (
+            <ReviewForm
+              productId={formData.productId}
+              name={formData.name}
+              email={formData.email}
+              isInitialVisible={true}
+            />
+          )}
+        </Section>
       )}
-    </div>
+    </>
   );
 }
 
@@ -71,6 +75,6 @@ const Message = ({type, text}: MessageProps) => (
       type === 'success' ? 'bg-green-100' : 'bg-red-100'
     }`}
   >
-    <p>{text}</p>
+    <p className="font-bold text-xl text-center">{text}</p>
   </div>
 );

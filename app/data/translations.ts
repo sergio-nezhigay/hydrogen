@@ -51,6 +51,8 @@ export const translations = {
     review_body: 'Коментар',
     review_title: 'Заголовок відгуку',
     reviews: 'Відгуки',
+    review_thanks_message:
+      'Дякуємо за ваш відгук! Це допоможе нам та нашим клієнтам!',
     search: 'Пошук',
     shipping: 'Доставка',
     quantity: 'Кількість',
@@ -138,6 +140,8 @@ export const translations = {
     shipping: 'Доставка',
     quantity: 'Количество',
     returns: 'Возврат',
+    review_thanks_message:
+      'Спасибо за ваш отзыв! Это поможет нам и нашим клиентам!',
     'Shipping Policy': 'Условия доставки',
     'Sign out': 'Выйти',
     sort_by: 'Сортировать по',

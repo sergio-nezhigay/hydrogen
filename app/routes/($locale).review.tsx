@@ -1,10 +1,12 @@
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {getSeoMeta} from '@shopify/hydrogen';
+import type {MetaArgs, LoaderFunctionArgs} from '@shopify/remix-oxygen';
 
 import type {
   GetProductQuery,
   GetProductQueryVariables,
 } from 'storefrontapi.generated';
 import {addJudgemeReview} from '~/lib/judgeme';
+import {seoPayload} from '~/lib/seo.server';
 import {submitReviewAction} from '~/lib/utils';
 import {ReviewPage} from '~/modules/ReviewPage';
 
@@ -14,6 +16,10 @@ export const action = async ({
   params,
 }: LoaderFunctionArgs) => {
   return await submitReviewAction({request, context, params});
+};
+
+export const meta = ({matches}: MetaArgs<typeof loader>) => {
+  return getSeoMeta(...matches.map((match) => (match.data as any).seo));
 };
 
 export async function loader({request, context}: LoaderFunctionArgs) {
@@ -26,6 +32,12 @@ export async function loader({request, context}: LoaderFunctionArgs) {
   const rating = url.searchParams.get('review_rating')
     ? parseInt(url.searchParams.get('review_rating')!)
     : undefined;
+
+  const seo = seoPayload.noindex({
+    url: request.url,
+    title: 'Залишити відгук',
+    description: 'Форма відгуку на товар',
+  });
 
   if (!productId || !name || !email) {
     return {mode: 'PARAM_ERROR'};
