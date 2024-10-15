@@ -82,15 +82,21 @@ interface ReviewFormProps {
   productId: string;
   name?: string;
   email?: string;
+  isInitialVisible?: boolean;
 }
 
-export function ReviewForm({productId, name, email}: ReviewFormProps) {
+export function ReviewForm({
+  productId,
+  name,
+  email,
+  isInitialVisible = false,
+}: ReviewFormProps) {
   const actionData = useActionData<ActionData>();
   const {translation} = useTranslation();
 
   const [rating, setRating] = useState<number>(0);
   const [body, setBody] = useState('');
-  const [formVisible, setFormVisible] = useState(false);
+  const [formVisible, setFormVisible] = useState(isInitialVisible);
 
   useEffect(() => {
     if (actionData?.success) {
@@ -131,7 +137,6 @@ export function ReviewForm({productId, name, email}: ReviewFormProps) {
           >
             <input type="hidden" name="productId" value={productId} />
 
-            {/* Conditionally render hidden fields if name and email are provided */}
             {name ? (
               <input type="hidden" name="name" value={name} />
             ) : (

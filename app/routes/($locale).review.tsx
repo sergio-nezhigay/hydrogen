@@ -1,71 +1,72 @@
-import {Suspense} from 'react';
-import {defer, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, useLoaderData} from '@remix-run/react';
-import {Image} from '@shopify/hydrogen';
+import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 
-import {ReviewForm} from '~/modules/ReviewForm';
+import type {
+  GetProductQuery,
+  GetProductQueryVariables,
+} from 'storefrontapi.generated';
+import {addJudgemeReview} from '~/lib/judgeme';
+import {submitReviewAction} from '~/lib/utils';
+import {ReviewPage} from '~/modules/ReviewPage';
+
+export const action = async ({
+  request,
+  context,
+  params,
+}: LoaderFunctionArgs) => {
+  return await submitReviewAction({request, context, params});
+};
 
 export async function loader({request, context}: LoaderFunctionArgs) {
-  const productId = 'gid://shopify/Product/9708716785980';
-  const customerName = 'Serg77';
-  const customerEmail = 'abc@gmail.com';
+  const url = new URL(request.url);
+  const productId = url.searchParams.get('productId');
+  const name = url.searchParams.get('name');
+  const email = url.searchParams.get('email');
+  const title = url.searchParams.get('review_title') || ''; // Assuming there could be a title
+  const body = url.searchParams.get('review_body');
+  const rating = url.searchParams.get('review_rating')
+    ? parseInt(url.searchParams.get('review_rating')!)
+    : undefined;
 
-  if (!productId || !customerName || !customerEmail) {
-    throw new Response('Missing parameters', {status: 400});
+  if (!productId || !name || !email) {
+    return {mode: 'PARAM_ERROR'};
   }
 
-  const product = await context.storefront.query(GET_PRODUCT_QUERY, {
-    variables: {id: productId},
-  });
-
-  return defer({
-    product,
-    customerName,
-    customerEmail,
-  });
-}
-
-export default function ReviewPage() {
-  const {product, customerName, customerEmail} = useLoaderData<typeof loader>();
-
-  return (
-    <div className="max-w-2xl mx-auto p-6">
-      <Suspense fallback={<div>Loading review form...</div>}>
-        <Await resolve={product}>
-          {(resolvedProduct) => {
-            console.log('🚀 ~ resolvedProduct:', resolvedProduct);
-            if (!resolvedProduct || !resolvedProduct?.product?.id) return null;
-            // Get the first image from the product images array
-            //const firstImage = productData.images.edges[0]?.node;
-
-            return (
-              <>
-                <h1 className="text-2xl font-bold mb-4">
-                  Leave a Review for{' '}
-                  {resolvedProduct?.product?.title || 'Product'}
-                </h1>
-
-                <div className="w-[200px] mx-auto mb-4">
-                  <Image
-                    data={resolvedProduct?.product?.images.edges[0].node}
-                    sizes="300px"
-                    className=" object-cover "
-                    aspectRatio="4/5"
-                  />
-                </div>
-
-                <ReviewForm
-                  productId={resolvedProduct?.product?.id}
-                  name={customerName}
-                  email={customerEmail}
-                />
-              </>
-            );
-          }}
-        </Await>
-      </Suspense>
-    </div>
+  const {product}: GetProductQuery = await context.storefront.query(
+    GET_PRODUCT_QUERY,
+    {
+      variables: {id: productId} as GetProductQueryVariables,
+    },
   );
+
+  if (!body || !rating) {
+    return {
+      mode: 'GATHER',
+      formData: {
+        productId,
+        name,
+        email,
+      },
+      product,
+    };
+  }
+
+  try {
+    await addJudgemeReview({
+      api_token: context.env.JUDGEME_PUBLIC_TOKEN,
+      shop_domain: context.env.PUBLIC_STORE_DOMAIN,
+      id: parseInt(productId),
+      email,
+      name,
+      rating,
+      title,
+      body,
+    });
+
+    return {mode: 'SENT', product};
+  } catch (error) {
+    console.error('Error sending review:', error);
+    return {mode: 'SEND_ERROR'};
+  }
 }
 
 const GET_PRODUCT_QUERY = `#graphql
@@ -75,14 +76,18 @@ const GET_PRODUCT_QUERY = `#graphql
       title
       images(first: 1) {
         edges {
-        node {
-          url
-          altText
-          height
-          width
+          node {
+            url
+            altText
+            height
+            width
+          }
         }
-      }
       }
     }
   }
 `;
+
+export default function ReviewRoute() {
+  return <ReviewPage />;
+}

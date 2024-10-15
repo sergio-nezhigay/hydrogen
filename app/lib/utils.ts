@@ -9,6 +9,7 @@ import typographicBase from 'typographic-base';
 import type {ClassValue} from 'clsx';
 import clsx from 'clsx';
 import {twMerge} from 'tailwind-merge';
+import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
 
 import type {
   ChildMenuItemFragment,
@@ -19,6 +20,7 @@ import type {RootLoader} from '~/root';
 import {countries} from '~/data/countries';
 import {translations} from '~/data/translations';
 
+import {addJudgemeReview} from './judgeme';
 import type {I18nLocale} from './type';
 
 type EnhancedMenuItemProps = {
@@ -502,4 +504,49 @@ export function formatProductDetails({
   }
 
   return details;
+}
+
+export async function submitReviewAction({
+  request,
+  context,
+  params,
+}: LoaderFunctionArgs) {
+  const formData = await request.formData();
+  const name = formData.get('name') as string;
+  const email = formData.get('email') as string;
+  const rating = parseInt(formData.get('rating') as string);
+  const title = name; // to make simpler
+  const body = formData.get('body') as string;
+  const productId = formData.get('productId') as string;
+
+  if (!name || !email || !rating || !title || !body) {
+    return {error: 'All fields are required'};
+  }
+
+  // Extract the numeric product ID from the global ID
+  const numericProductId = productId.split('/').pop();
+  if (!numericProductId) {
+    return {error: 'Invalid product ID'};
+  }
+
+  try {
+    await addJudgemeReview({
+      api_token: context.env.JUDGEME_PUBLIC_TOKEN,
+      shop_domain: context.env.PUBLIC_STORE_DOMAIN,
+      id: parseInt(numericProductId),
+      email,
+      name,
+      rating,
+      title,
+      body,
+    });
+
+    return {success: true};
+  } catch (error) {
+    console.error('Error submitting review:', error);
+    return {
+      error:
+        'There was an error submitting your review. Please try again later.',
+    };
+  }
 }

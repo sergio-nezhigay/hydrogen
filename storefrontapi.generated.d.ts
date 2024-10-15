@@ -1865,7 +1865,7 @@ interface GeneratedQueryTypes {
     return: AllProductsQuery;
     variables: AllProductsQueryVariables;
   };
-  '#graphql\n  query GetProduct($id: ID!) {\n    product(id: $id) {\n      id\n      title\n      images(first: 1) {\n        edges {\n        node {\n          url\n          altText\n          height\n          width\n        }\n      }\n      }\n    }\n  }\n': {
+  '#graphql\n  query GetProduct($id: ID!) {\n    product(id: $id) {\n      id\n      title\n      images(first: 1) {\n        edges {\n          node {\n            url\n            altText\n            height\n            width\n          }\n        }\n      }\n    }\n  }\n': {
     return: GetProductQuery;
     variables: GetProductQueryVariables;
   };
