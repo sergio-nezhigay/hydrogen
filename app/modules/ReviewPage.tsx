@@ -1,13 +1,17 @@
-import {useLoaderData} from '@remix-run/react';
+import {useActionData, useLoaderData} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
 
 import {Section} from '~/components/Text';
 import {useTranslation} from '~/lib/utils';
 import {ReviewForm} from '~/modules/ReviewForm';
+import type {action} from '~/routes/($locale).review';
 import type {LoaderData} from '~/types/review';
 
 export function ReviewPage() {
   const data = useLoaderData<LoaderData>();
+  console.log('🚀 ~ data:', data);
+  const actionData = useActionData<typeof action>();
+  console.log('🚀 ~ actionData:', actionData);
   const {translation} = useTranslation();
   if (!data) return <p>No data error</p>;
 
@@ -32,7 +36,7 @@ export function ReviewPage() {
             />
           </div>
 
-          {mode === 'SENT' && (
+          {(mode === 'SENT' || actionData?.success) && (
             <Message type="success" text={translation.review_thanks_message} />
           )}
 
@@ -50,7 +54,7 @@ export function ReviewPage() {
             />
           )}
 
-          {mode === 'GATHER' && formData && (
+          {mode === 'GATHER' && !actionData?.success && formData && (
             <ReviewForm
               productId={formData.productId}
               name={formData.name}

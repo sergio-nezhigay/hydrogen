@@ -520,13 +520,13 @@ export async function submitReviewAction({
   const productId = formData.get('productId') as string;
 
   if (!name || !email || !rating || !title || !body) {
-    return {error: 'All fields are required'};
+    return {success: false, error: 'All fields are required'};
   }
 
   // Extract the numeric product ID from the global ID
   const numericProductId = productId.split('/').pop();
   if (!numericProductId) {
-    return {error: 'Invalid product ID'};
+    return {success: false, error: 'Invalid product ID'};
   }
 
   try {
@@ -545,6 +545,7 @@ export async function submitReviewAction({
   } catch (error) {
     console.error('Error submitting review:', error);
     return {
+      success: false,
       error:
         'There was an error submitting your review. Please try again later.',
     };

@@ -1,10 +1,4 @@
-import {data} from '@remix-run/server-runtime/dist/single-fetch';
-
-import type {
-  JudgemeProductData,
-  JudgemeReview,
-  JudgemeReviewsData,
-} from './type';
+import type {JudgemeProductData, JudgemeReviewsData} from './type';
 
 async function getInternalIdByHandle(
   api_token: string,

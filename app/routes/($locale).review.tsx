@@ -27,7 +27,7 @@ export async function loader({request, context}: LoaderFunctionArgs) {
   const productId = url.searchParams.get('productId');
   const name = url.searchParams.get('name');
   const email = url.searchParams.get('email');
-  const title = url.searchParams.get('review_title') || ''; // Assuming there could be a title
+  const title = url.searchParams.get('review_title') || '';
   const body = url.searchParams.get('review_body');
   const rating = url.searchParams.get('review_rating')
     ? parseInt(url.searchParams.get('review_rating')!)
