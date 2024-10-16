@@ -180,56 +180,56 @@ export default function Collection() {
         heading={collection.title}
         headingClassName="sr-only"
       >
-        {collection.products.nodes.length > 0 ? (
-          <SortFilter
-            filters={(collection.products.filters as Filter[]).filter(
-              ({id}) => !id.includes('availability'),
+        {/*{collection.products.nodes.length > 0 ? (*/}
+        <SortFilter
+          filters={(collection.products.filters as Filter[]).filter(
+            ({id}) => !id.includes('availability'),
+          )}
+          appliedFilters={appliedFilters.filter(
+            ({filter}) => !filter.available,
+          )}
+          //  collections={collections}
+        >
+          <Pagination connection={collection.products}>
+            {({
+              nodes,
+              isLoading,
+              PreviousLink,
+              NextLink,
+              nextPageUrl,
+              hasNextPage,
+              state,
+            }) => (
+              <>
+                <div className="flex items-center justify-center mb-6">
+                  <Button as={PreviousLink} variant="secondary" width="full">
+                    {isLoading ? translation.loading : translation.prev}
+                  </Button>
+                </div>
+                <ProductsLoadedOnScroll
+                  nodes={nodes}
+                  inView={inView}
+                  nextPageUrl={nextPageUrl}
+                  hasNextPage={hasNextPage}
+                  state={state}
+                />
+                <div className="flex items-center justify-center mt-6">
+                  <Button
+                    ref={ref}
+                    as={NextLink}
+                    variant="secondary"
+                    width="full"
+                  >
+                    {isLoading ? translation.loading : translation.next}
+                  </Button>
+                </div>
+              </>
             )}
-            appliedFilters={appliedFilters.filter(
-              ({filter}) => !filter.available,
-            )}
-            //  collections={collections}
-          >
-            <Pagination connection={collection.products}>
-              {({
-                nodes,
-                isLoading,
-                PreviousLink,
-                NextLink,
-                nextPageUrl,
-                hasNextPage,
-                state,
-              }) => (
-                <>
-                  <div className="flex items-center justify-center mb-6">
-                    <Button as={PreviousLink} variant="secondary" width="full">
-                      {isLoading ? translation.loading : translation.prev}
-                    </Button>
-                  </div>
-                  <ProductsLoadedOnScroll
-                    nodes={nodes}
-                    inView={inView}
-                    nextPageUrl={nextPageUrl}
-                    hasNextPage={hasNextPage}
-                    state={state}
-                  />
-                  <div className="flex items-center justify-center mt-6">
-                    <Button
-                      ref={ref}
-                      as={NextLink}
-                      variant="secondary"
-                      width="full"
-                    >
-                      {isLoading ? translation.loading : translation.next}
-                    </Button>
-                  </div>
-                </>
-              )}
-            </Pagination>
-          </SortFilter>
-        ) : (
+          </Pagination>
+        </SortFilter>
+        {/*) : (
           ''
-        )}
+        )}*/}
       </Section>
       <Analytics.CollectionView
         data={{
@@ -367,16 +367,16 @@ function getSortValuesFromParam(sortParam: SortParam | null): {
         sortKey: 'BEST_SELLING',
         reverse: false,
       };
-    case 'newest':
-      return {
-        sortKey: 'CREATED',
-        reverse: true,
-      };
-    case 'featured':
-      return {
-        sortKey: 'MANUAL',
-        reverse: false,
-      };
+    //case 'newest':
+    //  return {
+    //    sortKey: 'CREATED',
+    //    reverse: true,
+    //  };
+    //case 'featured':
+    //  return {
+    //    sortKey: 'MANUAL',
+    //    reverse: false,
+    //  };
     default:
       return {
         sortKey: 'RELEVANCE',

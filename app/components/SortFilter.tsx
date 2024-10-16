@@ -47,12 +47,9 @@ export type AppliedFilter = {
   filter: ProductFilter;
 };
 
-export type SortParam =
-  | 'price-low-high'
-  | 'price-high-low'
-  | 'best-selling'
-  | 'newest'
-  | 'featured';
+export type SortParam = 'price-low-high' | 'price-high-low' | 'best-selling';
+//  | 'newest'
+//  | 'featured';
 
 export type SortFilterProps = {
   filters: Filter[];
@@ -108,7 +105,20 @@ function Filters({filters}: {filters: Filter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
   const {t} = useTranslation();
-  const sortedFilters = filters.sort((a, b) => sortFilters(a, b));
+  const sortedFilters = filters
+    .sort((a, b) => sortFilters(a, b))
+    .filter(
+      ({values, id}) =>
+        values.some(({count}) => count > 0) || id.includes('price'),
+    );
+  const filterSort = (a: {label: string}, b: {label: string}) => {
+    const numA = a.label.match(/\d+/);
+    const numB = b.label.match(/\d+/);
+    if (numA && numB) {
+      return parseInt(numA[0], 10) - parseInt(numB[0], 10);
+    }
+    return a.label.localeCompare(b.label);
+  };
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     const appliedFilter = {
@@ -155,7 +165,7 @@ function Filters({filters}: {filters: Filter[]}) {
             />
 
             <span>{t(option.label)}</span>
-            <span className="opacity-60">({option.count})</span>
+            {/*<span className="opacity-60">({option.count})</span>*/}
           </Link>
         );
     }
@@ -177,16 +187,19 @@ function Filters({filters}: {filters: Filter[]}) {
                   </AccordionTrigger>
                   <AccordionContent key={filter.id} asChild>
                     <ScrollArea className="flex flex-col max-h-80 overflow-y-auto">
-                      <ul key={filter.id} className="py-2">
+                      <ul
+                        key={filter.id}
+                        className={cn('py-2 grid ', {
+                          'grid-cols-2': !filter.id.includes('price'),
+                        })}
+                      >
                         {filter.values
                           ?.filter(
                             ({count, id, label}) =>
                               (count > 0 || id.includes('price')) &&
                               label !== 'Informatica',
                           )
-                          .sort((a, b) =>
-                            a.label.localeCompare(b.label) ? -1 : 1,
-                          )
+                          .sort(filterSort)
                           .map((option) => {
                             return (
                               <li key={option.id} className="pb-2">
@@ -376,7 +389,7 @@ export default function SortMenu({className}: {className?: string}) {
   const {translation} = useTranslation();
 
   const items: {label: string; key: SortParam}[] = [
-    {label: translation.featured, key: 'featured'},
+    //{label: translation.featured, key: 'featured'},
     {
       label: translation.price_low_high ?? 'Price: Low - High',
       key: 'price-low-high',
@@ -386,7 +399,7 @@ export default function SortMenu({className}: {className?: string}) {
       key: 'price-high-low',
     },
     {label: translation.best_selling ?? 'Best Selling', key: 'best-selling'},
-    {label: translation.newest ?? 'Newest', key: 'newest'},
+    //{label: translation.newest ?? 'Newest', key: 'newest'},
   ];
 
   const [params] = useSearchParams();
