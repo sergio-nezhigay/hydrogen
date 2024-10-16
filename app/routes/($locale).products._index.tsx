@@ -101,7 +101,7 @@ export default function AllProducts() {
   );
 }
 
-const ALL_PRODUCTS_QUERY = `#graphql
+export const ALL_PRODUCTS_QUERY = `#graphql
   query AllProducts(
     $country: CountryCode
     $language: LanguageCode

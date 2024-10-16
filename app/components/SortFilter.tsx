@@ -202,7 +202,7 @@ function Filters({filters}: {filters: Filter[]}) {
                           .sort(filterSort)
                           .map((option) => {
                             return (
-                              <li key={option.id} className="pb-2">
+                              <li key={option.id} className="flex pb-2">
                                 {filterMarkup(filter, option)}
                               </li>
                             );

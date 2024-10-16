@@ -10,8 +10,11 @@ import type {ClassValue} from 'clsx';
 import clsx from 'clsx';
 import {twMerge} from 'tailwind-merge';
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
+import type {Storefront} from '@shopify/hydrogen';
+import {getPaginationVariables} from '@shopify/hydrogen';
 
 import type {
+  AllProductsQuery,
   ChildMenuItemFragment,
   MenuFragment,
   ParentMenuItemFragment,
@@ -19,6 +22,7 @@ import type {
 import type {RootLoader} from '~/root';
 import {countries} from '~/data/countries';
 import {translations} from '~/data/translations';
+import {ALL_PRODUCTS_QUERY} from '~/routes/($locale).products._index';
 
 import {addJudgemeReview} from './judgeme';
 import type {I18nLocale} from './type';
