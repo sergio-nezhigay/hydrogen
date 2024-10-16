@@ -46,7 +46,7 @@ export function HeroSection() {
       </picture>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-stone-600 via-stone-900 to-stone-600 opacity-40 lg:opacity-30" />
+      <div className="absolute inset-0 bg-gradient-to-b from-stone-600 via-stone-900 to-stone-600 opacity-10" />
 
       {/* Content */}
       <div className="relative z-10 text-center px-4">

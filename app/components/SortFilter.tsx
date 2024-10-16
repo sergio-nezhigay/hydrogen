@@ -156,7 +156,7 @@ function Filters({filters}: {filters: Filter[]}) {
           >
             <Check
               className={cn(
-                'inline-block border transition-colors duration-150  rounded-sm group-hover:border-stone-900 size-4 text-slate-50  ',
+                'inline-block border transition-colors shrink-0 duration-150  rounded-sm group-hover:border-stone-900 size-4 text-slate-50  ',
                 {
                   'bg-indigo-700/80 border-indigo-700/80': isActive,
                   ' border-stone-900 border-opacity-50': !isActive,
@@ -436,18 +436,18 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
     <Sheet>
       <SheetTrigger
         aria-controls={undefined}
-        className="size-10 flex-center hover:bg-stone-700/5 rounded-md"
+        className="flex-center text-black hover:bg-stone-700/5 rounded-md"
       >
-        <IconFilters />
+        <IconFilters className="w-7 h-7" />
       </SheetTrigger>
 
-      <SheetContent side="left" className="bg-main">
+      <SheetContent side="left" className="bg-main px-2">
         <SheetHeader>
           <SheetTitle>Фільтр</SheetTitle>
           <SheetDescription className="sr-only">Фільтр</SheetDescription>
         </SheetHeader>
         <ScrollArea
-          className="flex flex-col overflow-y-auto p-4"
+          className="flex flex-col overflow-y-auto"
           style={{maxHeight: 'calc(100vh - 100px)'}}
         >
           <div className="min-h-[26px]">
