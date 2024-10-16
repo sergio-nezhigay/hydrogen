@@ -436,9 +436,9 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
     <Sheet>
       <SheetTrigger
         aria-controls={undefined}
-        className="flex-center text-black hover:bg-stone-700/5 rounded-md"
+        className="flex-center border size-10 text-black hover:bg-stone-700/5 rounded-md"
       >
-        <IconFilters className="w-7 h-7" />
+        <IconFilters className="w-7 h-7 translate-x-1" />
       </SheetTrigger>
 
       <SheetContent side="left" className="bg-main px-2">
