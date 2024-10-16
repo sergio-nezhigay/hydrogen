@@ -35,7 +35,7 @@ export function Header({
   const {shop, menu} = header;
 
   return (
-    <header className="flex sticky top-0 z-50  items-center bg-accent-gradient text-white  h-20 lg:h-[118px] ">
+    <header className="flex sticky top-0 z-50  items-center bg-accent-gradient text-white  h-16 lg:h-[118px] ">
       <div className="flex-between container ">
         <div className="shrink-0">
           <a

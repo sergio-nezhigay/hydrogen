@@ -18,53 +18,51 @@ export function ReviewPage() {
   const {mode, product, formData} = data;
 
   return (
-    <>
-      {product?.title && (
-        <Section
-          heading={product.title}
-          headingClassName="text-center mx-auto"
-          padding="y"
-          useH1
-          className="py-8"
-        >
-          <div className="w-20 mx-auto mb-4">
-            <Image
-              data={product.images.edges[0].node}
-              sizes="auto"
-              className="object-cover rounded"
-              aspectRatio="1/1"
-            />
-          </div>
-
-          {(mode === 'SENT' || actionData?.success) && (
-            <Message type="success" text={translation.review_thanks_message} />
-          )}
-
-          {mode === 'PARAM_ERROR' && (
-            <Message
-              type="error"
-              text="Error: Missing required parameters. Please check your input."
-            />
-          )}
-
-          {mode === 'SEND_ERROR' && (
-            <Message
-              type="error"
-              text="Error: There was an issue sending your review. Please try again later."
-            />
-          )}
-
-          {mode === 'GATHER' && !actionData?.success && formData && (
-            <ReviewForm
-              productId={formData.productId}
-              name={formData.name}
-              email={formData.email}
-              isInitialVisible={true}
-            />
-          )}
-        </Section>
+    <Section
+      heading={product?.title || 'Відгук'}
+      headingClassName="text-center mx-auto"
+      padding="y"
+      useH1
+      className="py-8"
+    >
+      {product && (
+        <div className="w-20 mx-auto mb-4">
+          <Image
+            data={product.images.edges[0].node}
+            sizes="auto"
+            className="object-cover rounded"
+            aspectRatio="1/1"
+          />
+        </div>
       )}
-    </>
+
+      {(mode === 'SENT' || actionData?.success) && (
+        <Message type="success" text={translation.review_thanks_message} />
+      )}
+
+      {mode === 'PARAM_ERROR' && (
+        <Message
+          type="error"
+          text="Error: Missing required parameters. Please check your input."
+        />
+      )}
+
+      {mode === 'SEND_ERROR' && (
+        <Message
+          type="error"
+          text="Error: There was an issue sending your review. Please try again later."
+        />
+      )}
+
+      {mode === 'GATHER' && !actionData?.success && formData && (
+        <ReviewForm
+          productId={formData.productId}
+          name={formData.name}
+          email={formData.email}
+          isInitialVisible={true}
+        />
+      )}
+    </Section>
   );
 }
 

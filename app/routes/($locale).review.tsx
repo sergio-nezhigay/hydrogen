@@ -40,7 +40,7 @@ export async function loader({request, context}: LoaderFunctionArgs) {
   });
 
   if (!productId || !name || !email) {
-    return {mode: 'PARAM_ERROR'};
+    return {mode: 'PARAM_ERROR', seo};
   }
 
   const {product}: GetProductQuery = await context.storefront.query(
@@ -59,6 +59,7 @@ export async function loader({request, context}: LoaderFunctionArgs) {
         email,
       },
       product,
+      seo,
     };
   }
 
@@ -74,10 +75,10 @@ export async function loader({request, context}: LoaderFunctionArgs) {
       body,
     });
 
-    return {mode: 'SENT', product};
+    return {mode: 'SENT', product, seo};
   } catch (error) {
     console.error('Error sending review:', error);
-    return {mode: 'SEND_ERROR'};
+    return {mode: 'SEND_ERROR', seo};
   }
 }
 
