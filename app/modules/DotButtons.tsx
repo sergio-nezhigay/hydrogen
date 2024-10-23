@@ -38,7 +38,7 @@ type DotButtonProps = {
 function DotButton({isSelected, onClick}: DotButtonProps) {
   return (
     <Button
-      className={clsx('inline-block p-2 h-0 rounded-full', {
+      className={clsx('inline-block p-2 h-0 rounded-full !bg-slate-200', {
         'bg-stone-900': isSelected,
         '!bg-stone-200': !isSelected,
       })}
