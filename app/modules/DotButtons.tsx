@@ -38,10 +38,10 @@ type DotButtonProps = {
 function DotButton({isSelected, onClick}: DotButtonProps) {
   return (
     <Button
-      className={clsx(
-        'inline-block p-2 h-0 rounded-full',
-        isSelected ? 'bg-blue-800' : 'bg-yellow-300',
-      )}
+      className={clsx('inline-block p-2 h-0 rounded-full', {
+        'bg-stone-800': isSelected,
+        'bg-stone-300': !isSelected,
+      })}
       type="button"
       onClick={onClick}
       aria-pressed={isSelected}

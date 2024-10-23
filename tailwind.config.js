@@ -4,7 +4,7 @@ import animatePlugin from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ['class'],
+  //  darkMode: ['class'],
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   prefix: '',
   theme: {
