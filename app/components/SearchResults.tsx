@@ -1,10 +1,11 @@
 import {Link} from '@remix-run/react';
-import {Image, Money, Pagination} from '@shopify/hydrogen';
+import {Image, Pagination} from '@shopify/hydrogen';
 
 import {urlWithTrackingParams, type RegularSearchReturn} from '~/lib/search';
 import {cn, useTranslation} from '~/lib/utils';
 
 import {navigationMenuTriggerStyle} from './ui/navigation-menu';
+import {HryvniaMoney} from './HryvniaMoney';
 
 type SearchItems = RegularSearchReturn['result']['items'];
 type PartialSearchResult<ItemType extends keyof SearchItems> = Pick<
@@ -129,9 +130,8 @@ function SearchResultsProducts({
                   )}
                   <div>
                     <p>{product.title}</p>
-                    <small>
-                      <Money data={product.variants.nodes[0].price} />
-                    </small>
+
+                    <HryvniaMoney data={product.variants.nodes[0].price} />
                   </div>
                 </Link>
               </div>

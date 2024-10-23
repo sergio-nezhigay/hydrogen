@@ -1,6 +1,6 @@
 import {Link, useFetcher, type Fetcher} from '@remix-run/react';
-import {Image, Money} from '@shopify/hydrogen';
-import React, {useRef, useEffect, useTransition} from 'react';
+import {Image} from '@shopify/hydrogen';
+import React, {useRef, useEffect} from 'react';
 
 import {
   getEmptyPredictiveSearchResult,
@@ -10,6 +10,7 @@ import {
 import {useTranslation} from '~/lib/utils';
 
 import {useAside} from './Aside';
+import {HryvniaMoney} from './HryvniaMoney';
 
 type PredictiveSearchItems = PredictiveSearchReturn['result']['items'];
 
@@ -229,12 +230,13 @@ function SearchResultsPredictiveProducts({
                   />
                 )}
                 <div>
-                  <p>{product.title}</p>
                   <small>
-                    {product?.variants?.nodes?.[0].price && (
-                      <Money data={product.variants.nodes[0].price} />
-                    )}
+                    <p className="line-clamp-3 text-sm">{product.title}</p>
                   </small>
+
+                  {product?.variants?.nodes?.[0].price && (
+                    <HryvniaMoney data={product.variants.nodes[0].price} />
+                  )}
                 </div>
               </Link>
             </li>

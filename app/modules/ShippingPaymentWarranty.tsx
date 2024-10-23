@@ -1,12 +1,5 @@
 import type {FC} from 'react';
-import {ShieldCheck, Truck, CreditCard} from 'lucide-react';
-
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '~/components/ui/accordion';
+import {ShieldCheck, Truck, CreditCard, Gift} from 'lucide-react';
 
 interface ShippingPaymentWarrantyProps {
   warrantyTerm?: number;
@@ -15,30 +8,43 @@ interface ShippingPaymentWarrantyProps {
 export const ShippingPaymentWarranty: FC<ShippingPaymentWarrantyProps> = ({
   warrantyTerm = 12,
 }) => {
+  const rows = [
+    {
+      icon: <ShieldCheck />,
+      label: 'Гарантія',
+      description: `${warrantyTerm} місяців. Обмін/повернення товару впродовж 14 днів`,
+    },
+    {
+      icon: <Truck />,
+      label: 'Доставка',
+      description: "Нова Пошта на відділення/поштомат або кур'єр на адресу",
+    },
+    {
+      icon: <CreditCard />,
+      label: 'Оплата',
+      description: 'При отриманні або передплата',
+    },
+    {
+      icon: <Gift />,
+      label: 'Бонус',
+      description: '+ 20 грн бонус при купівлі цього товару',
+    },
+  ];
+
   return (
-    <div className="shadow grid gap-4 grid-cols-[auto,1fr] opacity-90 rounded-md p-4">
-      <div className="flex space-x-3">
-        <ShieldCheck className="w-6 h-6 opacity-60" />
-        <span className="font-bold">Гарантія:</span>
-      </div>
-      <span>
-        {warrantyTerm} місяців. Обмін/повернення товару впродовж 14 днів
-      </span>
-
-      <div className="col-span-2 h-px bg-gray-200 w-[95%] mx-auto"></div>
-
-      <div className="flex space-x-3">
-        <Truck className="w-6 h-6 opacity-60" />
-        <span className="font-bold">Доставка:</span>
-      </div>
-      <span>Нова Пошта на відділення/поштомат або кур&apos;єр на адресу</span>
-
-      <div className="col-span-2 h-px bg-gray-200 w-[95%] mx-auto"></div>
-      <div className="flex space-x-3">
-        <CreditCard className="w-6 h-6 opacity-60" />
-        <span className="font-bold">Оплата:</span>
-      </div>
-      <span>При отриманні або передплата</span>
+    <div className="grid gap-2 w-fit grid-cols-[auto,1fr] opacity-80">
+      {rows.map((row, index) => (
+        <>
+          <div className="flex space-x-3">
+            <span className="size-6 opacity-60">{row.icon}</span>
+            <span className="font-bold">{row.label}:</span>
+          </div>
+          <span>{row.description}</span>
+          {index < rows.length - 1 && (
+            <div className="col-span-2 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-[100%] mx-auto"></div>
+          )}
+        </>
+      ))}
     </div>
   );
 };
