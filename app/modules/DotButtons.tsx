@@ -40,7 +40,7 @@ function DotButton({isSelected, onClick}: DotButtonProps) {
     <Button
       className={clsx(
         'inline-block p-2 h-0 rounded-full',
-        isSelected ? 'bg-stone-800' : 'bg-stone-300',
+        isSelected ? 'bg-blue-800' : 'bg-yellow-300',
       )}
       type="button"
       onClick={onClick}
