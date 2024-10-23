@@ -354,12 +354,14 @@ const PREDICTIVE_SEARCH_QUERY = `#graphql
       $limitScope: PredictiveSearchLimitScope!
       $term: String!
       $types: [PredictiveSearchType!]
+      $searchableFields: [SearchableField!]
     ) @inContext(country: $country, language: $language) {
       predictiveSearch(
         limit: $limit,
         limitScope: $limitScope,
         query: $term,
         types: $types,
+        searchableFields: $searchableFields
       ) {
         articles {
           ...PredictiveArticle
@@ -412,6 +414,13 @@ async function predictiveSearch({
         limit,
         limitScope: 'EACH',
         term,
+        searchableFields: [
+          'TITLE',
+          'VARIANTS_SKU',
+          'PRODUCT_TYPE',
+          'VENDOR',
+          'BODY',
+        ],
       },
     },
   );
