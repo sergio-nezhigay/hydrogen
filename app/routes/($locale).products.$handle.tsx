@@ -41,7 +41,7 @@ import {
   AccordionTrigger,
 } from '~/components/ui/accordion';
 import {ReviewList} from '~/modules/ReviewList';
-import ShippingPaymentWarranty from '~/modules/ShippingPaymentWarranty';
+import {ShippingPaymentWarranty} from '~/modules/ShippingPaymentWarranty';
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -293,8 +293,7 @@ export default function Product() {
             </div>
 
             <ShippingPaymentWarranty />
-            {descriptionHtml}
-            {descriptionHtml}
+
             {descriptionHtml}
             {descriptionHtml}
           </div>
