@@ -162,7 +162,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="light">
         {data ? (
           <Analytics.Provider
             cart={data.cart}
