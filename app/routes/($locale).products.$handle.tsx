@@ -41,6 +41,7 @@ import {
   AccordionTrigger,
 } from '~/components/ui/accordion';
 import {ReviewList} from '~/modules/ReviewList';
+import ShippingPaymentWarranty from '~/modules/ShippingPaymentWarranty';
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -192,6 +193,7 @@ export default function Product() {
     useLoaderData<typeof loader>();
 
   const {media, title, descriptionHtml} = product;
+  console.log('🚀 ~ product:', product);
 
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,
@@ -215,6 +217,7 @@ export default function Product() {
     refundPolicy,
     translation,
   });
+  const classAdvanatge = 'shadow-border rounded-md p-2';
 
   return (
     <>
@@ -249,7 +252,7 @@ export default function Product() {
 
                 {product.selectedVariant?.sku && (
                   <span className="text-primary/70">
-                    Код:&nbsp;{product.selectedVariant?.sku}
+                    КOД:&nbsp;{product.selectedVariant.sku.split('^')[0]}
                   </span>
                 )}
               </div>
@@ -288,9 +291,12 @@ export default function Product() {
                 </Await>
               </Suspense>
             </div>
-            <div className="grid gap-4 py-4">
-              {descriptionHtml && <ProductDetail items={details} />}
-            </div>
+
+            <ShippingPaymentWarranty />
+            {descriptionHtml}
+            {descriptionHtml}
+            {descriptionHtml}
+            {descriptionHtml}
           </div>
         </div>
       </Section>
@@ -524,6 +530,9 @@ const PRODUCT_FRAGMENT = `#graphql
       value
     }
     supplier: metafield(namespace: "custom", key: "supplier") {
+      value
+    }
+    warranty: metafield(namespace: "custom", key: "warranty") {
       value
     }
   }

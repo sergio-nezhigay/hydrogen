@@ -3,9 +3,9 @@ import {Suspense} from 'react';
 import type {CartQueryDataReturn} from '@shopify/hydrogen';
 import {CartForm} from '@shopify/hydrogen';
 import {json, type ActionFunctionArgs} from '@shopify/remix-oxygen';
+
 import {CartMain} from '~/components/CartMain';
 import type {RootLoader} from '~/root';
-
 import {useTranslation} from '~/lib/utils';
 
 export const meta: MetaFunction = () => {
@@ -112,8 +112,8 @@ export async function action({request, context}: ActionFunctionArgs) {
 
 export default function Cart() {
   const rootData = useRouteLoaderData<RootLoader>('root');
-  if (!rootData) return null;
   const {translation} = useTranslation();
+  if (!rootData) return null;
 
   return (
     <section>

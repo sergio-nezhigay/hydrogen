@@ -13,8 +13,8 @@ module.exports = {
       padding: {
         DEFAULT: '1rem',
         md: '1rem',
-        lg: '2rem',
-        '2xl': '3rem',
+        lg: '1rem',
+        '2xl': '1rem',
       },
       screens: {
         sm: '640px',
