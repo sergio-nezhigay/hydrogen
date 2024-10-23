@@ -19,8 +19,8 @@ export function DotButtons({
         <div className="flex-center md:hidden gap-2 my-4">
           {Array.from({length: totalButtons}).map((_, index) => (
             <DotButton
-              key={index}
               isSelected={index === activeIndex}
+              key={index}
               onClick={() => onButtonClick(index)}
             />
           ))}
@@ -39,8 +39,8 @@ function DotButton({isSelected, onClick}: DotButtonProps) {
   return (
     <Button
       className={clsx('inline-block p-2 h-0 rounded-full', {
-        'bg-stone-800': isSelected,
-        'bg-stone-300': !isSelected,
+        'bg-stone-900': isSelected,
+        '!bg-stone-200': !isSelected,
       })}
       type="button"
       onClick={onClick}

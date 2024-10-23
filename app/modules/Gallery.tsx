@@ -108,9 +108,9 @@ export function Gallery({
       </Carousel>
       {/*dots*/}
       <DotButtons
+        onButtonClick={scrollTo}
         totalButtons={galleryItems.length}
         activeIndex={currentIndex}
-        onButtonClick={scrollTo}
       />
       {/*thumbs*/}
 
