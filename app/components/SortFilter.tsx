@@ -159,7 +159,7 @@ function Filters({filters}: {filters: Filter[]}) {
                 'inline-block border transition-colors shrink-0 duration-150  rounded-sm group-hover:border-stone-900 size-4 text-slate-50  ',
                 {
                   'bg-indigo-700/80 border-indigo-700/80': isActive,
-                  'bg-transparent text-transparent border-stone-900 border-opacity-50 stroke-red-500':
+                  'bg-transparent text-transparent border-stone-900 border-opacity-50 stroke-transparent':
                     !isActive,
                 },
               )}
