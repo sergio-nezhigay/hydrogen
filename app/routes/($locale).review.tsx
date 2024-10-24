@@ -62,12 +62,14 @@ export async function loader({request, context}: LoaderFunctionArgs) {
       seo,
     };
   }
-
+  const id = parseInt(productId);
+  console.log('🚀 ~ productId:', productId);
+  console.log('🚀 ~ id:', id);
   try {
     await addJudgemeReview({
       api_token: context.env.JUDGEME_PUBLIC_TOKEN,
       shop_domain: context.env.PUBLIC_STORE_DOMAIN,
-      id: parseInt(productId),
+      id,
       email,
       name,
       rating,
