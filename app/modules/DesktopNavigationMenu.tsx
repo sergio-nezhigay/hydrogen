@@ -12,7 +12,7 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from '~/components/ui/navigation-menu';
-import {cn} from '~/lib/utils';
+import {cn, useTranslation} from '~/lib/utils';
 import {navigationData} from '~/data/navigationData';
 
 export function DesktopNavigationMenu() {
@@ -37,7 +37,7 @@ export function DesktopNavigationMenu() {
     }
   }, [activeTrigger, value]);
   const topMenuStyle = 'font-normal xl:text-lg lg-only:px-3';
-
+  const {t} = useTranslation();
   return (
     <div className="text-white hidden lg:flex mx-auto">
       {/*<h1>offset {offset}</h1>*/}
@@ -56,7 +56,7 @@ export function DesktopNavigationMenu() {
                     }}
                     className={topMenuStyle}
                   >
-                    {menu.title}
+                    {t(menu.title)}
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <div className="grid gap-3 p-4 lg:w-[300px] xl:w-[600px] xl:grid-cols-2">
@@ -66,7 +66,7 @@ export function DesktopNavigationMenu() {
                             to={subItem.to}
                             className={navigationMenuTriggerStyle()}
                           >
-                            {subItem.title}
+                            {t(subItem.title)}
                           </Link>
                         </NavigationMenuLink>
                       ))}
@@ -79,7 +79,7 @@ export function DesktopNavigationMenu() {
                     to={menu.to}
                     className={cn(navigationMenuTriggerStyle(), topMenuStyle)}
                   >
-                    {menu.title}
+                    {t(menu.title)}
                   </Link>
                 </NavigationMenuLink>
               )}

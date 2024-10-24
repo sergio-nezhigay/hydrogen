@@ -8,10 +8,11 @@ import {
 } from '~/components/ui/accordion';
 import {useAside} from '~/components/Aside';
 import {navigationData} from '~/data/navigationData';
+import {useTranslation} from '~/lib/utils';
 
 export const MobileNavigationMenu = () => {
   const {close} = useAside();
-
+  const {t} = useTranslation();
   return (
     <Accordion type="single" collapsible>
       {navigationData.map((menuGroup) => (
@@ -25,7 +26,7 @@ export const MobileNavigationMenu = () => {
 
           `}
               >
-                {menuGroup.title}
+                {t(menuGroup.title)}
               </AccordionTrigger>
               <AccordionContent
                 className={`transition-max-height duration-500 ease-out overflow-hidden `}
@@ -39,7 +40,7 @@ export const MobileNavigationMenu = () => {
                         className="block p-2 text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
                         onClick={close}
                       >
-                        {item.title}
+                        {t(item.title)}
                       </Link>
                     </li>
                   ))}
@@ -53,7 +54,7 @@ export const MobileNavigationMenu = () => {
               className="block p-4 text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
               onClick={close}
             >
-              {menuGroup.title}
+              {t(menuGroup.title)}
             </Link>
           )}
         </AccordionItem>

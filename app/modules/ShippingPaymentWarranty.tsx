@@ -1,33 +1,36 @@
 import type {FC} from 'react';
 import {ShieldCheck, Truck, CreditCard, Gift} from 'lucide-react';
 
+import {useTranslation} from '~/lib/utils';
+
 interface ShippingPaymentWarrantyProps {
-  warrantyTerm?: number;
+  warrantyTerm?: string;
 }
 
 export const ShippingPaymentWarranty: FC<ShippingPaymentWarrantyProps> = ({
-  warrantyTerm = 12,
+  warrantyTerm = '12',
 }) => {
+  const {t} = useTranslation();
   const rows = [
     {
       icon: <ShieldCheck />,
-      label: 'Гарантія',
-      description: `${warrantyTerm} місяців. Обмін/повернення товару впродовж 14 днів`,
+      label: t('Warranty'),
+      description: t('Warranty Description', {warrantyTerm}),
     },
     {
       icon: <Truck />,
-      label: 'Доставка',
-      description: "Нова Пошта на відділення/поштомат або кур'єр на адресу",
+      label: t('Delivery'),
+      description: t('Delivery Description'),
     },
     {
       icon: <CreditCard />,
-      label: 'Оплата',
-      description: 'При отриманні або передплата',
+      label: t('Payment'),
+      description: t('Payment Description'),
     },
     {
       icon: <Gift />,
-      label: 'Бонус',
-      description: '+ 20 грн бонус при купівлі цього товару',
+      label: t('Bonus'),
+      description: t('Bonus Description'),
     },
   ];
 

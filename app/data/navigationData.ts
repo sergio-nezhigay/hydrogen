@@ -55,7 +55,7 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/hdmi-scart',
       },
       {
-        title: 'HDMI розгалужувачі',
+        title: 'HDMI Splitters',
         to: '/collections/hdmi-splitter',
       },
     ],
@@ -92,7 +92,7 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/vga-usb',
       },
       {
-        title: 'VGA розгалужувачі',
+        title: 'VGA Splitters',
         to: '/collections/vga-splitter',
       },
     ],
@@ -167,7 +167,7 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/perehodnik-hdmi-rca',
       },
       {
-        title: 'RCA-optical',
+        title: 'RCA-Optical',
         to: '/collections/rca-optical',
       },
       {
@@ -188,7 +188,7 @@ export const navigationData: MenuGroup[] = [
     title: 'USB',
     items: [
       {
-        title: 'USB кабелі',
+        title: 'USB Cables',
         to: '/collections/kabeli-usb',
       },
       {
@@ -204,89 +204,87 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/usb_otg',
       },
       {
-        title: 'USB flash',
+        title: 'USB Flash',
         to: '/collections/fleshki',
       },
-
       {
-        title: 'USB розгалужувачі',
+        title: 'USB Hubs',
         to: '/collections/koncentratory-usb',
       },
     ],
   },
   {
-    title: 'Комплектуючі',
+    title: 'Components',
     items: [
       {
-        title: 'Пам’ять оперативна',
+        title: 'RAM Memory',
         to: '/collections/pamyat',
       },
       {
-        title: 'SSD диски',
+        title: 'SSD Drives',
         to: '/collections/ssd',
       },
       {
-        title: 'Жорсткі диски',
+        title: 'Hard Drives',
         to: '/collections/hdd',
       },
       {
-        title: 'Кишені для жорсткого диска',
+        title: 'HDD Enclosures',
         to: '/collections/karmany-dlja-hdd',
       },
       {
-        title: 'Блоки живлення для ПК',
+        title: 'PC Power Supplies',
         to: '/collections/bloki_pitaniya',
       },
       {
-        title: 'Зарядні пристрої',
+        title: 'Chargers',
         to: '/collections/power',
       },
       {
-        title: 'Мережеві фільтри',
+        title: 'Power Filters',
         to: '/collections/power_filters',
       },
       {
-        title: 'Термопасти',
+        title: 'Thermal Paste',
         to: '/collections/termopasta',
       },
       {
-        title: 'Зовнішні акумулятори (Power Bank)',
+        title: 'Power Banks',
         to: '/collections/power-bank',
       },
     ],
   },
   {
-    title: 'Інше',
+    title: 'Other',
     items: [
       {
-        title: 'Проекційні екрани',
+        title: 'Projector Screens',
         to: '/collections/ekran_proektora',
       },
       {
-        title: 'Кронштейни для проекторів',
+        title: 'Projector Mounts',
         to: '/collections/krepleniya-dlya-proektorov',
       },
       {
-        title: 'Оптичні перехідники',
+        title: 'Optical Adapters',
         to: '/collections/optical',
       },
       {
-        title: 'Аксесуари',
+        title: 'Accessories',
         to: '/collections/other_accs',
       },
       {
-        title: 'Патч кабелі',
+        title: 'Patch Cables',
         to: '/collections/kabeli-rj45',
       },
       {
-        title: 'Кабелі інші',
+        title: 'Other Cables',
         to: '/collections/cable',
       },
     ],
   },
-
   {
-    title: 'Контакти',
+    title: 'Contacts',
     to: '/pages/contact',
   },
 ];
