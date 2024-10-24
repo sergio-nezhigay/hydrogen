@@ -97,7 +97,19 @@ export async function addJudgemeReview({
       review_type: 'product',
     }),
   });
-
+  console.log('arguments', {
+    shop_domain,
+    platform,
+    id,
+    email,
+    name,
+    rating,
+    title,
+    body,
+    verified_buyer: true,
+    review_type: 'product',
+  });
+  console.log('response', JSON.stringify(response));
   if (!response.ok) {
     throw new Error(`Failed to submit review: ${response.statusText}`);
   }
