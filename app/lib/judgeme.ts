@@ -68,7 +68,7 @@ export async function addJudgemeReview({
   api_token,
   shop_domain,
 }: {
-  id: number;
+  id: string;
   email: string;
   name: string;
   rating: number;

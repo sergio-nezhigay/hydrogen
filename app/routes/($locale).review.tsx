@@ -62,7 +62,10 @@ export async function loader({request, context}: LoaderFunctionArgs) {
       seo,
     };
   }
-  const id = parseInt(productId);
+  const id = productId.split('/').pop();
+  if (!id) {
+    return {success: false, error: 'Invalid product ID'};
+  }
   console.log('🚀 ~ productId:', productId);
   console.log('🚀 ~ id:', id);
   try {

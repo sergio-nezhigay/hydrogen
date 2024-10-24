@@ -519,7 +519,7 @@ export async function submitReviewAction({
   const name = formData.get('name') as string;
   const email = formData.get('email') as string;
   const rating = parseInt(formData.get('rating') as string);
-  const title = name; // to make simpler
+  const title = name;
   const body = formData.get('body') as string;
   const productId = formData.get('productId') as string;
 
@@ -528,8 +528,8 @@ export async function submitReviewAction({
   }
 
   // Extract the numeric product ID from the global ID
-  const numericProductId = productId.split('/').pop();
-  if (!numericProductId) {
+  const id = productId.split('/').pop();
+  if (!id) {
     return {success: false, error: 'Invalid product ID'};
   }
 
@@ -537,7 +537,7 @@ export async function submitReviewAction({
     await addJudgemeReview({
       api_token: context.env.JUDGEME_PUBLIC_TOKEN,
       shop_domain: context.env.PUBLIC_STORE_DOMAIN,
-      id: parseInt(numericProductId),
+      id,
       email,
       name,
       rating,
