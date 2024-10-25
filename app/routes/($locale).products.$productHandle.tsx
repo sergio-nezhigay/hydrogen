@@ -347,14 +347,14 @@ function ProductImage({itemData, index}: ProductImageProps) {
       ? {...itemData.image, altText: itemData.alt || 'Product image ' + index}
       : null;
   return (
-    <div className="bg-primary/5">
+    <div className="bg-primary/5 aspect-square flex">
       {image && (
         <Image
           loading={index === 0 ? 'eager' : 'lazy'}
           data={image}
           aspectRatio={'1/1'}
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-contain w-full h-full"
+          className="object-contain"
         />
       )}
     </div>
