@@ -13,15 +13,17 @@ export function ProductImage({itemData, index}: ProductImageProps) {
       ? {...itemData.image, altText: itemData.alt || 'Product image ' + index}
       : null;
   return (
-    <div className="aspect-square">
+    <>
       {image && (
-        <Image
-          loading={index === 0 ? 'eager' : 'lazy'}
-          data={image}
-          sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-contain w-full h-full"
-        />
+        <div className="flex aspect-square">
+          <Image
+            loading={index === 0 ? 'eager' : 'lazy'}
+            data={image}
+            sizes="(min-width: 45em) 50vw, 100vw"
+            className="object-contain"
+          />
+        </div>
       )}
-    </div>
+    </>
   );
 }

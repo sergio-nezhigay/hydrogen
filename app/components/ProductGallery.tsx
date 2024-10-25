@@ -31,10 +31,13 @@ export function ProductGallery({
             : null;
 
         const style = [
-          isFullWidth ? 'md:col-span-2' : 'md:col-span-1',
-          isFirst || isFourth ? '' : 'md:aspect-[4/5]',
-          'aspect-square snap-center card-image bg-main dark:bg-contrast/10 w-mobileGallery md:w-full',
+          ' snap-center card-image bg-main dark:bg-contrast/10 ',
         ].join(' ');
+        //const style = [
+        //  isFullWidth ? 'md:col-span-2' : 'md:col-span-1',
+        //  isFirst || isFourth ? '' : 'md:aspect-[4/5]',
+        //  'aspect-square snap-center card-image bg-main dark:bg-contrast/10 w-mobileGallery md:w-full',
+        //].join(' ');
 
         return (
           <div className={style} key={med.id || image?.id}>
@@ -42,12 +45,6 @@ export function ProductGallery({
               <Image
                 loading={i === 0 ? 'eager' : 'lazy'}
                 data={image}
-                //aspectRatio={!isFirst && !isFourth ? '4/5' : undefined}
-                //sizes={
-                //  isFirst || isFourth
-                //    ? '(min-width: 48em) 60vw, 90vw'
-                //    : '(min-width: 48em) 30vw, 90vw'
-                //}
                 className="object-cover w-full h-full aspect-square"
               />
             )}
