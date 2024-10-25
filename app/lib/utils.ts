@@ -380,25 +380,6 @@ export function sortFilters(a: Filter, b: Filter) {
   return 1;
 }
 
-//export function useViewType() {
-//  const [isMobile, setIsMobile] = useState<boolean>(() =>
-//    typeof window !== 'undefined' ? window.innerWidth <= 768 : false,
-//  );
-
-//  useEffect(() => {
-//    const handleResize = () => {
-//      setIsMobile(window.innerWidth <= 768);
-//    };
-
-//    handleResize();
-
-//    window.addEventListener('resize', handleResize);
-//    return () => window.removeEventListener('resize', handleResize);
-//  }, []);
-
-//  return isMobile;
-//}
-
 /**
  * Generate alternate URLs for different languages
  * @param url - The full URL of the current page

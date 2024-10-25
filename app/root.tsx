@@ -170,7 +170,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
             consent={data.consent}
           >
             <PageLayout {...data}>{children}</PageLayout>
-            <CustomAnalytics />
+            {/*<CustomAnalytics />*/}
           </Analytics.Provider>
         ) : (
           children
