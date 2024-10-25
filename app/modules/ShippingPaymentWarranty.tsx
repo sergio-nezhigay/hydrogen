@@ -1,5 +1,6 @@
 import type {FC} from 'react';
 import {ShieldCheck, Truck, CreditCard, Gift} from 'lucide-react';
+import React from 'react';
 
 import {useTranslation} from '~/lib/utils';
 
@@ -37,7 +38,7 @@ export const ShippingPaymentWarranty: FC<ShippingPaymentWarrantyProps> = ({
   return (
     <div className="grid gap-2 w-fit grid-cols-[auto,1fr] opacity-80">
       {rows.map((row, index) => (
-        <div key={row.label}>
+        <React.Fragment key={row.label}>
           <div className="flex space-x-3">
             <span className="size-6 opacity-60">{row.icon}</span>
             <span className="font-bold">{row.label}:</span>
@@ -46,7 +47,7 @@ export const ShippingPaymentWarranty: FC<ShippingPaymentWarrantyProps> = ({
           {index < rows.length - 1 && (
             <div className="col-span-2 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent w-[100%] mx-auto"></div>
           )}
-        </div>
+        </React.Fragment>
       ))}
     </div>
   );

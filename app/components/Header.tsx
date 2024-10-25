@@ -13,7 +13,7 @@ import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
 import {useAside} from './Aside';
 
 const phone = {
-  full: '+38 (099) 381-5288',
+  full: '+38(099)381-5288',
   display: '(099) 381-5288',
 };
 
@@ -44,16 +44,10 @@ export function Header({
           >
             {phone.display}
           </a>
-          <NavLink
-            prefetch="intent"
-            to="/"
-            style={activeLinkStyle}
-            className="shrink-0"
-            end
-          >
+          <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
             <Image
-              width={0}
-              height={0}
+              //  width={50}
+              //  height={0}
               className="h-7 sm:h-10 md:h-14 w-auto"
               src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/byte-white.svg?v=1722326712"
               alt="logo"
