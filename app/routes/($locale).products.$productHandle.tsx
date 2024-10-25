@@ -354,7 +354,7 @@ function ProductImage({itemData, index}: ProductImageProps) {
           data={image}
           aspectRatio={'1/1'}
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover w-full h-full"
+          className="object-contain w-full h-full"
         />
       )}
     </div>
