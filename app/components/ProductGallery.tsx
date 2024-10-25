@@ -43,11 +43,11 @@ export function ProductGallery({
                 loading={i === 0 ? 'eager' : 'lazy'}
                 data={image}
                 //aspectRatio={!isFirst && !isFourth ? '4/5' : undefined}
-                sizes={
-                  isFirst || isFourth
-                    ? '(min-width: 48em) 60vw, 90vw'
-                    : '(min-width: 48em) 30vw, 90vw'
-                }
+                //sizes={
+                //  isFirst || isFourth
+                //    ? '(min-width: 48em) 60vw, 90vw'
+                //    : '(min-width: 48em) 30vw, 90vw'
+                //}
                 className="object-cover w-full h-full aspect-square"
               />
             )}
