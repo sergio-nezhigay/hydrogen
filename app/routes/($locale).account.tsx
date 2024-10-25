@@ -125,7 +125,7 @@ function Account({customer, heading, featuredDataPromise}: AccountType) {
       <AccountDetails customer={customer} />
       <AccountAddressBook addresses={addresses} customer={customer} />
       {!orders.length && (
-        <Suspense>
+        <Suspense fallback={`Завантаження...`}>
           <Await
             resolve={featuredDataPromise}
             errorElement="There was a problem loading featured products."

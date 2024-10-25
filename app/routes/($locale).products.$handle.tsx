@@ -193,7 +193,6 @@ export default function Product() {
     useLoaderData<typeof loader>();
 
   const {media, title, descriptionHtml} = product;
-  console.log('🚀 ~ product:', product);
 
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,

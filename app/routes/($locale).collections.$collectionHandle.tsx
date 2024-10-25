@@ -161,7 +161,7 @@ export default function Collection() {
   const {collection, appliedFilters} = useLoaderData<typeof loader>();
   const {translation} = useTranslation();
   const {ref, inView} = useInView();
-  console.log(collection.products.nodes);
+
   return (
     <>
       <PageHeader heading={collection.title} className="container">
