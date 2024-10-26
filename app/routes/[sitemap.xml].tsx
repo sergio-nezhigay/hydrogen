@@ -18,7 +18,6 @@ export async function loader({
     ],
   });
 
-  // Set any custom headers on the sitemap response
   response.headers.set('Cache-Control', `max-age=${60 * 60 * 24}`);
 
   return response;
