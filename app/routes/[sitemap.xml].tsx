@@ -1,23 +1,22 @@
 import type {LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {getSitemap} from '@shopify/hydrogen';
 
-import {getSitemapIndex} from '~/lib/sitemap';
-
-export async function loader({
-  request,
-  context: {storefront},
-}: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  const baseUrl = url.origin;
-
-  const response = await getSitemapIndex({
+export async function loader({storefront, request}: LoaderFunctionArgs) {
+  const response = await getSitemap({
     storefront,
     request,
-    types: ['products', 'pages', 'collections', 'articles'],
-    customUrls: [`${baseUrl}/sitemap-empty.xml`],
+    params: {},
+    locales: ['uk-UA', 'ru-UA'], // Ukrainian and Russian locales for Ukraine
+    getLink: ({type, baseUrl, handle, locale}) => {
+      if (!locale) return `${baseUrl}/${type}/${handle}`;
+      return `${baseUrl}/${locale}/${type}/${handle}`; // Create URLs based on locale
+    },
   });
 
-  response.headers.set('Oxygen-Cache-Control', `max-age=${60 * 60 * 24}`);
-  response.headers.set('Vary', 'Accept-Encoding, Accept-Language');
-
+  response.headers.set('Cache-Control', `max-age=${60 * 60 * 24}`);
   return response;
+}
+
+export default function Sitemap() {
+  return null;
 }
