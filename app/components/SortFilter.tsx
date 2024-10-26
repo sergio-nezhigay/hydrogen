@@ -183,7 +183,7 @@ function Filters({filters}: {filters: Filter[]}) {
             {sortedFilters.map((filter: Filter) => (
               <AccordionItem key={filter.id} value={filter.label}>
                 <>
-                  <AccordionTrigger className="transition-colors flex justify-between w-full py-2 font-semibold hover:text-indigo-700/80 hover:bg-transparent">
+                  <AccordionTrigger className="transition-colors flex justify-between w-full py-2 font-semibold hover:text-indigo-700/80 hover:bg-transparent text-left">
                     {filter.label}
                   </AccordionTrigger>
                   <AccordionContent key={filter.id} asChild>
