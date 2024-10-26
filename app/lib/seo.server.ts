@@ -40,7 +40,7 @@ function root({
   const alternates = getAlternates(url);
   return {
     title: shop?.name,
-    titleTemplate: `%s | ${domain}`,
+    titleTemplate: `%s`,
     description: truncate(shop?.description ?? ''),
     handle: '@shopify',
     url,
@@ -305,14 +305,21 @@ function product({
   url: Request['url'];
   judgemeReviewsData: JudgemeReviewsData;
 }): SeoConfig {
-  const description = truncate(
-    product?.seo?.description ?? product?.description ?? '',
-  );
-
+  const productTitle = product?.seo?.title ?? product?.title;
   const alternates = getAlternates(url);
 
+  const isRussian = url.includes('/ru');
+
+  const title = isRussian
+    ? `${productTitle} – фото, отзывы, характеристики | Купить в Украине: Киеве, Днепре, Одессе, Запорожье, Львове`
+    : `${productTitle} – фото, відгуки, характеристики | Купити в Україні: Києві, Дніпрі, Одесі, Запоріжжі, Львові`;
+
+  const description = isRussian
+    ? `⚡️ Купить ${productTitle} | Низкие цены, гарантия, скидки, консультации для покупателей`
+    : `⚡️ Купити ${productTitle} | Низькі ціни, гарантія, знижки, консультації для покупців`;
+
   return {
-    title: product?.seo?.title ?? product?.title,
+    title,
     description,
     media: selectedVariant?.image,
     jsonLd: productJsonLd({product, selectedVariant, url, judgemeReviewsData}),
@@ -625,7 +632,7 @@ function noindex({
 }): SeoConfig {
   return {
     description: title,
-    title: title,
+    title,
     url,
     robots: {
       noIndex: true,

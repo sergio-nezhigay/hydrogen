@@ -25,11 +25,10 @@ import {
   submitReviewAction,
   useTranslation,
 } from '~/lib/utils';
-import {addJudgemeReview, getJudgemeReviews} from '~/lib/judgeme';
+import {getJudgemeReviews} from '~/lib/judgeme';
 import {seoPayload} from '~/lib/seo.server';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
-//import ReviewList from '~/modules/ReviewList';
 import {Gallery} from '~/modules/Gallery';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
