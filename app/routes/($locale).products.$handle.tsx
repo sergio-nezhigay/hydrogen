@@ -33,12 +33,12 @@ import {Gallery} from '~/modules/Gallery';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
 import type {RootLoader} from '~/root';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '~/components/ui/accordion';
+//import {
+//  Accordion,
+//  AccordionContent,
+//  AccordionItem,
+//  AccordionTrigger,
+//} from '~/components/ui/accordion';
 import {ReviewList} from '~/modules/ReviewList';
 import {ShippingPaymentWarranty} from '~/modules/ShippingPaymentWarranty';
 
@@ -362,43 +362,43 @@ interface ProductDetailProps {
   items: ProductDetailItem[];
 }
 
-function compareLearnmore(a: ProductDetailItem, b: ProductDetailItem) {
-  if (a.learnMore && a.learnMore.length > 0) return -1;
-  if (b.learnMore && b.learnMore.length > 0) return 1;
+//function compareLearnmore(a: ProductDetailItem, b: ProductDetailItem) {
+//  if (a.learnMore && a.learnMore.length > 0) return -1;
+//  if (b.learnMore && b.learnMore.length > 0) return 1;
 
-  return 0;
-}
+//  return 0;
+//}
 
-export function ProductDetail({items}: ProductDetailProps) {
-  const {translation} = useTranslation();
+//export function ProductDetail({items}: ProductDetailProps) {
+//  const {translation} = useTranslation();
 
-  return (
-    <Accordion type="single" collapsible defaultValue="item-3">
-      {items
-        .sort((a, b) => compareLearnmore(a, b))
-        .map((item, index) => (
-          <AccordionItem value={`item-${index + 1}`} key={item.title}>
-            <AccordionTrigger className="text-left flex justify-between items-center">
-              <Text size="lead" className="inline-block">
-                {item.title}
-              </Text>
-            </AccordionTrigger>
-            <AccordionContent className="grid gap-2 pb-4 pt-2">
-              <div dangerouslySetInnerHTML={{__html: item.content}} />
-              {item.learnMore && (
-                <Link
-                  className="underline border-primary/30 pb-px text-primary/50 w-fit hover:text-indigo-600"
-                  to={item.learnMore}
-                >
-                  {translation.learn_more}
-                </Link>
-              )}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-    </Accordion>
-  );
-}
+//  return (
+//    <Accordion type="single" collapsible defaultValue="item-3">
+//      {items
+//        .sort((a, b) => compareLearnmore(a, b))
+//        .map((item, index) => (
+//          <AccordionItem value={`item-${index + 1}`} key={item.title}>
+//            <AccordionTrigger className="text-left flex justify-between items-center">
+//              <Text size="lead" className="inline-block">
+//                {item.title}
+//              </Text>
+//            </AccordionTrigger>
+//            <AccordionContent className="grid gap-2 pb-4 pt-2">
+//              <div dangerouslySetInnerHTML={{__html: item.content}} />
+//              {item.learnMore && (
+//                <Link
+//                  className="underline border-primary/30 pb-px text-primary/50 w-fit hover:text-indigo-600"
+//                  to={item.learnMore}
+//                >
+//                  {translation.learn_more}
+//                </Link>
+//              )}
+//            </AccordionContent>
+//          </AccordionItem>
+//        ))}
+//    </Accordion>
+//  );
+//}
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   query productRecommendations(

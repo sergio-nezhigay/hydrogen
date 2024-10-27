@@ -315,11 +315,11 @@ function product({
     : `${productTitle} – фото, відгуки, характеристики | Купити в Україні: Києві, Дніпрі, Одесі, Запоріжжі, Львові`;
 
   const description = isRussian
-    ? `⚡️ Купить ${productTitle} | Низкие цены, гарантия, скидки, консультации для покупателей`
-    : `⚡️ Купити ${productTitle} | Низькі ціни, гарантія, знижки, консультації для покупців`;
+    ? `⚡️ Купить ${productTitle} | Низкие цены, гарантия, консультации для покупателей`
+    : `⚡️ Купити ${productTitle} | Низькі ціни, гарантія, консультації для покупців`;
 
   return {
-    title,
+    title: truncate(title, 120),
     description,
     media: selectedVariant?.image,
     jsonLd: productJsonLd({product, selectedVariant, url, judgemeReviewsData}),
