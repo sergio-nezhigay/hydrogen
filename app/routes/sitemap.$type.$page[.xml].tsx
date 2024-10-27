@@ -8,7 +8,7 @@ export async function loader({
 }: LoaderFunctionArgs) {
   console.log('Request received', {request, params});
 
-  const response = await getSitemap({
+  const response1 = await getSitemap({
     storefront,
     request,
     params,
