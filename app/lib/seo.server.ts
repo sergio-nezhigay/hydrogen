@@ -320,7 +320,7 @@ function product({
 
   return {
     title: truncate(title, 120),
-    description,
+    description: truncate(description),
     media: selectedVariant?.image,
     jsonLd: productJsonLd({product, selectedVariant, url, judgemeReviewsData}),
     alternates,

@@ -38,6 +38,7 @@ export default async function handleRequest(
       'https://*.google.com.ua',
       'https://google.com',
       'https://*.google.com',
+      'https://stats.g.doubleclick.net',
     ],
     frameSrc: [
       'https://www.googletagmanager.com',
