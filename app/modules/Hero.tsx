@@ -35,10 +35,10 @@ export function HeroSection() {
       <picture>
         <source
           media="(min-width: 768px)"
-          srcSet="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-desktop-narrow-compressed.webp?v=1728656179"
+          srcSet="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-desktop-narrow-compressed3.webp?v=1730054146"
         />
         <Image
-          src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-mobile-compressed.webp?v=1728656179"
+          src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-mobile-compressed3.webp?v=1730054146"
           className="blur-sm absolute inset-0 h-full object-cover object-[center_90%]"
           alt="Комп'ютер майбутнього"
           sizes="100vw"
