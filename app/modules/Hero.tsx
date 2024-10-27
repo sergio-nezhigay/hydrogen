@@ -39,14 +39,14 @@ export function HeroSection() {
         />
         <Image
           src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-mobile-compressed.webp?v=1728656179"
-          className="absolute inset-0 h-full object-cover object-[center_90%]"
+          className="blur-sm absolute inset-0 h-full object-cover object-[center_90%]"
           alt="Комп'ютер майбутнього"
           sizes="100vw"
         />
       </picture>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-stone-600 via-stone-900 to-stone-600 opacity-10" />
+      <div className="absolute inset-0 bg-[#737373] opacity-10" />
 
       {/* Content */}
       <div className="relative z-10 text-center px-4">
