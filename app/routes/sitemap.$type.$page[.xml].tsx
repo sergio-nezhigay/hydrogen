@@ -6,9 +6,7 @@ export async function loader({
   params,
   context: {storefront},
 }: LoaderFunctionArgs) {
-  console.log('Request received', {request, params});
-
-  const response1 = await getSitemap({
+  const response = await getSitemap({
     storefront,
     request,
     params,
@@ -20,10 +18,6 @@ export async function loader({
       return `${baseUrl}/ru/${type}/${handle}`;
     },
   });
-
-  // Log the response before returning
-  console.log('Generated Sitemap Response:', response.body);
-
   response.headers.set('Cache-Control', `max-age=${60 * 60 * 24}`);
 
   return response;
