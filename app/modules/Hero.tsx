@@ -31,22 +31,22 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[700px] flex sm-max:content-start md:content-center align-center sm-max:pt-[200px] md:flex-center text-white">
-      <picture>
+    <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[700px] flex sm-max:content-start md:content-center align-center sm-max:pt-[200px] md:flex-center overflow-hidden text-white">
+      <picture className="absolute inset-0 w-[104%]">
         <source
           media="(min-width: 768px)"
-          srcSet="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-desktop-narrow-compressed3.webp?v=1730054146"
+          srcSet="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-desktop-narrow-compressed.webp?v=1728656179"
         />
         <Image
-          src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-mobile-compressed3.webp?v=1730054146"
-          className="blur-sm absolute inset-0 h-full object-cover object-[center_90%]"
+          src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-mobile-compressed.webp?v=1728656179"
+          className="absolute -inset-[2%] w-[104%] h-[103%] blur-sm object-cover object-[center_90%]"
           alt="Комп'ютер майбутнього"
           sizes="100vw"
         />
       </picture>
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-[#737373] opacity-10" />
+      <div className="absolute inset-0  bg-stone-500 opacity-10" />
 
       {/* Content */}
       <div className="relative z-10 text-center px-4">
