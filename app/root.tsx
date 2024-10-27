@@ -1,7 +1,9 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import type {SeoConfig} from '@shopify/hydrogen';
 import {
   useNonce,
   getShopAnalytics,
+  Script,
   Analytics,
   getSeoMeta,
 } from '@shopify/hydrogen';
@@ -29,7 +31,8 @@ import tailwindCss from '~/styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {HEADER_QUERY} from '~/lib/fragments';
 
-import {CustomAnalytics} from './modules/CustomAnalytics';
+import {GoogleTagManager} from './modules/GoogleTagManager';
+//import {CustomAnalytics} from './modules/CustomAnalytics';
 import {DEFAULT_LOCALE} from './lib/utils';
 import {seoPayload} from './lib/seo.server';
 import {GenericError} from './components/GenericError';
@@ -161,8 +164,36 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
+        {/***********************************************/
+        /**********  EXAMPLE UPDATE STARTS  ************/}
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-WRQRP5RF');`,
+          }}
+        ></Script>
+        {/**********   EXAMPLE UPDATE END   ************/
+        /***********************************************/}
       </head>
       <body>
+        {/***********************************************/
+        /**********  EXAMPLE UPDATE STARTS  ************/}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WRQRP5RF"
+            height="0"
+            width="0"
+            style={{
+              display: 'none',
+              visibility: 'hidden',
+            }}
+          ></iframe>
+        </noscript>
+        {/**********   EXAMPLE UPDATE END   ************/
+        /***********************************************/}
         {data ? (
           <Analytics.Provider
             cart={data.cart}
@@ -170,7 +201,12 @@ export function Layout({children}: {children?: React.ReactNode}) {
             consent={data.consent}
           >
             <PageLayout {...data}>{children}</PageLayout>
-            <CustomAnalytics />
+            {/*<CustomAnalytics />*/}
+            {/***********************************************/
+            /**********  EXAMPLE UPDATE STARTS  ************/}
+            <GoogleTagManager />
+            {/**********   EXAMPLE UPDATE END   ************/
+            /***********************************************/}
           </Analytics.Provider>
         ) : (
           children
