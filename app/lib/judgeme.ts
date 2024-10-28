@@ -136,10 +136,7 @@ export const getAllShopReviews = async (
 
     const response = await fetch(apiUrl);
     const data = (await response.json()) as JudgemeReviewsData;
-    console.log('🚀 ~ data:', JSON.stringify(data.reviews));
-
-    const list = data.reviews.filter((review) => !review.hidden);
-    console.log('🚀 ~ data:', JSON.stringify(list));
+    const list = data.reviews.filter((review) => review.published);
 
     return list;
   } catch (error) {

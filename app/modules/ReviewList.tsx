@@ -11,13 +11,13 @@ type ReviewCardProps = {
 function ReviewCard({review}: ReviewCardProps) {
   const {dateTime, displayDate} = formatDateForTimeTag(review.created_at);
 
+  const reviewerName = review.reviewer.name;
   return (
     <>
-      {' '}
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center">
           <Text as="h3" className="mr-2 font-semibold">
-            {review.reviewer.name}
+            {reviewerName}
           </Text>
           {review.verified && (
             <span className="flex items-center text-xs text-green-600">
@@ -57,19 +57,22 @@ type ReviewListProps = {
 };
 
 function ReviewList({reviews, title}: ReviewListProps) {
+  console.log('🚀 ~ reviews:', reviews);
   return (
     <>
       {reviews.length > 0 && (
         <Section heading={title} padding="y" id="review-list">
           <ul>
-            {reviews.map((review) => (
-              <li
-                key={review.id}
-                className="mb-6 rounded-lg border p-4 shadow-md"
-              >
-                <ReviewCard review={review} />
-              </li>
-            ))}
+            {reviews
+              .filter(({published}) => published)
+              .map((review) => (
+                <li
+                  key={review.id}
+                  className="mb-6 rounded-lg border p-4 shadow-md"
+                >
+                  <ReviewCard review={review} />
+                </li>
+              ))}
           </ul>
         </Section>
       )}

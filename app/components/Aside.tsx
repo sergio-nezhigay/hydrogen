@@ -55,7 +55,7 @@ export function Aside({
           <SheetDescription className="sr-only">{heading}</SheetDescription>
         </SheetHeader>
         <ScrollArea
-          className="flex flex-col overflow-y-auto"
+          className="flex flex-col overflow-y-auto pt-2"
           style={{maxHeight: scrollStyle}}
         >
           {children}

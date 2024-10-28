@@ -60,12 +60,13 @@ export type SortFilterProps = {
 
 export const FILTER_URL_PREFIX = 'filter.';
 
+const minusBrands = ['Informatica', 'Byte', 'DSL', 'Panasonic'];
+
 export function SortFilter({
   filters,
   appliedFilters = [],
   children,
 }: SortFilterProps) {
-  //  const isMobile = useViewType();
   return (
     <>
       {/*mobile*/}
@@ -152,7 +153,7 @@ function Filters({filters}: {filters: Filter[]}) {
           <Link
             prefetch="intent"
             to={isActive ? appliedFilterLink : to}
-            className="flex-start gap-2 hover:bg-slate-100 p-1 rounded-sm group "
+            className="flex-start gap-2 w-full hover:bg-slate-100 p-1 rounded-sm group "
           >
             <Check
               className={cn(
@@ -198,7 +199,7 @@ function Filters({filters}: {filters: Filter[]}) {
                           ?.filter(
                             ({count, id, label}) =>
                               (count > 0 || id.includes('price')) &&
-                              label !== 'Informatica',
+                              !minusBrands.includes(label),
                           )
                           .sort(filterSort)
                           .map((option) => {

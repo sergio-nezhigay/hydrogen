@@ -115,7 +115,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
     context.env.JUDGEME_PUBLIC_TOKEN,
     context.env.PUBLIC_STORE_DOMAIN,
     10, // perPage
-    15, // page
+    33, // page
   ).catch((error) => {
     console.error('Error fetching shop reviews:', error);
     return null;

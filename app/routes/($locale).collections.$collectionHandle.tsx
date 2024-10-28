@@ -30,7 +30,8 @@ import {routeHeaders} from '~/data/cache';
 import {seoPayload} from '~/lib/seo.server';
 import {FILTER_URL_PREFIX} from '~/components/SortFilter';
 import {getImageLoadingPriority} from '~/lib/const';
-import {parseAsCurrency, useTranslation} from '~/lib/utils';
+import {cn, parseAsCurrency, useTranslation} from '~/lib/utils';
+import {navigationMenuTriggerStyle} from '~/components/ui/navigation-menu';
 
 export const headers = routeHeaders;
 
@@ -164,17 +165,6 @@ export default function Collection() {
 
   return (
     <>
-      <PageHeader heading={collection.title} className="container">
-        {collection?.description && (
-          <div className="flex items-baseline justify-between w-full">
-            <div>
-              <Text format width="narrow" as="p" className="inline-block">
-                {collection.description}
-              </Text>
-            </div>
-          </div>
-        )}
-      </PageHeader>
       <Section
         padding="y"
         heading={collection.title}
@@ -213,7 +203,12 @@ export default function Collection() {
                   hasNextPage={hasNextPage}
                   state={state}
                 />
-                <div className="flex items-center justify-center mt-6">
+                <div
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    `mx-auto flex items-center justify-center mt-6`,
+                  )}
+                >
                   <Button
                     ref={ref}
                     as={NextLink}

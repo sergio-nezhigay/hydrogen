@@ -19,7 +19,8 @@ import {Button} from '~/components/Button';
 import {getImageLoadingPriority} from '~/lib/const';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
-import {useTranslation} from '~/lib/utils';
+import {cn, useTranslation} from '~/lib/utils';
+import {navigationMenuTriggerStyle} from '~/components/ui/navigation-menu';
 
 const PAGINATION_SIZE = 4;
 
@@ -115,7 +116,12 @@ export default function Collections() {
                   />
                 ))}
               </Grid>
-              <div className="flex items-center justify-center mt-6">
+              <div
+                className={cn(
+                  navigationMenuTriggerStyle(),
+                  `mx-auto flex items-center justify-center mt-6`,
+                )}
+              >
                 <Button as={NextLink} variant="secondary" width="full">
                   {isLoading ? translation.loading : translation.next}
                 </Button>
