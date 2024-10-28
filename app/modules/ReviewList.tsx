@@ -57,7 +57,6 @@ type ReviewListProps = {
 };
 
 function ReviewList({reviews, title}: ReviewListProps) {
-  console.log('🚀 ~ reviews:', reviews);
   return (
     <>
       {reviews.length > 0 && (

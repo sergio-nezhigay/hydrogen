@@ -110,17 +110,17 @@ module.exports = {
       },
       fontFamily: {
         sans: [
-          //  'system-ui',
-          //  '-apple-system',
-          //  'BlinkMacSystemFont',
-          //  '"Segoe UI"',
-          'Lato',
+          'Montserrat',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
           'Roboto',
           '"Helvetica Neue"',
           'Arial',
           'sans-serif',
         ],
-        serif: ['"Times New Roman"', 'Times', 'Georgia', 'Cambria', 'serif'],
       },
       fontSize: {
         display: ['var(--font-size-display)', '1.1'],
