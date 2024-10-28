@@ -46,7 +46,7 @@ function ReviewCard({review}: ReviewCardProps) {
       <div className="mt-2 flex items-center">
         <StarRating rating={review.rating} />
       </div>
-      <Text className="mt-1">{review.body}</Text>
+      <Text className="mt-1 sm-max:line-clamp-3">{review.body}</Text>
     </>
   );
 }
