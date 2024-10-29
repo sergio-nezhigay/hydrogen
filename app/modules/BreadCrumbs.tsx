@@ -109,7 +109,7 @@ function BreadCrumbs() {
       padding="y"
       className="overflow-hidden"
     >
-      <ScrollArea className="flex w-screen overflow-x-auto">
+      <ScrollArea className="flex w-screen overflow-x-auto sm-max:h-8">
         <Breadcrumb className="">
           <BreadcrumbList>
             {pages.map((page, idx) => {
