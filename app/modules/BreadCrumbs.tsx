@@ -17,7 +17,7 @@ import {
 import {Section} from '~/components/Text';
 import {useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
-import {ScrollArea} from '~/components/ui/scroll-area';
+import {ScrollArea, ScrollBar} from '~/components/ui/scroll-area';
 
 export type TBreadcrumbType = 'collections' | 'collection' | 'product';
 
@@ -109,8 +109,8 @@ function BreadCrumbs() {
       padding="y"
       className="overflow-hidden"
     >
-      <ScrollArea className=" w-full">
-        <Breadcrumb>
+      <ScrollArea className="flex w-screen overflow-x-auto">
+        <Breadcrumb className="">
           <BreadcrumbList>
             {pages.map((page, idx) => {
               const urlWithPrefix = isRuPage
@@ -139,7 +139,7 @@ function BreadCrumbs() {
                       </Link>
                     </BreadcrumbLink>
                   ) : (
-                    <span className="font-narrow md:text-base sm-max:text-nowrap">
+                    <span className="font-narrow md:text-base sm-max:whitespace-nowrap">
                       {page.name}
                     </span>
                   )}
@@ -149,6 +149,7 @@ function BreadCrumbs() {
             })}
           </BreadcrumbList>
         </Breadcrumb>
+        <ScrollBar orientation="horizontal" />
       </ScrollArea>
     </Section>
   );
