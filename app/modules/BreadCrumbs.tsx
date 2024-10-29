@@ -17,6 +17,7 @@ import {
 import {Section} from '~/components/Text';
 import {useTranslation} from '~/lib/utils';
 import type {RootLoader} from '~/root';
+import {ScrollArea} from '~/components/ui/scroll-area';
 
 export type TBreadcrumbType = 'collections' | 'collection' | 'product';
 
@@ -102,46 +103,53 @@ function BreadCrumbs() {
   }
 
   return (
-    <Section heading="Breadcrumbs" headingClassName="sr-only" padding="y">
-      <Breadcrumb>
-        <BreadcrumbList>
-          {pages.map((page, idx) => {
-            const urlWithPrefix = isRuPage
-              ? new URL(`/ru${page.href}`, baseUrl).href
-              : new URL(`${page.href}`, baseUrl).href;
+    <Section
+      heading="Breadcrumbs"
+      headingClassName="sr-only"
+      padding="y"
+      className="overflow-hidden"
+    >
+      <ScrollArea className=" w-full">
+        <Breadcrumb>
+          <BreadcrumbList>
+            {pages.map((page, idx) => {
+              const urlWithPrefix = isRuPage
+                ? new URL(`/ru${page.href}`, baseUrl).href
+                : new URL(`${page.href}`, baseUrl).href;
 
-            return (
-              <BreadcrumbItem key={page.name}>
-                {idx < pages.length - 1 ? (
-                  <BreadcrumbLink asChild>
-                    <Link
-                      to={urlWithPrefix}
-                      className={clsx(
-                        'hover:text-indigo-600 hover:underline whitespace-nowrap md:text-base',
-                      )}
-                      prefetch="viewport"
-                    >
-                      {page.name === 'Home' ? (
-                        <>
-                          <Home className="size-5" />
-                          <span className="sr-only">Головна сторінка</span>
-                        </>
-                      ) : (
-                        page.name
-                      )}
-                    </Link>
-                  </BreadcrumbLink>
-                ) : (
-                  <span className="line-clamp-2 font-narrow md:text-base">
-                    {page.name}
-                  </span>
-                )}
-                {idx < pages.length - 1 && <BreadcrumbSeparator />}
-              </BreadcrumbItem>
-            );
-          })}
-        </BreadcrumbList>
-      </Breadcrumb>
+              return (
+                <BreadcrumbItem key={page.name}>
+                  {idx < pages.length - 1 ? (
+                    <BreadcrumbLink asChild>
+                      <Link
+                        to={urlWithPrefix}
+                        className={clsx(
+                          'hover:text-indigo-600 hover:underline whitespace-nowrap md:text-base',
+                        )}
+                        prefetch="viewport"
+                      >
+                        {page.name === 'Home' ? (
+                          <>
+                            <Home className="size-5" />
+                            <span className="sr-only">Головна сторінка</span>
+                          </>
+                        ) : (
+                          page.name
+                        )}
+                      </Link>
+                    </BreadcrumbLink>
+                  ) : (
+                    <span className="font-narrow md:text-base sm-max:text-nowrap">
+                      {page.name}
+                    </span>
+                  )}
+                  {idx < pages.length - 1 && <BreadcrumbSeparator />}
+                </BreadcrumbItem>
+              );
+            })}
+          </BreadcrumbList>
+        </Breadcrumb>
+      </ScrollArea>
     </Section>
   );
 }

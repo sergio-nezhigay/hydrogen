@@ -25,6 +25,7 @@ function robotsTxtData({url}: {url: string}) {
     '/carts',
     '/account',
     '/search',
+    '/search',
   ];
 
   const disallowPaths = [
@@ -32,6 +33,7 @@ function robotsTxtData({url}: {url: string}) {
     ...basePaths.map((path) => `/ru${path}`),
     '/ru/ru',
     '/*.atom',
+    '/*checkout*',
   ];
 
   const disallowRules = disallowPaths
