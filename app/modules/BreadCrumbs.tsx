@@ -132,7 +132,7 @@ function BreadCrumbs() {
                     </Link>
                   </BreadcrumbLink>
                 ) : (
-                  <span className="line-clamp-1">{page.name}</span>
+                  <span className="line-clamp-2 font-narrow">{page.name}</span>
                 )}
                 {idx < pages.length - 1 && <BreadcrumbSeparator />}
               </BreadcrumbItem>

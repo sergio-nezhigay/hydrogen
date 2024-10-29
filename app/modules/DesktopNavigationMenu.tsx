@@ -36,7 +36,7 @@ export function DesktopNavigationMenu() {
       setOffset(null);
     }
   }, [activeTrigger, value]);
-  const topMenuStyle = 'font-normal xl:text-lg lg-only:px-3';
+  const topMenuStyle = 'font-narrow font-normal xl:text-lg lg-only:px-3';
   const {t} = useTranslation();
   return (
     <div className="text-white hidden lg:flex mx-auto">
@@ -64,7 +64,10 @@ export function DesktopNavigationMenu() {
                         <NavigationMenuLink key={subItem.title} asChild>
                           <Link
                             to={subItem.to}
-                            className={navigationMenuTriggerStyle()}
+                            className={cn(
+                              navigationMenuTriggerStyle(),
+                              'font-narrow',
+                            )}
                           >
                             {t(subItem.title)}
                           </Link>

@@ -109,18 +109,26 @@ module.exports = {
         mobileGallery: 'calc(100vw - 3rem)',
       },
       fontFamily: {
-        sans: [
-          'Montserrat',
-          'ui-sans-serif',
-          'system-ui',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          '"Segoe UI"',
-          'Roboto',
+        narrow: [
+          '"Arial Narrow"',
+          '"Roboto Condensed"',
           '"Helvetica Neue"',
           'Arial',
           'sans-serif',
         ],
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          'Helvetica',
+          'Arial',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ],
+        //heading: ['Georgia', 'Times New Roman', 'Times', 'serif'], // Serif font for headers
       },
       fontSize: {
         display: ['var(--font-size-display)', '1.1'],

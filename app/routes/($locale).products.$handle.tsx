@@ -228,7 +228,7 @@ export default function Product() {
           />
           <div className="product-main">
             <div className="grid gap-2 ">
-              <Heading as="h1" className="overflow-hidden whitespace-normal ">
+              <Heading as="h1" className=" overflow-hidden whitespace-normal ">
                 {title}
               </Heading>
               <div

@@ -10,17 +10,19 @@ function LangSelector() {
   const {language} = useTranslation();
 
   return (
-    <ul className="hidden md:flex-center text-base">
+    <ul className="font-narrow hidden md:flex-center text-base">
       <li className="px-2">
         {language === 'ru' ? (
           <a
             href={currentUrl.replace('/ru', '')}
-            className="flex-center gap-2 group"
+            className="flex-center gap-2 group "
           >
-            <span className="group-hover:bg-stone-100/20 icon-header">UA</span>
+            <span className="group-hover:bg-stone-100/20 icon-header font-narrow">
+              UA
+            </span>
           </a>
         ) : (
-          <span className="flex-center gap-2 text-gray-50/50">
+          <span className="flex-center gap-2 text-gray-50/50 font-narrow">
             <span className="icon-header">UA</span>
           </span>
         )}
@@ -34,7 +36,9 @@ function LangSelector() {
             RU
           </a>
         ) : (
-          <span className={clsx('text-gray-50/50 icon-header')}>RU</span>
+          <span className={clsx('text-gray-50/50 icon-header font-narrow')}>
+            RU
+          </span>
         )}
       </li>
     </ul>

@@ -20,7 +20,7 @@ export const MobileNavigationMenu = () => {
           {menuGroup.items ? (
             <>
               <AccordionTrigger
-                className={`w-full text-left p-4 font-bold rounded-md transition-colors duration-200
+                className={`w-full font-narrow text-left p-4 font-bold rounded-md transition-colors duration-200
                     hover:bg-gray-100
                     data-[state=open]:text-blue-700
 
@@ -37,7 +37,7 @@ export const MobileNavigationMenu = () => {
                       <Link
                         to={item.to}
                         prefetch="viewport"
-                        className="block p-2 text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
+                        className="block p-2 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
                         onClick={close}
                       >
                         {t(item.title)}
@@ -51,7 +51,7 @@ export const MobileNavigationMenu = () => {
             <Link
               to={menuGroup.to!}
               prefetch="viewport"
-              className="block p-4 text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
+              className="block p-4 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
               onClick={close}
             >
               {t(menuGroup.title)}

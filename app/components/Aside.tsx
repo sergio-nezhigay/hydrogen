@@ -44,7 +44,7 @@ export function Aside({
   return (
     <Sheet open={type === activeType}>
       <SheetContent
-        className="bg-main"
+        className="bg-main font-narrow"
         onEscapeKeyDown={close}
         onPointerDownOutside={close}
         onInteractOutside={close}

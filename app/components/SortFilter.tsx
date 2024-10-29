@@ -81,7 +81,7 @@ export function SortFilter({
         </div>
       </div>
       {/*desktop*/}
-      <div className="sm-max:hidden">
+      <div className="sm-max:hidden ">
         <div className="flex min-h-8 mb-2">
           {appliedFilters.length > 0 && (
             <AppliedFilters filters={appliedFilters} />
@@ -166,7 +166,7 @@ function Filters({filters}: {filters: Filter[]}) {
               )}
             />
 
-            <span>{t(option.label)}</span>
+            <span className="font-narrow">{t(option.label)}</span>
             {/*<span className="opacity-60">({option.count})</span>*/}
           </Link>
         );
@@ -184,7 +184,7 @@ function Filters({filters}: {filters: Filter[]}) {
             {sortedFilters.map((filter: Filter) => (
               <AccordionItem key={filter.id} value={filter.label}>
                 <>
-                  <AccordionTrigger className="transition-colors flex justify-between w-full py-2 font-semibold hover:text-indigo-700/80 hover:bg-transparent text-left">
+                  <AccordionTrigger className="transition-colors flex justify-between w-full py-2 font-semibold font-narrow hover:text-indigo-700/80 hover:bg-transparent text-left">
                     {filter.label}
                   </AccordionTrigger>
                   <AccordionContent key={filter.id} asChild>
@@ -236,7 +236,7 @@ export function AppliedFilters({filters = []}: {filters: AppliedFilter[]}) {
             className="flex px-2 border rounded-full gap hover:bg-slate-100"
             key={filter.label}
           >
-            <span className="flex-grow">{t(filter.label)}</span>
+            <span className="flex-grow font-narrow">{t(filter.label)}</span>
             <span>
               <IconXMark />
             </span>

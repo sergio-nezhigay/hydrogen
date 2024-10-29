@@ -1,8 +1,7 @@
 import {Phone, Clock, Mail, MapPin} from 'lucide-react';
-import {Section} from '~/components/Text';
-
 import React from 'react';
 
+import {Section} from '~/components/Text';
 import {EnhancedMenu, useTranslation} from '~/lib/utils';
 
 export const Footer = () => {
@@ -15,7 +14,7 @@ export const Footer = () => {
       divider="top"
       as="footer"
       padding="y"
-      className={`min-h-[25rem] w-full items-start overflow-hidden bg-gray-900 py-8  ${textColor}`}
+      className={` min-h-[25rem] w-full items-start overflow-hidden bg-gray-900 py-8  ${textColor}`}
     >
       <ul className="grid list-none grid-cols-1 gap-4 p-0">
         <FooterItem
@@ -44,10 +43,14 @@ export const Footer = () => {
         <FooterItem
           icon={<MapPin size={32} />}
           title={translation.address}
-          content={<span className="ml-2">{translation.address_details}</span>}
+          content={
+            <span className="ml-2 font-narrow">
+              {translation.address_details}
+            </span>
+          }
         />
       </ul>
-      <p className="mt-4 text-center text-sm text-gray-400">
+      <p className="mt-4 text-center text-sm text-gray-400 font-narrow">
         {translation.copyright}{' '}
         <a
           href="https://serhii.vercel.app/"
@@ -68,10 +71,10 @@ interface FooterItemProps {
 
 function FooterItem({icon, title, content}: FooterItemProps) {
   return (
-    <li className="grid grid-cols-[50px_1fr] items-center whitespace-pre py-2">
-      <div className="flex size-8 items-center justify-center">{icon}</div>
-      <div>
-        <strong>{title}:</strong>
+    <li className=" grid grid-cols-[50px_1fr] items-center whitespace-pre py-2">
+      <div className="flex size-8 items-center justify-center ">{icon}</div>
+      <div className="font-narrow">
+        {title}
         {content}
       </div>
     </li>

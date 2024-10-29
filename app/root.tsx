@@ -26,7 +26,7 @@ import {
 
 import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css?url';
-import fontStyles from '~/styles/custom-font.css?url';
+//import fontStyles from '~/styles/custom-font.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from '~/styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
@@ -68,7 +68,7 @@ export function links() {
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: tailwindCss},
     {rel: 'stylesheet', href: appStyles},
-    {rel: 'stylesheet', href: fontStyles},
+    //{rel: 'stylesheet', href: fontStyles},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
