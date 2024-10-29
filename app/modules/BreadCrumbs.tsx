@@ -117,7 +117,7 @@ function BreadCrumbs() {
                     <Link
                       to={urlWithPrefix}
                       className={clsx(
-                        'hover:text-indigo-600 hover:underline whitespace-nowrap',
+                        'hover:text-indigo-600 hover:underline whitespace-nowrap md:text-base',
                       )}
                       prefetch="viewport"
                     >
@@ -132,7 +132,9 @@ function BreadCrumbs() {
                     </Link>
                   </BreadcrumbLink>
                 ) : (
-                  <span className="line-clamp-2 font-narrow">{page.name}</span>
+                  <span className="line-clamp-2 font-narrow md:text-base">
+                    {page.name}
+                  </span>
                 )}
                 {idx < pages.length - 1 && <BreadcrumbSeparator />}
               </BreadcrumbItem>
