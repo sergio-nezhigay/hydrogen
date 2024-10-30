@@ -1,5 +1,5 @@
 import {Await, Link} from '@remix-run/react';
-import {Suspense, useEffect, useState} from 'react';
+import {Suspense} from 'react';
 
 import type {CartApiQueryFragment, HeaderQuery} from 'storefrontapi.generated';
 import {Aside} from '~/components/Aside';
@@ -13,8 +13,6 @@ import {
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 import {useTranslation} from '~/lib/utils';
 import BreadCrumbs from '~/modules/BreadCrumbs';
-
-import {CartLoading} from './CartLoading';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -56,43 +54,15 @@ export function PageLayout({
   );
 }
 
-//function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
-//  const {translation} = useTranslation();
-//  return (
-//    <Aside type="cart" heading={translation.basket}>
-//      <Suspense fallback={<CartLoading />}>
-//        <Await resolve={cart}>
-//          {(cart) => {
-//            return <CartMain cart={cart} layout="aside" />;
-//          }}
-//        </Await>
-//      </Suspense>
-//    </Aside>
-//  );
-//}
-
 function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
+  console.log('🚀 ~ cart1:', cart);
   const {translation} = useTranslation();
-  const [delayedCart, setDelayedCart] = useState<CartApiQueryFragment | null>(
-    null,
-  );
-
-  // Simulate a delay in loading the cart
-  useEffect(() => {
-    const loadCartWithDelay = async () => {
-      const cartData = await cart;
-      setTimeout(() => {
-        setDelayedCart(cartData);
-      }, 5000); // 5 seconds delay
-    };
-    loadCartWithDelay();
-  }, [cart]);
-
   return (
     <Aside type="cart" heading={translation.basket}>
-      <Suspense fallback={<CartLoading />}>
-        <Await resolve={delayedCart}>
+      <Suspense fallback={`<p>${translation.loading}...</p>`}>
+        <Await resolve={cart}>
           {(cart) => {
+            console.log('🚀 ~ cart2:', cart);
             return <CartMain cart={cart} layout="aside" />;
           }}
         </Await>
