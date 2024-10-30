@@ -49,12 +49,13 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   if (!checkoutUrl) return null;
 
   const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
+  const buttonText = checkoutUrl ? translation.make_order : translation.loading;
 
   return (
     <div className="flex mt-2 ">
       <a href={checkoutUrlWithZipcode} target="_self" className="w-full">
         <Button as="span" width="full" variant="red">
-          {translation.make_order}
+          {buttonText}
         </Button>
       </a>
     </div>

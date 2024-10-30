@@ -55,14 +55,12 @@ export function PageLayout({
 }
 
 function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
-  console.log('🚀 ~ cart1:', cart);
   const {translation} = useTranslation();
   return (
     <Aside type="cart" heading={translation.basket}>
       <Suspense fallback={`<p>${translation.loading}...</p>`}>
         <Await resolve={cart}>
           {(cart) => {
-            console.log('🚀 ~ cart2:', cart);
             return <CartMain cart={cart} layout="aside" />;
           }}
         </Await>
