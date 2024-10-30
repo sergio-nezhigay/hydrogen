@@ -94,7 +94,7 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="header-ctas">
+    <nav className="flex align-center gap-4 ml-auto">
       <LangSelector />
 
       <a
