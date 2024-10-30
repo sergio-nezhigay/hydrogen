@@ -90,10 +90,10 @@ function CartLineQuantity({line}: {line: CartLine}) {
   const buttonStyle =
     'size-8 transition text-primary/50 hover:text-primary disabled:text-primary/10 text-lg font-bold';
   return (
-    <div className="flex-start gap-2">
-      <small>
+    <div className="flex items-center gap-2">
+      <span className="text-sm flex-center">
         {translation.quantity}: {quantity} &nbsp;&nbsp;
-      </small>
+      </span>
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
           aria-label="Decrease quantity"

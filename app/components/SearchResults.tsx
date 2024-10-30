@@ -120,17 +120,22 @@ function SearchResultsProducts({
 
             return (
               <div className="mb-2" key={product.id}>
-                <Link to={productUrl} className="flex" prefetch="viewport">
+                <Link
+                  to={productUrl}
+                  className="flex-center gap-2"
+                  prefetch="viewport"
+                >
                   {product.variants.nodes[0].image && (
-                    <Image
-                      data={product.variants.nodes[0].image}
-                      alt={product.title}
-                      width={50}
-                    />
+                    <div className=" shrink-0">
+                      <Image
+                        data={product.variants.nodes[0].image}
+                        alt={product.title}
+                        width={50}
+                      />
+                    </div>
                   )}
                   <div>
                     <p>{product.title}</p>
-
                     <HryvniaMoney data={product.variants.nodes[0].price} />
                   </div>
                 </Link>
