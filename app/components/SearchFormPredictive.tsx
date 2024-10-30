@@ -28,7 +28,7 @@ export const SEARCH_ENDPOINT = '/search';
  **/
 export function SearchFormPredictive({
   children,
-  className = 'bg-main sticky top-0 mb-8 z-50',
+  className = 'bg-main sticky top-0 mb-2 z-50',
   ...props
 }: SearchFormPredictiveProps) {
   const fetcher = useFetcher<PredictiveSearchReturn>({key: 'search'});

@@ -140,7 +140,7 @@ function SearchAside() {
                   <Link
                     onClick={closeSearch}
                     to={`${SEARCH_ENDPOINT}?q=${term.current}`}
-                    className="block mt-4 text-indigo-600 hover:underline hover:text-indigo-800"
+                    className="block text-indigo-600 hover:underline hover:text-indigo-800"
                   >
                     <p>
                       {t('View all results for')} <q>{term.current}</q> &nbsp; →

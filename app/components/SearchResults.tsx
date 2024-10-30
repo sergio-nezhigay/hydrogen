@@ -122,7 +122,7 @@ function SearchResultsProducts({
               <div className="mb-2" key={product.id}>
                 <Link
                   to={productUrl}
-                  className="flex-center gap-2"
+                  className="flex items-center gap-2"
                   prefetch="viewport"
                 >
                   {product.variants.nodes[0].image && (
@@ -160,9 +160,9 @@ function SearchResultsProducts({
                 {ItemsMarkup}
                 <br />
               </div>
-              <div>
+              <div className="flex-center">
                 <NextLink
-                  className={cn(navigationMenuTriggerStyle(), 'bg-slate-50')}
+                  className={cn(navigationMenuTriggerStyle(), 'border')}
                 >
                   {isLoading ? (
                     translation.loading
