@@ -25,18 +25,16 @@ import {
 } from '@remix-run/react';
 
 import favicon from '~/assets/favicon.svg';
-import resetStyles from '~/styles/reset.css?url';
 import tailwindCss from '~/styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {HEADER_QUERY} from '~/lib/fragments';
+import searchStyles from '~/styles/search.css?url';
 
 import {GoogleTagManager} from './modules/GoogleTagManager';
 import {DEFAULT_LOCALE} from './lib/utils';
 import {seoPayload} from './lib/seo.server';
 import {GenericError} from './components/GenericError';
 import {NotFound} from './components/NotFound';
-
-import searchStyles from '~/styles/search.css?url';
 
 export type RootLoader = typeof loader;
 
@@ -64,7 +62,6 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export function links() {
   return [
-    {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: tailwindCss},
     {rel: 'stylesheet', href: searchStyles},
     {
