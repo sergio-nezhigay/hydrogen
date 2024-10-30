@@ -96,7 +96,6 @@ function HeaderCtas({
   return (
     <nav className="flex align-center gap-4 ml-auto">
       <LangSelector />
-
       <a
         href={`tel:${phone.full}`}
         className="icon-header  hover:bg-stone-100/20 flex items-center lg:hidden "

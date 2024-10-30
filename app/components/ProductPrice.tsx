@@ -14,7 +14,7 @@ export function ProductPrice({
   return (
     <div className="product-price text-2xl">
       {compareAtPrice ? (
-        <div className="product-price-on-sale">
+        <div className="flex gap-2">
           {price ? <HryvniaMoney data={price} /> : null}
           <s>
             <HryvniaMoney data={compareAtPrice} />

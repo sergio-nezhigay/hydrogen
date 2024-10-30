@@ -220,13 +220,13 @@ export default function Product() {
   return (
     <>
       <Section heading="Опис товару" padding="y" headingClassName="sr-only">
-        <div className="product">
+        <div className="grid md:grid-cols-2 md:gap-16">
           <Gallery
             galleryItems={media.nodes}
             GalleryItemComponent={ProductImage}
             showThumbs={true}
           />
-          <div className="product-main">
+          <div className="flex flex-col gap-8 md:gap-16 md:top-24 md:sticky ">
             <div className="grid gap-2 ">
               <Heading as="h1" className=" overflow-hidden whitespace-normal ">
                 {title}
@@ -292,6 +292,7 @@ export default function Product() {
 
             <ShippingPaymentWarranty />
 
+            {descriptionHtml}
             {descriptionHtml}
             {descriptionHtml}
           </div>

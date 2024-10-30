@@ -55,7 +55,7 @@ function SearchResultsArticles({
           });
 
           return (
-            <div className="predictive-search-result-item" key={article.id}>
+            <div className="mb-2" key={article.id}>
               <Link prefetch="intent" to={articleUrl} className="flex">
                 {article.title}
               </Link>
@@ -85,7 +85,7 @@ function SearchResultsPages({term, pages}: PartialSearchResult<'pages'>) {
           });
 
           return (
-            <div className="predictive-search-result-item" key={page.id}>
+            <div className="mb-2" key={page.id}>
               <Link prefetch="intent" to={pageUrl}>
                 {page.title}
               </Link>
@@ -119,7 +119,7 @@ function SearchResultsProducts({
             });
 
             return (
-              <div className="predictive-search-result-item" key={product.id}>
+              <div className="mb-2" key={product.id}>
                 <Link to={productUrl} className="flex" prefetch="viewport">
                   {product.variants.nodes[0].image && (
                     <Image

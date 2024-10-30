@@ -26,18 +26,17 @@ import {
 
 import favicon from '~/assets/favicon.svg';
 import resetStyles from '~/styles/reset.css?url';
-//import fontStyles from '~/styles/custom-font.css?url';
-import appStyles from '~/styles/app.css?url';
 import tailwindCss from '~/styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {HEADER_QUERY} from '~/lib/fragments';
 
 import {GoogleTagManager} from './modules/GoogleTagManager';
-//import {CustomAnalytics} from './modules/CustomAnalytics';
 import {DEFAULT_LOCALE} from './lib/utils';
 import {seoPayload} from './lib/seo.server';
 import {GenericError} from './components/GenericError';
 import {NotFound} from './components/NotFound';
+
+import searchStyles from '~/styles/search.css?url';
 
 export type RootLoader = typeof loader;
 
@@ -67,8 +66,7 @@ export function links() {
   return [
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: tailwindCss},
-    {rel: 'stylesheet', href: appStyles},
-    //{rel: 'stylesheet', href: fontStyles},
+    {rel: 'stylesheet', href: searchStyles},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
