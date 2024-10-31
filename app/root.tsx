@@ -24,7 +24,7 @@ import {
   ScrollRestoration,
 } from '@remix-run/react';
 
-import favicon from '~/assets/favicon.svg';
+import favicon from '~/assets/favicon.ico';
 import tailwindCss from '~/styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {HEADER_QUERY} from '~/lib/fragments';
@@ -69,7 +69,7 @@ export function links() {
       href: 'https://cdn.shopify.com',
     },
 
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    {rel: 'icon', type: 'image/x-icon', href: favicon},
   ];
 }
 
