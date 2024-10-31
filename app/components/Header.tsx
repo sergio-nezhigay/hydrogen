@@ -36,28 +36,26 @@ export function Header({
 
   return (
     <header className="font-narrow flex sticky top-0 z-50  items-center bg-accent-gradient text-white  h-16 lg:h-[118px] ">
-      <div className="flex-between container ">
-        <div className="shrink-0">
-          <a
-            href={`tel:${phone.full}`}
-            className="text-white font-narrow hover:bg-stone-100/20 hidden lg:block mb-2 p-1 rounded-md xl:text-lg"
-          >
-            {phone.display}
-          </a>
+      <div className="container grid grid-cols-[auto_auto] lg:gap-y-4">
+        <a
+          href={`tel:${phone.full}`}
+          className="text-white font-narrow hover:bg-stone-100/20 hidden lg:block p-1 rounded-md xl:text-lg order-1 w-fit"
+        >
+          {phone.display}
+        </a>
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+
+        <div className="shrink-0 order-2 lg:order-3 flex-start">
           <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
             <Image
-              //  width={50}
-              //  height={0}
-              className="h-7 sm:h-10 md:h-14 w-auto"
-              src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/byte-white.svg?v=1722326712"
+              className="w-[100px] xs:w-[150px] sm:w-[180px] md:w-[233px] "
+              src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/informatica-white.webp?v=1730375267"
               alt="logo"
-              sizes="50px"
+              sizes="(min-width: 48em) 233px, (min-width: 32em) 180px,(min-width: 27em) 150px, 100px"
             />
           </NavLink>
         </div>
-
-        <div className="flex flex-col gap-3 ">
-          <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+        <div className="order-4 ml-auto">
           <HeaderMenu
             menu={menu}
             viewport="desktop"
@@ -94,7 +92,7 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="flex align-center gap-4 ml-auto">
+    <nav className="flex-center gap-4 ml-auto order-3 lg:order-2">
       <LangSelector />
       <a
         href={`tel:${phone.full}`}

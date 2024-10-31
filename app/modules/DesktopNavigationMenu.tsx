@@ -39,7 +39,7 @@ export function DesktopNavigationMenu() {
   const topMenuStyle = 'font-narrow font-normal xl:text-lg lg-only:px-3';
   const {t} = useTranslation();
   return (
-    <div className="text-white hidden lg:flex mx-auto">
+    <div className="text-white hidden lg:flex ml-auto">
       {/*<h1>offset {offset}</h1>*/}
       <NavigationMenu value={value} onValueChange={setValue}>
         <NavigationMenuList ref={listRef} className="lg-only:space-x-0">

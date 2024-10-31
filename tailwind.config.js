@@ -67,6 +67,7 @@ module.exports = {
           'linear-gradient(to right, #1d4ed8, #6d28d9, #3730a3)',
       },
       screens: {
+        xs: '27em',
         sm: '32em',
         md: '48em',
         lg: '64em',
