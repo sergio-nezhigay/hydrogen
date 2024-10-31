@@ -13,7 +13,7 @@ export function GenericError({
   // TODO hide error in prod?
   if (error) {
     description += `\n${error.message}`;
-    // eslint-disable-next-line no-console
+
     console.error(error);
   }
 
@@ -38,7 +38,7 @@ export function GenericError({
           />
         )}
         <Button width="auto" variant="secondary" to={'/'}>
-          Take me to the home page
+          Перейти на головну сторінку сайту
         </Button>
       </PageHeader>
       <FeaturedSection />

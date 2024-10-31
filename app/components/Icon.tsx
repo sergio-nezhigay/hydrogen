@@ -27,16 +27,16 @@ function Icon({
   );
 }
 
-export function IconMenu(props: IconProps) {
-  return (
-    <Icon {...props} stroke={props.stroke || 'currentColor'}>
-      <title>Menu</title>
-      <line x1="3" y1="6.375" x2="17" y2="6.375" strokeWidth="1.25" />
-      <line x1="3" y1="10.375" x2="17" y2="10.375" strokeWidth="1.25" />
-      <line x1="3" y1="14.375" x2="17" y2="14.375" strokeWidth="1.25" />
-    </Icon>
-  );
-}
+//export function IconMenu(props: IconProps) {
+//  return (
+//    <Icon {...props} stroke={props.stroke || 'currentColor'}>
+//      <title>Menu</title>
+//      <line x1="3" y1="6.375" x2="17" y2="6.375" strokeWidth="1.25" />
+//      <line x1="3" y1="10.375" x2="17" y2="10.375" strokeWidth="1.25" />
+//      <line x1="3" y1="14.375" x2="17" y2="14.375" strokeWidth="1.25" />
+//    </Icon>
+//  );
+//}
 
 export function IconClose(props: IconProps) {
   return (
@@ -60,80 +60,80 @@ export function IconClose(props: IconProps) {
   );
 }
 
-export function IconArrow({direction = 'right'}: IconProps) {
-  let rotate;
+//export function IconArrow({direction = 'right'}: IconProps) {
+//  let rotate;
 
-  switch (direction) {
-    case 'right':
-      rotate = 'rotate-0';
-      break;
-    case 'left':
-      rotate = 'rotate-180';
-      break;
-    case 'up':
-      rotate = '-rotate-90';
-      break;
-    case 'down':
-      rotate = 'rotate-90';
-      break;
-    default:
-      rotate = 'rotate-0';
-  }
+//  switch (direction) {
+//    case 'right':
+//      rotate = 'rotate-0';
+//      break;
+//    case 'left':
+//      rotate = 'rotate-180';
+//      break;
+//    case 'up':
+//      rotate = '-rotate-90';
+//      break;
+//    case 'down':
+//      rotate = 'rotate-90';
+//      break;
+//    default:
+//      rotate = 'rotate-0';
+//  }
 
-  return (
-    <Icon className={`w-5 h-5 ${rotate}`}>
-      <title>Arrow</title>
-      <path d="M7 3L14 10L7 17" strokeWidth="1.25" />
-    </Icon>
-  );
-}
+//  return (
+//    <Icon className={`w-5 h-5 ${rotate}`}>
+//      <title>Arrow</title>
+//      <path d="M7 3L14 10L7 17" strokeWidth="1.25" />
+//    </Icon>
+//  );
+//}
 
-export function IconCaret({
-  direction = 'down',
-  stroke = 'currentColor',
-  ...props
-}: IconProps) {
-  let rotate;
+//export function IconCaret({
+//  direction = 'down',
+//  stroke = 'currentColor',
+//  ...props
+//}: IconProps) {
+//  let rotate;
 
-  switch (direction) {
-    case 'down':
-      rotate = 'rotate-0';
-      break;
-    case 'up':
-      rotate = 'rotate-180';
-      break;
-    case 'left':
-      rotate = '-rotate-90';
-      break;
-    case 'right':
-      rotate = 'rotate-90';
-      break;
-    default:
-      rotate = 'rotate-0';
-  }
+//  switch (direction) {
+//    case 'down':
+//      rotate = 'rotate-0';
+//      break;
+//    case 'up':
+//      rotate = 'rotate-180';
+//      break;
+//    case 'left':
+//      rotate = '-rotate-90';
+//      break;
+//    case 'right':
+//      rotate = 'rotate-90';
+//      break;
+//    default:
+//      rotate = 'rotate-0';
+//  }
 
-  return (
-    <Icon
-      {...props}
-      className={`w-5 h-5 transition ${rotate}`}
-      fill="transparent"
-      stroke={stroke}
-    >
-      <title>Caret</title>
-      <path d="M14 8L10 12L6 8" strokeWidth="1.25" />
-    </Icon>
-  );
-}
+//  return (
+//    <Icon
+//      {...props}
+//      className={`w-5 h-5 transition ${rotate}`}
+//      fill="transparent"
+//      stroke={stroke}
+//    >
+//      <title>Caret</title>
+//      <path d="M14 8L10 12L6 8" strokeWidth="1.25" />
+//    </Icon>
+//  );
+//}
 
-export function IconSelect(props: IconProps) {
-  return (
-    <Icon {...props}>
-      <title>Select</title>
-      <path d="M7 8.5L10 6.5L13 8.5" strokeWidth="1.25" />
-      <path d="M13 11.5L10 13.5L7 11.5" strokeWidth="1.25" />
-    </Icon>
-  );
-}
+//export function IconSelect(props: IconProps) {
+//  return (
+//    <Icon {...props}>
+//      <title>Select</title>
+//      <path d="M7 8.5L10 6.5L13 8.5" strokeWidth="1.25" />
+//      <path d="M13 11.5L10 13.5L7 11.5" strokeWidth="1.25" />
+//    </Icon>
+//  );
+//}
 
 export function IconBag(props: IconProps) {
   const {t} = useTranslation();
@@ -148,14 +148,14 @@ export function IconBag(props: IconProps) {
   );
 }
 
-export function UkrFlag() {
-  return (
-    <Icon className="w-4 h-4">
-      <circle cx="10" cy="10" r="10" fill="#0057B7" />
-      <path fill="#FFD700" d="M0 10c0 5.525 4.475 10 10 10s10-4.475 10-10" />
-    </Icon>
-  );
-}
+//export function UkrFlag() {
+//  return (
+//    <Icon className="w-4 h-4">
+//      <circle cx="10" cy="10" r="10" fill="#0057B7" />
+//      <path fill="#FFD700" d="M0 10c0 5.525 4.475 10 10 10s10-4.475 10-10" />
+//    </Icon>
+//  );
+//}
 
 export function IconLogin(props: IconProps) {
   const {t} = useTranslation();
@@ -190,15 +190,15 @@ export function IconAccount(props: IconProps) {
   );
 }
 
-export function IconHelp(props: IconProps) {
-  const {t} = useTranslation();
-  return (
-    <Icon {...props}>
-      <title>{t('Help')}</title>
-      <path d="M3.375 10a6.625 6.625 0 1 1 13.25 0 6.625 6.625 0 0 1-13.25 0ZM10 2.125a7.875 7.875 0 1 0 0 15.75 7.875 7.875 0 0 0 0-15.75Zm.699 10.507H9.236V14h1.463v-1.368ZM7.675 7.576A3.256 3.256 0 0 0 7.5 8.67h1.245c0-.496.105-.89.316-1.182.218-.299.553-.448 1.005-.448a1 1 0 0 1 .327.065c.124.044.24.113.35.208.108.095.2.223.272.383.08.154.12.34.12.558a1.3 1.3 0 0 1-.076.471c-.044.131-.11.252-.197.361-.08.102-.174.197-.283.285-.102.087-.212.182-.328.284a3.157 3.157 0 0 0-.382.383c-.102.124-.19.27-.262.438a2.476 2.476 0 0 0-.164.591 6.333 6.333 0 0 0-.043.81h1.179c0-.263.021-.485.065-.668a1.65 1.65 0 0 1 .207-.47c.088-.139.19-.263.306-.372.117-.11.244-.223.382-.34l.35-.306c.116-.11.218-.23.305-.361.095-.139.168-.3.219-.482.058-.19.087-.412.087-.667 0-.35-.062-.664-.186-.942a1.881 1.881 0 0 0-.513-.689 2.07 2.07 0 0 0-.753-.427A2.721 2.721 0 0 0 10.12 6c-.4 0-.764.066-1.092.197a2.36 2.36 0 0 0-.83.536c-.225.234-.4.515-.523.843Z" />
-    </Icon>
-  );
-}
+//export function IconHelp(props: IconProps) {
+//  const {t} = useTranslation();
+//  return (
+//    <Icon {...props}>
+//      <title>{t('Help')}</title>
+//      <path d="M3.375 10a6.625 6.625 0 1 1 13.25 0 6.625 6.625 0 0 1-13.25 0ZM10 2.125a7.875 7.875 0 1 0 0 15.75 7.875 7.875 0 0 0 0-15.75Zm.699 10.507H9.236V14h1.463v-1.368ZM7.675 7.576A3.256 3.256 0 0 0 7.5 8.67h1.245c0-.496.105-.89.316-1.182.218-.299.553-.448 1.005-.448a1 1 0 0 1 .327.065c.124.044.24.113.35.208.108.095.2.223.272.383.08.154.12.34.12.558a1.3 1.3 0 0 1-.076.471c-.044.131-.11.252-.197.361-.08.102-.174.197-.283.285-.102.087-.212.182-.328.284a3.157 3.157 0 0 0-.382.383c-.102.124-.19.27-.262.438a2.476 2.476 0 0 0-.164.591 6.333 6.333 0 0 0-.043.81h1.179c0-.263.021-.485.065-.668a1.65 1.65 0 0 1 .207-.47c.088-.139.19-.263.306-.372.117-.11.244-.223.382-.34l.35-.306c.116-.11.218-.23.305-.361.095-.139.168-.3.219-.482.058-.19.087-.412.087-.667 0-.35-.062-.664-.186-.942a1.881 1.881 0 0 0-.513-.689 2.07 2.07 0 0 0-.753-.427A2.721 2.721 0 0 0 10.12 6c-.4 0-.764.066-1.092.197a2.36 2.36 0 0 0-.83.536c-.225.234-.4.515-.523.843Z" />
+//    </Icon>
+//  );
+//}
 
 export function IconSearch(props: IconProps) {
   return (
@@ -212,23 +212,23 @@ export function IconSearch(props: IconProps) {
   );
 }
 
-export function IconCheck({
-  stroke = 'currentColor',
-  ...props
-}: React.ComponentProps<typeof Icon>) {
-  return (
-    <Icon {...props} fill="transparent" stroke={stroke}>
-      <title>Check</title>
-      <circle cx="10" cy="10" r="7.25" strokeWidth="1.25" />
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-        d="m7.04 10.37 2.42 2.41 3.5-5.56"
-      />
-    </Icon>
-  );
-}
+//export function IconCheck({
+//  stroke = 'currentColor',
+//  ...props
+//}: React.ComponentProps<typeof Icon>) {
+//  return (
+//    <Icon {...props} fill="transparent" stroke={stroke}>
+//      <title>Check</title>
+//      <circle cx="10" cy="10" r="7.25" strokeWidth="1.25" />
+//      <path
+//        strokeLinecap="round"
+//        strokeLinejoin="round"
+//        strokeWidth="1.5"
+//        d="m7.04 10.37 2.42 2.41 3.5-5.56"
+//      />
+//    </Icon>
+//  );
+//}
 
 export function IconXMark({
   stroke = 'currentColor',
@@ -285,44 +285,3 @@ export function IconFilters(props: IconProps) {
     </Icon>
   );
 }
-
-//type StarProps = {
-//  fill: 'empty' | 'half' | 'full';
-//};
-
-//export function Star({fill}: StarProps) {
-//  let gradientId = 'emptyGradient';
-
-//  if (fill === 'half') {
-//    gradientId = 'halfGradient';
-//  } else if (fill === 'full') {
-//    gradientId = 'fullGradient';
-//  }
-
-//  return (
-//    <svg
-//      width="24"
-//      height="24"
-//      viewBox="0 0 24 24"
-//      fill="none"
-//      xmlns="http://www.w3.org/2000/svg"
-//    >
-//      <defs>
-//        <linearGradient id="halfGradient">
-//          <stop offset="50%" stopColor="orange" />
-//          <stop offset="50%" stopColor="lightgray" />
-//        </linearGradient>
-//        <linearGradient id="fullGradient">
-//          <stop offset="100%" stopColor="orange" />
-//        </linearGradient>
-//        <linearGradient id="emptyGradient">
-//          <stop offset="100%" stopColor="lightgray" />
-//        </linearGradient>
-//      </defs>
-//      <path
-//        fill={`url(#${gradientId})`}
-//        d="M12 2.5L14.09 8.26L20 9.27L16 13.14L17.18 19.02L12 16.77L6.82 19.02L8 13.14L4 9.27L9.91 8.26L12 2.5Z"
-//      />
-//    </svg>
-//  );
-//}

@@ -1,6 +1,7 @@
 import {CartForm, Money, type OptimisticCart} from '@shopify/hydrogen';
 import {useRef} from 'react';
 import type {FetcherWithComponents} from '@remix-run/react';
+import {Loader} from 'lucide-react';
 
 import type {CartLayout} from '~/components/CartMain';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
@@ -46,16 +47,20 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
 
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   const {translation} = useTranslation();
-  if (!checkoutUrl) return null;
+  //  if (!checkoutUrl) return null;
 
   const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
-  const buttonText = checkoutUrl ? translation.make_order : translation.loading;
+  const buttonContent = checkoutUrl ? (
+    translation.make_order
+  ) : (
+    <Loader className="animate-spin mx-auto" />
+  );
 
   return (
     <div className="flex mt-2 ">
       <a href={checkoutUrlWithZipcode} target="_self" className="w-full">
         <Button as="span" width="full" variant="red">
-          {buttonText}
+          {buttonContent}
         </Button>
       </a>
     </div>

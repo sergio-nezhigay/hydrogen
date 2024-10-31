@@ -52,7 +52,7 @@ export const translations = {
     continue_shopping: 'Продовжити покупки',
     copyright: '© 2024 Byte. Всі права захищено.',
     description: 'Опис',
-    dev_site: 'Сайт розробника',
+    dev_site: 'Розробка',
     email: 'Електронна пошта',
     enter_shipping_address: 'Введіть адресу доставки',
     featured: 'Рекомендовані',
