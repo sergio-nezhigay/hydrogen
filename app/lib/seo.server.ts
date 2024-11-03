@@ -28,7 +28,7 @@ import type {ShopFragment} from 'storefrontapi.generated';
 import type {JudgemeReviewsData} from './type';
 import {getAlternates} from './utils';
 
-const domain = 'byte.com.ua';
+const domain = 'informatica.com.ua';
 
 function root({
   shop,
