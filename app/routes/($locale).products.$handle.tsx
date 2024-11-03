@@ -293,8 +293,6 @@ export default function Product() {
             <ShippingPaymentWarranty />
 
             {descriptionHtml}
-            {descriptionHtml}
-            {descriptionHtml}
           </div>
         </div>
       </Section>
