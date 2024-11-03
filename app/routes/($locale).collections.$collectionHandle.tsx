@@ -162,6 +162,10 @@ export default function Collection() {
   const {collection, appliedFilters} = useLoaderData<typeof loader>();
   const {translation} = useTranslation();
   const {ref, inView} = useInView();
+  const buttonsClass = cn(
+    navigationMenuTriggerStyle(),
+    'flex items-center justify-center mb-6 mx-auto p-0',
+  );
 
   return (
     <>
@@ -191,7 +195,7 @@ export default function Collection() {
               state,
             }) => (
               <>
-                <div className="flex items-center justify-center mb-6">
+                <div className={buttonsClass}>
                   <Button as={PreviousLink} variant="secondary" width="full">
                     {isLoading ? translation.loading : translation.prev}
                   </Button>
@@ -203,7 +207,7 @@ export default function Collection() {
                   hasNextPage={hasNextPage}
                   state={state}
                 />
-                <div className="mx-auto flex items-center justify-center mt-6">
+                <div className={buttonsClass}>
                   <Button
                     ref={ref}
                     as={NextLink}
@@ -246,17 +250,18 @@ function ProductsLoadedOnScroll({
   hasNextPage: boolean;
   state: any;
 }) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      navigate(nextPageUrl, {
-        replace: true,
-        preventScrollReset: true,
-        state,
-      });
-    }
-  }, [inView, navigate, state, nextPageUrl, hasNextPage]);
+  //  in-view-based pagination
+  //
+  //  const navigate = useNavigate();
+  //  useEffect(() => {
+  //    if (inView && hasNextPage) {
+  //      navigate(nextPageUrl, {
+  //        replace: true,
+  //        preventScrollReset: true,
+  //        state,
+  //      });
+  //    }
+  //  }, [inView, navigate, state, nextPageUrl, hasNextPage]);
 
   return (
     <Grid layout="products" data-test="product-grid">
