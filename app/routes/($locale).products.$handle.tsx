@@ -291,8 +291,7 @@ export default function Product() {
             </div>
 
             <ShippingPaymentWarranty />
-
-            {descriptionHtml}
+            <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
           </div>
         </div>
       </Section>
