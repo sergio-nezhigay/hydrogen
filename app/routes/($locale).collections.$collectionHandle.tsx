@@ -203,12 +203,7 @@ export default function Collection() {
                   hasNextPage={hasNextPage}
                   state={state}
                 />
-                <div
-                  className={cn(
-                    navigationMenuTriggerStyle(),
-                    `mx-auto flex items-center justify-center mt-6`,
-                  )}
-                >
+                <div className="mx-auto flex items-center justify-center mt-6">
                   <Button
                     ref={ref}
                     as={NextLink}
