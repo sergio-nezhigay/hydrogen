@@ -1,6 +1,7 @@
 import type {FC} from 'react';
 import {ShieldCheck, Truck, CreditCard, Gift} from 'lucide-react';
 import React from 'react';
+import {Link} from '@remix-run/react';
 
 import {useTranslation} from '~/lib/utils';
 
@@ -17,11 +18,13 @@ export const ShippingPaymentWarranty: FC<ShippingPaymentWarrantyProps> = ({
       icon: <ShieldCheck />,
       label: t('Warranty'),
       description: t('Warranty Description', {warrantyTerm}),
+      link: '/policies/refund-policy',
     },
     {
       icon: <Truck />,
       label: t('Delivery'),
       description: t('Delivery Description'),
+      link: '/policies/shipping-policy',
     },
     {
       icon: <CreditCard />,
@@ -41,7 +44,18 @@ export const ShippingPaymentWarranty: FC<ShippingPaymentWarrantyProps> = ({
         <React.Fragment key={row.label}>
           <div className="flex space-x-3">
             <span className="size-6 opacity-60">{row.icon}</span>
-            <span className="font-bold">{row.label}:</span>
+            {row.link ? (
+              <Link
+                to={row.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-sans font-bold hover:text-indigo-600 hover:underline"
+              >
+                {row.label}
+              </Link>
+            ) : (
+              <span className="font-bold">{row.label}</span>
+            )}
           </div>
           <span>{row.description}</span>
           {index < rows.length - 1 && (

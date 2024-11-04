@@ -110,7 +110,7 @@ export const translations = {
     'View all results for': 'Переглянути всі результати для',
     we_couldnt_find:
       'Ми не змогли знайти {type}, яку ви шукаєте. Спробуйте перевірити URL-адресу або поверніться на головну сторінку.',
-    we_lost_this: 'Ми втратили цю {type}',
+    we_lost_this: 'Ми не можемо знайти цю {type}',
     'Welcome to your account.': 'Ласкаво просимо до вашого акаунта.',
     working_hours: 'Робочі години',
     working_hours_details: `\n\tПонеділок – П'ятниця: 10:00 - 18:00\n\tСубота, Неділя – Вихідні`,
@@ -230,7 +230,7 @@ export const translations = {
     'View all results for': 'Посмотреть все результаты для',
     we_couldnt_find:
       'Мы не смогли найти {type}, которую вы ищете. Попробуйте проверить URL-адрес или вернуться на главную страницу.',
-    we_lost_this: 'Мы потеряли эту {type}',
+    we_lost_this: 'Мы не можем найти эту {type}',
     'Welcome to your account.': 'Добро пожаловать в ваш аккаунт.',
     working_hours: 'Рабочие часы',
     working_hours_details: `\n\tПонедельник – Пятница: 10:00 - 18:00\n\tСуббота, Воскресенье – Выходные`,

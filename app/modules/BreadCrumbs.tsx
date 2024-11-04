@@ -103,12 +103,7 @@ function BreadCrumbs() {
   }
 
   return (
-    <Section
-      heading="Breadcrumbs"
-      headingClassName="sr-only"
-      padding="y"
-      //  className="overflow-hidden"
-    >
+    <Section heading="Breadcrumbs" headingClassName="sr-only" padding="y">
       <ScrollArea className="sm-max:flex sm-max:w-[calc(100vw_-_32px)] sm-max:overflow-x-auto sm-max:h-8">
         <Breadcrumb>
           <BreadcrumbList>
