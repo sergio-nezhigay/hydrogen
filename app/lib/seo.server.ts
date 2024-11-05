@@ -117,7 +117,7 @@ function root({
 function home({url}: {url: Request['url']}): SeoConfig {
   const alternates = getAlternates(url);
   return {
-    title: 'Byte',
+    title: 'Informatica',
     titleTemplate: `Магазин електроніки %s | ${domain}`,
 
     robots: {
