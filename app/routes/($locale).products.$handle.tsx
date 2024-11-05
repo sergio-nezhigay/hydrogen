@@ -295,7 +295,10 @@ export default function Product() {
               <h2 className="font-semibold text-xl mb-4">
                 {translation.description}
               </h2>
-              <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
+              <div
+                className="description"
+                dangerouslySetInnerHTML={{__html: descriptionHtml}}
+              />
             </div>
           </div>
         </div>
@@ -314,7 +317,7 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
-      <Suspense fallback={<Skeleton className="h-32" />}>
+      <Suspense fallback={<Skeleton className="h-8" />}>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}

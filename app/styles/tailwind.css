@@ -119,4 +119,17 @@ body {
   .icon-header {
     @apply rounded-md size-8 flex-center;
   }
+
+  ul {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .description li {
+    list-style-type: square;
+    list-style-position: inside;
+  }
+  .description strong {
+    opacity: 0.9;
+    font-weight: 500;
+  }
 }
