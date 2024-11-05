@@ -12,7 +12,6 @@ import type {
   ProductFilter,
 } from '@shopify/hydrogen/storefront-api-types';
 import {
-  flattenConnection,
   getPaginationVariables,
   Analytics,
   getSeoMeta,
@@ -20,7 +19,7 @@ import {
 } from '@shopify/hydrogen';
 import invariant from 'tiny-invariant';
 
-import {PageHeader, Section, Text} from '~/components/Text';
+import {Section} from '~/components/Text';
 import {Grid} from '~/components/Grid';
 import {Button} from '~/components/Button';
 import {ProductCard} from '~/components/ProductCard';
@@ -41,7 +40,7 @@ export const handle = {
 
 export async function loader({params, request, context}: LoaderFunctionArgs) {
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 8,
+    pageBy: 14,
   });
   const {collectionHandle} = params;
   const locale = context.storefront.i18n;
@@ -164,7 +163,7 @@ export default function Collection() {
   const {ref, inView} = useInView();
   const buttonsClass = cn(
     navigationMenuTriggerStyle(),
-    'flex items-center justify-center mb-6 mx-auto p-0',
+    'flex items-center justify-center mb-6 my-2 mx-auto p-0 bg-gray-900/10',
   );
 
   return (
@@ -374,7 +373,7 @@ function getSortValuesFromParam(sortParam: SortParam | null): {
     //  };
     default:
       return {
-        sortKey: 'RELEVANCE',
+        sortKey: 'PRICE',
         reverse: false,
       };
   }
