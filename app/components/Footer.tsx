@@ -21,8 +21,8 @@ export const Footer = () => {
           icon={<Phone size={32} />}
           title={translation.phone}
           content={
-            <a href="tel:+380980059236" className={linkStyle}>
-              (098) 005-9236
+            <a href="tel:+380993815288" className={linkStyle}>
+              (099) 381-5288
             </a>
           }
         />
