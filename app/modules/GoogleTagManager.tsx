@@ -9,13 +9,38 @@ declare global {
 }
 
 export function GoogleTagManager() {
-  const {register, subscribe} = useAnalytics();
+  const {register, subscribe, canTrack} = useAnalytics();
   const {ready} = register('Google Tag Manager');
 
   useEffect(() => {
-    subscribe('product_viewed', () => {
+    setTimeout(() => {
+      const isTrackingAllowed = canTrack();
+      console.log('CustomAnalytics - isTrackingAllowed', isTrackingAllowed);
+    }, 1000);
+    subscribe('product_viewed', (data) => {
       // Triggering a custom event in GTM when a product is viewed
-      window.dataLayer.push({event: 'viewed-product'});
+      console.log('CustomAnalytics - Product viewed:', data);
+      const product = data?.products?.[0];
+      const items = product
+        ? [
+            {
+              item_id: product.id,
+              item_name: product.title,
+              price: parseFloat(product.price),
+              quantity: product.quantity || 1,
+            },
+          ]
+        : [];
+      const value = product ? parseFloat(product.price) : 0;
+      window.dataLayer.push({
+        event: 'viewed-product',
+        url: data.url,
+        ecommerce: {
+          currency: 'UAH',
+          value,
+          items,
+        },
+      });
     });
     subscribe('page_viewed', (data) => {
       console.log('CustomAnalytics - Page viewed:', data);
