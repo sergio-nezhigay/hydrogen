@@ -32,15 +32,17 @@ export function GoogleTagManager() {
           ]
         : [];
       const value = product ? parseFloat(product.price) : 0;
-      window.dataLayer.push({
-        event: 'viewed-product',
+      const content = {
+        event: 'view_item',
         url: data.url,
         ecommerce: {
           currency: 'UAH',
           value,
           items,
         },
-      });
+      };
+      console.log('content=', content);
+      window.dataLayer.push(content);
     });
     subscribe('page_viewed', (data) => {
       console.log('CustomAnalytics - Page viewed:', data);
