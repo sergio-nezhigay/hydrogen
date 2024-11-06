@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import type {SeoConfig} from '@shopify/hydrogen';
 import {
   useNonce,
@@ -159,7 +160,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Links />
         {/***********************************************/
         /**********  EXAMPLE UPDATE STARTS  ************/}
-        {/*<Script
+        <Script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -167,14 +168,14 @@ export function Layout({children}: {children?: React.ReactNode}) {
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-WRQRP5RF');`,
           }}
-        ></Script>*/}
+        ></Script>
         {/**********   EXAMPLE UPDATE END   ************/
         /***********************************************/}
       </head>
       <body>
         {/***********************************************/
         /**********  EXAMPLE UPDATE STARTS  ************/}
-        {/*<noscript>
+        <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-WRQRP5RF"
             height="0"
@@ -184,7 +185,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
               visibility: 'hidden',
             }}
           ></iframe>
-        </noscript>*/}
+        </noscript>
         {/**********   EXAMPLE UPDATE END   ************/
         /***********************************************/}
         {data ? (
@@ -197,7 +198,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
             {/*<CustomAnalytics />*/}
             {/***********************************************/
             /**********  EXAMPLE UPDATE STARTS  ************/}
-            {/*<GoogleTagManager />*/}
+            <GoogleTagManager />
             {/**********   EXAMPLE UPDATE END   ************/
             /***********************************************/}
           </Analytics.Provider>

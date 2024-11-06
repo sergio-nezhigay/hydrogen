@@ -8,7 +8,7 @@ declare global {
 }
 
 export function GoogleTagManager() {
-  const {subscribe, register} = useAnalytics();
+  const {register} = useAnalytics();
   const {ready} = register('Google Tag Manager');
 
   useEffect(() => {
