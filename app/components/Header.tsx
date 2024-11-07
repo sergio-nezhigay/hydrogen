@@ -36,7 +36,7 @@ export function Header({
 
   return (
     <header className="font-narrow flex sticky top-0 z-50  items-center bg-accent-gradient text-white  h-16 lg:h-[118px] ">
-      <div className="container grid grid-cols-[auto_auto] lg:gap-y-4">
+      <div className="container grid grid-cols-[auto_auto] lg:gap-y-0">
         <a
           href={`tel:${phone.full}`}
           className="text-white font-narrow hover:bg-stone-100/20 hidden lg:block p-1 rounded-md xl:text-lg order-1 w-fit"
