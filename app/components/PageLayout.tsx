@@ -89,7 +89,7 @@ function SearchAside() {
               />
               <button
                 onClick={goToSearch}
-                className="px-4 py-2 bg-accent-gradient text-white rounded-md opacity-90 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-indigo-700"
+                className="px-4 py-2 bg-blueAccent text-white rounded-md opacity-90 hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-indigo-700"
               >
                 {translation.search}
               </button>
