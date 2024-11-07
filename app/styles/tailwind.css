@@ -5,6 +5,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --blueAccent: rgb(0, 94, 142);
 }
 
 body {
@@ -120,7 +121,7 @@ body {
     @apply rounded-md size-8 flex-center;
   }
 
-  ul {
+  .description ul {
     padding-top: 8px;
     padding-bottom: 8px;
   }
@@ -131,5 +132,8 @@ body {
   .description strong {
     opacity: 0.9;
     font-weight: 500;
+  }
+  .bg-blueAccent {
+    background-color: var(--blueAccent);
   }
 }
