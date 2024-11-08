@@ -32,7 +32,7 @@ export function GoogleTagManager() {
           ]
         : [];
       const value = product ? parseFloat(product.price) : 0;
-      const content = {
+      const viewItemData = {
         event: 'view_item',
         url: data.url,
         ecommerce: {
@@ -41,15 +41,87 @@ export function GoogleTagManager() {
           items,
         },
       };
-      console.log('content=', content);
-      window.dataLayer.push(content);
+      console.log('viewItemData=', viewItemData);
+      window.dataLayer.push(viewItemData);
     });
     subscribe('search_viewed', (data) => {
       console.log('from hydrogen search_submitted event data', data);
+      const searchData = {
+        event: 'search',
+        url: data.url,
+        ecommerce: {
+          search_term: data?.searchTerm,
+        },
+      };
+      console.log('🚀 ~ searchData:', searchData);
+      window.dataLayer.push(searchData);
+      //      from hydrogen search_submitted event data
+      //{searchTerm: 'kvr133', searchResults: {…}, customData: {…}, cart: null, prevCart: null, …}
+      //cart
+      //:
+      //null
+      //customData
+      //:
+      //{}
+      //prevCart
+      //:
+      //null
+      //searchResults
+      //:
+      //{total: 8, items: {…}}
+      //searchTerm
+      //:
+      //"kvr133"
+      //shop
+      //:
+      //{shopId: 'gid://shopify/Shop/86804627772', acceptedLanguage: 'UK', currency: 'UAH', hydrogenSubchannelId: '1000019792'}
+      //url
+      //:
+      //"https://informatica.com.ua/search?q=kvr133"
     });
 
     subscribe('collection_viewed', (data) => {
       console.log('from hydrogen code collection_viewed event', data);
+      const collectionViewData = {
+        event: 'view_item_list',
+        url: data.url,
+        ecommerce: {
+          collection_id: data.collection?.id,
+          collection_title: data?.collection?.handle,
+        },
+      };
+      console.log('🚀 ~ collectionViewData:', collectionViewData);
+      window.dataLayer.push(collectionViewData);
+      //{collection: {…}, customData: {…}, cart: null, prevCart: null, shop: {…}, …}
+      //cart
+      //:
+      //null
+      //collection
+      //:
+      //handle
+      //:
+      //"pamyat"
+      //id
+      //:
+      //"gid://shopify/Collection/496623714620"
+      //[[Prototype]]
+      //:
+      //Object
+      //customData
+      //:
+      //{}
+      //prevCart
+      //:
+      //null
+      //shop
+      //:
+      //{shopId: 'gid://shopify/Shop/86804627772', acceptedLanguage: 'UK', currency: 'UAH', hydrogenSubchannelId: '1000019792'}
+      //url
+      //:
+      //"https://informatica.com.ua/collections/pamyat"
+      //[[Prototype]]
+      //:
+      //Object
     });
     subscribe('page_viewed', (data) => {
       console.log('CustomAnalytics - Page viewed:', data);
