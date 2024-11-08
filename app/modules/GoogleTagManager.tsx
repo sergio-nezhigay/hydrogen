@@ -44,6 +44,13 @@ export function GoogleTagManager() {
       console.log('content=', content);
       window.dataLayer.push(content);
     });
+    subscribe('search_viewed', (data) => {
+      console.log('from hydrogen search_submitted event data', data);
+    });
+
+    subscribe('collection_viewed', (data) => {
+      console.log('from hydrogen code collection_viewed event', data);
+    });
     subscribe('page_viewed', (data) => {
       console.log('CustomAnalytics - Page viewed:', data);
       window.dataLayer.push({
@@ -51,6 +58,7 @@ export function GoogleTagManager() {
         page: data.url,
       });
     });
+
     ready();
   }, []);
 

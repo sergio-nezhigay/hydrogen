@@ -31,7 +31,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[700px] flex sm-max:content-start md:content-center align-center sm-max:flex-center md:flex-center overflow-hidden text-white">
+    <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[500px] flex sm-max:content-start md:content-center align-center sm-max:flex-center md:flex-center overflow-hidden text-white">
       <picture className="absolute inset-0 w-[104%]">
         <source
           media="(min-width: 768px)"

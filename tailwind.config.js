@@ -30,6 +30,7 @@ module.exports = {
         contrast: 'rgb(var(--color-contrast) / <alpha-value>)',
         background: 'hsl(var(--background))',
         foreground: 'var(--foreground)',
+        blueAccent: 'var(--blueAccent)',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',

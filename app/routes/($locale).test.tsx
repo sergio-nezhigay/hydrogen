@@ -13,11 +13,12 @@ import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
 import {Skeleton} from '~/components/Skeleton';
-import {HeroSection1} from '~/modules/Hero1';
+import {HeroSection} from '~/modules/Hero';
 import {BrandSwimlane} from '~/modules/BrandSwimlane';
 import {getAllShopReviews} from '~/lib/judgeme';
 import type {ReviewSwimlaneProps} from '~/modules/ReviewSwimlane';
 import {ReviewSwimlane} from '~/modules/ReviewSwimlane';
+import {HeroSection1} from '~/modules/Hero1';
 
 export const headers = routeHeaders;
 
@@ -140,9 +141,9 @@ export default function Homepage() {
   return (
     <>
       <HeroSection1 />
-      <BrandSwimlane />
-      {/*<Skeleton className="my-4 h-screen w-full aspect-[3/4]" />*/}
-      {featuredCollections && (
+      {/*<BrandSwimlane />*/}
+
+      {/*{featuredCollections && (
         <Suspense
           fallback={<Skeleton className="mt-20 mb-12 w-full h-[250px]" />}
         >
@@ -190,7 +191,7 @@ export default function Homepage() {
             }}
           </Await>
         </Suspense>
-      )}
+      )}*/}
     </>
   );
 }
