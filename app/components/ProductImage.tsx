@@ -17,7 +17,7 @@ export function ProductImage({itemData, index}: ProductImageProps) {
       {image && (
         <Image
           loading={index === 0 ? 'eager' : 'lazy'}
-          //  width={0}
+          width={0}
           data={image}
           sizes="(max-width: 768px) 100vw, 50vw"
           className="object-contain w-full h-auto"

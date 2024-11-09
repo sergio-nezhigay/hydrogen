@@ -33,12 +33,6 @@ import {Gallery} from '~/modules/Gallery';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
 import type {RootLoader} from '~/root';
-//import {
-//  Accordion,
-//  AccordionContent,
-//  AccordionItem,
-//  AccordionTrigger,
-//} from '~/components/ui/accordion';
 import {ReviewList} from '~/modules/ReviewList';
 import {ShippingPaymentWarranty} from '~/modules/ShippingPaymentWarranty';
 

@@ -64,6 +64,7 @@ export function ProductCard({
             {image && (
               <Image
                 className="w-full h-full object-contain"
+                width={0}
                 sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, 50vw"
                 data={image}
                 alt={image.altText || `Зображення ${product.title}`}
