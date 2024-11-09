@@ -19,6 +19,7 @@ export function Grid({
 }) {
   const layouts = {
     default: `grid-cols-1 ${items === 2 && 'md:grid-cols-2'}
+    ${items === 8 && 'sm:grid-cols-8'}
     ${items === 3 && 'sm:grid-cols-3'}
     ${items > 3 && 'md:grid-cols-3'}
     ${items >= 4 && 'lg:grid-cols-4'}

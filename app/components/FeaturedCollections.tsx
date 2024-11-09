@@ -34,8 +34,8 @@ export function FeaturedCollections({
   }
 
   return (
-    <Section {...props} heading={t(title)} padding="y">
-      <Grid items={collectionsWithImage.length}>
+    <Section {...props} heading={t(title)} padding="y" className="bg-gray-50">
+      <Grid items={8}>
         {collectionsWithImage.map((collection) => (
           <Link
             key={collection.id}
@@ -44,13 +44,13 @@ export function FeaturedCollections({
             className="group"
           >
             <div className="grid gap-4">
-              <div className="card-image bg-primary/5 aspect-[3/2] group-hover:shadow-hover transition-shadow duration-300">
+              <div className="bg-primary/5 aspect-square group-hover:shadow-hover transition-shadow duration-300 !rounded-full overflow-hidden size-[140px]">
                 {collection?.image && (
                   <Image
                     alt={`Image of ${collection.title}`}
                     data={collection.image}
                     sizes="(max-width: 768px) 100vw, (max-width: 768px) 33vw, 20vw"
-                    aspectRatio="3/2"
+                    aspectRatio="1/1"
                   />
                 )}
               </div>

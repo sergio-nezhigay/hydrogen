@@ -17,6 +17,7 @@ import {Thumb} from './Thumb';
 import {DotButtons} from './DotButtons';
 import type {BrandCardWrapperProps} from './BrandSwimlane';
 import type {ReviewCardWrapperProps} from './ReviewSwimlane';
+import type {CollectionCardProps} from './CollectionSwimLine';
 
 type GalleryProps = {
   galleryItems: any[];
@@ -24,7 +25,8 @@ type GalleryProps = {
     | FC<ProductCardWrapperProps>
     | FC<ProductImageProps>
     | FC<BrandCardWrapperProps>
-    | FC<ReviewCardWrapperProps>;
+    | FC<ReviewCardWrapperProps>
+    | FC<CollectionCardProps>;
   itemClasses?: string;
   showThumbs?: boolean;
 };
@@ -82,7 +84,7 @@ export function Gallery({
   }
 
   return (
-    <div className="w-full md:px-12">
+    <div className="w-full">
       <Carousel
         setApi={setCarouselApi}
         opts={{

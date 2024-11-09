@@ -55,29 +55,6 @@ export function GoogleTagManager() {
       };
       console.log('🚀 ~ searchData:', searchData);
       window.dataLayer.push(searchData);
-      //      from hydrogen search_submitted event data
-      //{searchTerm: 'kvr133', searchResults: {…}, customData: {…}, cart: null, prevCart: null, …}
-      //cart
-      //:
-      //null
-      //customData
-      //:
-      //{}
-      //prevCart
-      //:
-      //null
-      //searchResults
-      //:
-      //{total: 8, items: {…}}
-      //searchTerm
-      //:
-      //"kvr133"
-      //shop
-      //:
-      //{shopId: 'gid://shopify/Shop/86804627772', acceptedLanguage: 'UK', currency: 'UAH', hydrogenSubchannelId: '1000019792'}
-      //url
-      //:
-      //"https://informatica.com.ua/search?q=kvr133"
     });
 
     subscribe('collection_viewed', (data) => {
@@ -92,36 +69,6 @@ export function GoogleTagManager() {
       };
       console.log('🚀 ~ collectionViewData:', collectionViewData);
       window.dataLayer.push(collectionViewData);
-      //{collection: {…}, customData: {…}, cart: null, prevCart: null, shop: {…}, …}
-      //cart
-      //:
-      //null
-      //collection
-      //:
-      //handle
-      //:
-      //"pamyat"
-      //id
-      //:
-      //"gid://shopify/Collection/496623714620"
-      //[[Prototype]]
-      //:
-      //Object
-      //customData
-      //:
-      //{}
-      //prevCart
-      //:
-      //null
-      //shop
-      //:
-      //{shopId: 'gid://shopify/Shop/86804627772', acceptedLanguage: 'UK', currency: 'UAH', hydrogenSubchannelId: '1000019792'}
-      //url
-      //:
-      //"https://informatica.com.ua/collections/pamyat"
-      //[[Prototype]]
-      //:
-      //Object
     });
     subscribe('page_viewed', (data) => {
       console.log('CustomAnalytics - Page viewed:', data);

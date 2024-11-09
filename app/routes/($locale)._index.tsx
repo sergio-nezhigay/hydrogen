@@ -7,17 +7,17 @@ import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
 
-import {FeaturedCollections} from '~/components/FeaturedCollections';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
 import {Skeleton} from '~/components/Skeleton';
-import {HeroSection} from '~/modules/Hero';
 import {BrandSwimlane} from '~/modules/BrandSwimlane';
 import {getAllShopReviews} from '~/lib/judgeme';
-import type {ReviewSwimlaneProps} from '~/modules/ReviewSwimlane';
 import {ReviewSwimlane} from '~/modules/ReviewSwimlane';
+import {HeroSection} from '~/modules/Hero';
+import CollectionSwimLine from '~/modules/CollectionSwimLine';
+import type {HomepageFeaturedCollectionsQuery} from 'storefrontapi.generated';
 
 export const headers = routeHeaders;
 
@@ -70,12 +70,14 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
 function loadDeferredData({context}: LoaderFunctionArgs) {
   const {language, country} = context.storefront.i18n;
   const collectionIds = [
+    'gid://shopify/Collection/496623714620',
+    'gid://shopify/Collection/496623943996',
+    'gid://shopify/Collection/496624271676',
+    'gid://shopify/Collection/496623518012',
+    'gid://shopify/Collection/497045635388',
+    'gid://shopify/Collection/496624730428',
     'gid://shopify/Collection/496623911228',
     'gid://shopify/Collection/496623780156',
-    'gid://shopify/Collection/496623714620',
-    'gid://shopify/Collection/496625287484',
-    'gid://shopify/Collection/496624271676',
-    //'gid://shopify/Collection/496624730428',
   ];
   const featuredProducts = context.storefront
     .query(HOMEPAGE_FEATURED_PRODUCTS_QUERY, {
@@ -140,31 +142,32 @@ export default function Homepage() {
   return (
     <>
       <HeroSection />
-      <BrandSwimlane />
-      {/*<Skeleton className="my-4 h-screen w-full aspect-[3/4]" />*/}
       {featuredCollections && (
-        <Suspense
-          fallback={<Skeleton className="mt-20 mb-12 w-full h-[250px]" />}
-        >
+        <Suspense fallback={<p></p>}>
           <Await resolve={featuredCollections}>
             {(response) => {
               const collections = response?.nodes || [];
+              if (collections.length === 0) {
+                return <span>Collections loading error</span>;
+              }
               return collections.length > 0 ? (
-                <FeaturedCollections nodes={collections} />
+                <CollectionSwimLine collections={collections} />
               ) : (
-                <Skeleton className="my-4 w-full h-[250px]" />
+                <Skeleton className="my-4 w-full h-[300px]" />
               );
             }}
           </Await>
         </Suspense>
       )}
-
+      <BrandSwimlane />
       {featuredProducts && (
         <Suspense fallback={<p></p>}>
           <Await resolve={featuredProducts}>
             {(response) => {
               return response?.products?.nodes ? (
-                <ProductSwimlane products={response.products} />
+                <div className="bg-gray-50">
+                  <ProductSwimlane products={response.products} />
+                </div>
               ) : (
                 <Skeleton className="my-4 w-full h-[300px]" />
               );

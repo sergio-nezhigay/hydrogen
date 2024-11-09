@@ -26,7 +26,7 @@ export function ReviewSwimlane({
       {...props}
       padding="y"
       display="flex"
-      className="flex flex-col"
+      className="flex flex-col bg-gray-50"
     >
       <Gallery
         galleryItems={reviews.slice(0, count)}

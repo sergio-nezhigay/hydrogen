@@ -1,88 +1,105 @@
-import {useState, useEffect} from 'react';
 import {Image} from '@shopify/hydrogen';
 
-import {cn, useTranslation} from '~/lib/utils';
+import {useTranslation} from '~/lib/utils';
 import {Link} from '~/components/Link';
-const phoneNumber = '+380507025777';
+import {Section} from '~/components/Text';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '~/components/ui/carousel';
+import type {Product} from '~/data/heroProducts';
+import {heroProducts} from '~/data/heroProducts';
 
 export function HeroSection() {
-  const [isVisible, setIsVisible] = useState(false);
-  const {translation} = useTranslation();
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  const buttonStyle =
-    'font-bold inline-block px-6 py-3 mt-4 bg-white/90 text-indigo-900 rounded-lg hover:bg-indigo-700 hover:text-white transition-color';
-
-  // Multiple shadow text border effect
-  const textShadowStyle = {
-    textShadow: `
-      0.05em 0 black,
-      0 0.05em black,
-      -0.05em 0 black,
-      0 -0.05em black,
-      -0.05em -0.05em black,
-      -0.05em 0.05em black,
-      0.05em -0.05em black,
-      0.05em 0.05em black
-    `,
-  };
-
   return (
-    <section className="relative w-full min-h-[200px] h-[70vh] lg:h-[500px] flex sm-max:content-start md:content-center align-center sm-max:flex-center md:flex-center overflow-hidden text-white">
-      <picture className="absolute inset-0 w-[104%]">
-        <source
-          media="(min-width: 768px)"
-          srcSet="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-desktop-narrow-compressed.webp?v=1728656179"
-        />
+    <Section
+      useH1
+      display="flex"
+      heading="Головна сторінка"
+      headingClassName="sr-only"
+      className="pb-8"
+      padding="y"
+    >
+      <h1 className="sr-only">Головна сторінка</h1>
+      <Carousel
+        opts={{
+          loop: true,
+        }}
+      >
+        <CarouselContent>
+          {heroProducts.map((product) => (
+            <>
+              <CarouselItem>
+                <ProductSlide product={product} />
+              </CarouselItem>
+            </>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="sm-max:hidden" />
+        <CarouselNext className="sm-max:hidden " />
+      </Carousel>
+    </Section>
+  );
+}
+
+const ProductSlide: React.FC<{product: Product}> = ({product}) => {
+  const {t} = useTranslation();
+  return (
+    <div
+      className={`flex flex-row relative rounded-lg shadow-lg text-blueAccent overflow-hidden md:h-[320px] transition-opacity duration-700 ease-in-out outline-1`}
+    >
+      {/* Part 1: Product Description */}
+
+      <ul className="md:uppercase flex flex-col justify-center w-1/3 sm-max:flex-wrap gap-4 text-sm md:text-base lg:text-2xl xl:text-4xl italic md:font-bold md:space-y-1 sm-max:gap-x-4 sm-max:mb-4 items-start">
+        {product.advantages.map((advantage: string) => (
+          <li key={advantage}>
+            <div>{t(advantage)}</div>
+          </li>
+        ))}
+      </ul>
+
+      {/* Part 2: Product Image */}
+      <div className="sm-max:h-[200px] sm-max:-translate-x-8 w-[42%] flex items-center justify-center">
         <Image
-          src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/future-mobile-compressed.webp?v=1728656179"
-          className="absolute -inset-[2%] w-[104%] h-[103%] blur-sm object-cover object-[center_90%]"
-          alt="Комп'ютер майбутнього"
-          sizes="100vw"
+          src={product.imageUrl}
+          alt={product.name}
+          className="object-contain w-full h-full"
+          sizes="40vw"
         />
-      </picture>
+      </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0  bg-stone-500 opacity-10" />
-
-      {/* Content */}
-      <div className="relative z-10 text-center px-4">
-        <h1
-          className={`text-3xl lg:text-5xl transform font-bold transition-all duration-300 ease-in-out sm-max:mb-10`}
-          style={textShadowStyle}
-        >
-          {translation.hero_title}
-        </h1>
-        <p
-          className={`text-xl lg:text-4xl sm-max:max-w-[200px] mx-auto text-gray-200 transform transition-all duration-300 ease-in-out delay-300 sm-max:mb-10`}
-          style={textShadowStyle}
-        >
-          {translation.hero_description}
+      {/* Part 3: Price Section */}
+      <div className="absolute right-0 top-0 justify-between h-full items-end flex flex-col font-medium py-4">
+        <p className=" text-sm sm-max:text-center sm:text-[20px] lg:text-[25px] xl:text-[34px] 2xl:text-[38px] mb-3 md:mb-8">
+          {t(product.name)}
         </p>
-        <div
-          className={` mx-auto transition-all duration-1000 ease-in-out delay-1000 ${
-            isVisible
-              ? 'opacity-100  translate-y-0'
-              : 'opacity-0  translate-y-4'
-          }`}
-        >
-          <a
-            href={`tel:${phoneNumber}`}
-            className={cn('md:hidden ', buttonStyle)}
-          >
-            {translation.hero_button}
-          </a>
+        <div className="flex flex-col items-center gap-3">
+          <div className="flex flex-col gap-1 sm-max:mb-4">
+            {product.oldPrice && (
+              <div className="w-fit md:text-xl opacity-85 text-center mx-auto line-through">
+                {product.oldPrice}
+              </div>
+            )}
+            <div className="relative w-fit md:inline-block md:mb-4 lg:mb-10">
+              <div className="absolute inset-0 transform -rotate-6 bg-red-400 rounded p-1 lg:p-3"></div>
+
+              <div className="relative z-10 md:text-2xl xl:text-3xl bg-transparent font-medium p-1 lg:p-3">
+                {product.currentPrice}
+              </div>
+            </div>
+          </div>
+
           <Link
-            to={`/pages/contact`}
-            className={cn('sm-max:hidden ', buttonStyle)}
+            to={`/products/${product.productPageUrl}`}
+            className="w-fit sm-max:mx-auto font-bold flex px-2 py-1 md:px-6 md:py-3 bg-blueAccent text-white rounded-lg hover:opacity-85 transition-all"
           >
-            {translation.hero_button}
+            {t('View Details')}
           </Link>
         </div>
       </div>
-    </section>
+    </div>
   );
-}
+};

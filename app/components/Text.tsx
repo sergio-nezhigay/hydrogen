@@ -157,7 +157,7 @@ export function Section({
             as={useH1 ? 'h1' : 'h2'}
             size="heading"
             className={clsx(
-              padding === 'y' ? paddings['x'] : '',
+              padding === 'y' ? paddings['y'] : '',
               headingClassName,
               'py-6',
             )}
