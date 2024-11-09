@@ -18,6 +18,7 @@ export function ReviewSwimlane({
   count = 12,
   ...props
 }: ReviewSwimlaneProps) {
+  console.log('🚀 ~ reviews:', reviews);
   const {translation} = useTranslation();
 
   return (
