@@ -13,14 +13,14 @@ export function ProductImage({itemData, index}: ProductImageProps) {
       ? {...itemData.image, altText: itemData.alt || 'Product image ' + index}
       : null;
   return (
-    <div className="object-contain aspect-square flex">
+    <div className="card-image object-contain aspect-square flex">
       {image && (
         <Image
           loading={index === 0 ? 'eager' : 'lazy'}
-          width={0}
           data={image}
-          sizes="(max-width: 768px) 100vw, 50vw"
+          sizes="(min-width: 768px) 40vw, 90vw"
           className="object-contain w-full h-auto"
+          aspectRatio="1/1"
         />
       )}
     </div>
