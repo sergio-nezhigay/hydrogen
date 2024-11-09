@@ -213,7 +213,12 @@ export default function Product() {
 
   return (
     <>
-      <Section heading="Опис товару" padding="y" headingClassName="sr-only">
+      <Section
+        heading="Опис товару"
+        padding="y"
+        headingClassName="sr-only"
+        display="flex"
+      >
         <div className="grid md:grid-cols-2 md:gap-16">
           <Gallery
             galleryItems={media.nodes}

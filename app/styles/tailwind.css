@@ -102,8 +102,13 @@ body {
       @apply absolute top-0 left-0 z-0 block h-full w-full rounded shadow-border;
     }
     img {
-      @apply aspect-[inherit] w-full object-cover;
+      @apply aspect-[inherit] w-full object-contain;
     }
+  }
+
+  .product-image img {
+    height: auto;
+    width: 100%;
   }
 
   .flex-center {
