@@ -48,10 +48,9 @@ export function Header({
         <div className="shrink-0 order-2 lg:order-3 flex-start">
           <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
             <Image
-              className="w-[100px] xs:w-[150px] sm:w-[180px] md:w-[233px] "
               src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/informatica-white.webp?v=1730375267"
               alt="logo"
-              sizes="(min-width: 48em) 233px, (min-width: 32em) 180px,(min-width: 27em) 150px, 100px"
+              sizes="(min-width: 48em) 233px, (min-width: 32em) 180px,(min-width: 27em) 150px, 150px"
             />
           </NavLink>
         </div>
@@ -107,7 +106,7 @@ function HeaderCtas({
         prefetch="intent"
         to="/account"
         style={activeLinkStyle}
-        className="hover:bg-stone-100/20 icon-header"
+        className="hover:bg-stone-100/20 icon-header sm-max:hidden"
       >
         <Suspense fallback=<IconLogin />>
           <Await resolve={isLoggedIn} errorElement="Sign in">
