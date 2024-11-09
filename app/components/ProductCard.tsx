@@ -65,7 +65,7 @@ export function ProductCard({
               <Image
                 className="w-full h-full object-contain"
                 sizes="(min-width: 768px) 25vw, 50vw"
-                data={image}
+                src={image.url}
                 alt={image.altText || `Зображення ${product.title}`}
                 loading={loading}
                 aspectRatio="1/1"

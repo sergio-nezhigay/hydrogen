@@ -13,14 +13,14 @@ export function ProductImage({itemData, index}: ProductImageProps) {
       ? {...itemData.image, altText: itemData.alt || 'Product image ' + index}
       : null;
   return (
-    <div className="w-full h-[auto] relative object-contain">
+    <div className="w-full h-[auto] aspect-square flex-center">
       {image && (
         <Image
           loading={index === 0 ? 'eager' : 'lazy'}
-          data={image}
+          src={image.url}
+          alt={image.altText}
           sizes="(min-width: 768px) 50vw, 100vw"
-          aspectRatio="1/1"
-          className="w-full h-full"
+          className="w-full h-auto"
         />
       )}
     </div>
