@@ -26,16 +26,17 @@ export function Thumb({selected, onClick, item}: PropType) {
         onClick={onClick}
         onMouseEnter={onClick}
         type="button"
-        className={`flex items-center justify-center w-full bg-primary/5`}
+        className={`flex items-center justify-center w-full bg-primary/5 aspect-square`}
       >
         {image && (
           <Image
-            data={image}
+            src={image.url}
+            alt={image.altText}
             width={70}
             height={70}
-            aspectRatio={'1/1'}
+            //aspectRatio={'1/1'}
             sizes="70px"
-            className="object-cover w-full h-full"
+            className="w-full h-full"
           />
         )}
       </button>

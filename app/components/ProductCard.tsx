@@ -63,12 +63,12 @@ export function ProductCard({
           <div className="card-image aspect-square group-hover:shadow-hover transition-shadow duration-300">
             {image && (
               <Image
-                className="w-full h-full object-contain"
+                className="w-full h-full"
                 sizes="(min-width: 768px) 25vw, 50vw"
                 src={image.url}
                 alt={image.altText || `Зображення ${product.title}`}
                 loading={loading}
-                aspectRatio="1/1"
+                //aspectRatio="1/1"
               />
             )}
 
