@@ -13,7 +13,7 @@ export function ProductImage({itemData, index}: ProductImageProps) {
       ? {...itemData.image, altText: itemData.alt || 'Product image ' + index}
       : null;
   return (
-    <div className="w-full h-[auto] relative object-cover">
+    <div className="w-full h-[auto] relative object-contain">
       {image && (
         <Image
           loading={index === 0 ? 'eager' : 'lazy'}
