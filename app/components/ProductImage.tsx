@@ -3,14 +3,14 @@ import {Image} from '@shopify/hydrogen';
 import type {MediaFragment} from 'storefrontapi.generated';
 
 export type ProductImageProps = {
-  itemData: MediaFragment;
+  item: MediaFragment;
   index: number;
 };
 
-export function ProductImage({itemData, index}: ProductImageProps) {
+export function ProductImage({item, index}: ProductImageProps) {
   const image =
-    itemData.__typename === 'MediaImage'
-      ? {...itemData.image, altText: itemData.alt || 'Product image ' + index}
+    item.__typename === 'MediaImage'
+      ? {...item.image, altText: item.alt || 'Product image ' + index}
       : null;
   return (
     <div className="w-full h-[auto] aspect-square flex-center">

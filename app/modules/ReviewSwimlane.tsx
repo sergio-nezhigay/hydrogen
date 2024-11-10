@@ -1,10 +1,10 @@
 import {Section} from '~/components/Text';
 import type {JudgemeReview} from '~/lib/type';
 import {useTranslation} from '~/lib/utils';
-import {Gallery} from '~/modules/Gallery';
 import {Link} from '~/components/Link';
 
-import {ReviewCard} from './ReviewList'; // Import the ReviewCard component
+import {ReviewCard} from './ReviewList';
+import DynamicGallery from './DynamicGallery';
 
 export type ReviewSwimlaneProps = {
   title?: string;
@@ -28,10 +28,10 @@ export function ReviewSwimlane({
       display="flex"
       className="flex flex-col bg-gray-50"
     >
-      <Gallery
-        galleryItems={reviews.slice(0, count)}
-        GalleryItemComponent={ReviewCardWrapper}
-        itemClasses="pl-4 lg:basis-1/2 xl:basis-1/3"
+      <DynamicGallery
+        data={reviews.slice(0, count)}
+        presentationComponent={ReviewCardWrapper}
+        itemStyle="pl-4 lg:basis-1/2 xl:basis-1/4"
       />
     </Section>
   );
@@ -39,25 +39,25 @@ export function ReviewSwimlane({
 
 export type ReviewCardWrapperProps = {
   index: number;
-  itemData: JudgemeReview;
+  item: JudgemeReview;
 };
 
-function ReviewCardWrapper({itemData, index}: ReviewCardWrapperProps) {
+function ReviewCardWrapper({item, index}: ReviewCardWrapperProps) {
   const productBaseUrl = '/products/';
   return (
     <div key={index} className="p-4 border rounded-lg shadow h-full">
-      {itemData.product_handle && itemData.product_title && (
+      {item.product_handle && item.product_title && (
         <h3 className="font-medium text-lg">
           <Link
-            to={`${productBaseUrl}${itemData.product_handle}`}
+            to={`${productBaseUrl}${item.product_handle}`}
             className="text-blue-600 hover:underline"
           >
-            {itemData.product_title}
+            {item.product_title}
           </Link>
         </h3>
       )}
 
-      <ReviewCard review={itemData} />
+      <ReviewCard review={item} />
     </div>
   );
 }
