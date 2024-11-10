@@ -171,7 +171,8 @@ export default function Collection() {
       <Section
         padding="y"
         heading={collection.title}
-        headingClassName="sr-only"
+        //headingClassName="sr-only"
+        display="flex"
       >
         {/*{collection.products.nodes.length > 0 ? (*/}
         <SortFilter

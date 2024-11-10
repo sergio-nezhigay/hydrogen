@@ -204,7 +204,7 @@ export default function Product() {
         headingClassName="sr-only"
         display="flex"
       >
-        <div className="grid md:grid-cols-[4fr_6fr] md:gap-16">
+        <div className="grid md:grid-cols-[5fr_5fr] xl:grid-cols-[4fr_6fr] md:gap-16">
           <DynamicGallery
             data={media.nodes}
             presentationComponent={ProductImage}

@@ -82,7 +82,7 @@ export function SortFilter({
       </div>
       {/*desktop*/}
       <div className="sm-max:hidden ">
-        <div className="flex min-h-8 mb-2">
+        <div className="flex min-h-4">
           {appliedFilters.length > 0 && (
             <AppliedFilters filters={appliedFilters} />
           )}
@@ -174,51 +174,47 @@ function Filters({filters}: {filters: Filter[]}) {
   };
 
   return (
-    <>
-      <nav className="md:py-4">
-        <div className="divide-y">
-          <Accordion
-            type="multiple"
-            defaultValue={sortedFilters.map((filter) => filter.label)}
-          >
-            {sortedFilters.map((filter: Filter) => (
-              <AccordionItem key={filter.id} value={filter.label}>
-                <>
-                  <AccordionTrigger className="transition-colors flex justify-between w-full py-2 font-semibold font-narrow hover:text-indigo-700/80 hover:bg-transparent text-left">
-                    {filter.label}
-                  </AccordionTrigger>
-                  <AccordionContent key={filter.id} asChild>
-                    <ScrollArea className="flex flex-col max-h-80 overflow-y-auto">
-                      <ul
-                        key={filter.id}
-                        className={cn('py-2 grid ', {
-                          'grid-cols-2': !filter.id.includes('price'),
-                        })}
-                      >
-                        {filter.values
-                          ?.filter(
-                            ({count, id, label}) =>
-                              (count > 0 || id.includes('price')) &&
-                              !minusBrands.includes(label),
-                          )
-                          .sort(filterSort)
-                          .map((option) => {
-                            return (
-                              <li key={option.id} className="flex pb-2">
-                                {filterMarkup(filter, option)}
-                              </li>
-                            );
-                          })}
-                      </ul>
-                    </ScrollArea>
-                  </AccordionContent>
-                </>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
-      </nav>
-    </>
+    <nav className="divide-y">
+      <Accordion
+        type="multiple"
+        defaultValue={sortedFilters.map((filter) => filter.label)}
+      >
+        {sortedFilters.map((filter: Filter) => (
+          <AccordionItem key={filter.id} value={filter.label}>
+            <>
+              <AccordionTrigger className="transition-colors flex justify-between w-full py-2 font-semibold font-narrow hover:text-indigo-700/80 hover:bg-transparent text-left">
+                {filter.label}
+              </AccordionTrigger>
+              <AccordionContent key={filter.id} asChild>
+                <ScrollArea className="flex flex-col max-h-80 overflow-y-auto">
+                  <ul
+                    key={filter.id}
+                    className={cn('py-2 grid ', {
+                      'grid-cols-2': !filter.id.includes('price'),
+                    })}
+                  >
+                    {filter.values
+                      ?.filter(
+                        ({count, id, label}) =>
+                          (count > 0 || id.includes('price')) &&
+                          !minusBrands.includes(label),
+                      )
+                      .sort(filterSort)
+                      .map((option) => {
+                        return (
+                          <li key={option.id} className="flex pb-2">
+                            {filterMarkup(filter, option)}
+                          </li>
+                        );
+                      })}
+                  </ul>
+                </ScrollArea>
+              </AccordionContent>
+            </>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </nav>
   );
 }
 
