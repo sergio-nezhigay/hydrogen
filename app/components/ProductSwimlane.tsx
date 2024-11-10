@@ -4,7 +4,6 @@ import type {
 } from 'storefrontapi.generated';
 import {Section} from '~/components/Text';
 import {ProductCard} from '~/components/ProductCard';
-import {Gallery} from '~/modules/Gallery';
 import {useTranslation} from '~/lib/utils';
 import DynamicGallery from '~/modules/DynamicGallery';
 
@@ -25,9 +24,7 @@ export function ProductSwimlane({
 }: ProductSwimlaneProps) {
   const {t} = useTranslation();
   const translatedTitle = t(title);
-  console.log('====================================');
-  console.log(products.nodes);
-  console.log('====================================');
+
   return (
     <Section
       heading={translatedTitle}

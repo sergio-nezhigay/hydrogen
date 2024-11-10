@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/iframe-has-title */
 import type {SeoConfig} from '@shopify/hydrogen';
 import {
   useNonce,
@@ -184,6 +183,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
               display: 'none',
               visibility: 'hidden',
             }}
+            title="GTM"
           ></iframe>
         </noscript>
         {/**********   EXAMPLE UPDATE END   ************/

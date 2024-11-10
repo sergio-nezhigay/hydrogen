@@ -134,7 +134,7 @@ function DynamicGallery<T extends {id: string | number}>({
                       >
                         <button
                           onClick={() => scrollTo(index)}
-                          onMouseEnter={() => scrollTo(index)}
+                          //  onMouseEnter={() => scrollTo(index)}
                           type="button"
                           className={`flex items-center justify-center w-full bg-primary/5 aspect-square`}
                         >

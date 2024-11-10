@@ -6,9 +6,10 @@ import {
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
+import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 
 import {ProductSwimlane} from '~/components/ProductSwimlane';
-import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
+import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
 import {Skeleton} from '~/components/Skeleton';
@@ -17,7 +18,7 @@ import {getAllShopReviews} from '~/lib/judgeme';
 import {ReviewSwimlane} from '~/modules/ReviewSwimlane';
 import {HeroSection} from '~/modules/Hero';
 import CollectionSwimLine from '~/modules/CollectionSwimLine';
-import type {HomepageFeaturedCollectionsQuery} from 'storefrontapi.generated';
+import {homepageCollectionIDs} from '~/data/homepageCollectionIDs';
 
 export const headers = routeHeaders;
 
@@ -34,10 +35,7 @@ export async function loader(args: LoaderFunctionArgs) {
     throw new Response(null, {status: 404});
   }
 
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
   return defer({...deferredData, ...criticalData});
@@ -48,16 +46,7 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context, request}: LoaderFunctionArgs) {
-  const [{shop, hero}] = await Promise.all([
-    context.storefront.query(HOMEPAGE_SEO_QUERY, {
-      variables: {handle: 'freestyle'},
-    }),
-    // Add other queries here, so that they are loaded in parallel
-  ]);
-
   return {
-    shop,
-    primaryHero: hero,
     seo: seoPayload.home({url: request.url}),
   };
 }
@@ -69,16 +58,7 @@ async function loadCriticalData({context, request}: LoaderFunctionArgs) {
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
   const {language, country} = context.storefront.i18n;
-  const collectionIds = [
-    'gid://shopify/Collection/496623714620',
-    'gid://shopify/Collection/496623943996',
-    'gid://shopify/Collection/496624271676',
-    'gid://shopify/Collection/496623518012',
-    'gid://shopify/Collection/497045635388',
-    'gid://shopify/Collection/496624730428',
-    'gid://shopify/Collection/496623911228',
-    'gid://shopify/Collection/496623780156',
-  ];
+
   const featuredProducts = context.storefront
     .query(HOMEPAGE_FEATURED_PRODUCTS_QUERY, {
       variables: {
@@ -103,7 +83,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       variables: {
         country,
         language,
-        ids: collectionIds,
+        ids: homepageCollectionIDs,
       },
     })
     .catch((error) => {
@@ -125,7 +105,6 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
     featuredProducts,
     featuredCollections,
     shopReviews,
-    //language,
   };
 }
 
@@ -139,17 +118,19 @@ export default function Homepage() {
 
   return (
     <>
-      {/*<HeroSection />
+      <HeroSection />
+      <BrandSwimlane />
+
       {featuredCollections && (
         <Suspense fallback={<p></p>}>
           <Await resolve={featuredCollections}>
             {(response) => {
               const collections = response?.nodes || [];
-              if (collections.length === 0) {
+              if (!collections || collections?.length === 0) {
                 return <span>Collections loading error</span>;
               }
               return collections.length > 0 ? (
-                <CollectionSwimLine collections={collections} />
+                <CollectionSwimLine collections={collections as Collection[]} />
               ) : (
                 <Skeleton className="my-4 w-full h-[300px]" />
               );
@@ -157,7 +138,7 @@ export default function Homepage() {
           </Await>
         </Suspense>
       )}
-      <BrandSwimlane />*/}
+
       {featuredProducts && (
         <Suspense fallback={<p></p>}>
           <Await resolve={featuredProducts}>
@@ -174,7 +155,7 @@ export default function Homepage() {
         </Suspense>
       )}
 
-      {/*{shopReviews && (
+      {shopReviews && (
         <Suspense
           fallback={
             <Skeleton className="my-4 w-full h-[300px]">
@@ -191,53 +172,10 @@ export default function Homepage() {
             }}
           </Await>
         </Suspense>
-      )}*/}
+      )}
     </>
   );
 }
-
-const COLLECTION_CONTENT_FRAGMENT = `#graphql
-  fragment CollectionContent on Collection {
-    id
-    handle
-    title
-    descriptionHtml
-    heading: metafield(namespace: "hero", key: "title") {
-      value
-    }
-    byline: metafield(namespace: "hero", key: "byline") {
-      value
-    }
-    cta: metafield(namespace: "hero", key: "cta") {
-      value
-    }
-    spread: metafield(namespace: "hero", key: "spread") {
-      reference {
-        ...Media
-      }
-    }
-    spreadSecondary: metafield(namespace: "hero", key: "spread_secondary") {
-      reference {
-        ...Media
-      }
-    }
-  }
-  ${MEDIA_FRAGMENT}
-` as const;
-
-const HOMEPAGE_SEO_QUERY = `#graphql
-  query seoCollectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    hero: collection(handle: $handle) {
-      ...CollectionContent
-    }
-    shop {
-      name
-      description
-    }
-  }
-  ${COLLECTION_CONTENT_FRAGMENT}
-` as const;
 
 export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
   query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)
