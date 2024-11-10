@@ -3,7 +3,7 @@ import {Image} from '@shopify/hydrogen';
 import {Section} from '~/components/Text';
 import {useTranslation} from '~/lib/utils';
 import {Link} from '~/components/Link';
-import {homepageBrands} from '~/data/homePageBrands';
+import {homepageBrands} from '~/data/homepageBrands';
 
 import DynamicGallery from './DynamicGallery';
 
