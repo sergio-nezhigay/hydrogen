@@ -1,9 +1,11 @@
 export const translations = {
   uk: {
     Warranty: 'Гарантія',
+    'Warranty and returns': 'Гарантия і повернення',
     'Warranty Description':
       '{warrantyTerm} місяців. Обмін/повернення товару протягом 14 днів',
     Delivery: 'Доставка',
+    'Delivery and Payment': 'Доставка і оплата',
     'Delivery Description':
       "Нова Пошта у відділення/поштомат або кур'єр до вашої адреси",
     Payment: 'Оплата',
@@ -129,8 +131,10 @@ export const translations = {
   },
   ru: {
     Warranty: 'Гарантия',
+    'Warranty and returns': 'Гарантия и возврат',
     'Warranty Description': `{warrantyTerm} месяцев. Обмен/возврат товара в течение 14 дней`,
     Delivery: 'Доставка',
+    'Delivery and Payment': 'Доставка и оплата',
     'Delivery Description':
       'Новая Почта в отделение/постамат или курьер на ваш адрес',
     Payment: 'Оплата',

@@ -9,8 +9,9 @@ import {MobileNavigationMenu} from '~/modules/MobileNavigationMenu';
 import LangSelector from '~/modules/LangSelector';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 
-import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
+import {IconBag, IconSearch} from './Icon';
 import {useAside} from './Aside';
+import TopMenu from './TopMenu';
 
 const phone = {
   full: '+38(099)381-5288',
@@ -39,7 +40,7 @@ export function Header({
       <div className="container grid grid-cols-[auto_auto] lg:gap-y-2">
         <a
           href={`tel:${phone.full}`}
-          className="text-white font-narrow hover:bg-stone-100/20 hidden lg:block p-1 rounded-md xl:text-lg order-1 w-fit"
+          className="text-white font-narrow hover:bg-stone-100/20 hidden lg:block p-1 rounded-md xl:text-lg order-1 w-fit opacity-85"
         >
           {phone.display}
         </a>
@@ -50,7 +51,7 @@ export function Header({
             <Image
               src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/informatica-white.webp?v=1730375267"
               alt="logo"
-              sizes="(min-width: 48em) 233px, (min-width: 32em) 180px,(min-width: 27em) 150px, 150px"
+              sizes="(min-width: 48em) 233px, (min-width: 32em) 180px,(min-width: 27em) 150px, 130px"
             />
           </NavLink>
         </div>
@@ -91,7 +92,8 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="flex-center gap-4 ml-auto order-3 lg:order-2">
+    <nav className="flex-center gap-4 ml-auto order-3 lg:order-2 opacity-85">
+      <TopMenu />
       <LangSelector />
       <a
         href={`tel:${phone.full}`}
@@ -102,7 +104,7 @@ function HeaderCtas({
       </a>
 
       <SearchToggle />
-      <NavLink
+      {/*<NavLink
         prefetch="intent"
         to="/account"
         style={activeLinkStyle}
@@ -113,7 +115,7 @@ function HeaderCtas({
             {(isLoggedIn) => (isLoggedIn ? <IconAccount /> : <IconLogin />)}
           </Await>
         </Suspense>
-      </NavLink>
+      </NavLink>*/}
       <CartToggle cart={cart} />
       <HeaderMenuMobileToggle />
     </nav>

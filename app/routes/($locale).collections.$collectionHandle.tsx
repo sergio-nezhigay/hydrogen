@@ -173,7 +173,7 @@ export default function Collection() {
         heading={collection.title}
         //headingClassName="sr-only"
         display="flex"
-        className="py-0"
+        className="pt-0"
         headingClassName="!py-1"
       >
         {/*{collection.products.nodes.length > 0 ? (*/}
