@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
 import {defer, redirect} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, useRouteLoaderData} from '@remix-run/react';
+import {Await, Link, useLoaderData, useRouteLoaderData} from '@remix-run/react';
 import type {Storefront} from '@shopify/hydrogen';
 import {
   getSelectedProductOptions,
@@ -19,18 +19,22 @@ import {getVariantUrl} from '~/lib/variants';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
-import {Heading, Section} from '~/components/Text';
-import {submitReviewAction, useTranslation} from '~/lib/utils';
+import {Heading, Section, Text} from '~/components/Text';
+import {
+  formatProductDetails,
+  submitReviewAction,
+  useTranslation,
+} from '~/lib/utils';
 import {getJudgemeReviews} from '~/lib/judgeme';
 import {seoPayload} from '~/lib/seo.server';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
+import {Gallery} from '~/modules/Gallery';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
 import type {RootLoader} from '~/root';
 import {ReviewList} from '~/modules/ReviewList';
 import {ShippingPaymentWarranty} from '~/modules/ShippingPaymentWarranty';
-import DynamicGallery from '~/modules/DynamicGallery';
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -175,6 +179,9 @@ function redirectToFirstVariant({
 export default function Product() {
   const rootData = useRouteLoaderData<RootLoader>('root');
 
+  const shippingPolicy = rootData?.header?.shop?.shippingPolicy;
+  const refundPolicy = rootData?.header?.shop?.refundPolicy;
+
   const {product, variants, judgemeReviewsData, recommended} =
     useLoaderData<typeof loader>();
 
@@ -196,6 +203,14 @@ export default function Product() {
       ?.scrollIntoView({behavior: 'smooth'});
   };
 
+  const details = formatProductDetails({
+    descriptionHtml,
+    shippingPolicy,
+    refundPolicy,
+    translation,
+  });
+  const classAdvanatge = 'shadow-border rounded-md p-2';
+
   return (
     <>
       <Section
@@ -205,10 +220,9 @@ export default function Product() {
         display="flex"
       >
         <div className="grid md:grid-cols-2 md:gap-16">
-          <DynamicGallery
-            data={media.nodes}
-            presentationComponent={ProductImage}
-            itemStyle="my-gallery-item-style"
+          <Gallery
+            galleryItems={media.nodes}
+            GalleryItemComponent={ProductImage}
             showThumbs={true}
           />
           <div className="flex flex-col gap-8 md:gap-16 md:top-24 md:sticky ">
@@ -288,6 +302,7 @@ export default function Product() {
           </div>
         </div>
       </Section>
+
       <Suspense fallback={<Skeleton className="h-32" />}>
         <Await
           errorElement="There was a problem loading related products"
@@ -341,6 +356,54 @@ export default function Product() {
     </>
   );
 }
+
+interface ProductDetailItem {
+  title: string;
+  content: string;
+  learnMore?: string;
+}
+
+interface ProductDetailProps {
+  items: ProductDetailItem[];
+}
+
+//function compareLearnmore(a: ProductDetailItem, b: ProductDetailItem) {
+//  if (a.learnMore && a.learnMore.length > 0) return -1;
+//  if (b.learnMore && b.learnMore.length > 0) return 1;
+
+//  return 0;
+//}
+
+//export function ProductDetail({items}: ProductDetailProps) {
+//  const {translation} = useTranslation();
+
+//  return (
+//    <Accordion type="single" collapsible defaultValue="item-3">
+//      {items
+//        .sort((a, b) => compareLearnmore(a, b))
+//        .map((item, index) => (
+//          <AccordionItem value={`item-${index + 1}`} key={item.title}>
+//            <AccordionTrigger className="text-left flex justify-between items-center">
+//              <Text size="lead" className="inline-block">
+//                {item.title}
+//              </Text>
+//            </AccordionTrigger>
+//            <AccordionContent className="grid gap-2 pb-4 pt-2">
+//              <div dangerouslySetInnerHTML={{__html: item.content}} />
+//              {item.learnMore && (
+//                <Link
+//                  className="underline border-primary/30 pb-px text-primary/50 w-fit hover:text-indigo-600"
+//                  to={item.learnMore}
+//                >
+//                  {translation.learn_more}
+//                </Link>
+//              )}
+//            </AccordionContent>
+//          </AccordionItem>
+//        ))}
+//    </Accordion>
+//  );
+//}
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   query productRecommendations(

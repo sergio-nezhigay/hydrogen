@@ -122,24 +122,32 @@ function DynamicGallery<T extends {id: string | number}>({
                   possibleItem.__typename === 'MediaImage'
                     ? {...(item as any).image, altText: possibleItem.alt}
                     : null;
+                const selected = index === currentIndex;
                 return (
                   <CarouselItem key={item.id} className="pl-4 basis-1/10">
                     {image && (
-                      <button
-                        onClick={() => scrollTo(index)}
-                        onMouseEnter={() => scrollTo(index)}
-                        type="button"
-                        className={`flex items-center justify-center w-full bg-primary/5 aspect-square`}
+                      <div
+                        className={clsx('border ', {
+                          'border-primary': selected,
+                          'border-transparent': !selected,
+                        })}
                       >
-                        <Image
-                          src={image.url}
-                          alt={image.altText}
-                          width={70}
-                          height={70}
-                          sizes="70px"
-                          className="w-full h-full"
-                        />
-                      </button>
+                        <button
+                          onClick={() => scrollTo(index)}
+                          onMouseEnter={() => scrollTo(index)}
+                          type="button"
+                          className={`flex items-center justify-center w-full bg-primary/5 aspect-square`}
+                        >
+                          <Image
+                            src={image.url}
+                            alt={image.altText}
+                            width={70}
+                            height={70}
+                            sizes="70px"
+                            className="w-full h-full"
+                          />
+                        </button>
+                      </div>
                     )}
                   </CarouselItem>
                 );
