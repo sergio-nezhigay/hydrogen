@@ -66,7 +66,7 @@ export function ProductCard({
                 className="w-full h-full"
                 sizes="(min-width: 768px) 25vw, 50vw"
                 src={image.url}
-                alt={image.altText || `Зображення ${product.title}`}
+                alt={image.altText || `${product.title}`}
                 loading={loading}
                 //aspectRatio="1/1"
               />
