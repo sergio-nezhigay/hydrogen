@@ -6,6 +6,7 @@ import {Section} from '~/components/Text';
 import {ProductCard} from '~/components/ProductCard';
 import {Gallery} from '~/modules/Gallery';
 import {useTranslation} from '~/lib/utils';
+import DynamicGallery from '~/modules/DynamicGallery';
 
 const mockProducts = {
   nodes: new Array(12).fill(''),
@@ -24,7 +25,9 @@ export function ProductSwimlane({
 }: ProductSwimlaneProps) {
   const {t} = useTranslation();
   const translatedTitle = t(title);
-
+  console.log('====================================');
+  console.log(products.nodes);
+  console.log('====================================');
   return (
     <Section
       heading={translatedTitle}
@@ -33,10 +36,16 @@ export function ProductSwimlane({
       display="flex"
       className="flex flex-col "
     >
-      <Gallery
+      {/*<Gallery
         galleryItems={products.nodes}
         GalleryItemComponent={ProductCardWrapper}
         itemClasses="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+      />*/}
+
+      <DynamicGallery
+        data={products.nodes}
+        presentationComponent={ProductCardWrapper}
+        itemStyle="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
       />
     </Section>
   );
@@ -44,9 +53,9 @@ export function ProductSwimlane({
 
 export type ProductCardWrapperProps = {
   index: number;
-  itemData: ProductCardFragment;
+  item: ProductCardFragment;
 };
 
-function ProductCardWrapper({itemData}: ProductCardWrapperProps) {
-  return <ProductCard product={itemData} className="w-full" />;
+function ProductCardWrapper({item}: ProductCardWrapperProps) {
+  return <ProductCard product={item} className="w-full" />;
 }

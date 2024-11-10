@@ -139,7 +139,7 @@ export default function Homepage() {
 
   return (
     <>
-      <HeroSection />
+      {/*<HeroSection />
       {featuredCollections && (
         <Suspense fallback={<p></p>}>
           <Await resolve={featuredCollections}>
@@ -157,7 +157,7 @@ export default function Homepage() {
           </Await>
         </Suspense>
       )}
-      <BrandSwimlane />
+      <BrandSwimlane />*/}
       {featuredProducts && (
         <Suspense fallback={<p></p>}>
           <Await resolve={featuredProducts}>
@@ -174,7 +174,7 @@ export default function Homepage() {
         </Suspense>
       )}
 
-      {shopReviews && (
+      {/*{shopReviews && (
         <Suspense
           fallback={
             <Skeleton className="my-4 w-full h-[300px]">
@@ -191,7 +191,7 @@ export default function Homepage() {
             }}
           </Await>
         </Suspense>
-      )}
+      )}*/}
     </>
   );
 }

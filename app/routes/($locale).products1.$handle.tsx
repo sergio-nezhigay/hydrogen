@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
 import {defer, redirect} from '@shopify/remix-oxygen';
-import {Await, Link, useLoaderData, useRouteLoaderData} from '@remix-run/react';
+import {Await, useLoaderData, useRouteLoaderData} from '@remix-run/react';
 import type {Storefront} from '@shopify/hydrogen';
 import {
   getSelectedProductOptions,
@@ -13,23 +13,18 @@ import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
 import invariant from 'tiny-invariant';
 
-import type {MediaFragment, ProductFragment} from 'storefrontapi.generated';
+import type {ProductFragment} from 'storefrontapi.generated';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {getVariantUrl} from '~/lib/variants';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
-import {Heading, Section, Text} from '~/components/Text';
-import {
-  formatProductDetails,
-  submitReviewAction,
-  useTranslation,
-} from '~/lib/utils';
+import {Heading, Section} from '~/components/Text';
+import {submitReviewAction, useTranslation} from '~/lib/utils';
 import {getJudgemeReviews} from '~/lib/judgeme';
 import {seoPayload} from '~/lib/seo.server';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
-import {Gallery} from '~/modules/Gallery';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
 import type {RootLoader} from '~/root';
@@ -177,40 +172,8 @@ function redirectToFirstVariant({
   );
 }
 
-interface ProductCardProps {
-  item: MediaFragment;
-  index: number;
-}
-
-function ProductCard({item, index}: ProductCardProps) {
-  const image =
-    item.__typename === 'MediaImage'
-      ? {...item.image, altText: item.alt}
-      : null;
-
-  return (
-    <div className="product-card">
-      {image?.url && (
-        <img
-          src={image.url}
-          alt={item.alt || 'Product Image' + index}
-          className="product-image w-20"
-        />
-      )}
-
-      <div className="product-info">
-        <p>ID: {item.id}</p>
-        <p>Type: {item.__typename}</p>
-      </div>
-    </div>
-  );
-}
-
 export default function Product() {
   const rootData = useRouteLoaderData<RootLoader>('root');
-
-  const shippingPolicy = rootData?.header?.shop?.shippingPolicy;
-  const refundPolicy = rootData?.header?.shop?.refundPolicy;
 
   const {product, variants, judgemeReviewsData, recommended} =
     useLoaderData<typeof loader>();
@@ -233,82 +196,151 @@ export default function Product() {
       ?.scrollIntoView({behavior: 'smooth'});
   };
 
-  const details = formatProductDetails({
-    descriptionHtml,
-    shippingPolicy,
-    refundPolicy,
-    translation,
-  });
-  const classAdvanatge = 'shadow-border rounded-md p-2';
-
   return (
     <>
       <Section
-        heading="Тестовий Опис товару"
+        heading="Опис товару"
         padding="y"
-        //headingClassName="sr-only"
+        headingClassName="sr-only"
         display="flex"
       >
-        <div>
-          <h1>Product Gallery</h1>
+        <div className="grid md:grid-cols-2 md:gap-16">
           <DynamicGallery
             data={media.nodes}
-            presentationComponent={ProductCard}
+            presentationComponent={ProductImage}
             itemStyle="my-gallery-item-style"
+            showThumbs={true}
           />
+          <div className="flex flex-col gap-8 md:gap-16 md:top-24 md:sticky ">
+            <div className="grid gap-2 ">
+              <Heading as="h1" className=" overflow-hidden whitespace-normal ">
+                {title}
+              </Heading>
+              <div
+                className={clsx({
+                  'flex-between': reviewNumber > 0,
+                  'flex-end': reviewNumber === 0,
+                })}
+              >
+                {reviewNumber > 0 && (
+                  <a
+                    href="#review-list"
+                    className="space-x-2 flex"
+                    onClick={handleScrollToReviews}
+                  >
+                    <StarRating rating={rating} />
+                    <span className="align-top">({reviewNumber})</span>
+                  </a>
+                )}
+
+                {product.selectedVariant?.sku && (
+                  <span className="text-primary/70">
+                    КOД:&nbsp;{product.selectedVariant.sku.split('^')[0]}
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="md:flex-start gap-8">
+              <div className="sm-max:mb-4">
+                {selectedVariant.availableForSale && (
+                  <p className="mb-1">{translation.available}</p>
+                )}
+                <ProductPrice
+                  price={selectedVariant?.price}
+                  compareAtPrice={selectedVariant?.compareAtPrice}
+                />
+              </div>
+
+              <Suspense
+                fallback={
+                  <ProductForm
+                    product={product}
+                    selectedVariant={selectedVariant}
+                    variants={[]}
+                  />
+                }
+              >
+                <Await
+                  errorElement="There was a problem loading product variants"
+                  resolve={variants}
+                >
+                  {(data) => (
+                    <ProductForm
+                      product={product}
+                      selectedVariant={selectedVariant}
+                      variants={data?.product?.variants.nodes || []}
+                    />
+                  )}
+                </Await>
+              </Suspense>
+            </div>
+
+            <ShippingPaymentWarranty />
+            <div>
+              <h2 className="font-semibold text-xl mb-4">
+                {translation.description}
+              </h2>
+              <div
+                className="description"
+                dangerouslySetInnerHTML={{__html: descriptionHtml}}
+              />
+            </div>
+          </div>
         </div>
       </Section>
+      <Suspense fallback={<Skeleton className="h-32" />}>
+        <Await
+          errorElement="There was a problem loading related products"
+          resolve={recommended}
+        >
+          {(products) => (
+            <ProductSwimlane
+              title={translation.also_interested}
+              products={products}
+            />
+          )}
+        </Await>
+      </Suspense>
+      <Suspense fallback={<Skeleton className="h-8" />}>
+        <Await
+          errorElement="There was a problem loading related products"
+          resolve={recommended}
+        >
+          {(products) => (
+            <>
+              {products.complementaryNodes.length > 0 && (
+                <ProductSwimlane
+                  title={translation.complementary_products}
+                  products={{nodes: products.complementaryNodes}}
+                />
+              )}
+            </>
+          )}
+        </Await>
+      </Suspense>
+
+      <ReviewList reviews={reviews} title={translation.reviews} />
+
+      <ReviewForm productId={product.id} />
+
+      <Analytics.ProductView
+        data={{
+          products: [
+            {
+              id: product.id,
+              title: product.title,
+              price: selectedVariant?.price.amount || '0',
+              vendor: product.vendor,
+              variantId: selectedVariant?.id || '',
+              variantTitle: selectedVariant?.title || '',
+              quantity: 1,
+            },
+          ],
+        }}
+      />
     </>
   );
 }
-
-interface ProductDetailItem {
-  title: string;
-  content: string;
-  learnMore?: string;
-}
-
-interface ProductDetailProps {
-  items: ProductDetailItem[];
-}
-
-//function compareLearnmore(a: ProductDetailItem, b: ProductDetailItem) {
-//  if (a.learnMore && a.learnMore.length > 0) return -1;
-//  if (b.learnMore && b.learnMore.length > 0) return 1;
-
-//  return 0;
-//}
-
-//export function ProductDetail({items}: ProductDetailProps) {
-//  const {translation} = useTranslation();
-
-//  return (
-//    <Accordion type="single" collapsible defaultValue="item-3">
-//      {items
-//        .sort((a, b) => compareLearnmore(a, b))
-//        .map((item, index) => (
-//          <AccordionItem value={`item-${index + 1}`} key={item.title}>
-//            <AccordionTrigger className="text-left flex justify-between items-center">
-//              <Text size="lead" className="inline-block">
-//                {item.title}
-//              </Text>
-//            </AccordionTrigger>
-//            <AccordionContent className="grid gap-2 pb-4 pt-2">
-//              <div dangerouslySetInnerHTML={{__html: item.content}} />
-//              {item.learnMore && (
-//                <Link
-//                  className="underline border-primary/30 pb-px text-primary/50 w-fit hover:text-indigo-600"
-//                  to={item.learnMore}
-//                >
-//                  {translation.learn_more}
-//                </Link>
-//              )}
-//            </AccordionContent>
-//          </AccordionItem>
-//        ))}
-//    </Accordion>
-//  );
-//}
 
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   query productRecommendations(
