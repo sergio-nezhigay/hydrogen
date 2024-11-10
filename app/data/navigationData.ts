@@ -283,8 +283,14 @@ export const navigationData: MenuGroup[] = [
       },
     ],
   },
-  {
-    title: 'Contacts',
-    to: '/pages/contact',
-  },
+  //  {
+  //    title: 'Contacts',
+  //    to: '/pages/contact',
+  //  },
+];
+
+export const topMenuItems = [
+  {to: '/policies/shipping-policy', label: 'Delivery and Payment'},
+  {to: '/policies/refund-policy', label: 'Warranty and returns'},
+  {to: '/pages/contact', label: 'Contacts'},
 ];
