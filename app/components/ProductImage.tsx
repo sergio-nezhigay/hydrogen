@@ -13,14 +13,14 @@ export function ProductImage({item, index}: ProductImageProps) {
       ? {...item.image, altText: item.alt || 'Product image ' + index}
       : null;
   return (
-    <div className="w-full h-[auto] aspect-square flex-center">
+    <div className="w-full h-auto flex-center aspect-square">
       {image && (
         <Image
           loading={index === 0 ? 'eager' : 'lazy'}
           src={image.url}
           alt={image.altText}
           sizes="(min-width: 768px) 50vw, 100vw"
-          className="w-full h-auto"
+          className="w-full"
         />
       )}
     </div>
