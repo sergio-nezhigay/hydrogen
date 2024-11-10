@@ -31,7 +31,7 @@ export function BrandSwimlane({
       <DynamicGallery
         data={brands.nodes}
         presentationComponent={BrandCardWrapper}
-        itemStyle="pl-4 py-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
+        itemStyle="pl-4 py-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/7"
       />
     </Section>
   );

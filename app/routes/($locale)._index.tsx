@@ -19,6 +19,7 @@ import {ReviewSwimlane} from '~/modules/ReviewSwimlane';
 import {HeroSection} from '~/modules/Hero';
 import CollectionSwimLine from '~/modules/CollectionSwimLine';
 import {homepageCollectionIDs} from '~/data/homepageCollectionIDs';
+import BannerLine from '~/components/BannerLine';
 
 export const headers = routeHeaders;
 
@@ -119,6 +120,7 @@ export default function Homepage() {
   return (
     <>
       <HeroSection />
+      <BannerLine />
       <BrandSwimlane />
 
       {featuredCollections && (
