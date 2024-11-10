@@ -2,12 +2,11 @@ import React from 'react';
 
 import DynamicGallery from '~/modules/DynamicGallery';
 
-// Example presentation component for product cards
+// Example pre3456ion component for product cards
 function ProductCard({item}: {item: {name: string; price: number}}) {
   return (
     <div className="product-card">
-      <h3>{item.name}</h3>
-      <p>{item.price}</p>
+      <h3>{item.name}</h3> <p>{item.price}</p>
     </div>
   );
 }
