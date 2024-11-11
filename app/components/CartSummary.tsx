@@ -53,7 +53,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   const buttonContent = checkoutUrl ? (
     translation.make_order
   ) : (
-    <div className="flex items-center space-x-2">
+    <div className="flex-center space-x-2">
       <Loader className="animate-spin" />
       <span>{translation.loading || 'Завантаження...'}</span>
     </div>
