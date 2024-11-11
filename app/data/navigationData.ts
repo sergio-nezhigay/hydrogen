@@ -255,7 +255,7 @@ export const navigationData: MenuGroup[] = [
     ],
   },
   {
-    title: 'Other',
+    title: 'Miscellaneous',
     items: [
       {
         title: 'Projector Screens',

@@ -31,7 +31,7 @@ export function BrandSwimlane({
       <DynamicGallery
         data={brands.nodes}
         presentationComponent={BrandCardWrapper}
-        itemStyle="pl-4 py-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/7"
+        itemStyle="pl-4 py-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
       />
     </Section>
   );
@@ -44,7 +44,7 @@ export type BrandCardWrapperProps = {
 
 function BrandCardWrapper({item}: BrandCardWrapperProps) {
   return (
-    <div className="w-full h-full flex-center sm-max:border p-2 hover:shadow-hover ">
+    <div className="w-full h-[150px] flex-center sm-max:border p-2 rounded-lg overflow-hidden hover:shadow-hover ">
       <Link to={`/brands/${item.alt}`}>
         <Image
           src={item.src}
