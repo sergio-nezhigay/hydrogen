@@ -6,7 +6,6 @@ import {
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
-import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
@@ -17,8 +16,7 @@ import {BrandSwimlane} from '~/modules/BrandSwimlane';
 import {getAllShopReviews} from '~/lib/judgeme';
 import {ReviewSwimlane} from '~/modules/ReviewSwimlane';
 import {HeroSection} from '~/modules/Hero';
-import CollectionSwimLine from '~/modules/CollectionSwimLine';
-import {homepageCollectionIDs} from '~/data/homepageCollectionIDs';
+import CollectionLine from '~/modules/CollectionLine';
 
 export const headers = routeHeaders;
 
@@ -30,8 +28,6 @@ export async function loader(args: LoaderFunctionArgs) {
     params.locale &&
     params.locale.toLowerCase() !== `${language}`.toLowerCase()
   ) {
-    // If the locale URL param is defined, yet we still are on `EN-US`
-    // the the locale param must be invalid, send to the 404 page
     throw new Response(null, {status: 404});
   }
 
@@ -41,21 +37,12 @@ export async function loader(args: LoaderFunctionArgs) {
   return defer({...deferredData, ...criticalData});
 }
 
-/**
- * Load data necessary for rendering content above the fold. This is the critical data
- * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
- */
 async function loadCriticalData({context, request}: LoaderFunctionArgs) {
   return {
     seo: seoPayload.home({url: request.url}),
   };
 }
 
-/**
- * Load data for rendering content below the fold. This data is deferred and will be
- * fetched after the initial page load. If it's unavailable, the page should still 200.
- * Make sure to not throw any errors here, as it will cause the page to 500.
- */
 function loadDeferredData({context}: LoaderFunctionArgs) {
   const {language, country} = context.storefront.i18n;
 
@@ -78,21 +65,6 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
       return null;
     });
 
-  const featuredCollections = context.storefront
-    .query(HOMEPAGE_FEATURED_COLLECTIONS_QUERY, {
-      variables: {
-        country,
-        language,
-        ids: homepageCollectionIDs,
-      },
-    })
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
-
-      console.error(error);
-      return null;
-    });
-
   const shopReviews = getAllShopReviews(
     context.env.JUDGEME_PUBLIC_TOKEN,
     context.env.PUBLIC_STORE_DOMAIN,
@@ -103,7 +75,6 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
   return {
     featuredProducts,
-    featuredCollections,
     shopReviews,
   };
 }
@@ -113,31 +84,15 @@ export const meta = ({matches}: MetaArgs<typeof loader>) => {
 };
 
 export default function Homepage() {
-  const {featuredCollections, featuredProducts, shopReviews} =
-    useLoaderData<typeof loader>();
+  const {featuredProducts, shopReviews} = useLoaderData<typeof loader>();
 
   return (
     <>
       <HeroSection />
-      <BrandSwimlane />
+      {/*<BannerLine />*/}
+      <CollectionLine />
 
-      {featuredCollections && (
-        <Suspense fallback={<p></p>}>
-          <Await resolve={featuredCollections}>
-            {(response) => {
-              const collections = response?.nodes || [];
-              if (!collections || collections?.length === 0) {
-                return <span>Collections loading error</span>;
-              }
-              return collections.length > 0 ? (
-                <CollectionSwimLine collections={collections as Collection[]} />
-              ) : (
-                <Skeleton className="my-4 w-full h-[300px]" />
-              );
-            }}
-          </Await>
-        </Suspense>
-      )}
+      <BrandSwimlane />
 
       {featuredProducts && (
         <Suspense fallback={<p></p>}>
@@ -187,25 +142,4 @@ export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
     }
   }
   ${PRODUCT_CARD_FRAGMENT}
-` as const;
-
-// @see: https://shopify.dev/api/storefront/current/queries/collections
-export const HOMEPAGE_FEATURED_COLLECTIONS_QUERY = `#graphql
-  query homepageFeaturedCollections($country: CountryCode, $language: LanguageCode, $ids: [ID!]!)
-  @inContext(country: $country, language: $language) {
-    nodes(ids: $ids) {
-      id
-      ... on Collection {
-        id
-        title
-        handle
-        image {
-          altText
-          width
-          height
-          url
-        }
-      }
-    }
-  }
 ` as const;
