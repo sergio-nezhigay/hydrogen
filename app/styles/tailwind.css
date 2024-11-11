@@ -142,4 +142,9 @@ body {
     opacity: 0.9;
     font-weight: 500;
   }
+  .text-outline {
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
+      1px 1px 0 black;
+  }
 }

@@ -129,6 +129,9 @@ export const translations = {
     'Multiple Ports': 'Багато портів',
     'Compact Design': 'Компактний дизайн',
     'Easy Connectivity': 'Легке підключення',
+    'Best models': 'Кращі моделі',
+    'Computer mice': "Комп'ютерні мишки",
+    'Best elecronics to present': 'Найкраща електроніка для\nподарунків',
   },
   ru: {
     Warranty: 'Гарантия',
@@ -261,5 +264,8 @@ export const translations = {
     'Multiple Ports': 'Множество портов',
     'Compact Design': 'Компактный дизайн',
     'Easy Connectivity': 'Легкое подключение',
+    'Best models': 'Лучшие модели',
+    'Computer mice': 'Компьютерные мыши',
+    'Best elecronics to present': 'Лучшая электроника для \nподарков',
   },
 };

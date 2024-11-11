@@ -20,7 +20,6 @@ export function HeroSection() {
       display="flex"
       heading="Головна сторінка"
       headingClassName="sr-only"
-      className="pb-8"
       padding="y"
     >
       <h1 className="sr-only">Головна сторінка</h1>
@@ -53,7 +52,7 @@ const ProductSlide: React.FC<{product: Product}> = ({product}) => {
     >
       {/* Part 1: Product Description */}
 
-      <ul className="md:uppercase flex flex-col justify-center w-1/3 sm-max:flex-wrap gap-4 text-sm md:text-base lg:text-2xl xl:text-4xl italic md:font-bold md:space-y-1 sm-max:gap-x-4 sm-max:mb-4 items-start">
+      <ul className="sm:uppercase flex flex-col justify-center w-1/3 sm-max:flex-wrap gap-4 text-sm md:text-base lg:text-2xl xl:text-4xl italic md:font-bold md:space-y-1 sm-max:gap-x-4 sm-max:mb-4 items-start">
         {product.advantages.map((advantage: string) => (
           <li key={advantage}>
             <div>{t(advantage)}</div>
