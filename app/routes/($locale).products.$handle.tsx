@@ -471,7 +471,7 @@ const PRODUCT_FRAGMENT = `#graphql
         handle
       }
     }
-    cost_copy: metafield(namespace: "custom", key: "cost_copy") {
+    delta: metafield(namespace: "custom", key: "delta") {
       value
     }
     warranty: metafield(namespace: "custom", key: "warranty") {

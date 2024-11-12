@@ -10,19 +10,19 @@ export function AddToCartButton({
   disabled,
   lines,
   onClick,
-  cost_copy,
+  delta,
 }: {
   analytics?: unknown;
   children: React.ReactNode;
   disabled?: boolean;
   lines: Array<OptimisticCartLineInput>;
   onClick?: () => void;
-  cost_copy: string;
+  delta: string;
 }) {
   return (
     <CartForm
       route="/cart"
-      inputs={{lines, cost_copy}}
+      inputs={{lines, delta}}
       action={CartForm.ACTIONS.LinesAdd}
     >
       {(fetcher: FetcherWithComponents<any>) => (
