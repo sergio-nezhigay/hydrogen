@@ -72,7 +72,7 @@ export const PRODUCT_CARD_FRAGMENT = `#graphql
         }
       }
     }
-    delta: metafield(namespace: "custom", key: "delta") {
+    cost_copy: metafield(namespace: "custom", key: "cost_copy") {
         value
     }
     supplier: metafield(namespace: "custom", key: "supplier") {

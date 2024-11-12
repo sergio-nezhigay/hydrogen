@@ -20,9 +20,8 @@ export function ProductForm({
 }) {
   const {open} = useAside();
   const {translation} = useTranslation();
-  const delta = product.delta?.value || selectedVariant?.price?.amount || '';
-  const supplier = product.supplier?.value || '';
-  const meta = {delta, supplier};
+  const cost_copy =
+    product.cost_copy?.value || selectedVariant?.price?.amount || '';
 
   return (
     <div className="product-form">
@@ -50,8 +49,7 @@ export function ProductForm({
               ]
             : []
         }
-        delta={delta}
-        meta={meta}
+        cost_copy={cost_copy}
       >
         {selectedVariant?.availableForSale
           ? translation.buy

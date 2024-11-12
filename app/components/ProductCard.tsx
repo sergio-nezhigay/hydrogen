@@ -35,9 +35,7 @@ export function ProductCard({
     : getProductPlaceholder();
   if (!cardProduct?.variants?.nodes?.length) return null;
 
-  const delta = product.delta?.value || '';
-  const supplier = product.supplier?.value || '';
-  const meta = {delta, supplier};
+  const cost_copy = product.cost_copy?.value || '';
 
   const firstVariant = flattenConnection(cardProduct.variants)[0];
 
@@ -108,8 +106,7 @@ export function ProductCard({
               merchandiseId: firstVariant.id,
             },
           ]}
-          delta={delta}
-          meta={meta}
+          cost_copy={cost_copy}
         >
           <Text as="span" className="flex-center gap-2">
             {translation.buy}

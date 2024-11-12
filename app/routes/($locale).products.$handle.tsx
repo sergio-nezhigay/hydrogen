@@ -113,6 +113,11 @@ async function loadCriticalData({
     url: request.url,
     judgemeReviewsData,
   });
+  console.log(
+    '===== LOG START =====',
+    new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
+  );
+  console.log('product:', JSON.stringify(product, null, 4));
 
   return {
     product,
@@ -173,7 +178,7 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  const rootData = useRouteLoaderData<RootLoader>('root');
+  //  const rootData = useRouteLoaderData<RootLoader>('root');
 
   const {product, variants, judgemeReviewsData, recommended} =
     useLoaderData<typeof loader>();
@@ -425,7 +430,6 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
     title
     unitPrice {
       amount
-      currencyCode
     }
   }
 ` as const;
@@ -447,6 +451,7 @@ const PRODUCT_FRAGMENT = `#graphql
         ...Media
       }
     }
+
     selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
       ...ProductVariant
     }
@@ -454,6 +459,7 @@ const PRODUCT_FRAGMENT = `#graphql
       nodes {
         ...ProductVariant
       }
+
     }
     seo {
       description
@@ -465,15 +471,13 @@ const PRODUCT_FRAGMENT = `#graphql
         handle
       }
     }
-    delta: metafield(namespace: "custom", key: "delta") {
-      value
-    }
-    supplier: metafield(namespace: "custom", key: "supplier") {
+    cost_copy: metafield(namespace: "custom", key: "cost_copy") {
       value
     }
     warranty: metafield(namespace: "custom", key: "warranty") {
       value
     }
+
   }
   ${MEDIA_FRAGMENT}
   ${PRODUCT_VARIANT_FRAGMENT}
@@ -498,10 +502,12 @@ const PRODUCT_VARIANTS_FRAGMENT = `#graphql
     variants(first: 250) {
       nodes {
         ...ProductVariant
+
       }
     }
   }
   ${PRODUCT_VARIANT_FRAGMENT}
+
 ` as const;
 
 const VARIANTS_QUERY = `#graphql
