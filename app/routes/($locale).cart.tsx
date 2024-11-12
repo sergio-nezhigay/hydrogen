@@ -42,6 +42,10 @@ export async function action({request, context}: ActionFunctionArgs) {
           value: inputs.supplier as string,
         });
       }
+      attributes.push({
+        key: 'testkey',
+        value: '10',
+      });
       await cart.updateAttributes(attributes);
       break;
     case CartForm.ACTIONS.LinesUpdate:
