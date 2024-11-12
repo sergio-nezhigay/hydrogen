@@ -43,7 +43,7 @@ export async function action({request, context}: ActionFunctionArgs) {
         });
       }
       attributes.push({
-        key: 'testkey',
+        key: 'dlt',
         value: '10',
       });
       await cart.updateAttributes(attributes);
@@ -131,6 +131,7 @@ export default function Cart() {
             errorElement={<div>An error occurred</div>}
           >
             {(cart) => {
+              console.log('🚀 ~ cart:', cart);
               return <CartMain layout="page" cart={cart} />;
             }}
           </Await>
