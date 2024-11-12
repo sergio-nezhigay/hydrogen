@@ -18,6 +18,7 @@ import {ReviewSwimlane} from '~/modules/ReviewSwimlane';
 import {HeroSection} from '~/modules/Hero';
 import CollectionLine from '~/modules/CollectionLine';
 import BannerLine from '~/components/BannerLine';
+import {ServiceInfo} from '~/modules/ServiceInfo';
 
 export const headers = routeHeaders;
 
@@ -90,6 +91,7 @@ export default function Homepage() {
   return (
     <>
       <HeroSection />
+      <ServiceInfo />
       <BannerLine />
       <CollectionLine />
 
