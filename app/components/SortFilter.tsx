@@ -7,7 +7,6 @@ import {
   useLocation,
   useSearchParams,
   useNavigate,
-  useRouteLoaderData,
 } from '@remix-run/react';
 import useDebounce from 'react-use/esm/useDebounce';
 import type {
