@@ -10,7 +10,7 @@ import {
 
 const ChatIcon = () => {
   return (
-    <div className="sticky bottom-5 right-5 w-10 ml-auto">
+    <div className="fixed bottom-5 right-5 shift-left">
       <DropdownMenu>
         <DropdownMenuTrigger
           className="w-14 h-14 rounded-full bg-blueAccent opacity-80 flex items-center justify-center shadow-lg hover:opacity-100 cursor-pointer transition-colors"

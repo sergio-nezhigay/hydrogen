@@ -63,8 +63,8 @@ body {
   }
   body {
     @apply bg-background text-foreground;
-    position: relative;
   }
+
   a {
     @apply font-narrow m-0;
   }
@@ -78,6 +78,9 @@ body {
   .fadeIn {
     opacity: 0;
     animation: fadeInAnimation ease 500ms forwards;
+  }
+  .shift-left {
+    transform: translateX(calc(-1 * var(--removed-body-scroll-bar-size)));
   }
 
   .strike {

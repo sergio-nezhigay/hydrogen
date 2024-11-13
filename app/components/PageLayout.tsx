@@ -49,7 +49,7 @@ export function PageLayout({
         <BreadCrumbs />
         {children}
       </main>
-      {/*<ChatIcon />*/}
+      <ChatIcon />
       <Footer />
     </Aside.Provider>
   );
