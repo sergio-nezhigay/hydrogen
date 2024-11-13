@@ -13,7 +13,7 @@ import {
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 import {useTranslation} from '~/lib/utils';
 import BreadCrumbs from '~/modules/BreadCrumbs';
-import ChatIcon from '~/modules/ChatIcon';
+import Chat from '~/modules/Chat';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -49,7 +49,7 @@ export function PageLayout({
         <BreadCrumbs />
         {children}
       </main>
-      <ChatIcon />
+      <Chat />
       <Footer />
     </Aside.Provider>
   );
