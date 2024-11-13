@@ -113,11 +113,6 @@ async function loadCriticalData({
     url: request.url,
     judgemeReviewsData,
   });
-  console.log(
-    '===== LOG START =====',
-    new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}),
-  );
-  console.log('product:', JSON.stringify(product, null, 4));
 
   return {
     product,

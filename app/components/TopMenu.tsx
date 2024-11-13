@@ -14,7 +14,7 @@ function TopMenu() {
   const {t} = useTranslation();
 
   return (
-    <NavigationMenu className="sm-max:hidden">
+    <NavigationMenu className="hidden lg:flex">
       <NavigationMenuList>
         {topMenuItems.map((item) => (
           <NavigationMenuItem key={item.label}>

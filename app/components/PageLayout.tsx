@@ -51,7 +51,7 @@ export function PageLayout({
       </main>
 
       <Footer />
-      {/*<ChatIcon />*/}
+      <ChatIcon />
     </Aside.Provider>
   );
 }
