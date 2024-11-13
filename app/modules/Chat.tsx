@@ -12,7 +12,7 @@ const Chat = () => {
   const handleClick = () => {
     if (window.dataLayer) {
       window.dataLayer.push({
-        event: 'chatButtonClick',
+        event: 'chat_button_click',
         category: 'User Interaction',
         action: 'click',
         label: 'Chat Button',
