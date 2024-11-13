@@ -52,7 +52,7 @@ const ProductSlide: React.FC<{product: Product}> = ({product}) => {
     >
       {/* Part 1: Product Description */}
 
-      <ul className="sm:uppercase flex flex-col justify-center w-1/3 sm-max:flex-wrap gap-4 text-sm md:text-base lg:text-2xl xl:text-4xl italic md:font-bold md:space-y-1 sm-max:gap-x-4 sm-max:mb-4 items-start">
+      <ul className="sm:uppercase flex flex-col justify-center w-1/3 sm-max:flex-wrap gap-4 text-sm md:text-base lg:text-2xl xl:text-4xl xl:pl-12 lg:pl-10 italic md:font-bold md:space-y-1 sm-max:gap-x-4 sm-max:mb-4 items-start">
         {product.advantages.map((advantage: string) => (
           <li key={advantage}>
             <div>{t(advantage)}</div>
@@ -71,7 +71,7 @@ const ProductSlide: React.FC<{product: Product}> = ({product}) => {
       </div>
 
       {/* Part 3: Price Section */}
-      <div className="absolute right-0 top-0 justify-between h-full items-end flex flex-col font-medium py-4">
+      <div className="absolute right-0 top-0 justify-between h-full items-end flex flex-col font-medium py-4 xl:pr-12 lg:pr-10">
         <p className=" text-sm sm-max:text-center sm:text-[20px] lg:text-[25px] xl:text-[34px] 2xl:text-[38px] mb-3 md:mb-8">
           {t(product.name)}
         </p>

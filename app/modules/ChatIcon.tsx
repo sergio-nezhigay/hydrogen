@@ -10,8 +10,7 @@ import {
 
 const ChatIcon = () => {
   return (
-    <div className="fixed bottom-5 right-5">
-      {/* DropdownMenu for Viber and Telegram */}
+    <div className="sticky bottom-5 right-5 w-10 ml-auto">
       <DropdownMenu>
         <DropdownMenuTrigger
           className="w-14 h-14 rounded-full bg-blueAccent opacity-80 flex items-center justify-center shadow-lg hover:opacity-100 cursor-pointer transition-colors"
@@ -23,20 +22,18 @@ const ChatIcon = () => {
         <DropdownMenuContent className="bg-white font-bold border rounded-lg shadow-lg p-2">
           <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
             <Link
-              to="viber://chat?number=+380507025777" // Replace with your actual Viber chat link
+              to="viber://chat?number=+380507025777"
               className="flex items-center space-x-2 mx-auto"
             >
-              {/*<MessageCircle className="text-violet-600" />*/}
               <span>Viber</span>
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
             <Link
-              to="https://t.me/NSergiy" // Replace with your Telegram link
+              to="https://t.me/NSergiy"
               className="flex items-center space-x-2 mx-auto"
             >
-              {/*<MessageCircle className="text-blue-500" />*/}
               <span>Telegram</span>
             </Link>
           </DropdownMenuItem>

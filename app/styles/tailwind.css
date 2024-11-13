@@ -63,6 +63,7 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    position: relative;
   }
   a {
     @apply font-narrow m-0;
