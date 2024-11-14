@@ -36,7 +36,7 @@ const Chat = () => {
               to="viber://chat?number=+380507025777"
               className="flex items-center space-x-2 mx-auto"
             >
-              <span>Viber</span>
+              Viber
             </Link>
           </DropdownMenuItem>
 
@@ -45,7 +45,7 @@ const Chat = () => {
               to="https://t.me/NSergiy"
               className="flex items-center space-x-2 mx-auto"
             >
-              <span>Telegram</span>
+              Telegram
             </Link>
           </DropdownMenuItem>
         </DropdownMenuContent>
