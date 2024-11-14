@@ -14,7 +14,10 @@ import LangSelector from './LangSelector';
 
 export const MobileNavigationMenu = () => {
   const {close} = useAside();
-  const {t} = useTranslation();
+  const {t, language} = useTranslation();
+
+  const langPath = `${language === 'ru' && 'ru'}`;
+
   return (
     <>
       <Accordion type="single" collapsible>
@@ -38,7 +41,7 @@ export const MobileNavigationMenu = () => {
                     {menuGroup.items.map((item) => (
                       <li key={item.title}>
                         <Link
-                          to={item.to}
+                          to={langPath + item.to}
                           prefetch="viewport"
                           className="block p-2 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
                           onClick={close}
@@ -52,7 +55,7 @@ export const MobileNavigationMenu = () => {
               </>
             ) : (
               <Link
-                to={menuGroup.to!}
+                to={langPath + menuGroup.to!}
                 prefetch="viewport"
                 className="block p-4 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
                 onClick={close}
@@ -68,7 +71,7 @@ export const MobileNavigationMenu = () => {
         {topMenuItems.map((item) => (
           <>
             <Link
-              to={item.to}
+              to={langPath + item.to}
               className="block p-4 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
               onClick={close}
             >

@@ -37,7 +37,9 @@ export function DesktopNavigationMenu() {
     }
   }, [activeTrigger, value]);
   const topMenuStyle = 'font-narrow font-normal xl:text-lg lg-only:px-3';
-  const {t} = useTranslation();
+  const {t, language} = useTranslation();
+
+  const langPath = `${language === 'ru' && 'ru'}`;
   return (
     <div className="text-white hidden lg:flex ml-auto">
       {/*<h1>offset {offset}</h1>*/}
@@ -63,7 +65,7 @@ export function DesktopNavigationMenu() {
                       {menu.items.map((subItem) => (
                         <NavigationMenuLink key={subItem.title} asChild>
                           <Link
-                            to={subItem.to}
+                            to={langPath + subItem.to}
                             className={cn(
                               navigationMenuTriggerStyle(),
                               'font-narrow',
@@ -79,7 +81,7 @@ export function DesktopNavigationMenu() {
               ) : (
                 <NavigationMenuLink asChild>
                   <Link
-                    to={menu.to}
+                    to={langPath + menu.to}
                     className={cn(navigationMenuTriggerStyle(), topMenuStyle)}
                   >
                     {t(menu.title)}

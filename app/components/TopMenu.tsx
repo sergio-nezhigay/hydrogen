@@ -11,7 +11,9 @@ import {topMenuItems} from '~/data/navigationData';
 import {cn, useTranslation} from '~/lib/utils';
 
 function TopMenu() {
-  const {t} = useTranslation();
+  const {t, language} = useTranslation();
+
+  const langPath = `${language === 'ru' && 'ru'}`;
 
   return (
     <NavigationMenu className="hidden lg:flex">
@@ -19,7 +21,10 @@ function TopMenu() {
         {topMenuItems.map((item) => (
           <NavigationMenuItem key={item.label}>
             <NavigationMenuLink asChild>
-              <Link to={item.to} className={cn(navigationMenuTriggerStyle())}>
+              <Link
+                to={langPath + item.to}
+                className={cn(navigationMenuTriggerStyle())}
+              >
                 {t(item.label)}
               </Link>
             </NavigationMenuLink>
