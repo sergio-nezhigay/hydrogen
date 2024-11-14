@@ -16,7 +16,7 @@ export const MobileNavigationMenu = () => {
   const {close} = useAside();
   const {t, language} = useTranslation();
 
-  const langPath = `${language === 'ru' && 'ru'}`;
+  const langPath = language === 'ru' ? 'ru' : '';
 
   return (
     <>

@@ -13,7 +13,7 @@ import {cn, useTranslation} from '~/lib/utils';
 function TopMenu() {
   const {t, language} = useTranslation();
 
-  const langPath = `${language === 'ru' && 'ru'}`;
+  const langPath = language === 'ru' ? 'ru' : '';
 
   return (
     <NavigationMenu className="hidden lg:flex">
