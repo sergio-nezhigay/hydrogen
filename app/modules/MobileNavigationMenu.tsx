@@ -9,6 +9,7 @@ import {
 import {useAside} from '~/components/Aside';
 import {navigationData, topMenuItems} from '~/data/navigationData';
 import {useTranslation} from '~/lib/utils';
+import LangSelector from './LangSelector';
 
 export const MobileNavigationMenu = () => {
   const {close} = useAside();
@@ -75,6 +76,7 @@ export const MobileNavigationMenu = () => {
           </>
         ))}
       </div>
+      <LangSelector />
     </>
   );
 };
