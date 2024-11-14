@@ -140,7 +140,7 @@ export const translations = {
     Delivery: 'Доставка',
     'Delivery and Payment': 'Доставка и оплата',
     'Delivery Description':
-      'Новая Почта в отделение/постамат или курьер на ваш адрес',
+      'Новая Почта в отделение/почтомат или курьер на ваш адрес',
     Payment: 'Оплата',
     'Payment Description': 'При получении или предоплата',
     Bonus: 'Бонус',
