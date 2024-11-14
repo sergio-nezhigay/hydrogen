@@ -33,29 +33,37 @@ export function Aside({
   children,
   heading,
   type,
+  HeaderComponent,
 }: {
   children?: React.ReactNode;
   type: AsideType;
   heading: React.ReactNode;
+  HeaderComponent?: React.ComponentType;
 }) {
   const {type: activeType, close} = useAside();
   const isCart = type === 'cart';
   const scrollStyle = isCart ? 'none' : 'calc(100vh - 100px)';
+
   return (
     <Sheet open={type === activeType}>
       <SheetContent
-        className="bg-main font-narrow"
+        className="bg-main font-narrow px-0 border-l-blueAccent"
         onEscapeKeyDown={close}
         onPointerDownOutside={close}
         onInteractOutside={close}
         side={isCart ? 'rightFull' : 'right'}
       >
-        <SheetHeader>
-          <SheetTitle>{heading}</SheetTitle>
+        <SheetHeader className="flex bg-blueAccent text-white flex-row flex-start space-y-0 gap-20 px-6">
+          {HeaderComponent && (
+            <div className="opacity-80 -ml-4">
+              <HeaderComponent />
+            </div>
+          )}
+          <SheetTitle className="text-white">{heading}</SheetTitle>
           <SheetDescription className="sr-only">{heading}</SheetDescription>
         </SheetHeader>
         <ScrollArea
-          className="flex flex-col overflow-y-auto pt-2"
+          className="flex flex-col overflow-y-auto pt-2 px-4"
           style={{maxHeight: scrollStyle}}
         >
           {children}
@@ -63,7 +71,7 @@ export function Aside({
 
         <SheetClose
           asChild
-          className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary"
+          className="text-white absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary"
         >
           <button type="submit" onClick={close}>
             <X className="h-4 w-4" onClick={close} />

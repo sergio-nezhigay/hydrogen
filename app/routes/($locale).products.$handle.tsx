@@ -27,7 +27,6 @@ import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {Skeleton} from '~/components/Skeleton';
-import type {RootLoader} from '~/root';
 import {ReviewList} from '~/modules/ReviewList';
 import {ShippingPaymentWarranty} from '~/modules/ShippingPaymentWarranty';
 import DynamicGallery from '~/modules/DynamicGallery';
@@ -195,6 +194,7 @@ export default function Product() {
       .getElementById('review-list')
       ?.scrollIntoView({behavior: 'smooth'});
   };
+  const [sku1, sku2] = product.selectedVariant?.sku?.split('^') || [null, null];
 
   return (
     <>
@@ -233,10 +233,8 @@ export default function Product() {
                   </a>
                 )}
 
-                {product.selectedVariant?.sku && (
-                  <span className="text-primary/70">
-                    КOД:&nbsp;{product.selectedVariant.sku.split('^')[0]}
-                  </span>
+                {sku1 && (
+                  <span className="text-primary/70">КOД:&nbsp;{sku1}</span>
                 )}
               </div>
             </div>
@@ -284,6 +282,7 @@ export default function Product() {
                 className="description"
                 dangerouslySetInnerHTML={{__html: descriptionHtml}}
               />
+              {sku2 && <span className="text-primary/30">{sku2}</span>}
             </div>
           </div>
         </div>

@@ -94,7 +94,10 @@ function HeaderCtas({
   return (
     <nav className="flex-center gap-4 ml-auto order-3 lg:order-2 opacity-85">
       <TopMenu />
-      <LangSelector />
+      <div className="sm-max:hidden">
+        <LangSelector />
+      </div>
+
       <a
         href={`tel:${phone.full}`}
         className="icon-header  hover:bg-stone-100/20 flex items-center lg:hidden "
