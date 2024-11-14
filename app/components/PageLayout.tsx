@@ -157,9 +157,6 @@ function SearchAside() {
     </Aside>
   );
 }
-const Test = () => {
-  return <div className="w-10 h-10 bg-red-200">test</div>;
-};
 
 function MobileMenuAside({
   header,

@@ -53,13 +53,13 @@ export function Aside({
         onInteractOutside={close}
         side={isCart ? 'rightFull' : 'right'}
       >
-        <SheetHeader className="flex bg-blueAccent text-white flex-row flex-start space-y-0 gap-20 px-6">
+        <SheetHeader className="flex bg-blueAccent text-white flex-row flex-start space-y-0 px-6">
           {HeaderComponent && (
             <div className="opacity-80 -ml-4">
               <HeaderComponent />
             </div>
           )}
-          <SheetTitle className="text-white">{heading}</SheetTitle>
+          <SheetTitle className="text-white mx-auto">{heading}</SheetTitle>
           <SheetDescription className="sr-only">{heading}</SheetDescription>
         </SheetHeader>
         <ScrollArea
