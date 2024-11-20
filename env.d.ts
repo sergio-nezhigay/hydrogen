@@ -20,6 +20,7 @@ declare global {
    * Declare expected Env parameter in fetch handler.
    */
   interface Env {
+    SHOP_ID: string | undefined;
     GTM_CONTAINER_ID: string;
     SESSION_SECRET: string;
     PUBLIC_STOREFRONT_API_TOKEN: string;
