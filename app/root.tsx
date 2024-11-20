@@ -193,7 +193,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
             cart={data.cart}
             shop={data.shop}
             consent={data.consent}
-            cookieDomain="c2da09-15.myshopify.com"
+            cookieDomain="informatica.com.ua"
           >
             <PageLayout {...data}>{children}</PageLayout>
             {/*<CustomAnalytics />*/}
