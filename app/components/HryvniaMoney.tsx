@@ -1,5 +1,4 @@
 import {Money} from '@shopify/hydrogen';
-
 import clsx from 'clsx';
 
 interface HryvniaMoneyProps {
@@ -17,7 +16,7 @@ export function HryvniaMoney({data, className}: HryvniaMoneyProps) {
         withoutCurrency
         data-test="price"
       />
-      <span className="ml-1 text-base">₴</span>
+      <span className="ml-1 text-base">₴₴</span>
     </span>
   );
 }
