@@ -1,4 +1,5 @@
 import {Money} from '@shopify/hydrogen';
+
 import clsx from 'clsx';
 
 interface HryvniaMoneyProps {

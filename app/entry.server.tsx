@@ -18,9 +18,7 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://*.googletagmanager.com',
       'googleads.g.doubleclick.net',
-      'https://www.google.com',
-      'https://www.google.com.ua',
-      'https://*.googleadservices.com',
+      'https://*.google.com.ua',
     ],
     imgSrc: [
       'https://cdn.shopify.com',

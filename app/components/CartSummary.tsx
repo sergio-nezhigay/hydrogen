@@ -49,7 +49,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   const {translation} = useTranslation();
   //  if (!checkoutUrl) return null;
 
-  const checkoutUrlWithZipcode = `${checkoutUrl}&checkout[shipping_address][zip]=12345`;
+  const checkoutUrlWithZipcode = `${checkoutUrl}?&discount=TEST10&checkout[shipping_address][zip]=12345`;
   const buttonContent = checkoutUrl ? (
     translation.make_order
   ) : (

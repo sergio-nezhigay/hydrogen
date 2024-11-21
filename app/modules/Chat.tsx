@@ -34,7 +34,7 @@ const Chat = () => {
           <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
             <Link
               to="viber://chat?number=+380507025777"
-              className="adwords-goal flex items-center space-x-2 mx-auto"
+              className="flex items-center space-x-2 mx-auto"
             >
               Viber
             </Link>
@@ -43,7 +43,7 @@ const Chat = () => {
           <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
             <Link
               to="https://t.me/NSergiy"
-              className="adwords-goal flex items-center space-x-2 mx-auto"
+              className="flex items-center space-x-2 mx-auto"
             >
               Telegram
             </Link>
