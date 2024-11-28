@@ -282,7 +282,11 @@ export default function Product() {
                 className="description"
                 dangerouslySetInnerHTML={{__html: descriptionHtml}}
               />
-              {sku2 && <span className="text-primary/30">{sku2}</span>}
+              {sku2 && (
+                <div className="text-primary/30 border size-5 flex-center mt-2 rounded-full">
+                  {sku2.slice(0, 1)}
+                </div>
+              )}
             </div>
           </div>
         </div>
