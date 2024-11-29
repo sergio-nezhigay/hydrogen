@@ -39,9 +39,9 @@ function ReviewCard({review}: ReviewCardProps) {
             </span>
           )}
         </div>
-        <Text className="text-sm">
+        {/*<Text className="text-sm">
           <time dateTime={dateTime}>{displayDate}</time>
-        </Text>
+        </Text>*/}
       </div>
       <div className="mt-2 flex items-center">
         <StarRating rating={review.rating} />
