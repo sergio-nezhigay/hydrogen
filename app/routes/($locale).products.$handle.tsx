@@ -291,7 +291,7 @@ export default function Product() {
           </div>
         </div>
       </Section>
-      <Suspense fallback={<Skeleton className="h-32" />}>
+      <Suspense>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}
@@ -304,7 +304,7 @@ export default function Product() {
           )}
         </Await>
       </Suspense>
-      <Suspense fallback={<Skeleton className="h-8" />}>
+      <Suspense>
         <Await
           errorElement="There was a problem loading related products"
           resolve={recommended}
