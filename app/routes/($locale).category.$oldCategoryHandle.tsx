@@ -5,5 +5,5 @@ import {redirect} from '@shopify/remix-oxygen';
 export const loader = async ({params}: LoaderFunctionArgs) => {
   const {oldCategoryHandle} = params;
 
-  return redirect(`/collections/${oldCategoryHandle}`, 302);
+  return redirect(`/collections/${oldCategoryHandle}`, 301);
 };
