@@ -274,6 +274,18 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/other_accs',
       },
       {
+        title: 'Lamps',
+        to: '/collections/lamps',
+      },
+      {
+        title: 'LED light strings',
+        to: '/collections/light-strings',
+      },
+      {
+        title: 'Laptop charger adapters',
+        to: '/collections/laptop-charger-adapters',
+      },
+      {
         title: 'Patch Cables',
         to: '/collections/kabeli-rj45',
       },

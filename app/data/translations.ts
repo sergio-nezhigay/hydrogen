@@ -132,6 +132,9 @@ export const translations = {
     'Best models': 'Кращі моделі',
     'Computer mice': "Комп'ютерні мишки",
     'Best elecronics to present': 'Цікава електроніка для\nподарунків',
+    Lamps: 'Ліхтарі та лампи',
+    'LED light strings': 'Світлодіодні стрічки',
+    'Laptop charger adapters': 'Перехідники для зарядки ноутбуків',
   },
   ru: {
     Warranty: 'Гарантия',
@@ -267,5 +270,8 @@ export const translations = {
     'Best models': 'Лучшие модели',
     'Computer mice': 'Компьютерные мыши',
     'Best elecronics to present': 'Интересная электроника для \nподарков',
+    Lamps: 'Фонари и лампы',
+    'LED light strings': 'Светодиодные ленты',
+    'Laptop charger adapters': 'Переходники для зарядки ноутбуков',
   },
 };
