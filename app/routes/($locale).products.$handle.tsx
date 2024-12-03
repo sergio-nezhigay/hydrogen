@@ -86,7 +86,6 @@ async function loadCriticalData({
   if (!product?.id) {
     throw new Response(null, {status: 404});
   }
-
   const recommended = getRecommendedProducts(context.storefront, product.id);
 
   const firstVariant = product.variants.nodes[0];
@@ -196,6 +195,8 @@ export default function Product() {
   };
   const [sku1, sku2] = product.selectedVariant?.sku?.split('^') || [null, null];
 
+  const barcode = product.selectedVariant?.barcode;
+
   return (
     <>
       <Section
@@ -282,11 +283,14 @@ export default function Product() {
                 className="description"
                 dangerouslySetInnerHTML={{__html: descriptionHtml}}
               />
-              {sku2 && (
-                <div className="text-primary/30 border size-5 flex-center mt-2 rounded-full">
-                  {sku2.slice(0, 1)}
-                </div>
-              )}
+              <div className="text-sm flex gap-5 w-full mt-2  text-primary/20">
+                {sku2 && (
+                  <div className="border size-5 flex-center rounded-full">
+                    {sku2.slice(0, 1)}
+                  </div>
+                )}
+                {barcode && <p className="w-full flex">{barcode}</p>}
+              </div>
             </div>
           </div>
         </div>
@@ -404,6 +408,7 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
       currencyCode
     }
     id
+    barcode
     image {
       __typename
       id
