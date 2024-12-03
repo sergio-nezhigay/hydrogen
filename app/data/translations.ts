@@ -134,7 +134,7 @@ export const translations = {
     'Best elecronics to present': 'Цікава електроніка для\nподарунків',
     Lamps: 'Ліхтарі та лампи',
     'LED light strings': 'Світлодіодні стрічки',
-    'Laptop charger adapters': 'Перехідники для зарядки ноутбуків',
+    'Laptop charger adapters': 'Перехідники для зарядки ноутбуків та роутерів',
   },
   ru: {
     Warranty: 'Гарантия',
@@ -272,6 +272,6 @@ export const translations = {
     'Best elecronics to present': 'Интересная электроника для \nподарков',
     Lamps: 'Фонари и лампы',
     'LED light strings': 'Светодиодные ленты',
-    'Laptop charger adapters': 'Переходники для зарядки ноутбуков',
+    'Laptop charger adapters': 'Переходники для зарядки ноутбуков и роутеров',
   },
 };

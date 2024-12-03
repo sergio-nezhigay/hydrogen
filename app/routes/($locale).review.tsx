@@ -66,8 +66,7 @@ export async function loader({request, context}: LoaderFunctionArgs) {
   if (!id) {
     return {success: false, error: 'Invalid product ID'};
   }
-  console.log('🚀 ~ productId:', productId);
-  console.log('🚀 ~ id:', id);
+
   try {
     await addJudgemeReview({
       api_token: context.env.JUDGEME_PUBLIC_TOKEN,
