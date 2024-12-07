@@ -21,7 +21,7 @@ import {
   AccordionTrigger,
 } from '~/components/ui/accordion';
 import {IconFilters, IconXMark} from '~/components/Icon';
-import {cn, sortFilters, useTranslation} from '~/lib/utils';
+import {cn, useTranslation} from '~/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -105,12 +105,10 @@ function Filters({filters}: {filters: Filter[]}) {
   const [params] = useSearchParams();
   const location = useLocation();
   const {t} = useTranslation();
-  const sortedFilters = filters
-    //.sort((a, b) => sortFilters(a, b))
-    .filter(
-      ({values, id}) =>
-        values.some(({count}) => count > 0) || id.includes('price'),
-    );
+  const sortedFilters = filters.filter(
+    ({values, id}) =>
+      values.some(({count}) => count > 0) || id.includes('price'),
+  );
   const filterSort = (a: {label: string}, b: {label: string}) => {
     const numA = a.label.match(/\d+/);
     const numB = b.label.match(/\d+/);
