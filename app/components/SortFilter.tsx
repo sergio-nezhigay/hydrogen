@@ -106,7 +106,7 @@ function Filters({filters}: {filters: Filter[]}) {
   const location = useLocation();
   const {t} = useTranslation();
   const sortedFilters = filters
-    .sort((a, b) => sortFilters(a, b))
+    //.sort((a, b) => sortFilters(a, b))
     .filter(
       ({values, id}) =>
         values.some(({count}) => count > 0) || id.includes('price'),
