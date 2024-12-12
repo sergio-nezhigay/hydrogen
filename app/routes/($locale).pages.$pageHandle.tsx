@@ -41,7 +41,7 @@ export default function Page() {
 
   return (
     <>
-      <Section>
+      <Section className="!pb-20">
         <PageHeader
           heading={page.title}
           variant="allCollections"
