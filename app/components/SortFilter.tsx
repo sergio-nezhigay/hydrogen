@@ -196,7 +196,7 @@ function Filters({filters}: {filters: Filter[]}) {
                           (count > 0 || id.includes('price')) &&
                           !minusBrands.includes(label),
                       )
-                      .sort(filterSort)
+                      //  .sort(filterSort)
                       .map((option) => {
                         return (
                           <li key={option.id} className="flex pb-2">
