@@ -22,24 +22,24 @@ export const homeCollections: CollectionProps[] = [
   },
   {
     id: '3',
-    title: 'HDMI-VGA',
-    handle: 'hdmi-vga',
+    title: 'LED light strings',
+    handle: 'light-strings',
     imageSrc:
-      'https://cdn.shopify.com/s/files/1/0868/0462/7772/collections/DALL_E_2024-10-07_11.22.23_-_A_sleek_adapter_similar_to_the_user_s_provided_image_featuring_an_HDMI_to_VGA_converter._The_adapter_should_have_a_black_modern_box_design_with_a_sh_1.webp',
+      'https://cdn.shopify.com/s/files/1/0868/0462/7772/files/image-removebg-preview_048d36c5-8c40-4a60-9eb2-ddbdb802e6fb.webp?v=1734098302',
   },
   {
     id: '4',
-    title: 'VGA-VGA',
-    handle: 'cable_vga',
+    title: 'Laptop charger adapters',
+    handle: 'laptop-charger-adapters',
     imageSrc:
-      'https://cdn.shopify.com/s/files/1/0868/0462/7772/collections/800px-Vga-cable.webp',
+      'https://cdn.shopify.com/s/files/1/0868/0462/7772/files/USB-C_Laptop_Adapter_AK-ND-C18_1_1600x1600-removebg-preview.png?v=1734098223',
   },
   {
     id: '5',
     title: 'Optical Adapters',
     handle: 'optical',
     imageSrc:
-      'https://cdn.shopify.com/s/files/1/0868/0462/7772/collections/Digital-Audio-Converter-Optical-SPDIF-Toslink-to-Coaxial-Coax-to-Optical-SPDIF-Toslink-Bi-Directional-Switch.webp',
+      'https://cdn.shopify.com/s/files/1/0868/0462/7772/files/SPDIF_to_RCA_1.png?v=1734098117',
   },
   {
     id: '6',
@@ -50,10 +50,10 @@ export const homeCollections: CollectionProps[] = [
   },
   {
     id: '7',
-    title: 'Projector Mounts',
-    handle: 'krepleniya-dlya-proektorov',
+    title: 'Lamps',
+    handle: 'lamps',
     imageSrc:
-      'https://cdn.shopify.com/s/files/1/0868/0462/7772/collections/heavy-duty-adjustable-projector-mounting-kit-black-2-600x600_1.webp',
+      'https://cdn.shopify.com/s/files/1/0868/0462/7772/files/Baby_20Special_20276_20-_20Soft_20Peach_20-_20AN.webp?v=1734097915',
   },
   {
     id: '8',
