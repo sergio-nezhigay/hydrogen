@@ -10,7 +10,7 @@ interface ShippingPaymentWarrantyProps {
 }
 
 export const ShippingPaymentWarranty: FC<ShippingPaymentWarrantyProps> = ({
-  warrantyTerm = '12',
+  warrantyTerm = '36',
 }) => {
   const {t} = useTranslation();
   const rows = [
