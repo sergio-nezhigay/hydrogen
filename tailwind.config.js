@@ -3,7 +3,8 @@ import typographyPlugin from '@tailwindcss/typography';
 import animatePlugin from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
+  //module.exports = {
   //  darkMode: ['class'],
   content: ['./app/**/*.{js,ts,jsx,tsx}'],
   prefix: '',
