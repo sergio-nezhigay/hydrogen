@@ -1,7 +1,7 @@
 import {Suspense} from 'react';
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
 import {defer, redirect} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, useRouteLoaderData} from '@remix-run/react';
+import {Await, useLoaderData} from '@remix-run/react';
 import type {Storefront} from '@shopify/hydrogen';
 import {
   getSelectedProductOptions,
@@ -26,7 +26,6 @@ import {seoPayload} from '~/lib/seo.server';
 import {StarRating} from '~/modules/StarRating';
 import {ReviewForm} from '~/modules/ReviewForm';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
-import {Skeleton} from '~/components/Skeleton';
 import {ReviewList} from '~/modules/ReviewList';
 import {ShippingPaymentWarranty} from '~/modules/ShippingPaymentWarranty';
 import DynamicGallery from '~/modules/DynamicGallery';
@@ -48,12 +47,8 @@ export const action = async ({
 };
 
 export async function loader(args: LoaderFunctionArgs) {
-  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
-
-  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
-
   return defer({...deferredData, ...criticalData});
 }
 
@@ -171,12 +166,11 @@ function redirectToFirstVariant({
 }
 
 export default function Product() {
-  //  const rootData = useRouteLoaderData<RootLoader>('root');
-
   const {product, variants, judgemeReviewsData, recommended} =
     useLoaderData<typeof loader>();
 
-  const {media, title, descriptionHtml} = product;
+  const {media, title, descriptionHtml, warranty} = product;
+  const warrantyTerm = warranty?.value || '12';
 
   const selectedVariant = useOptimisticVariant(
     product.selectedVariant,
@@ -274,7 +268,7 @@ export default function Product() {
               </Suspense>
             </div>
 
-            <ShippingPaymentWarranty />
+            <ShippingPaymentWarranty warrantyTerm={warrantyTerm} />
             <div>
               <h2 className="font-semibold text-xl mb-4">
                 {translation.description}
