@@ -233,6 +233,10 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/karmany-dlja-hdd',
       },
       {
+        title: 'Mice',
+        to: '/collections/mice',
+      },
+      {
         title: 'PC Power Supplies',
         to: '/collections/bloki_pitaniya',
       },

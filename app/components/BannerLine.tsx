@@ -9,7 +9,7 @@ function BannerLine() {
     <>
       <div className="container h-[150px] sm:uppercase flex mb-10 gap-4 overflow-hidden ">
         <Link
-          to="/search?q=мишка"
+          to="/collections/mice"
           className="w-[40%] p-4 xl:p-8 flex flex-col justify-end relative text-white bg-[#242529] h-full flex-1 text-right"
         >
           <p className="text-sm md:text-lg xl:text-[24px] opacity-50 xl:mb-6">

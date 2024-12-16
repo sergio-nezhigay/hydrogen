@@ -22,6 +22,7 @@ export const translations = {
     'Інші комплектуючі': 'Інші components',
     'Інші комплектуючі2': 'Інші components',
     'USB Hubs': 'USB розгалужувачі',
+    Mice: 'Мишки',
     'RAM Memory': "Оперативна пам'ять",
     'SSD Drives': 'SSD диски',
     'Hard Drives': 'Жорсткі диски',
@@ -155,6 +156,7 @@ export const translations = {
     'USB Cables': 'USB кабели',
     'USB Flash': 'USB флешки',
     'USB Hubs': 'USB разветвители',
+    Mice: 'Мышки',
     'Compo nents': 'Комплектующие',
     Components: 'Комплектующие',
 

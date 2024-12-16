@@ -163,7 +163,7 @@ export default function Collection() {
   const {ref, inView} = useInView();
   const buttonsClass = cn(
     navigationMenuTriggerStyle(),
-    'flex items-center justify-center mb-6 my-2 mx-auto p-0 bg-gray-900/10',
+    'flex items-center justify-center my-8 mx-auto p-0 bg-gray-900/10',
   );
 
   return (
