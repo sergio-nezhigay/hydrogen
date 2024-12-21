@@ -237,6 +237,10 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/mice',
       },
       {
+        title: 'Keyboards',
+        to: '/collections/keyboards',
+      },
+      {
         title: 'PC Power Supplies',
         to: '/collections/bloki_pitaniya',
       },
