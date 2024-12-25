@@ -39,6 +39,7 @@ export default async function handleRequest(
       'https://google.com',
       'https://*.google.com',
       'https://stats.g.doubleclick.net',
+      'https://admin-action-block.gadget.app',
     ],
     frameSrc: [
       'https://www.googletagmanager.com',
