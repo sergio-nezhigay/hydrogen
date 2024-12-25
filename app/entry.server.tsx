@@ -19,6 +19,7 @@ export default async function handleRequest(
       'https://*.googletagmanager.com',
       'googleads.g.doubleclick.net',
       'https://*.google.com.ua',
+      'https://admin-action-block.gadget.app',
     ],
     imgSrc: [
       'https://cdn.shopify.com',
