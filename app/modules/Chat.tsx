@@ -60,12 +60,14 @@ const Chat = () => {
             className="text-black hover:bg-gray-200 cursor-pointer"
             onClick={toggleChatbot}
           >
-            <span className="flex items-center space-x-2 mx-auto">Робот</span>
+            <span className="flex items-center space-x-2 mx-auto">
+              Інформік
+            </span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       {isChatbotOpen && (
-        <div className="fixed bottom-20 right-5 bg-white border rounded-lg shadow-lg w-80 p-4 z-50">
+        <div className="fixed bottom-20 right-5 bg-white border rounded-lg shadow-lg w-[400px] p-4 z-50">
           <ChatbotForm />
         </div>
       )}
@@ -80,7 +82,7 @@ const ChatbotForm = () => {
     {
       type: 'bot',
       content:
-        'Привіт! Я — Гізмо, ваш персональний помічник із покупок. Чим я можу вам допомогти сьогодні?',
+        'Привіт! Я — Інформік, ваш персональний помічник із покупок. Чим я можу вам допомогти сьогодні?',
     },
   ]);
 
@@ -140,7 +142,7 @@ const ChatbotForm = () => {
   return (
     <div
       id="chatbot-window"
-      className="fixed bottom-4 right-4 w-80 border rounded-lg shadow-lg bg-white flex flex-col"
+      //  className="border rounded-lg shadow-lg bg-white flex flex-col"
     >
       {/* Chat Messages */}
       <div
