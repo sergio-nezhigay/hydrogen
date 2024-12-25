@@ -1,4 +1,4 @@
-import {Link} from '@remix-run/react';
+import {Link, replace} from '@remix-run/react';
 import {MessageCircle} from 'lucide-react';
 import {useState} from 'react';
 
@@ -26,6 +26,7 @@ const Chat = () => {
       });
     }
   };
+
   return (
     <div className="fixed bottom-5 right-5 shift-left">
       <DropdownMenu>
@@ -75,10 +76,15 @@ const Chat = () => {
 const ChatbotForm = () => {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [chatResponse, setChatResponse] = useState('');
+  const decodedChatResponse = decodeHTML(chatResponse);
+  console.log('🚀 ~ chatResponse:', chatResponse);
+  console.log('🚀 ~ decodedChatResponse:', decodedChatResponse);
 
   const handleSubmit = async (event) => {
-    event.preventDefault(); // Prevent default form behavior
-    setIsSubmitting(true); // Set loading state
+    event.preventDefault();
+    setIsSubmitting(true);
+    setChatResponse(''); // Clear previous response
 
     try {
       const response = await fetch(
@@ -92,19 +98,24 @@ const ChatbotForm = () => {
         },
       );
 
-      if (!response.ok) {
-        throw new Error('Failed to send message');
+      if (!response.body) {
+        throw new Error('Response body is empty');
       }
 
-      const data = await response.json();
-      console.log('Server response:', data); // Handle server response
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let done = false;
 
-      // Clear the input field after successful submission
-      setMessage('');
+      while (!done) {
+        const {value, done: readerDone} = await reader.read();
+        done = readerDone;
+        const chunk = decoder.decode(value);
+        setChatResponse((prev) => prev + chunk); // Append chunk to response
+      }
     } catch (error) {
-      console.error('Error submitting message:', error);
+      console.error('Error receiving streamed message:', error);
     } finally {
-      setIsSubmitting(false); // Reset loading state
+      setIsSubmitting(false);
     }
   };
 
@@ -118,18 +129,34 @@ const ChatbotForm = () => {
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your message..."
           className="border rounded-lg p-2 w-full"
-          disabled={isSubmitting} // Disable input while submitting
+          disabled={isSubmitting}
         />
         <button
           type="submit"
           className="bg-blueAccent text-white font-bold rounded-lg px-4 py-2"
-          disabled={isSubmitting} // Disable button while submitting
+          disabled={isSubmitting}
         >
           {isSubmitting ? 'Sending...' : 'Send'}
         </button>
       </div>
+      <div
+        className="mt-4 bg-gray-100 p-2 rounded-lg overflow-y-auto max-h-64"
+        dangerouslySetInnerHTML={{__html: decodedChatResponse}}
+      />
     </form>
   );
+};
+
+const decodeHTML = (html) => {
+  return (
+    html
+      .replace(/^"(.*)"$/, '$1')
+      //.replace(/&quot;/g, '"')
+      //.replace(/&amp;/g, '&')
+      //.replace(/&#39;/g, "'")
+      .replace(/\\n\\n/g, '<br>')
+      .replace(/\\"/g, '"')
+  ); // Replace escaped quotes
 };
 
 export default Chat;
