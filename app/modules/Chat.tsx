@@ -1,4 +1,4 @@
-import {Link, replace} from '@remix-run/react';
+import {Link} from '@remix-run/react';
 import {MessageCircle} from 'lucide-react';
 import {useState} from 'react';
 
@@ -76,15 +76,27 @@ const Chat = () => {
 const ChatbotForm = () => {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [chatResponse, setChatResponse] = useState('');
-  const decodedChatResponse = decodeHTML(chatResponse);
-  console.log('🚀 ~ chatResponse:', chatResponse);
-  console.log('🚀 ~ decodedChatResponse:', decodedChatResponse);
+  const [chatHistory, setChatHistory] = useState([
+    {
+      type: 'bot',
+      content:
+        'Привіт! Я — Гізмо, ваш персональний помічник із покупок. Чим я можу вам допомогти сьогодні?',
+    },
+  ]);
 
-  const handleSubmit = async (event) => {
+  const decodeHTML = (html: string) => {
+    return html
+      .replace(/^"(.*)"$/, '$1')
+      .replace(/\\n/g, '<br>')
+      .replace(/\\"/g, '"');
+  };
+
+  const handleSubmit = async (event: {preventDefault: () => void}) => {
     event.preventDefault();
     setIsSubmitting(true);
-    setChatResponse(''); // Clear previous response
+
+    // Append user's message to chat history
+    setChatHistory((prev) => [...prev, {type: 'user', content: message}]);
 
     try {
       const response = await fetch(
@@ -105,58 +117,83 @@ const ChatbotForm = () => {
       const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let done = false;
+      let botResponse = '';
 
       while (!done) {
         const {value, done: readerDone} = await reader.read();
         done = readerDone;
-        const chunk = decoder.decode(value);
-        setChatResponse((prev) => prev + chunk); // Append chunk to response
+        botResponse += decoder.decode(value);
       }
+
+      setChatHistory((prev) => [
+        ...prev,
+        {type: 'bot', content: decodeHTML(botResponse)},
+      ]);
     } catch (error) {
       console.error('Error receiving streamed message:', error);
     } finally {
       setIsSubmitting(false);
+      setMessage(''); // Clear the input field
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="flex flex-col space-y-2">
+    <div
+      id="chatbot-window"
+      className="fixed bottom-4 right-4 w-80 border rounded-lg shadow-lg bg-white flex flex-col"
+    >
+      {/* Chat Messages */}
+      <div
+        id="chat"
+        className="flex-1 p-4 overflow-y-auto space-y-2 bg-gray-50 max-h-80"
+      >
+        {chatHistory.map((entry, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <div key={`${entry.type}-${index}`} className={`mb-2 ${entry.type}`}>
+            {entry.type === 'user' ? (
+              <span className="block text-right text-blue-600 font-semibold">
+                {entry.content}
+              </span>
+            ) : (
+              <p
+                className="text-gray-700"
+                dangerouslySetInnerHTML={{__html: entry.content}}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Input Form */}
+      <form
+        id="chat-form"
+        onSubmit={handleSubmit}
+        className="flex p-2 border-t bg-gray-100 space-x-2"
+      >
         <input
           type="text"
           name="chatInput"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder="Type your message..."
-          className="border rounded-lg p-2 w-full"
+          placeholder="Введіть своє питання..."
+          className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
           disabled={isSubmitting}
         />
         <button
+          name="chatButton"
           type="submit"
-          className="bg-blueAccent text-white font-bold rounded-lg px-4 py-2"
+          className={`px-4 py-2 font-bold text-white rounded-lg ${
+            isSubmitting
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-blue-500 hover:bg-blue-600'
+          }`}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Sending...' : 'Send'}
+          {isSubmitting ? 'Думаю...' : 'Надіслати'}
         </button>
-      </div>
-      <div
-        className="mt-4 bg-gray-100 p-2 rounded-lg overflow-y-auto max-h-64"
-        dangerouslySetInnerHTML={{__html: decodedChatResponse}}
-      />
-    </form>
+      </form>
+    </div>
   );
-};
-
-const decodeHTML = (html) => {
-  return (
-    html
-      .replace(/^"(.*)"$/, '$1')
-      //.replace(/&quot;/g, '"')
-      //.replace(/&amp;/g, '&')
-      //.replace(/&#39;/g, "'")
-      .replace(/\\n\\n/g, '<br>')
-      .replace(/\\"/g, '"')
-  ); // Replace escaped quotes
 };
 
 export default Chat;
