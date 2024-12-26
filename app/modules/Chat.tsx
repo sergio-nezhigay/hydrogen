@@ -70,7 +70,7 @@ const Chat = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <div className="fixed bottom-20 right-5 bg-white border rounded-lg shadow-lg w-full max-w-[440px] p-4 z-50">
+        <div className="fixed bottom-20 right-0 md:right-5 bg-white border rounded-lg shadow-lg w-full max-w-[440px] p-2 md:p-4 z-50">
           <ChatbotForm toggleChatbot={toggleChatbot} />
         </div>
       )}
@@ -178,7 +178,7 @@ const ChatbotForm: React.FC<ChatbotFormProps> = ({toggleChatbot}) => {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Введіть своє питання..."
-          className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+          className="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 sm-max:w-[90px]"
           disabled={isSubmitting}
         />
         <button
