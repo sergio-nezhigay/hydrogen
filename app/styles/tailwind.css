@@ -151,6 +151,14 @@ body {
   .description h3 {
     @apply font-medium text-base italic opacity-80 p-4;
   }
+  .message-content a {
+    @apply text-blue-500 underline;
+  }
+
+  .message-content a:hover {
+    @apply text-blue-700;
+  }
+
   .text-outline {
     color: white;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black,
