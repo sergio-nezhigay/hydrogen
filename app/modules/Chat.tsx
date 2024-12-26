@@ -1,7 +1,8 @@
 import {Link} from '@remix-run/react';
-import {MessageCircle} from 'lucide-react';
+import {MessageCircle, MessageSquare, Search, Send, Loader} from 'lucide-react';
 import {useState} from 'react';
 
+import {ScrollArea} from '~/components/ui/scroll-area';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,60 +30,66 @@ const Chat = () => {
 
   return (
     <div className="fixed bottom-5 right-5 shift-left">
-      <DropdownMenu>
-        <DropdownMenuTrigger
-          className="w-14 h-14 rounded-full bg-blueAccent opacity-80 flex items-center justify-center shadow-lg hover:opacity-100 cursor-pointer transition-colors"
-          aria-label="Open chat options"
-          onClick={handleClick}
-        >
-          <MessageCircle className="text-white text-3xl" />
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent className="bg-white font-bold border rounded-lg shadow-lg p-2">
-          <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
-            <Link
-              to="viber://chat?number=+380507025777"
-              className="flex items-center space-x-2 mx-auto"
-            >
-              Viber
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
-            <Link
-              to="https://t.me/NSergiy"
-              className="flex items-center space-x-2 mx-auto"
-            >
-              Telegram
-            </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="text-black hover:bg-gray-200 cursor-pointer"
-            onClick={toggleChatbot}
+      {!isChatbotOpen ? (
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            className="w-14 h-14 rounded-full bg-blueAccent opacity-80 flex items-center justify-center shadow-lg hover:opacity-100 cursor-pointer transition-colors"
+            aria-label="Open chat options"
+            onClick={handleClick}
           >
-            <span className="flex items-center space-x-2 mx-auto">
-              Інформік
-            </span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      {isChatbotOpen && (
-        <div className="fixed bottom-20 right-5 bg-white border rounded-lg shadow-lg w-[400px] p-4 z-50">
-          <ChatbotForm />
+            <MessageCircle className="text-white text-3xl" />
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent className="bg-white font-bold border rounded-lg shadow-lg p-2">
+            <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
+              <Link
+                to="viber://chat?number=+380507025777"
+                className="flex items-center gap-2"
+              >
+                <MessageSquare className="text-purple-500" size={20} />
+                Viber
+              </Link>
+            </DropdownMenuItem>
+
+            <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
+              <Link
+                to="https://t.me/NSergiy"
+                className="flex items-center gap-2"
+              >
+                <Send className="text-blue-500" size={20} />
+                Telegram
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="flex items-center gap-2 font-narrow hover:cursor-pointer"
+              onClick={toggleChatbot}
+            >
+              <Search className="text-green-500" size={20} />
+              Чат-бот
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ) : (
+        <div className="fixed bottom-20 right-5 bg-white border rounded-lg shadow-lg w-full max-w-[400px] p-4 z-50">
+          <ChatbotForm toggleChatbot={toggleChatbot} />
         </div>
       )}
     </div>
   );
 };
 
-const ChatbotForm = () => {
+type ChatbotFormProps = {
+  toggleChatbot: () => void;
+};
+
+const ChatbotForm: React.FC<ChatbotFormProps> = ({toggleChatbot}) => {
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [chatHistory, setChatHistory] = useState([
     {
       type: 'bot',
       content:
-        'Привіт! Я — Інформік, ваш персональний помічник із покупок. Чим я можу вам допомогти сьогодні?',
+        'Привіт! Я — Інформік, ваш персональний помічник із покупок. Чим я можу вам допомогти ?',
     },
   ]);
 
@@ -135,42 +142,38 @@ const ChatbotForm = () => {
       console.error('Error receiving streamed message:', error);
     } finally {
       setIsSubmitting(false);
-      setMessage(''); // Clear the input field
+      setMessage('');
     }
   };
 
   return (
-    <div
-      id="chatbot-window"
-      //  className="border rounded-lg shadow-lg bg-white flex flex-col"
-    >
+    <div>
       {/* Chat Messages */}
-      <div
-        id="chat"
-        className="flex-1 p-4 overflow-y-auto space-y-2 bg-gray-50 max-h-80"
-      >
+      {/*<div className="flex-1 p-2 overflow-y-auto space-y-2 max-h-80">*/}
+      <ScrollArea className="flex p-2 flex-col max-h-80 overflow-y-auto">
         {chatHistory.map((entry, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <div key={`${entry.type}-${index}`} className={`mb-2 ${entry.type}`}>
             {entry.type === 'user' ? (
-              <span className="block text-right text-blue-600 font-semibold">
+              <div className="ml-auto w-fit text-right rounded-lg p-2 bg-blue-500 text-white font-semibold">
                 {entry.content}
-              </span>
+              </div>
             ) : (
               <p
-                className="text-gray-700"
+                className="text-black bg-gray-100 rounded-lg p-2"
                 dangerouslySetInnerHTML={{__html: entry.content}}
               />
             )}
           </div>
         ))}
-      </div>
+      </ScrollArea>
+      {/*</div>*/}
 
       {/* Input Form */}
       <form
         id="chat-form"
         onSubmit={handleSubmit}
-        className="flex p-2 border-t bg-gray-100 space-x-2"
+        className="flex p-2 border-t space-x-2"
       >
         <input
           type="text"
@@ -191,9 +194,21 @@ const ChatbotForm = () => {
           }`}
           disabled={isSubmitting}
         >
-          {isSubmitting ? 'Думаю...' : 'Надіслати'}
+          {isSubmitting ? (
+            <span className="flex items-center gap-2">
+              <Loader className="animate-spin" size={20} /> Зачекайте...
+            </span>
+          ) : (
+            <span className="flex items-center gap-2">Надіслати</span>
+          )}
         </button>
       </form>
+      <button
+        className="mt-2 w-full text-center text-sm text-blue-500 hover:underline"
+        onClick={toggleChatbot}
+      >
+        Закрити чат
+      </button>
     </div>
   );
 };

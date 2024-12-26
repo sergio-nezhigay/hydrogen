@@ -15,6 +15,7 @@ import {useTranslation} from '~/lib/utils';
 import BreadCrumbs from '~/modules/BreadCrumbs';
 import Chat from '~/modules/Chat';
 import LangSelector from '~/modules/LangSelector';
+import ChatMenu from '~/modules/ChatMenu';
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -51,6 +52,7 @@ export function PageLayout({
         {children}
       </main>
       <Chat />
+
       <Footer />
     </Aside.Provider>
   );
