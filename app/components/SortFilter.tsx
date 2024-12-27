@@ -109,14 +109,6 @@ function Filters({filters}: {filters: Filter[]}) {
     ({values, id}) =>
       values.some(({count}) => count > 0) || id.includes('price'),
   );
-  const filterSort = (a: {label: string}, b: {label: string}) => {
-    const numA = a.label.match(/\d+/);
-    const numB = b.label.match(/\d+/);
-    if (numA && numB) {
-      return parseInt(numA[0], 10) - parseInt(numB[0], 10);
-    }
-    return a.label.localeCompare(b.label);
-  };
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
     const appliedFilter = {
@@ -164,7 +156,6 @@ function Filters({filters}: {filters: Filter[]}) {
             />
 
             <span className="font-narrow">{t(option.label)}</span>
-            {/*<span className="opacity-60">({option.count})</span>*/}
           </Link>
         );
     }
@@ -272,6 +263,8 @@ function getFilterLink(
   location: ReturnType<typeof useLocation>,
 ) {
   const paramsClone = new URLSearchParams(params);
+  paramsClone.delete('cursor');
+  paramsClone.delete('direction');
   const newParams = filterInputToParams(rawInput, paramsClone);
   return `${location.pathname}?${newParams.toString()}`;
 }
