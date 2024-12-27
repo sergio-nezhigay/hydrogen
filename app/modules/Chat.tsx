@@ -70,7 +70,7 @@ const Chat = () => {
           </DropdownMenuContent>
         </DropdownMenu>
       ) : (
-        <div className="fixed bottom-20 right-0 md:right-5 bg-white border rounded-lg shadow-lg w-full max-w-[440px] p-2 md:p-4 z-50">
+        <div className="fixed bottom-10 right-0 md:right-5 bg-white border rounded-lg shadow-lg w-full max-w-[440px] p-2 md:p-4 z-50">
           <ChatbotForm toggleChatbot={toggleChatbot} />
         </div>
       )}
@@ -149,7 +149,7 @@ const ChatbotForm: React.FC<ChatbotFormProps> = ({toggleChatbot}) => {
   return (
     <div>
       {/* Chat Messages */}
-      <ScrollArea className="flex p-2 flex-col max-h-80 overflow-y-auto">
+      <ScrollArea className="flex p-2 flex-col max-h-[50vh] overflow-y-auto">
         {chatHistory.map((entry, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <div key={`${entry.type}-${index}`} className={`mb-2 ${entry.type}`}>

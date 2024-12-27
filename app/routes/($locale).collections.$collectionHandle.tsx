@@ -1,10 +1,9 @@
-import {useEffect} from 'react';
 import {
   json,
   type MetaArgs,
   type LoaderFunctionArgs,
 } from '@shopify/remix-oxygen';
-import {useLoaderData, useNavigate} from '@remix-run/react';
+import {useLoaderData} from '@remix-run/react';
 import {useInView} from 'react-intersection-observer';
 import type {
   Filter,
@@ -40,7 +39,7 @@ export const handle = {
 
 export async function loader({params, request, context}: LoaderFunctionArgs) {
   const paginationVariables = getPaginationVariables(request, {
-    pageBy: 14,
+    pageBy: 19,
   });
   const {collectionHandle} = params;
   const locale = context.storefront.i18n;
@@ -171,7 +170,6 @@ export default function Collection() {
       <Section
         padding="y"
         heading={collection.title}
-        //headingClassName="sr-only"
         display="flex"
         className="pt-0"
         headingClassName="!py-1"
@@ -184,7 +182,6 @@ export default function Collection() {
           appliedFilters={appliedFilters.filter(
             ({filter}) => !filter.available,
           )}
-          //  collections={collections}
         >
           <Pagination connection={collection.products}>
             {({
