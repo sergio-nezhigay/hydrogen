@@ -162,7 +162,7 @@ export default function Collection() {
   const {ref, inView} = useInView();
   const buttonsClass = cn(
     navigationMenuTriggerStyle(),
-    'flex items-center justify-center my-8 mx-auto p-0 bg-gray-900/10',
+    'flex items-center justify-center mx-auto p-0 bg-gray-900/10',
   );
 
   return (
@@ -206,7 +206,7 @@ export default function Collection() {
                   hasNextPage={hasNextPage}
                   state={state}
                 />
-                <div className={buttonsClass}>
+                <div className={cn(buttonsClass, 'my-10')}>
                   <Button
                     ref={ref}
                     as={NextLink}
