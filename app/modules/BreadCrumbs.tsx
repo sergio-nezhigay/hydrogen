@@ -119,13 +119,13 @@ function BreadCrumbs() {
                       <Link
                         to={urlWithPrefix}
                         className={clsx(
-                          'hover:text-indigo-600 hover:underline whitespace-nowrap md:text-base',
+                          'hover:text-indigo-600 hover:underline whitespace-nowrap md:text-base font-semibold',
                         )}
                         prefetch="viewport"
                       >
                         {page.name === 'Home' ? (
                           <>
-                            <Home className="size-5" />
+                            <Home className="size-5 font-bold" />
                             <span className="sr-only">Головна сторінка</span>
                           </>
                         ) : (
@@ -134,11 +134,11 @@ function BreadCrumbs() {
                       </Link>
                     </BreadcrumbLink>
                   ) : (
-                    <span className="font-narrow md:text-base sm-max:whitespace-nowrap">
+                    <span className="font-narrow md:text-base sm-max:whitespace-nowrap sr-only ">
                       {page.name}
                     </span>
                   )}
-                  {idx < pages.length - 1 && <BreadcrumbSeparator />}
+                  {idx < pages.length - 2 && <BreadcrumbSeparator />}
                 </BreadcrumbItem>
               );
             })}
