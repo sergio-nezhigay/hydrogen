@@ -1,106 +1,106 @@
-//import {Script, useAnalytics, useNonce} from '@shopify/hydrogen';
-//import {useEffect} from 'react';
+import {Script, useAnalytics, useNonce} from '@shopify/hydrogen';
+import {useEffect} from 'react';
 
-//export function CustomAnalytics() {
-//  const {subscribe, canTrack} = useAnalytics();
-//  const nonce = useNonce();
+export function CustomAnalytics() {
+  const {subscribe, canTrack} = useAnalytics();
+  const nonce = useNonce();
 
-//  useEffect(() => {
-//    setTimeout(() => {
-//      let isTrackingAllowed = canTrack();
-//      console.log('CustomAnalytics - isTrackingAllowed', isTrackingAllowed);
-//    }, 1000);
-//    // Standard events
-//    subscribe('page_viewed', (data) => {
-//      console.log('CustomAnalytics - Page viewed:', data);
-//      window.dataLayer.push({
-//        event: 'shopify_page_view',
-//        page: data.url,
-//      });
-//    });
+  useEffect(() => {
+    setTimeout(() => {
+      const isTrackingAllowed = canTrack();
+      console.log('CustomAnalytics - isTrackingAllowed', isTrackingAllowed);
+    }, 1000);
+    subscribe('product_viewed', (data) => {
+      // Triggering a custom event in GTM when a product is viewed
+      console.log('CustomAnalytics - Product viewed:', data);
+      const product = data?.products?.[0];
+      const items = product
+        ? [
+            {
+              item_id: product.id,
+              item_name: product.title,
+              price: parseFloat(product.price),
+              quantity: product.quantity || 1,
+            },
+          ]
+        : [];
+      const value = product ? parseFloat(product.price) : 0;
+      const viewItemData = {
+        event: 'view_item',
+        url: data.url,
+        ecommerce: {
+          currency: 'UAH',
+          value,
+          items,
+        },
+      };
+      console.log('viewItemData=', viewItemData);
+      window.dataLayer.push(viewItemData);
+    });
+    subscribe('search_viewed', (data) => {
+      console.log('from hydrogen search_submitted event data', data);
+      const searchData = {
+        event: 'search',
+        url: data.url,
+        ecommerce: {
+          search_term: data?.searchTerm,
+        },
+      };
+      console.log('🚀 ~ searchData:', searchData);
+      window.dataLayer.push(searchData);
+    });
 
-//    subscribe('product_viewed', (data) => {
-//      console.log('CustomAnalytics - Product viewed:', data);
-//      if (data.products && data.products.length > 0) {
-//        const product = data.products[0];
-//        window.dataLayer.push({
-//          event: 'view_item',
-//          ecommerce: {
-//            items: [
-//              {
-//                item_id: product.id,
-//                item_name: product.title,
-//                price: product.price,
-//                quantity: product.quantity,
-//                item_variant: product.variantTitle,
-//                item_brand: product.vendor,
-//              },
-//            ],
-//          },
-//        });
-//      }
-//    });
-//    subscribe('collection_viewed', (data) => {
-//      console.log('CustomAnalytics - Collection viewed:', data);
-//      if (data.collection) {
-//        window.dataLayer.push({
-//          event: 'view_collection',
-//          collection: {
-//            collection_id: data.collection.id,
-//            collection_handle: data.collection.handle,
-//          },
-//          shop: {
-//            shop_id: data.shop?.shopId,
-//            language: data.shop?.acceptedLanguage,
-//            currency: data.shop?.currency,
-//            subchannel_id: data.shop?.hydrogenSubchannelId,
-//          },
-//          url: data.url,
-//        });
-//      }
-//    });
-//    subscribe('cart_viewed', (data) => {
-//      console.log('CustomAnalytics - Cart viewed:', data);
-//    });
-//    subscribe('cart_updated', (data) => {
-//      console.log('CustomAnalytics - Cart updated:', data);
-//    });
+    subscribe('collection_viewed', (data) => {
+      console.log('from hydrogen code collection_viewed event', data);
+      const collectionViewData = {
+        event: 'view_item_list',
+        url: data.url,
+        ecommerce: {
+          collection_id: data.collection?.id,
+          collection_title: data?.collection?.handle,
+        },
+      };
+      console.log('🚀 ~ collectionViewData:', collectionViewData);
+      window.dataLayer.push(collectionViewData);
+    });
+    subscribe('page_viewed', (data) => {
+      console.log('CustomAnalytics - Page viewed:', data);
+      window.dataLayer.push({
+        event: 'shopify_page_view',
+        page: data.url,
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-//    // Custom events
-//    subscribe('custom_sidecart_viewed', (data) => {
-//      console.log('CustomAnalytics - Custom sidecart opened:', data);
-//    });
-//    // eslint-disable-next-line react-hooks/exhaustive-deps
-//  }, []);
+  const id = 'GTM-WRQRP5RF';
+  if (!id) {
+    return null;
+  }
 
-//  let id = 'GTM-WRQRP5RF';
-//  if (!id) {
-//    return null;
-//  }
+  return (
+    <>
+      {/* Initialize GTM container */}
+      <Script
+        nonce={nonce}
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: `
+              dataLayer = window.dataLayer || [];
 
-//  return (
-//    <>
-//      {/* Initialize GTM container */}
-//      <Script
-//        nonce={nonce}
-//        suppressHydrationWarning
-//        dangerouslySetInnerHTML={{
-//          __html: `
-//              dataLayer = window.dataLayer || [];
+              function gtag(){
+                dataLayer.push(arguments)
+              };
 
-//              function gtag(){
-//                dataLayer.push(arguments)
-//              };
+              gtag('js', new Date());
+              gtag({'gtm.start': new Date().getTime(),event:'gtm.js'})
+              gtag('config', "${id}");
+          `,
+        }}
+      />
 
-//              gtag('js', new Date());
-//              gtag({'gtm.start': new Date().getTime(),event:'gtm.js'})
-//              gtag('config', "${id}");
-//          `,
-//        }}
-//      />
-
-//      {/* Load GTM script */}
-//      <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
-//    </>
-//  );
-//}
+      {/* Load GTM script */}
+      <Script async src={`https://www.googletagmanager.com/gtm.js?id=${id}`} />
+    </>
+  );
+}
