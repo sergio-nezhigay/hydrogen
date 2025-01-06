@@ -245,16 +245,8 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/bloki_pitaniya',
       },
       {
-        title: 'Chargers',
-        to: '/collections/power',
-      },
-      {
         title: 'Thermal Paste',
         to: '/collections/termopasta',
-      },
-      {
-        title: 'Power Banks',
-        to: '/collections/power-bank',
       },
       {
         title: 'Risers',
@@ -280,6 +272,14 @@ export const navigationData: MenuGroup[] = [
       {
         title: 'Accessories',
         to: '/collections/other_accs',
+      },
+      {
+        title: 'Power Banks',
+        to: '/collections/power-bank',
+      },
+      {
+        title: 'Chargers',
+        to: '/collections/power',
       },
       {
         title: 'Lamps',
