@@ -44,7 +44,7 @@ const Chat = () => {
             <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
               <Link
                 to="viber://chat?number=+380507025777"
-                className="flex items-center gap-2"
+                className="adwords-goal flex items-center gap-2"
               >
                 <MessageSquare className="text-purple-500" size={20} />
                 Viber
@@ -54,14 +54,14 @@ const Chat = () => {
             <DropdownMenuItem className="text-black hover:bg-gray-200 cursor-pointer">
               <Link
                 to="https://t.me/NSergiy"
-                className="flex items-center gap-2"
+                className="adwords-goal flex items-center gap-2"
               >
                 <Send className="text-blue-500" size={20} />
                 Telegram
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              className="flex items-center gap-2 font-narrow hover:cursor-pointer"
+              className="adwords-goal flex items-center gap-2 font-narrow hover:cursor-pointer"
               onClick={toggleChatbot}
             >
               <Search className="text-green-500" size={20} />
