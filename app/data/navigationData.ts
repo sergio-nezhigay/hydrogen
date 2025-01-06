@@ -249,16 +249,16 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/power',
       },
       {
-        title: 'Power Filters',
-        to: '/collections/power_filters',
-      },
-      {
         title: 'Thermal Paste',
         to: '/collections/termopasta',
       },
       {
         title: 'Power Banks',
         to: '/collections/power-bank',
+      },
+      {
+        title: 'Risers',
+        to: '/collections/risers',
       },
     ],
   },
@@ -292,6 +292,10 @@ export const navigationData: MenuGroup[] = [
       {
         title: 'Laptop charger adapters',
         to: '/collections/laptop-charger-adapters',
+      },
+      {
+        title: 'Power Filters',
+        to: '/collections/power_filters',
       },
       {
         title: 'Patch Cables',

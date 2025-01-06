@@ -33,6 +33,7 @@ export const translations = {
     'Power Filters': 'Мережеві фільтри',
     'Thermal Paste': 'Термопаста',
     'Power Banks': 'Зовнішні акумулятори (Power Bank)',
+    Risers: 'Райзери',
     'Projector Screens': 'Проекційні екрани',
     'Projector Mounts': 'Кронштейни для проекторів',
     'Optical Adapters': 'Оптичні перехідники',
@@ -201,7 +202,7 @@ export const translations = {
     featured: 'Рекомендуемые',
     featured_products: 'Рекомендуемые товары',
     featured_brands: 'Рекомендуемые бренды',
-
+    Risers: 'Райзеры',
     filter_by: 'Фильтровать по',
     find: 'Найти',
     from: 'от',
