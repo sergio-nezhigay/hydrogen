@@ -18,11 +18,10 @@ export function HeroSection() {
     <Section
       useH1
       display="flex"
-      heading="Головна сторінка"
+      heading="Домашня сторінка - Магазин електроніки Informatica | informatica.com.ua"
       headingClassName="sr-only"
       padding="y"
     >
-      <h1 className="sr-only">Головна сторінка</h1>
       <Carousel
         opts={{
           loop: true,
