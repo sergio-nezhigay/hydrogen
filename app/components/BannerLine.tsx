@@ -30,12 +30,12 @@ function BannerLine() {
         </Link>
 
         <div className="relative p-4 xl:p-12 w-[60%] text-[#272b2e] h-full   flex flex-col justify-center items-end whitespace-pre-wrap">
-          <h3 className="text-outline text-[20px] xl:text-[24px] relative z-1 font-medium text-right">
+          <h3 className="text-outline text-[20px] xl:text-[24px] relative font-medium text-right">
             {t('Best elecronics to present')}
           </h3>
           <Image
             src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/shop36_home_banner4_1.jpg?v=1731268793"
-            className="h-auto w-full block absolute object-cover inset-0"
+            className="h-full w-full block absolute object-cover inset-0 -z-10"
           />
         </div>
       </div>
