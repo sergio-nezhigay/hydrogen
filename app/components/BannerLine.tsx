@@ -21,18 +21,21 @@ function BannerLine() {
           <div className="w-[60%] md:w-[130px] lg:w-[150px] xl:w-[200px] absolute top-[0px] xl:-top-[20px] left-[30px] lg:left-[50px]">
             <Image
               src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/910-006560-1000x1000.webp?v=1731267726"
-              className="block w-full h-auto "
+              width={200}
+              height={200}
+              alt="Computer mouse"
+              className="h-full w-full object-cover"
             />
           </div>
         </Link>
 
         <div className="relative p-4 xl:p-12 w-[60%] text-[#272b2e] h-full   flex flex-col justify-center items-end whitespace-pre-wrap">
-          <h3 className="text-outline text-[20px] xl:text-[24px] relative z-10 font-medium text-right">
+          <h3 className="text-outline text-[20px] xl:text-[24px] relative z-1 font-medium text-right">
             {t('Best elecronics to present')}
           </h3>
           <Image
             src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/shop36_home_banner4_1.jpg?v=1731268793"
-            className="h-full block absolute object-cover inset-0"
+            className="h-auto w-full block absolute object-cover inset-0"
           />
         </div>
       </div>
