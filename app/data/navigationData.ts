@@ -245,16 +245,16 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/termopasta',
       },
       {
+        title: 'Risers',
+        to: '/collections/risers',
+      },
+      {
         title: 'Laptop Power Supplies',
         to: '/collections/laptop-power-supply',
       },
       {
         title: 'Laptop charger adapters',
         to: '/collections/laptop-charger-adapters',
-      },
-      {
-        title: 'Risers',
-        to: '/collections/risers',
       },
     ],
   },
