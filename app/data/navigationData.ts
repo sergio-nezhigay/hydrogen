@@ -241,12 +241,16 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/keyboards',
       },
       {
+        title: 'Thermal Paste',
+        to: '/collections/termopasta',
+      },
+      {
         title: 'Laptop Power Supplies',
         to: '/collections/laptop-power-supply',
       },
       {
-        title: 'Thermal Paste',
-        to: '/collections/termopasta',
+        title: 'Laptop charger adapters',
+        to: '/collections/laptop-charger-adapters',
       },
       {
         title: 'Risers',
@@ -288,10 +292,6 @@ export const navigationData: MenuGroup[] = [
       {
         title: 'LED light strings',
         to: '/collections/light-strings',
-      },
-      {
-        title: 'Laptop charger adapters',
-        to: '/collections/laptop-charger-adapters',
       },
       {
         title: 'Power Filters',
