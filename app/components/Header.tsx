@@ -9,7 +9,7 @@ import {MobileNavigationMenu} from '~/modules/MobileNavigationMenu';
 import LangSelector from '~/modules/LangSelector';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 
-import {IconBag, IconSearch} from './Icon';
+import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
 import {useAside} from './Aside';
 import TopMenu from './TopMenu';
 
@@ -107,7 +107,7 @@ function HeaderCtas({
       </a>
 
       <SearchToggle />
-      {/*<NavLink
+      <NavLink
         prefetch="intent"
         to="/account"
         style={activeLinkStyle}
@@ -118,7 +118,7 @@ function HeaderCtas({
             {(isLoggedIn) => (isLoggedIn ? <IconAccount /> : <IconLogin />)}
           </Await>
         </Suspense>
-      </NavLink>*/}
+      </NavLink>
       <CartToggle cart={cart} />
       <HeaderMenuMobileToggle />
     </nav>

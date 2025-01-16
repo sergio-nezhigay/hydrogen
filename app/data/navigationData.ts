@@ -241,8 +241,8 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/keyboards',
       },
       {
-        title: 'PC Power Supplies',
-        to: '/collections/bloki_pitaniya',
+        title: 'Laptop Power Supplies',
+        to: '/collections/laptop-power-supply',
       },
       {
         title: 'Thermal Paste',
