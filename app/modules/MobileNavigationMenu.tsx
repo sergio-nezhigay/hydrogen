@@ -17,6 +17,10 @@ export const MobileNavigationMenu = () => {
   const {t, language} = useTranslation();
 
   const langPath = language === 'ru' ? 'ru' : '';
+  const mobileTopMenuItems = [
+    ...topMenuItems,
+    {to: '/account/login', label: 'Login'},
+  ];
 
   return (
     <>
@@ -68,7 +72,7 @@ export const MobileNavigationMenu = () => {
       </Accordion>
 
       <div className="border-t mt-4 shadow-sm">
-        {topMenuItems.map((item) => (
+        {mobileTopMenuItems.map((item) => (
           <>
             <Link
               to={langPath + item.to}
