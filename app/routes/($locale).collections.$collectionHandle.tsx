@@ -356,11 +356,11 @@ function getSortValuesFromParam(sortParam: SortParam | null): {
         sortKey: 'PRICE',
         reverse: false,
       };
-    case 'best-selling':
-      return {
-        sortKey: 'BEST_SELLING',
-        reverse: false,
-      };
+    //case 'best-selling':
+    //  return {
+    //    sortKey: 'BEST_SELLING',
+    //    reverse: false,
+    //  };
     //case 'newest':
     //  return {
     //    sortKey: 'CREATED',
@@ -373,7 +373,7 @@ function getSortValuesFromParam(sortParam: SortParam | null): {
     //  };
     default:
       return {
-        sortKey: 'PRICE',
+        sortKey: 'BEST_SELLING',
         reverse: false,
       };
   }

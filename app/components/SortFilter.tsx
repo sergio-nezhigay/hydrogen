@@ -46,9 +46,12 @@ export type AppliedFilter = {
   filter: ProductFilter;
 };
 
-export type SortParam = 'price-low-high' | 'price-high-low' | 'best-selling';
-//  | 'newest'
-//  | 'featured';
+export type SortParam =
+  | 'price-low-high'
+  | 'price-high-low'
+  | 'best-selling'
+  | 'newest'
+  | 'featured';
 
 export type SortFilterProps = {
   filters: Filter[];
@@ -377,7 +380,7 @@ export default function SortMenu({className}: {className?: string}) {
   const {translation} = useTranslation();
 
   const items: {label: string; key: SortParam}[] = [
-    //{label: translation.featured, key: 'featured'},
+    {label: translation.featured, key: 'featured'},
     {
       label: translation.price_low_high ?? 'Price: Low - High',
       key: 'price-low-high',
@@ -387,7 +390,7 @@ export default function SortMenu({className}: {className?: string}) {
       key: 'price-high-low',
     },
     {label: translation.best_selling ?? 'Best Selling', key: 'best-selling'},
-    //{label: translation.newest ?? 'Newest', key: 'newest'},
+    {label: translation.newest ?? 'Newest', key: 'newest'},
   ];
 
   const [params] = useSearchParams();
