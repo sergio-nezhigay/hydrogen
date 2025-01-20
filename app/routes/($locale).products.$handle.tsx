@@ -18,7 +18,6 @@ import invariant from 'tiny-invariant';
 
 import {Heading, Section} from '~/components/Text';
 import {ProductPrice} from '~/components/ProductPrice';
-import {ProductImage} from '~/components/ProductImage19';
 import {ProductForm} from '~/components/ProductForm';
 import DynamicGallery from '~/modules/DynamicGallery';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
@@ -30,6 +29,7 @@ import {StarRating} from '~/modules/StarRating';
 import {getJudgemeReviews} from '~/lib/judgeme';
 import {useTranslation} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
+import {ProductImage} from '~/components/ProductImage';
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -158,7 +158,7 @@ export default function Product() {
     '^',
   ) || [null, null];
   const barcode = product.selectedOrFirstAvailableVariant?.barcode;
-  console.log('🚀 ~ sku1:', sku1);
+
   return (
     <>
       <Section
