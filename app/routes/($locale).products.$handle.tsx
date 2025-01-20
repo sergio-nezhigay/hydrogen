@@ -1,42 +1,35 @@
-import {Suspense} from 'react';
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
-import {defer, redirect} from '@shopify/remix-oxygen';
-import {Await, useLoaderData} from '@remix-run/react';
+import {defer} from '@shopify/remix-oxygen';
+//import type {MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
 import type {Storefront} from '@shopify/hydrogen';
 import {
   getSelectedProductOptions,
   Analytics,
   useOptimisticVariant,
+  getProductOptions,
+  getAdjacentAndFirstAvailableVariants,
+  useSelectedOptionInUrlParam,
   getSeoMeta,
 } from '@shopify/hydrogen';
-import type {SelectedOption} from '@shopify/hydrogen/storefront-api-types';
 import clsx from 'clsx';
+import {Suspense} from 'react';
 import invariant from 'tiny-invariant';
 
-import type {ProductFragment} from 'storefrontapi.generated';
-import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
-import {getVariantUrl} from '~/lib/variants';
-import {ProductPrice} from '~/components/ProductPrice';
-import {ProductImage} from '~/components/ProductImage';
-import {ProductForm} from '~/components/ProductForm';
 import {Heading, Section} from '~/components/Text';
-import {submitReviewAction, useTranslation} from '~/lib/utils';
-import {getJudgemeReviews} from '~/lib/judgeme';
-import {seoPayload} from '~/lib/seo.server';
-import {StarRating} from '~/modules/StarRating';
-import {ReviewForm} from '~/modules/ReviewForm';
+import {ProductPrice} from '~/components/ProductPrice';
+import {ProductForm} from '~/components/ProductForm';
+import DynamicGallery from '~/modules/DynamicGallery';
+import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
+import {ReviewForm} from '~/modules/ReviewForm';
 import {ReviewList} from '~/modules/ReviewList';
 import {ShippingPaymentWarranty} from '~/modules/ShippingPaymentWarranty';
-
 import {StarRating} from '~/modules/StarRating';
 import {getJudgemeReviews} from '~/lib/judgeme';
 import {useTranslation} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
 import {ProductImage} from '~/components/ProductImage';
-
-import DynamicGallery from '~/modules/DynamicGallery';
-
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -46,17 +39,13 @@ export const handle = {
   breadcrumbType: 'product',
 };
 
-export const action = async ({
-  request,
-  context,
-  params,
-}: LoaderFunctionArgs) => {
-  return await submitReviewAction({request, context, params});
-};
-
 export async function loader(args: LoaderFunctionArgs) {
+  // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
+
+  // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
+
   return defer({...deferredData, ...criticalData});
 }
 
@@ -69,14 +58,14 @@ async function loadCriticalData({
   params,
   request,
 }: LoaderFunctionArgs) {
+  const judgeme_API_TOKEN = context.env.JUDGEME_PUBLIC_TOKEN;
+  const shop_domain = context.env.PUBLIC_STORE_DOMAIN;
   const {handle} = params;
   const {storefront} = context;
 
   if (!handle) {
     throw new Error('Expected product handle to be defined');
   }
-  const judgeme_API_TOKEN = context.env.JUDGEME_PUBLIC_TOKEN;
-  const shop_domain = context.env.PUBLIC_STORE_DOMAIN;
 
   const [{product}, judgemeReviewsData] = await Promise.all([
     storefront.query(PRODUCT_QUERY, {
@@ -89,37 +78,27 @@ async function loadCriticalData({
   if (!product?.id) {
     throw new Response(null, {status: 404});
   }
+
   const recommended = getRecommendedProducts(context.storefront, product.id);
-
-  const firstVariant = product.variants.nodes[0];
-  const firstVariantIsDefault = Boolean(
-    firstVariant.selectedOptions.find(
-      (option: SelectedOption) =>
-        option.name === 'Title' && option.value === 'Default Title',
-    ),
-  );
-
-  if (firstVariantIsDefault) {
-    product.selectedVariant = firstVariant;
-  } else {
-    // if no selected variant was returned from the selected options,
-    // we redirect to the first variant's url with it's selected options applied
-    if (!product.selectedVariant) {
-      throw redirectToFirstVariant({product, request});
-    }
-  }
-  const seo = seoPayload.product({
-    product,
-    selectedVariant: product.selectedVariant,
-    url: request.url,
-    judgemeReviewsData,
-  });
-
+  const seo = product.selectedOrFirstAvailableVariant
+    ? seoPayload.product({
+        product: {
+          ...product,
+          variants: {
+            nodes: [product.selectedOrFirstAvailableVariant],
+            //nodes: product.variants, // Add the 'variants' field here
+          },
+        },
+        selectedVariant: product.selectedOrFirstAvailableVariant,
+        url: request.url,
+        judgemeReviewsData,
+      })
+    : null;
   return {
     product,
+    judgemeReviewsData,
     recommended,
     seo,
-    judgemeReviewsData,
   };
 }
 
@@ -129,82 +108,56 @@ async function loadCriticalData({
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context, params}: LoaderFunctionArgs) {
-  // In order to show which variants are available in the UI, we need to query
-  // all of them. But there might be a *lot*, so instead separate the variants
-  // into it's own separate query that is deferred. So there's a brief moment
-  // where variant options might show as available when they're not, but after
-  // this deffered query resolves, the UI will update.
-  const variants = context.storefront
-    .query(VARIANTS_QUERY, {
-      variables: {handle: params.handle!},
-    })
-    .catch((error) => {
-      // Log query errors, but don't throw them so the page can still render
+  // Put any API calls that is not critical to be available on first page render
+  // For example: product reviews, product recommendations, social feeds.
 
-      console.error(error);
-      return null;
-    });
-
-  return {
-    variants,
-  };
-}
-
-function redirectToFirstVariant({
-  product,
-  request,
-}: {
-  product: ProductFragment;
-  request: Request;
-}) {
-  const url = new URL(request.url);
-  const firstVariant = product.variants.nodes[0];
-
-  return redirect(
-    getVariantUrl({
-      pathname: url.pathname,
-      handle: product.handle,
-      selectedOptions: firstVariant.selectedOptions,
-      searchParams: new URLSearchParams(url.search),
-    }),
-    {
-      status: 302,
-    },
-  );
+  return {};
 }
 
 export default function Product() {
-  const {product, variants, judgemeReviewsData, recommended} =
+  const {product, judgemeReviewsData, recommended} =
     useLoaderData<typeof loader>();
-
-  const {media, title, descriptionHtml, warranty} = product;
-  const warrantyTerm = warranty?.value || '12';
-
-  const selectedVariant = useOptimisticVariant(
-    product.selectedVariant,
-    variants,
-  );
-
   const {translation} = useTranslation();
   const rating = judgemeReviewsData?.rating ?? 0;
   const reviewNumber = judgemeReviewsData?.reviewNumber ?? 0;
   const reviews = judgemeReviewsData?.reviews ?? [];
+  // Optimistically selects a variant with given available variant information
+  const selectedVariant = useOptimisticVariant(
+    product.selectedOrFirstAvailableVariant,
+    getAdjacentAndFirstAvailableVariants(product),
+  );
+
+  // Sets the search param to the selected variant without navigation
+  // only when no search params are set in the url
+  useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
+
+  // Get the product options array
+  const productOptions = getProductOptions({
+    ...product,
+    selectedOrFirstAvailableVariant: selectedVariant,
+  });
+
   const handleScrollToReviews = (event: {preventDefault: () => void}) => {
     event.preventDefault();
     document
       .getElementById('review-list')
       ?.scrollIntoView({behavior: 'smooth'});
   };
-  const [sku1, sku2] = product.selectedVariant?.sku?.split('^') || [null, null];
 
-  const barcode = product.selectedVariant?.barcode;
+  const {
+    media,
+    title,
+    descriptionHtml,
+    warranty,
+    delta,
+    selectedOrFirstAvailableVariant,
+  } = product;
 
   const warrantyTerm = warranty?.value || '12';
   const [sku1, sku2] = product.selectedOrFirstAvailableVariant?.sku?.split(
     '^',
   ) || [null, null];
   const barcode = product.selectedOrFirstAvailableVariant?.barcode;
-
 
   return (
     <>
@@ -224,10 +177,7 @@ export default function Product() {
           <div className="flex flex-col gap-8 md:gap-16 md:top-24 md:sticky ">
             <div className="grid gap-2 ">
               <Heading as="h1" className=" overflow-hidden whitespace-normal ">
-
-                {title}.
-
-
+                {title}-1
               </Heading>
               <div
                 className={clsx({
@@ -262,28 +212,11 @@ export default function Product() {
                 />
               </div>
 
-              <Suspense
-                fallback={
-                  <ProductForm
-                    product={product}
-                    selectedVariant={selectedVariant}
-                    variants={[]}
-                  />
-                }
-              >
-                <Await
-                  errorElement="There was a problem loading product variants"
-                  resolve={variants}
-                >
-                  {(data) => (
-                    <ProductForm
-                      product={product}
-                      selectedVariant={selectedVariant}
-                      variants={data?.product?.variants.nodes || []}
-                    />
-                  )}
-                </Await>
-              </Suspense>
+              <ProductForm
+                productOptions={productOptions}
+                selectedVariant={selectedVariant}
+                delta={delta?.value || '0'}
+              />
             </div>
 
             <ShippingPaymentWarranty warrantyTerm={warrantyTerm} />
@@ -361,6 +294,118 @@ export default function Product() {
   );
 }
 
+const PRODUCT_VARIANT_FRAGMENT = `#graphql
+  fragment ProductVariant on ProductVariant {
+    availableForSale
+    compareAtPrice {
+      amount
+      currencyCode
+    }
+    id
+    image {
+      __typename
+      id
+      url
+      altText
+      width
+      height
+    }
+    price {
+      amount
+      currencyCode
+    }
+    product {
+      title
+      handle
+    }
+    selectedOptions {
+      name
+      value
+    }
+    sku
+    barcode
+    title
+    unitPrice {
+      amount
+      currencyCode
+    }
+
+  }
+` as const;
+
+const PRODUCT_FRAGMENT = `#graphql
+  fragment Product on Product {
+    id
+    title
+    vendor
+    handle
+    descriptionHtml
+    description
+    encodedVariantExistence
+    encodedVariantAvailability
+    options {
+      name
+      optionValues {
+        name
+        firstSelectableVariant {
+          ...ProductVariant
+        }
+        swatch {
+          color
+          image {
+            previewImage {
+              url
+            }
+          }
+        }
+      }
+    }
+    media(first: 7) {
+      nodes {
+        ...Media
+      }
+    }
+    selectedOrFirstAvailableVariant(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
+      ...ProductVariant
+    }
+    adjacentVariants (selectedOptions: $selectedOptions) {
+      ...ProductVariant
+    }
+    seo {
+      description
+      title
+    }
+    collections(first: 1) {
+      nodes {
+        title
+        handle
+      }
+    }
+    delta: metafield(namespace: "custom", key: "delta") {
+      value
+    }
+    warranty: metafield(namespace: "custom", key: "warranty") {
+      value
+    }
+  }
+  ${MEDIA_FRAGMENT}
+  ${PRODUCT_VARIANT_FRAGMENT}
+` as const;
+
+const PRODUCT_QUERY = `#graphql
+  query Product(
+    $country: CountryCode
+    $handle: String!
+    $language: LanguageCode
+    $selectedOptions: [SelectedOptionInput!]!
+  ) @inContext(country: $country, language: $language) {
+    product(handle: $handle) {
+      ...Product
+    }
+  }
+  ${PRODUCT_FRAGMENT}
+` as const;
+
 const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   query productRecommendations(
     $productId: ID!
@@ -411,129 +456,3 @@ async function getRecommendedProducts(
     complementaryNodes: products.complementary ?? [],
   };
 }
-
-const PRODUCT_VARIANT_FRAGMENT = `#graphql
-  fragment ProductVariant on ProductVariant {
-    availableForSale
-    compareAtPrice {
-      amount
-      currencyCode
-    }
-    id
-    barcode
-    image {
-      __typename
-      id
-      url
-      altText
-      width
-      height
-    }
-    price {
-      amount
-      currencyCode
-    }
-    product {
-      title
-      handle
-    }
-    selectedOptions {
-      name
-      value
-    }
-    sku
-    title
-    unitPrice {
-      amount
-    }
-  }
-` as const;
-
-const PRODUCT_FRAGMENT = `#graphql
-  fragment Product on Product {
-    id
-    title
-    vendor
-    handle
-    descriptionHtml
-    description
-    options {
-      name
-      values
-    }
-    media(first: 7) {
-      nodes {
-        ...Media
-      }
-    }
-
-    selectedVariant: variantBySelectedOptions(selectedOptions: $selectedOptions, ignoreUnknownOptions: true, caseInsensitiveMatch: true) {
-      ...ProductVariant
-    }
-    variants(first: 1) {
-      nodes {
-        ...ProductVariant
-      }
-
-    }
-    seo {
-      description
-      title
-    }
-    collections(first: 1) {
-      nodes {
-        title
-        handle
-      }
-    }
-    delta: metafield(namespace: "custom", key: "delta") {
-      value
-    }
-    warranty: metafield(namespace: "custom", key: "warranty") {
-      value
-    }
-
-  }
-  ${MEDIA_FRAGMENT}
-  ${PRODUCT_VARIANT_FRAGMENT}
-` as const;
-
-const PRODUCT_QUERY = `#graphql
-  query Product(
-    $country: CountryCode
-    $handle: String!
-    $language: LanguageCode
-    $selectedOptions: [SelectedOptionInput!]!
-  ) @inContext(country: $country, language: $language) {
-    product(handle: $handle) {
-      ...Product
-    }
-  }
-  ${PRODUCT_FRAGMENT}
-` as const;
-
-const PRODUCT_VARIANTS_FRAGMENT = `#graphql
-  fragment ProductVariants on Product {
-    variants(first: 250) {
-      nodes {
-        ...ProductVariant
-
-      }
-    }
-  }
-  ${PRODUCT_VARIANT_FRAGMENT}
-
-` as const;
-
-const VARIANTS_QUERY = `#graphql
-  ${PRODUCT_VARIANTS_FRAGMENT}
-  query ProductVariants(
-    $country: CountryCode
-    $language: LanguageCode
-    $handle: String!
-  ) @inContext(country: $country, language: $language) {
-    product(handle: $handle) {
-      ...ProductVariants
-    }
-  }
-` as const;
