@@ -28,7 +28,15 @@ import {ReviewForm} from '~/modules/ReviewForm';
 import {ProductSwimlane} from '~/components/ProductSwimlane';
 import {ReviewList} from '~/modules/ReviewList';
 import {ShippingPaymentWarranty} from '~/modules/ShippingPaymentWarranty';
+
+import {StarRating} from '~/modules/StarRating';
+import {getJudgemeReviews} from '~/lib/judgeme';
+import {useTranslation} from '~/lib/utils';
+import {seoPayload} from '~/lib/seo.server';
+import {ProductImage} from '~/components/ProductImage';
+
 import DynamicGallery from '~/modules/DynamicGallery';
+
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -191,6 +199,13 @@ export default function Product() {
 
   const barcode = product.selectedVariant?.barcode;
 
+  const warrantyTerm = warranty?.value || '12';
+  const [sku1, sku2] = product.selectedOrFirstAvailableVariant?.sku?.split(
+    '^',
+  ) || [null, null];
+  const barcode = product.selectedOrFirstAvailableVariant?.barcode;
+
+
   return (
     <>
       <Section
@@ -209,7 +224,10 @@ export default function Product() {
           <div className="flex flex-col gap-8 md:gap-16 md:top-24 md:sticky ">
             <div className="grid gap-2 ">
               <Heading as="h1" className=" overflow-hidden whitespace-normal ">
-                {title}
+
+                {title}.
+
+
               </Heading>
               <div
                 className={clsx({
