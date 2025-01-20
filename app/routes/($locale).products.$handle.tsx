@@ -177,7 +177,7 @@ export default function Product() {
           <div className="flex flex-col gap-8 md:gap-16 md:top-24 md:sticky ">
             <div className="grid gap-2 ">
               <Heading as="h1" className=" overflow-hidden whitespace-normal ">
-                {title}-1
+                {title}-11
               </Heading>
               <div
                 className={clsx({
