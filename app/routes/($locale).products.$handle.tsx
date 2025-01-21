@@ -86,7 +86,6 @@ async function loadCriticalData({
           ...product,
           variants: {
             nodes: [product.selectedOrFirstAvailableVariant],
-            //nodes: product.variants, // Add the 'variants' field here
           },
         },
         selectedVariant: product.selectedOrFirstAvailableVariant,
@@ -302,14 +301,6 @@ const PRODUCT_VARIANT_FRAGMENT = `#graphql
       currencyCode
     }
     id
-    image {
-      __typename
-      id
-      url
-      altText
-      width
-      height
-    }
     price {
       amount
       currencyCode
@@ -350,17 +341,9 @@ const PRODUCT_FRAGMENT = `#graphql
         firstSelectableVariant {
           ...ProductVariant
         }
-        swatch {
-          color
-          image {
-            previewImage {
-              url
-            }
-          }
-        }
       }
     }
-    media(first: 7) {
+    media(first: 9) {
       nodes {
         ...Media
       }
