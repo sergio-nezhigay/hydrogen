@@ -194,7 +194,14 @@ export default function Collection() {
               state,
             }) => (
               <>
-                <div className={buttonsClass}>
+                <div
+                  className={cn(
+                    buttonsClass,
+                    collection.products.pageInfo.hasPreviousPage
+                      ? 'my-5'
+                      : 'my-0 h-5',
+                  )}
+                >
                   <Button as={PreviousLink} variant="secondary" width="full">
                     {isLoading ? translation.loading : translation.prev}
                   </Button>

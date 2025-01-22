@@ -92,7 +92,7 @@ export function SortFilter({
         </div>
         <div className="flex flex-col flex-wrap md:flex-row ">
           <aside className=" min-w-full md:min-w-[240px] md:w-1/5 md:pr-8 max-h-full">
-            <Filters filters={filters} />
+            <Filters filters={filters} appliedFilters={appliedFilters} />
           </aside>
           <div className="flex-1 md:w-4/5 ml-auto">{children}</div>
         </div>
@@ -101,20 +101,36 @@ export function SortFilter({
   );
 }
 
-function Filters({filters}: {filters: Filter[]}) {
+function Filters({
+  filters,
+  appliedFilters,
+}: {
+  filters: Filter[];
+  appliedFilters?: AppliedFilter[];
+}) {
   const [params] = useSearchParams();
   const location = useLocation();
   const {t} = useTranslation();
+
   const sortedFilters = filters.filter(
     ({values, id}) =>
       values.some(({count}) => count > 0) || id.includes('price'),
   );
 
   const filterMarkup = (filter: Filter, option: Filter['values'][0]) => {
-    const appliedFilter = {
-      filter: JSON.parse(option.input as string),
-      label: option.label,
-    } as AppliedFilter;
+    const appliedFilter = (appliedFilters || []).find(
+      (af) =>
+        af.label === option.label && JSON.stringify(af.filter) === option.input,
+    );
+
+    const isActive = Boolean(appliedFilter);
+
+    const to = getFilterLink(option.input as string, params, location);
+
+    const appliedFilterLink = appliedFilter
+      ? getAppliedFilterLink(appliedFilter, params, location)
+      : undefined;
+
     switch (filter.type) {
       case 'PRICE_RANGE':
         const priceFilter = params.get(`${FILTER_URL_PREFIX}price`);
@@ -127,26 +143,20 @@ function Filters({filters}: {filters: Filter[]}) {
         return <PriceRangeFilter min={min} max={max} />;
 
       default:
-        const to = getFilterLink(option.input as string, params, location);
-        const isActive =
-          params.toString() ===
-          new URLSearchParams(to.split('?')[1]).toString();
-
-        const appliedFilterLink = getAppliedFilterLink(
-          appliedFilter,
-          params,
-          location,
-        );
-
         return (
           <Link
             prefetch="intent"
-            to={isActive ? appliedFilterLink : to}
-            className="flex-start gap-2 w-full hover:bg-slate-100 p-1 rounded-sm group "
+            to={isActive && appliedFilterLink ? appliedFilterLink : to}
+            className={cn(
+              'flex-start gap-2 w-full hover:bg-slate-100 p-1 rounded-sm group',
+              {
+                'bg-indigo-700/10 text-indigo-700 font-semibold': isActive,
+              },
+            )}
           >
             <Check
               className={cn(
-                'inline-block border transition-colors shrink-0 duration-150  rounded-sm group-hover:border-stone-900 size-4 text-slate-50  ',
+                'inline-block border transition-colors shrink-0 duration-150 rounded-sm group-hover:border-stone-900 size-4 text-slate-50',
                 {
                   'bg-indigo-700/80 border-indigo-700/80': isActive,
                   'bg-transparent text-transparent border-stone-900 border-opacity-50 stroke-transparent':
@@ -177,7 +187,7 @@ function Filters({filters}: {filters: Filter[]}) {
                 <ScrollArea className="flex flex-col max-h-80 overflow-y-auto">
                   <ul
                     key={filter.id}
-                    className={cn('py-2 grid ', {
+                    className={cn('py-2 grid', {
                       'grid-cols-2': !filter.id.includes('price'),
                     })}
                   >
@@ -187,7 +197,6 @@ function Filters({filters}: {filters: Filter[]}) {
                           (count > 0 || id.includes('price')) &&
                           !minusBrands.includes(label),
                       )
-                      //  .sort(filterSort)
                       .map((option) => {
                         return (
                           <li key={option.id} className="flex pb-2">
@@ -444,7 +453,7 @@ function FiltersDrawer({filters, appliedFilters}: FiltersDrawerProps) {
             )}
           </div>
 
-          <Filters filters={filters} />
+          <Filters filters={filters} appliedFilters={appliedFilters} />
         </ScrollArea>
 
         <SheetClose
