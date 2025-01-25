@@ -1,4 +1,5 @@
 import type {SeoConfig} from '@shopify/hydrogen';
+import {captureRemixErrorBoundaryError, withSentry} from '@sentry/remix';
 import {
   useNonce,
   getShopAnalytics,
@@ -213,9 +214,11 @@ export function Layout({children}: {children?: React.ReactNode}) {
   );
 }
 
-export default function App() {
+function App() {
   return <Outlet />;
 }
+
+export default withSentry(App);
 
 export function ErrorBoundary({error}: {error: Error}) {
   const routeError = useRouteError();
@@ -229,6 +232,8 @@ export function ErrorBoundary({error}: {error: Error}) {
     title = 'Not found';
     if (routeError.status === 404) pageType = routeError.data || pageType;
   }
+
+  captureRemixErrorBoundaryError(error);
 
   return (
     <div>
