@@ -1,11 +1,25 @@
+import {sentryVitePlugin} from '@sentry/vite-plugin';
+import type {Plugin} from 'vite';
 import {defineConfig} from 'vite';
 import {hydrogen} from '@shopify/hydrogen/vite';
 import {oxygen} from '@shopify/mini-oxygen/vite';
 import {vitePlugin as remix} from '@remix-run/dev';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
+export function removeAsyncHooksPlugin(): Plugin {
+  return {
+    name: 'remove-async-hooks',
+    load: (id) => {
+      if (id === 'node:async_hooks') {
+        return 'export default {}';
+      }
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [
+    removeAsyncHooksPlugin(),
     hydrogen(),
     oxygen(),
     remix({
@@ -17,6 +31,10 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
+    sentryVitePlugin({
+      org: 'informatica-0v',
+      project: 'javascript-remix',
+    }),
   ],
   ssr: {
     optimizeDeps: {
@@ -38,5 +56,7 @@ export default defineConfig({
     // Allow a strict Content-Security-Policy
     // withtout inlining assets as base64:
     assetsInlineLimit: 0,
+
+    sourcemap: true,
   },
 });
