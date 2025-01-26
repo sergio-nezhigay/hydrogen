@@ -13,7 +13,7 @@ import {
   getSeoMeta,
 } from '@shopify/hydrogen';
 import clsx from 'clsx';
-import {Suspense} from 'react';
+import {Suspense, useEffect, useRef, useState} from 'react';
 import invariant from 'tiny-invariant';
 
 import {Heading, Section} from '~/components/Text';
@@ -239,35 +239,40 @@ export default function Product() {
           </div>
         </div>
       </Section>
-      <Suspense>
-        <Await
-          errorElement="There was a problem loading related products"
-          resolve={recommended}
-        >
-          {(products) => (
-            <ProductSwimlane
-              title={translation.also_interested}
-              products={products}
-            />
-          )}
-        </Await>
+      <Suspense fallback={<div>Loading related products...</div>}>
+        <LazyLoadComponent>
+          <Await
+            errorElement="There was a problem loading related products"
+            resolve={recommended}
+          >
+            {(products) => (
+              <ProductSwimlane
+                title={translation.also_interested}
+                products={products}
+              />
+            )}
+          </Await>
+        </LazyLoadComponent>
       </Suspense>
-      <Suspense>
-        <Await
-          errorElement="There was a problem loading related products"
-          resolve={recommended}
-        >
-          {(products) => (
-            <>
-              {products.complementaryNodes.length > 0 && (
-                <ProductSwimlane
-                  title={translation.complementary_products}
-                  products={{nodes: products.complementaryNodes}}
-                />
-              )}
-            </>
-          )}
-        </Await>
+
+      <Suspense fallback={<div>Loading complementary products...</div>}>
+        <LazyLoadComponent>
+          <Await
+            errorElement="There was a problem loading complementary products"
+            resolve={recommended}
+          >
+            {(products) => (
+              <>
+                {products.complementaryNodes.length > 0 && (
+                  <ProductSwimlane
+                    title={translation.complementary_products}
+                    products={{nodes: products.complementaryNodes}}
+                  />
+                )}
+              </>
+            )}
+          </Await>
+        </LazyLoadComponent>
       </Suspense>
 
       <ReviewList reviews={reviews} title={translation.reviews} />
@@ -291,6 +296,31 @@ export default function Product() {
       />
     </>
   );
+}
+
+function LazyLoadComponent({children}: {children: JSX.Element}) {
+  const [isInView, setIsInView] = useState(false);
+  const observerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      {threshold: 0.1},
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={observerRef}>{isInView && children}</div>;
 }
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql

@@ -17,6 +17,7 @@ body {
   :root {
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
+    --border: 20 14.3% 4.1%;
     --card: 0 0% 100%;
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
@@ -58,11 +59,9 @@ body {
       --screen-height-dynamic: 100dvh;
     }
   }
-  * {
-    @apply border-border font-sans m-0;
-  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans m-0;
   }
 
   a {

@@ -327,6 +327,8 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
       : parseFloat(value);
     setMinPrice(newMinPrice);
   };
+  const inputStyle =
+    'w-full border-border/80 focus:border-slate-900 hover:border-slate-900 focus:ring-slate-900 transition-colors';
 
   return (
     <div className="flex gap-2 mb-1">
@@ -334,7 +336,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
         <span>{translation.from}</span>
         <input
           name="minPrice"
-          className="w-full border-border"
+          className={inputStyle}
           type="number"
           value={minPrice ?? ''}
           placeholder={'₴'}
@@ -345,7 +347,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
         <span>{translation.to}</span>
         <input
           name="maxPrice"
-          className="w-full border-border"
+          className={inputStyle}
           type="number"
           value={maxPrice ?? ''}
           placeholder={'₴'}
