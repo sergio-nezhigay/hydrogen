@@ -83,5 +83,10 @@ export default defineConfig({
 
     sourcemap: true,
     //minify: process.env.NODE_ENV === 'production' ? 'terser' : false,
+    terserOptions: {
+      mangle: false,
+      keep_classnames: true,
+      keep_fnames: true,
+    },
   },
 });
