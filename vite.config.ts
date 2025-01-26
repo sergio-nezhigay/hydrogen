@@ -36,9 +36,19 @@ export default defineConfig({
       project: 'javascript-remix',
     }),
   ],
+  resolve: {
+    alias: [
+      {
+        find: 'node:async_hooks',
+        replacement: '',
+        customResolver: () => {},
+      },
+    ],
+  },
   ssr: {
+    external: ['node:async_hooks'],
     optimizeDeps: {
-      include: ['typographic-base'],
+      include: ['typographic-base', 'hoist-non-react-statics'],
     },
   },
   optimizeDeps: {
