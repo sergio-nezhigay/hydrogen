@@ -36,6 +36,19 @@ export default defineConfig({
       project: 'javascript-remix',
       authToken:
         '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',
+      sourcemaps: {
+        filesToDeleteAfterUpload: 'all',
+        ignore: ['node_modules'],
+      },
+      // Add these new settings
+      debug: true,
+
+      telemetry: false, // Disable telemetry if needed
+      // Server-specific configuration
+      _experiments: {
+        injectBuildId: true,
+        projectRoot: __dirname,
+      },
     }),
   ],
   resolve: {
@@ -69,5 +82,6 @@ export default defineConfig({
     assetsInlineLimit: 0,
 
     sourcemap: true,
+    //minify: process.env.NODE_ENV === 'production' ? 'terser' : false,
   },
 });
