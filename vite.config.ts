@@ -34,6 +34,8 @@ export default defineConfig({
     sentryVitePlugin({
       org: 'informatica-0v',
       project: 'javascript-remix',
+      authToken:
+        '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',
     }),
   ],
   resolve: {
