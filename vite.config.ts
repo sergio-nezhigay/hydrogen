@@ -5,6 +5,7 @@ import {hydrogen} from '@shopify/hydrogen/vite';
 import {oxygen} from '@shopify/mini-oxygen/vite';
 import {vitePlugin as remix} from '@remix-run/dev';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import tailwindcss from '@tailwindcss/vite';
 
 export function removeAsyncHooksPlugin(): Plugin {
   return {
@@ -20,6 +21,7 @@ export function removeAsyncHooksPlugin(): Plugin {
 export default defineConfig({
   plugins: [
     removeAsyncHooksPlugin(),
+    tailwindcss(),
     hydrogen(),
     oxygen(),
     remix({
@@ -34,12 +36,6 @@ export default defineConfig({
     sentryVitePlugin({
       org: 'informatica-0v',
       project: 'javascript-remix',
-      authToken: process.env.SENTRY_AUTH_TOKEN,
-      sourcemaps: {
-        // Specify files/directories to upload
-        include: ['./dist'],
-        ignore: ['node_modules'],
-      },
     }),
   ],
   resolve: {
