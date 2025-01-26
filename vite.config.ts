@@ -34,6 +34,12 @@ export default defineConfig({
     sentryVitePlugin({
       org: 'informatica-0v',
       project: 'javascript-remix',
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      sourcemaps: {
+        // Specify files/directories to upload
+        include: ['./dist'],
+        ignore: ['node_modules'],
+      },
     }),
   ],
   resolve: {
