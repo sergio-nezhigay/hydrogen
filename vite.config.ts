@@ -54,7 +54,6 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       'clsx',
-      '@headlessui/react',
       'typographic-base',
       'react-intersection-observer',
       'react-use/esm/useScroll',
