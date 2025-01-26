@@ -334,7 +334,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
         <span>{translation.from}</span>
         <input
           name="minPrice"
-          className="w-full border-border"
+          className="w-full"
           type="number"
           value={minPrice ?? ''}
           placeholder={'₴'}
@@ -345,7 +345,7 @@ function PriceRangeFilter({max, min}: {max?: number; min?: number}) {
         <span>{translation.to}</span>
         <input
           name="maxPrice"
-          className="w-full border-border"
+          className="w-full"
           type="number"
           value={maxPrice ?? ''}
           placeholder={'₴'}

@@ -59,7 +59,7 @@ body {
     }
   }
   * {
-    @apply border-border font-sans m-0;
+    @apply font-sans m-0;
   }
   body {
     @apply bg-background text-foreground;
