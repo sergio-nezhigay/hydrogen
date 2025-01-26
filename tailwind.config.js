@@ -6,16 +6,17 @@ import animatePlugin from 'tailwindcss-animate';
 export default {
   //module.exports = {
   //  darkMode: ['class'],
-  content: ['./app/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/styles/**/*.css',
+  ],
   prefix: '',
   theme: {
     container: {
       center: 'true',
       padding: {
         DEFAULT: '1rem',
-        md: '1rem',
-        lg: '1rem',
-        '2xl': '1rem',
       },
       screens: {
         sm: '640px',

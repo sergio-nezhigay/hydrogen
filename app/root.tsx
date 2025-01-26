@@ -1,4 +1,4 @@
-import { captureRemixErrorBoundaryError, withSentry } from "@sentry/remix";
+import {captureRemixErrorBoundaryError, withSentry} from '@sentry/remix';
 import type {SeoConfig} from '@shopify/hydrogen';
 import {
   useNonce,
@@ -61,18 +61,18 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   return defaultShouldRevalidate;
 };
 
-export function links() {
-  return [
-    {rel: 'stylesheet', href: tailwindCss},
-    {rel: 'stylesheet', href: searchStyles},
-    {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
+//export function links() {
+//  return [
+//    {rel: 'stylesheet', href: tailwindCss},
+//    {rel: 'stylesheet', href: searchStyles},
+//    {
+//      rel: 'preconnect',
+//      href: 'https://cdn.shopify.com',
+//    },
 
-    {rel: 'icon', type: 'image/x-icon', href: favicon},
-  ];
-}
+//    {rel: 'icon', type: 'image/x-icon', href: favicon},
+//  ];
+//}
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
@@ -157,6 +157,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="stylesheet" href={tailwindCss}></link>
         <Meta />
         <Links />
         {/***********************************************/

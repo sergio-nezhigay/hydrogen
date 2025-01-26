@@ -5,7 +5,6 @@ import {hydrogen} from '@shopify/hydrogen/vite';
 import {oxygen} from '@shopify/mini-oxygen/vite';
 import {vitePlugin as remix} from '@remix-run/dev';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import tailwindcss from '@tailwindcss/vite';
 
 export function removeAsyncHooksPlugin(): Plugin {
   return {
@@ -21,7 +20,6 @@ export function removeAsyncHooksPlugin(): Plugin {
 export default defineConfig({
   plugins: [
     removeAsyncHooksPlugin(),
-    tailwindcss(),
     hydrogen(),
     oxygen(),
     remix({

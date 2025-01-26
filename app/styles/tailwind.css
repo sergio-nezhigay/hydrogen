@@ -58,11 +58,9 @@ body {
       --screen-height-dynamic: 100dvh;
     }
   }
-  * {
-    @apply font-sans m-0;
-  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans m-0;
   }
 
   a {
