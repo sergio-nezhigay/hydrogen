@@ -1,4 +1,5 @@
 import type {SeoConfig} from '@shopify/hydrogen';
+import * as Sentry from '@sentry/browser';
 import {
   useNonce,
   getShopAnalytics,
@@ -22,6 +23,7 @@ import {
   type ShouldRevalidateFunction,
   ScrollRestoration,
 } from '@remix-run/react';
+import {useEffect} from 'react';
 
 import favicon from '~/assets/favicon.ico';
 import tailwindCss from '~/styles/tailwind.css?url';
@@ -213,11 +215,30 @@ export function Layout({children}: {children?: React.ReactNode}) {
   );
 }
 
+// Initialize Sentry
+if (typeof window !== 'undefined') {
+  Sentry.init({
+    dsn: 'https://e3f54e7a380c9bd88a6c474f3b66fb60@o4508700259319808.ingest.de.sentry.io/4508700292677712',
+    tracesSampleRate: 1.0,
+  });
+}
+
 export default function App() {
+  useEffect(() => {
+    // Add global error handler
+    const handleError = (event: ErrorEvent) => {
+      Sentry.captureException(event.error);
+    };
+
+    window.addEventListener('error', handleError);
+
+    return () => window.removeEventListener('error', handleError);
+  }, []);
   return <Outlet />;
 }
 
 export function ErrorBoundary({error}: {error: Error}) {
+  Sentry.captureException(error);
   const routeError = useRouteError();
   const isRouteError = isRouteErrorResponse(routeError);
   const nonce = useNonce();
@@ -232,6 +253,8 @@ export function ErrorBoundary({error}: {error: Error}) {
 
   return (
     <div>
+      <h2>Something went wrong!</h2>
+
       {isRouteError ? (
         <>
           {routeError.status === 404 ? (
