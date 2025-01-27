@@ -6,9 +6,6 @@ export function CustomAnalytics() {
   const nonce = useNonce();
 
   useEffect(() => {
-    setTimeout(() => {
-      const isTrackingAllowed = canTrack();
-    }, 1000);
     subscribe('product_viewed', (data) => {
       // Triggering a custom event in GTM when a product is viewed
 
