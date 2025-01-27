@@ -1,5 +1,4 @@
 import {useAnalytics} from '@shopify/hydrogen';
-import {subscribe} from 'graphql';
 import {useEffect} from 'react';
 
 declare global {
@@ -13,13 +12,9 @@ export function GoogleTagManager() {
   const {ready} = register('Google Tag Manager');
 
   useEffect(() => {
-    setTimeout(() => {
-      const isTrackingAllowed = canTrack();
-      console.log('CustomAnalytics - isTrackingAllowed', isTrackingAllowed);
-    }, 1000);
     subscribe('product_viewed', (data) => {
       // Triggering a custom event in GTM when a product is viewed
-      console.log('CustomAnalytics - Product viewed:', data);
+
       const product = data?.products?.[0];
       const items = product
         ? [
@@ -71,7 +66,6 @@ export function GoogleTagManager() {
       window.dataLayer.push(collectionViewData);
     });
     subscribe('page_viewed', (data) => {
-      console.log('CustomAnalytics - Page viewed:', data);
       window.dataLayer.push({
         event: 'shopify_page_view',
         page: data.url,
@@ -79,7 +73,7 @@ export function GoogleTagManager() {
     });
 
     ready();
-  }, []);
+  }, [canTrack, ready, subscribe]);
 
   return null;
 }
