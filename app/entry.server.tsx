@@ -17,6 +17,7 @@ export default async function handleRequest(
       'https://cdn.judge.me/',
       'https://cdn.shopify.com',
       'https://*.googletagmanager.com',
+      'https://*.googleadservices.com',
       'googleads.g.doubleclick.net',
       'https://*.google.com.ua',
       'https://admin-action-block.gadget.app',
