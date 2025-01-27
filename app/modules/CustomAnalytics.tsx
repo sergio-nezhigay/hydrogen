@@ -42,12 +42,10 @@ export function CustomAnalytics() {
           search_term: data?.searchTerm,
         },
       };
-      console.log('🚀 ~ searchData:', searchData);
       window.dataLayer.push(searchData);
     });
 
     subscribe('collection_viewed', (data) => {
-      console.log('from hydrogen code collection_viewed event', data);
       const collectionViewData = {
         event: 'view_item_list',
         url: data.url,
