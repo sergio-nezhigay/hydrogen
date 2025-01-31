@@ -87,6 +87,10 @@ async function loadCriticalData({
           variants: {
             nodes: [product.selectedOrFirstAvailableVariant],
           },
+          seo: {
+            title: product.seo?.title,
+            description: product.seo?.description,
+          },
         },
         selectedVariant: product.selectedOrFirstAvailableVariant,
         url: request.url,

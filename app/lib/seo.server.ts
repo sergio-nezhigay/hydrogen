@@ -305,22 +305,25 @@ function product({
   url: Request['url'];
   judgemeReviewsData: JudgemeReviewsData;
 }): SeoConfig {
+  const seoTitle = product.seo.title;
+  const seoDescription = product.seo.description;
   const productTitle = product?.seo?.title ?? product?.title;
+
   const alternates = getAlternates(url);
 
   const isRussian = url.includes('/ru');
 
-  const title = isRussian
+  const pageTitle = isRussian
     ? `${productTitle} – фото, отзывы, характеристики | Купить в Украине: Киеве, Днепре, Одессе, Запорожье, Львове`
     : `${productTitle} – фото, відгуки, характеристики | Купити в Україні: Києві, Дніпрі, Одесі, Запоріжжі, Львові`;
 
-  const description = isRussian
-    ? `⚡️ Купить ${productTitle} | Низкие цены, гарантия, консультации для покупателей`
-    : `⚡️ Купити ${productTitle} | Низькі ціни, гарантія, консультації для покупців`;
+  const pageDescription = isRussian
+    ? `Купить ${productTitle} | Низкие цены, гарантия, консультации для покупателей`
+    : `Купити ${productTitle} | Низькі ціни, гарантія, консультації для покупців`;
 
   return {
-    title: truncate(title, 120),
-    description: truncate(description),
+    title: seoTitle ? seoTitle : truncate(pageTitle, 120),
+    description: seoDescription ? seoDescription : truncate(pageDescription),
     media: selectedVariant?.image,
     jsonLd: productJsonLd({product, selectedVariant, url, judgemeReviewsData}),
     alternates,
