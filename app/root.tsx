@@ -64,13 +64,14 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export function links() {
   return [
-    {rel: 'stylesheet', href: tailwindCss},
-    {rel: 'stylesheet', href: searchStyles},
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
     },
-
+    {
+      rel: 'preconnect',
+      href: 'https://shop.app',
+    },
     {rel: 'icon', type: 'image/x-icon', href: favicon},
   ];
 }
@@ -158,6 +159,9 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="msvalidate.01" content="A352E6A0AF9A652267361BBB572B8468" />
+        <link rel="stylesheet" href={tailwindCss}></link>
+        <link rel="stylesheet" href={searchStyles}></link>
         <Meta />
         <Links />
         {/***********************************************/
