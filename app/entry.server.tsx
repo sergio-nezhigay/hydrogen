@@ -42,7 +42,6 @@ export default async function handleRequest(
       'https://*.google.com',
       'https://stats.g.doubleclick.net',
       'https://admin-action-block.gadget.app',
-      '*.sentry.io',
     ],
     frameSrc: [
       'https://www.googletagmanager.com',
