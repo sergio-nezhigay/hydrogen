@@ -33,12 +33,6 @@ export function ProductSwimlane({
       display="flex"
       className="flex flex-col "
     >
-      {/*<Gallery
-        galleryItems={products.nodes}
-        GalleryItemComponent={ProductCardWrapper}
-        itemClasses="pl-4 basis-1/2 md:basis-1/4 lg:basis-1/5 xl:basis-1/6"
-      />*/}
-
       <DynamicGallery
         data={products.nodes}
         presentationComponent={ProductCardWrapper}
