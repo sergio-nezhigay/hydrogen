@@ -195,6 +195,9 @@ export default function Product() {
     saveVisitedProducts,
     selectedVariant?.price.amount,
   ]);
+  const filteredVisitedProducts = visitedProducts.filter(
+    ({id}) => id !== product.id,
+  );
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
@@ -213,14 +216,7 @@ export default function Product() {
       ?.scrollIntoView({behavior: 'smooth'});
   };
 
-  const {
-    media,
-    title,
-    descriptionHtml,
-    warranty,
-    delta,
-    selectedOrFirstAvailableVariant,
-  } = product;
+  const {media, title, descriptionHtml, warranty, delta} = product;
 
   const warrantyTerm = warranty?.value || '12';
   const [sku1, sku2] = product.selectedOrFirstAvailableVariant?.sku?.split(
@@ -345,39 +341,37 @@ export default function Product() {
         </LazyLoadComponent>
       </Suspense>
 
-      {visitedProducts.length > 0 && (
+      {filteredVisitedProducts.length > 0 && (
         <LazyLoadComponent>
           <ProductSwimlane
             title={translation.already_seen}
             products={{
-              nodes: visitedProducts
-                .filter(({id}) => id !== product.id)
-                .map((product) => ({
-                  ...product,
-                  vendor: '',
-                  publishedAt: '',
-                  variants: {
-                    nodes: [
-                      {
-                        id: product.id,
-                        availableForSale: true,
-                        image: {
-                          url: product.imageUrl || '',
-                          altText: product.title,
-                        },
-                        price: {
-                          amount: product.price || '0',
-                          currencyCode: 'UAH',
-                        },
-                        selectedOptions: [],
-                        product: {
-                          handle: product.handle,
-                          title: product.title,
-                        },
+              nodes: filteredVisitedProducts.map((product) => ({
+                ...product,
+                vendor: '',
+                publishedAt: '',
+                variants: {
+                  nodes: [
+                    {
+                      id: product.id,
+                      availableForSale: true,
+                      image: {
+                        url: product.imageUrl || '',
+                        altText: product.title,
                       },
-                    ],
-                  },
-                })),
+                      price: {
+                        amount: product.price || '0',
+                        currencyCode: 'UAH',
+                      },
+                      selectedOptions: [],
+                      product: {
+                        handle: product.handle,
+                        title: product.title,
+                      },
+                    },
+                  ],
+                },
+              })),
             }}
           />
         </LazyLoadComponent>
