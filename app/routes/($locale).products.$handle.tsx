@@ -180,7 +180,7 @@ export default function Product() {
             price: selectedVariant?.price.amount || '0',
           },
           ...visitedProducts,
-        ].slice(0, 3);
+        ].slice(0, 6);
 
         saveVisitedProducts(newVisitedProducts);
       }
