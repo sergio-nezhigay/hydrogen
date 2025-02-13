@@ -144,8 +144,6 @@ export default function Product() {
     getAdjacentAndFirstAvailableVariants(product),
   );
 
-  console.log('typeof window=', typeof window);
-
   const getVisitedProducts = useCallback(() => {
     if (typeof window === 'undefined') {
       return [];
