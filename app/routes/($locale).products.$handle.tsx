@@ -13,7 +13,14 @@ import {
   getSeoMeta,
 } from '@shopify/hydrogen';
 import clsx from 'clsx';
-import {Suspense, useEffect, useRef, useState} from 'react';
+import {
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
 import invariant from 'tiny-invariant';
 
 import {Heading, Section} from '~/components/Text';
@@ -30,6 +37,13 @@ import {getJudgemeReviews} from '~/lib/judgeme';
 import {useTranslation} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
 import {ProductImage} from '~/components/ProductImage';
+
+interface VisitedProduct {
+  id: string;
+  handle: string;
+  title: string;
+  imageUrl?: string; // Optional image URL
+}
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -129,6 +143,58 @@ export default function Product() {
     product.selectedOrFirstAvailableVariant,
     getAdjacentAndFirstAvailableVariants(product),
   );
+
+  console.log('typeof window=', typeof window);
+
+  const getVisitedProducts = useCallback(() => {
+    if (typeof window === 'undefined') {
+      return [];
+    }
+    const storedProducts = localStorage.getItem('visitedProducts');
+    return storedProducts
+      ? (JSON.parse(storedProducts) as VisitedProduct[])
+      : [];
+  }, []);
+
+  const saveVisitedProducts = useCallback((products: VisitedProduct[]) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('visitedProducts', JSON.stringify(products));
+    }
+  }, []);
+
+  const visitedProducts = useMemo(
+    () => getVisitedProducts(),
+    [getVisitedProducts],
+  );
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const isProductAlreadyVisited = visitedProducts.some(
+        (visitedProduct: VisitedProduct) => visitedProduct.id === product.id,
+      );
+
+      if (!isProductAlreadyVisited) {
+        const newVisitedProducts = [
+          {
+            id: product.id,
+            handle: product.handle,
+            title: product.title,
+            imageUrl: product.media.nodes[0]?.previewImage?.url || '',
+          },
+          ...visitedProducts,
+        ].slice(0, 3);
+
+        saveVisitedProducts(newVisitedProducts);
+      }
+    }
+  }, [
+    product.id,
+    product.handle,
+    product.title,
+    product.media.nodes,
+    visitedProducts,
+    saveVisitedProducts,
+  ]);
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
