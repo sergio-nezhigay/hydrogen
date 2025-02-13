@@ -160,32 +160,32 @@ export default function Product() {
     [getVisitedProducts],
   );
 
-  useEffect(() => {
-    const isProductAlreadyVisited = visitedProducts.some(
-      (visitedProduct: VisitedProduct) => visitedProduct.id === product.id,
-    );
+  //  useEffect(() => {
+  //    const isProductAlreadyVisited = visitedProducts.some(
+  //      (visitedProduct: VisitedProduct) => visitedProduct.id === product.id,
+  //    );
 
-    if (!isProductAlreadyVisited) {
-      const newVisitedProducts = [
-        {
-          id: product.id,
-          handle: product.handle,
-          title: product.title,
-          imageUrl: product.media.nodes[0]?.previewImage?.url || '',
-        },
-        ...visitedProducts,
-      ].slice(0, 3);
+  //    if (!isProductAlreadyVisited) {
+  //      const newVisitedProducts = [
+  //        {
+  //          id: product.id,
+  //          handle: product.handle,
+  //          title: product.title,
+  //          imageUrl: product.media.nodes[0]?.previewImage?.url || '',
+  //        },
+  //        ...visitedProducts,
+  //      ].slice(0, 3);
 
-      saveVisitedProducts(newVisitedProducts);
-    }
-  }, [
-    product.id,
-    product.handle,
-    product.title,
-    product.media.nodes,
-    visitedProducts,
-    saveVisitedProducts,
-  ]);
+  //      saveVisitedProducts(newVisitedProducts);
+  //    }
+  //  }, [
+  //    product.id,
+  //    product.handle,
+  //    product.title,
+  //    product.media.nodes,
+  //    visitedProducts,
+  //    saveVisitedProducts,
+  //  ]);
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
