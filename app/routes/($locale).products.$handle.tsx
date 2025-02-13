@@ -1,7 +1,6 @@
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
 import {defer} from '@shopify/remix-oxygen';
-//import type {MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
-import {Await, useLoaderData, type MetaFunction} from '@remix-run/react';
+import {Await, useLoaderData} from '@remix-run/react';
 import type {Storefront} from '@shopify/hydrogen';
 import {
   getSelectedProductOptions,
@@ -9,7 +8,6 @@ import {
   useOptimisticVariant,
   getProductOptions,
   getAdjacentAndFirstAvailableVariants,
-  useSelectedOptionInUrlParam,
   getSeoMeta,
 } from '@shopify/hydrogen';
 import clsx from 'clsx';
@@ -42,7 +40,8 @@ interface VisitedProduct {
   id: string;
   handle: string;
   title: string;
-  imageUrl?: string; // Optional image URL
+  imageUrl: string;
+  price: string;
 }
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
@@ -178,6 +177,7 @@ export default function Product() {
             handle: product.handle,
             title: product.title,
             imageUrl: product.media.nodes[0]?.previewImage?.url || '',
+            price: selectedVariant?.price.amount || '0',
           },
           ...visitedProducts,
         ].slice(0, 3);
@@ -192,7 +192,13 @@ export default function Product() {
     product.media.nodes,
     visitedProducts,
     saveVisitedProducts,
+    selectedVariant?.price.amount,
   ]);
+
+  const alreadySeenProducts = useMemo(
+    () => getVisitedProducts(),
+    [getVisitedProducts],
+  );
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
@@ -295,13 +301,13 @@ export default function Product() {
                 className="description"
                 dangerouslySetInnerHTML={{__html: descriptionHtml}}
               />
-              <div className="text-sm flex gap-5 w-full mt-2  text-primary/20">
+              <div className="text-sm flex gap-5 w/full mt-2  text-primary/20">
                 {sku2 && (
                   <div className="border size-5 flex-center rounded-full">
                     {sku2.slice(0, 1)}
                   </div>
                 )}
-                {barcode && <p className="w-full flex">{barcode}</p>}
+                {barcode && <p className="w/full flex">{barcode}</p>}
               </div>
             </div>
           </div>
@@ -342,6 +348,42 @@ export default function Product() {
           </Await>
         </LazyLoadComponent>
       </Suspense>
+
+      {alreadySeenProducts.length > 0 && (
+        <LazyLoadComponent>
+          <ProductSwimlane
+            title={translation.already_seen}
+            products={{
+              nodes: alreadySeenProducts.map((product) => ({
+                ...product,
+                vendor: '',
+                publishedAt: '',
+                variants: {
+                  nodes: [
+                    {
+                      id: product.id,
+                      availableForSale: true,
+                      image: {
+                        url: product.imageUrl || '',
+                        altText: product.title,
+                      },
+                      price: {
+                        amount: product.price || '0',
+                        currencyCode: 'UAH',
+                      },
+                      selectedOptions: [],
+                      product: {
+                        handle: product.handle,
+                        title: product.title,
+                      },
+                    },
+                  ],
+                },
+              })),
+            }}
+          />
+        </LazyLoadComponent>
+      )}
 
       <ReviewList reviews={reviews} title={translation.reviews} />
 

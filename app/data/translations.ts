@@ -138,6 +138,7 @@ export const translations = {
     Lamps: 'Ліхтарі та лампи',
     'LED light strings': 'Світлодіодні стрічки',
     'Laptop charger adapters': 'Перехідники для живлення',
+    already_seen: 'Останні переглянуті товари',
   },
   ru: {
     Warranty: 'Гарантия',
@@ -278,5 +279,6 @@ export const translations = {
     Lamps: 'Фонари и лампы',
     'LED light strings': 'Светодиодные ленты',
     'Laptop charger adapters': 'Переходники для питания',
+    already_seen: 'Последние просмотренные товары',
   },
 };
