@@ -159,9 +159,8 @@ export default function Product() {
     }
   }, []);
 
-  const visitedProducts = useMemo(
-    () => getVisitedProducts(),
-    [getVisitedProducts],
+  const [visitedProducts, setVisitedProducts] = useState<VisitedProduct[]>(
+    getVisitedProducts(),
   );
 
   useEffect(() => {
@@ -183,6 +182,8 @@ export default function Product() {
         ].slice(0, 6);
 
         saveVisitedProducts(newVisitedProducts);
+
+        setVisitedProducts(newVisitedProducts);
       }
     }
   }, [
@@ -194,11 +195,6 @@ export default function Product() {
     saveVisitedProducts,
     selectedVariant?.price.amount,
   ]);
-
-  const alreadySeenProducts = useMemo(
-    () => getVisitedProducts(),
-    [getVisitedProducts],
-  );
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
@@ -349,37 +345,39 @@ export default function Product() {
         </LazyLoadComponent>
       </Suspense>
 
-      {alreadySeenProducts.length > 0 && (
+      {visitedProducts.length > 0 && (
         <LazyLoadComponent>
           <ProductSwimlane
             title={translation.already_seen}
             products={{
-              nodes: alreadySeenProducts.map((product) => ({
-                ...product,
-                vendor: '',
-                publishedAt: '',
-                variants: {
-                  nodes: [
-                    {
-                      id: product.id,
-                      availableForSale: true,
-                      image: {
-                        url: product.imageUrl || '',
-                        altText: product.title,
+              nodes: visitedProducts
+                .filter(({id}) => id !== product.id)
+                .map((product) => ({
+                  ...product,
+                  vendor: '',
+                  publishedAt: '',
+                  variants: {
+                    nodes: [
+                      {
+                        id: product.id,
+                        availableForSale: true,
+                        image: {
+                          url: product.imageUrl || '',
+                          altText: product.title,
+                        },
+                        price: {
+                          amount: product.price || '0',
+                          currencyCode: 'UAH',
+                        },
+                        selectedOptions: [],
+                        product: {
+                          handle: product.handle,
+                          title: product.title,
+                        },
                       },
-                      price: {
-                        amount: product.price || '0',
-                        currencyCode: 'UAH',
-                      },
-                      selectedOptions: [],
-                      product: {
-                        handle: product.handle,
-                        title: product.title,
-                      },
-                    },
-                  ],
-                },
-              })),
+                    ],
+                  },
+                })),
             }}
           />
         </LazyLoadComponent>
