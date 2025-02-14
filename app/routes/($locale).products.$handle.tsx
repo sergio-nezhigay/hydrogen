@@ -11,14 +11,7 @@ import {
   getSeoMeta,
 } from '@shopify/hydrogen';
 import clsx from 'clsx';
-import {
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-  useMemo,
-  useCallback,
-} from 'react';
+import {Suspense, useEffect, useRef, useState} from 'react';
 import invariant from 'tiny-invariant';
 
 import {Heading, Section} from '~/components/Text';
@@ -35,6 +28,8 @@ import {getJudgemeReviews} from '~/lib/judgeme';
 import {useTranslation} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
 import {ProductImage} from '~/components/ProductImage';
+import {useJwtPayload} from '~/hooks/useJwtPayload';
+import {useVisitedProducts} from '~/hooks/useVisitedProducts';
 
 interface VisitedProduct {
   id: string;
@@ -143,61 +138,15 @@ export default function Product() {
     getAdjacentAndFirstAvailableVariants(product),
   );
 
-  const getVisitedProducts = useCallback(() => {
-    if (typeof window === 'undefined') {
-      return [];
-    }
-    const storedProducts = localStorage.getItem('visitedProducts');
-    return storedProducts
-      ? (JSON.parse(storedProducts) as VisitedProduct[])
-      : [];
-  }, []);
+  const visitedProducts = useVisitedProducts({
+    id: product.id,
+    handle: product.handle,
+    title: product.title,
+    imageUrl: product.media.nodes[0]?.previewImage?.url || '',
+    price: selectedVariant?.price.amount || '0',
+  });
 
-  const saveVisitedProducts = useCallback((products: VisitedProduct[]) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('visitedProducts', JSON.stringify(products));
-    }
-  }, []);
-
-  const [visitedProducts, setVisitedProducts] = useState<VisitedProduct[]>(
-    getVisitedProducts(),
-  );
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isProductAlreadyVisited = visitedProducts.some(
-        (visitedProduct: VisitedProduct) => visitedProduct.id === product.id,
-      );
-
-      if (!isProductAlreadyVisited) {
-        const newVisitedProducts = [
-          {
-            id: product.id,
-            handle: product.handle,
-            title: product.title,
-            imageUrl: product.media.nodes[0]?.previewImage?.url || '',
-            price: selectedVariant?.price.amount || '0',
-          },
-          ...visitedProducts,
-        ].slice(0, 6);
-
-        saveVisitedProducts(newVisitedProducts);
-
-        setVisitedProducts(newVisitedProducts);
-      }
-    }
-  }, [
-    product.id,
-    product.handle,
-    product.title,
-    product.media.nodes,
-    visitedProducts,
-    saveVisitedProducts,
-    selectedVariant?.price.amount,
-  ]);
-  const filteredVisitedProducts = visitedProducts.filter(
-    ({id}) => id !== product.id,
-  );
+  useJwtPayload();
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
@@ -341,38 +290,11 @@ export default function Product() {
         </LazyLoadComponent>
       </Suspense>
 
-      {filteredVisitedProducts.length > 0 && (
+      {visitedProducts.length > 0 && (
         <LazyLoadComponent>
           <ProductSwimlane
             title={translation.already_seen}
-            products={{
-              nodes: filteredVisitedProducts.map((product) => ({
-                ...product,
-                vendor: '',
-                publishedAt: '',
-                variants: {
-                  nodes: [
-                    {
-                      id: product.id,
-                      availableForSale: true,
-                      image: {
-                        url: product.imageUrl || '',
-                        altText: product.title,
-                      },
-                      price: {
-                        amount: product.price || '0',
-                        currencyCode: 'UAH',
-                      },
-                      selectedOptions: [],
-                      product: {
-                        handle: product.handle,
-                        title: product.title,
-                      },
-                    },
-                  ],
-                },
-              })),
-            }}
+            products={{nodes: visitedProducts}}
           />
         </LazyLoadComponent>
       )}
