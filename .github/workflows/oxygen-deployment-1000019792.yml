@@ -1,6 +1,3 @@
-# Don't change the line below!
-#! oxygen_storefront_id: 1000019792
-
 name: Storefront 1000019792
 on: [push]
 
