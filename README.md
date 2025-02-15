@@ -1,60 +1,48 @@
-# Hydrogen template: Demo Store
+# Hydrogen Template: Customized Demo Store
 
-Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dovetail with [Remix](https://remix.run/), Shopify’s full stack web framework. This template contains a **full-featured setup** of components, queries and tooling to get started with Hydrogen. It is deployed at [hydrogen.shop](https://hydrogen.shop)
+This repository began as Shopify’s official Hydrogen demo store but has since been extensively modified to better fit our unique requirements. The changes made over the course of development have been tracked in our commit history and include improvements in component structure, routing, styling, API integration, and more.
 
-[Check out Hydrogen docs](https://shopify.dev/custom-storefronts/hydrogen)
-[Get familiar with Remix](https://remix.run/docs/en/v1)
+[Hydrogen Documentation](https://shopify.dev) | [Remix Documentation](https://remix.run)
 
-## What's included
+## Key Custom Changes
 
-- Remix
-- Hydrogen
-- Oxygen
-- Shopify CLI
-- ESLint
-- Prettier
-- GraphQL generator
-- TypeScript and JavaScript flavors
-- Tailwind CSS (via PostCSS)
-- Full-featured setup of components and routes
+- **Component Refactor:** Modularized components for better reusability and maintainability.
+- **Routing & Navigation:** Introduced custom routes and dynamic pages.
+- **Styling & Theming:** Tailwind CSS setup extended for custom brand styling.
+- **API Optimization:** Improved GraphQL queries and added new endpoints.
+- **Customer Account Features:** Enhanced customer authentication and account management.
+- **Code Quality & Maintenance:** Regular updates, bug fixes, and performance improvements.
 
-## Getting started
+## Installation
 
-**Requirements:**
+1. Clone the repository:
 
-- Node.js version 18.0.0 or higher
+   ```bash
+   git clone https://github.com/sergio-nezhigay/hydrogen.git
+   ```
 
-```bash
-npm create @shopify/hydrogen@latest -- --template demo-store
-```
+2. Install dependencies:
 
-Remember to update `.env` with your shop's domain and Storefront API token!
+   ```bash
+   npm install
+   ```
 
-## Building for production
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run build
-```
+The application should now be running on [http://localhost:3000](http://localhost:3000).
 
-## Local development
+## Main Packages
 
-```bash
-npm run dev
-``
+Key packages used include:
 
+- **@shopify/hydrogen**, **@radix-ui/react** components, **graphql**, **tailwindcss**, and more.
+- Development tools like **@remix-run** and **vite**.
 
-## Setup for using Customer Account API (`/account` section)
+For a full list of dependencies, refer to the `package.json`.
 
-### Setup public domain using ngrok
+## About
 
-1. Setup a [ngrok](https://ngrok.com/) account and add a permanent domain (ie. `https://<your-ngrok-domain>.app`)
-1. Install the [ngrok CLI](https://ngrok.com/download) to use in terminal
-1. Start ngrok using `ngrok http --domain=<your-ngrok-domain>.app 3000`
-
-### Include public domain in Customer Account API settings
-
-1. Go to your Shopify admin => `Hydrogen` or `Headless` app/channel => Customer Account API => Application setup
-1. Edit `Callback URI(s)` to include `https://<your-ngrok-domain>.app/account/authorize`
-1. Edit `Javascript origin(s)` to include your public domain `https://<your-ngrok-domain>.app` or keep it blank
-1. Edit `Logout URI` to include your public domain `https://<your-ngrok-domain>.app` or keep it blank
-```
+This project is maintained by [Serhii Nezhyhai](https://github.com/sergio-nezhigay).
