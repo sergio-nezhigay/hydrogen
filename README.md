@@ -1,4 +1,4 @@
-# Hydrogen Template: Customized Demo Store
+# Hydrogen Template: Customized Shopify Store
 
 This repository began as Shopify’s official Hydrogen demo store but has since been extensively modified to better fit our unique requirements. The changes made over the course of development have been tracked in our commit history and include improvements in component structure, routing, styling, API integration, and more.
 
@@ -37,6 +37,10 @@ The application should now be running on [http://localhost:3000](http://localhos
 ## Main Packages
 
 Key packages used include:
+
+## Related Shopify App
+
+For the related Shopify app, visit the repository here: [Suite Shopify App](https://github.com/sergio-nezhigay/suite).
 
 - **@shopify/hydrogen**, **@radix-ui/react** components, **graphql**, **tailwindcss**, and more.
 - Development tools like **@remix-run** and **vite**.
