@@ -30,6 +30,7 @@ import {seoPayload} from '~/lib/seo.server';
 import {ProductImage} from '~/components/ProductImage';
 import {useJwtPayload} from '~/hooks/useJwtPayload';
 import {useVisitedProducts} from '~/hooks/useVisitedProducts';
+import {useDiscountToken} from '~/hooks/useDiscountToken';
 
 interface VisitedProduct {
   id: string;
@@ -146,7 +147,8 @@ export default function Product() {
     price: selectedVariant?.price.amount || '0',
   });
 
-  useJwtPayload();
+  const discount = useDiscountToken();
+  console.log('🚀 ~ discount:', discount);
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
