@@ -1,6 +1,4 @@
-import {Money} from '@shopify/hydrogen';
 import type {MoneyV2} from '@shopify/hydrogen/storefront-api-types';
-import clsx from 'clsx';
 
 import {HryvniaMoney} from '~/components/HryvniaMoney';
 

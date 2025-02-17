@@ -23,7 +23,7 @@ export function ProductForm({
   const navigate = useNavigate();
   const {translation} = useTranslation();
   const {open} = useAside();
-
+  console.log('Selected Variant:', selectedVariant);
   return (
     <div className="product-form">
       {productOptions.map((option) => {

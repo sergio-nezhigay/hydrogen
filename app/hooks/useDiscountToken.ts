@@ -13,7 +13,7 @@ interface JwtPayload {
   c: string;
 }
 
-export const useDiscountToken = () => {
+export const useDiscountToken = (productId: string) => {
   const [discount, setDiscount] = useState<number | null>(null);
 
   const getToken = useCallback((): string | null => {
@@ -76,12 +76,15 @@ export const useDiscountToken = () => {
     }
   };
 
-  const isTokenValid = (payload: JwtPayload): boolean => {
-    const currentTime = Math.floor(Date.now() / 1000);
-    return payload.exp > currentTime;
-  };
-
   useEffect(() => {
+    const isTokenValid = (payload: JwtPayload): boolean => {
+      const currentTime = Math.floor(Date.now() / 1000);
+      const isValid = payload.exp > currentTime && payload.o === productId;
+      console.log(
+        `Token validation: currentTime=${currentTime}, tokenExpiry=${payload.exp}, isValid=${isValid}, productId=${productId}, tokenProductId=${payload.o}`,
+      );
+      return isValid;
+    };
     console.log('useDiscountToken hook initialized');
     const token = getToken();
 
@@ -105,7 +108,7 @@ export const useDiscountToken = () => {
     } else {
       console.log('No token found');
     }
-  }, [decodeJWT, getToken]);
+  }, [decodeJWT, getToken, productId]);
 
-  return discount;
+  return discount?.toString() ?? null;
 };
