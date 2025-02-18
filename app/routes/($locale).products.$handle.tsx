@@ -350,6 +350,14 @@ function LazyLoadComponent({children}: {children: JSX.Element}) {
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
   fragment ProductVariant on ProductVariant {
     availableForSale
+    image {
+      __typename
+      id
+      url
+      altText
+      width
+      height
+    }
     compareAtPrice {
       amount
       currencyCode
