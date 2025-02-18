@@ -163,6 +163,8 @@ function productJsonLd({
   url: Request['url'];
   judgemeReviewsData: JudgemeReviewsData;
 }): SeoConfig['jsonLd'] {
+  console.log('selectedVariant', JSON.stringify(selectedVariant));
+  console.log('product', JSON.stringify(product));
   const origin = new URL(url).origin;
   const variants = product.variants.nodes;
   const description = truncate(
@@ -250,6 +252,9 @@ function productJsonLd({
     } as Rating,
     reviewBody: review.body,
   }));
+
+  const imageUrl = (product as any).media?.nodes?.[0]?.image?.url ?? '';
+
   return [
     {
       '@context': 'https://schema.org',
@@ -276,7 +281,8 @@ function productJsonLd({
         name: product.vendor,
       },
       description,
-      image: [selectedVariant?.image?.url ?? ''],
+      image: [imageUrl],
+      //  image: [selectedVariant?.image?.url ?? ''],
       name: product.title,
       offers,
       sku: selectedVariant?.sku ?? '',
