@@ -1,8 +1,4 @@
-import {
-  type MetaArgs,
-  type LoaderFunctionArgs,
-  defer,
-} from '@shopify/remix-oxygen';
+import {type MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import invariant from 'tiny-invariant';
 import {
@@ -55,11 +51,11 @@ export async function loader({
     description: 'Усі товари' + brandHandle,
   });
 
-  return defer({
+  return {
     products: data.products,
     seo,
     brandHandle,
-  });
+  };
 }
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {

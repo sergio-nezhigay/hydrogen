@@ -1,8 +1,4 @@
-import {
-  defer,
-  type MetaArgs,
-  type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+import {type MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {getSeoMeta} from '@shopify/hydrogen';
@@ -35,7 +31,7 @@ export async function loader(args: LoaderFunctionArgs) {
   const deferredData = loadDeferredData(args);
   const criticalData = await loadCriticalData(args);
 
-  return defer({...deferredData, ...criticalData});
+  return {...deferredData, ...criticalData};
 }
 
 async function loadCriticalData({context, request}: LoaderFunctionArgs) {

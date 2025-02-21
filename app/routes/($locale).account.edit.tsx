@@ -1,4 +1,5 @@
-import {json, redirect, type ActionFunction} from '@shopify/remix-oxygen';
+import {data, redirect} from '@shopify/remix-oxygen';
+import type {ActionFunction, HeadersFunction} from '@shopify/remix-oxygen';
 import {
   useActionData,
   Form,
@@ -17,6 +18,8 @@ import {getInputStyleClasses} from '~/lib/utils';
 import {CUSTOMER_UPDATE_MUTATION} from '~/graphql/customer-account/CustomerUpdateMutation';
 
 import {doLogout} from './($locale).account_.logout';
+
+export const headers: HeadersFunction = ({loaderHeaders}) => loaderHeaders;
 
 export interface AccountOutletContext {
   customer: Customer;
@@ -86,7 +89,7 @@ export const action: ActionFunction = async ({request, context, params}) => {
       },
     });
   } catch (error: any) {
-    return json(
+    return data(
       {formError: error?.message},
       {
         status: 400,

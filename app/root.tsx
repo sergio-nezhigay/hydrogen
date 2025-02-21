@@ -5,11 +5,7 @@ import {
   Analytics,
   getSeoMeta,
 } from '@shopify/hydrogen';
-import {
-  defer,
-  type MetaArgs,
-  type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+import {type MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Links,
   Meta,
@@ -48,7 +44,6 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   formMethod,
   currentUrl,
   nextUrl,
-  defaultShouldRevalidate,
 }) => {
   // revalidate when a mutation is performed e.g add to cart, login...
   if (formMethod && formMethod !== 'GET') return true;
@@ -56,7 +51,7 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
   // revalidate when manually revalidating via useRevalidator
   if (currentUrl.toString() === nextUrl.toString()) return true;
 
-  return defaultShouldRevalidate;
+  return false;
 };
 
 export function links() {
@@ -83,7 +78,7 @@ export async function loader(args: LoaderFunctionArgs) {
   const {storefront, env, customerAccount} = args.context;
   const isLoggedInPromise: Promise<boolean> = customerAccount.isLoggedIn();
 
-  return defer({
+  return {
     ...deferredData,
     ...criticalData,
     isLoggedIn: isLoggedInPromise,
@@ -101,7 +96,7 @@ export async function loader(args: LoaderFunctionArgs) {
       language: args.context.storefront.i18n.language,
     },
     selectedLocale: storefront.i18n,
-  });
+  };
 }
 
 /**

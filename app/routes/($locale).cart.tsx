@@ -2,7 +2,12 @@ import {Await, type MetaFunction, useRouteLoaderData} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {CartQueryDataReturn} from '@shopify/hydrogen';
 import {CartForm} from '@shopify/hydrogen';
-import {json, type ActionFunctionArgs} from '@shopify/remix-oxygen';
+import {
+  data,
+  type LoaderFunctionArgs,
+  type ActionFunctionArgs,
+  type HeadersFunction,
+} from '@shopify/remix-oxygen';
 
 import {CartMain} from '~/components/CartMain';
 import type {RootLoader} from '~/root';
@@ -11,6 +16,8 @@ import {useTranslation} from '~/lib/utils';
 export const meta: MetaFunction = () => {
   return [{title: `Кошик`}];
 };
+
+export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;
 
 export async function action({request, context}: ActionFunctionArgs) {
   const {cart} = context;
@@ -84,7 +91,7 @@ export async function action({request, context}: ActionFunctionArgs) {
 
   const cartId = result?.cart?.id;
   const headers = cartId ? cart.setCartId(result.cart.id) : new Headers();
-  const {cart: cartResult, errors} = result;
+  const {cart: cartResult, errors, warnings} = result;
 
   const redirectTo = formData.get('redirectTo') ?? null;
   if (typeof redirectTo === 'string') {
@@ -92,16 +99,22 @@ export async function action({request, context}: ActionFunctionArgs) {
     headers.set('Location', redirectTo);
   }
 
-  return json(
+  return data(
     {
       cart: cartResult,
       errors,
+      warnings,
       analytics: {
         cartId,
       },
     },
     {status, headers},
   );
+}
+
+export async function loader({context}: LoaderFunctionArgs) {
+  const {cart} = context;
+  return await cart.get();
 }
 
 export default function Cart() {
