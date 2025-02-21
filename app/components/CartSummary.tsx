@@ -1,11 +1,11 @@
-import {CartForm, Money, type OptimisticCart} from '@shopify/hydrogen';
+import {CartForm, type OptimisticCart} from '@shopify/hydrogen';
 import {useRef} from 'react';
 import type {FetcherWithComponents} from '@remix-run/react';
 import {Loader} from 'lucide-react';
 
 import type {CartLayout} from '~/components/CartMain';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
-import {Text, Heading} from '~/components/Text';
+import {Text} from '~/components/Text';
 import {HryvniaMoney} from '~/components/HryvniaMoney';
 import {Button} from '~/components/Button';
 import {useTranslation} from '~/lib/utils';
@@ -47,8 +47,6 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
 
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   const {translation} = useTranslation();
-  //  if (!checkoutUrl) return null;
-
   const checkoutUrlWithZipcode = `${checkoutUrl}?&checkout[shipping_address][zip]=12345`;
   const buttonContent = checkoutUrl ? (
     translation.make_order
