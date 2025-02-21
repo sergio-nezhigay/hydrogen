@@ -1,5 +1,4 @@
 import {
-  json,
   type LoaderFunctionArgs,
   type ActionFunctionArgs,
 } from '@shopify/remix-oxygen';
@@ -32,7 +31,7 @@ export async function loader({request, context}: LoaderFunctionArgs) {
     return {term: '', result: null, error: error.message};
   });
 
-  return json(await searchPromise);
+  return await searchPromise;
 }
 
 /**

@@ -1,8 +1,4 @@
-import {
-  json,
-  type MetaArgs,
-  type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+import {type MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import type {Collection} from '@shopify/hydrogen/storefront-api-types';
 import {
@@ -48,7 +44,7 @@ export const loader = async ({
     url: request.url,
   });
 
-  return json({collections, seo});
+  return {collections, seo};
 };
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
@@ -60,77 +56,44 @@ export default function Collections() {
   const {translation} = useTranslation();
 
   return (
-    <>
-      {/*<PageHeader heading={translation.collections} />
-      <Section>
-        <Pagination connection={collections}>
-          {({nodes, isLoading, PreviousLink, NextLink}) => (
-            <>
-              <div className="flex items-center justify-center mb-6">
-                <Button as={PreviousLink} variant="secondary" width="full">
-                  {isLoading ? translation.loading : translation.prev}
-                </Button>
-              </div>
-              <Grid
-                items={nodes.length === 3 ? 3 : 2}
-                data-test="collection-grid"
-              >
-                {nodes.map((collection, i) => (
-                  <CollectionCard
-                    collection={collection as Collection}
-                    key={collection.id}
-                    loading={getImageLoadingPriority(i, 2)}
-                  />
-                ))}
-              </Grid>
-              <div className="flex items-center justify-center mt-6">
-                <Button as={NextLink} variant="secondary" width="full">
-                  {isLoading ? translation.loading : translation.next}
-                </Button>
-              </div>
-            </>
-          )}
-        </Pagination>
-      </Section>*/}
-      <Section
-        heading={translation.collections}
-        headingClassName="text-center mx-auto"
-        padding="y"
-        useH1
-        className="py-8"
-      >
-        <Pagination connection={collections}>
-          {({nodes, isLoading, PreviousLink, NextLink}) => (
-            <>
-              <div className="flex items-center justify-center mb-6">
-                <Button as={PreviousLink} variant="secondary" width="full">
-                  {isLoading ? translation.loading : translation.prev}
-                </Button>
-              </div>
-              <Grid data-test="collection-grid">
-                {nodes.map((collection, i) => (
-                  <CollectionCard
-                    collection={collection as Collection}
-                    key={collection.id}
-                    loading={getImageLoadingPriority(i, 2)}
-                  />
-                ))}
-              </Grid>
-              <div
-                className={cn(
-                  navigationMenuTriggerStyle(),
-                  `mx-auto flex items-center justify-center mt-6`,
-                )}
-              >
-                <Button as={NextLink} variant="secondary" width="full">
-                  {isLoading ? translation.loading : translation.next}
-                </Button>
-              </div>
-            </>
-          )}
-        </Pagination>
-      </Section>
-    </>
+    <Section
+      heading={translation.collections}
+      headingClassName="text-center mx-auto"
+      padding="y"
+      useH1
+      className="py-8"
+    >
+      <Pagination connection={collections}>
+        {({nodes, isLoading, PreviousLink, NextLink}) => (
+          <>
+            <div className="flex items-center justify-center mb-6">
+              <Button as={PreviousLink} variant="secondary" width="full">
+                {isLoading ? translation.loading : translation.prev}
+              </Button>
+            </div>
+            <Grid data-test="collection-grid">
+              {nodes.map((collection, i) => (
+                <CollectionCard
+                  collection={collection as Collection}
+                  key={collection.id}
+                  loading={getImageLoadingPriority(i, 2)}
+                />
+              ))}
+            </Grid>
+            <div
+              className={cn(
+                navigationMenuTriggerStyle(),
+                `mx-auto flex items-center justify-center mt-6`,
+              )}
+            >
+              <Button as={NextLink} variant="secondary" width="full">
+                {isLoading ? translation.loading : translation.next}
+              </Button>
+            </div>
+          </>
+        )}
+      </Pagination>
+    </Section>
   );
 }
 

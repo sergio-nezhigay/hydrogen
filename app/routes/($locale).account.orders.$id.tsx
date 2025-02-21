@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import {json, redirect, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
+import {redirect} from '@shopify/remix-oxygen';
+import type {HeadersFunction, LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData, type MetaFunction} from '@remix-run/react';
 import {Image, flattenConnection} from '@shopify/hydrogen';
 import type {FulfillmentStatus} from '@shopify/hydrogen/customer-account-api-types';
@@ -11,6 +12,8 @@ import {Link} from '~/components/Link';
 import {Heading, Section, Text} from '~/components/Text';
 import {CUSTOMER_ORDER_QUERY} from '~/graphql/customer-account/CustomerOrderQuery';
 import {HryvniaMoney} from '~/components/HryvniaMoney';
+
+export const headers: HeadersFunction = ({loaderHeaders}) => loaderHeaders;
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Order ${data?.order?.name}`}];
@@ -61,7 +64,7 @@ export async function loader({request, context, params}: LoaderFunctionArgs) {
         ? fulfillments[0].status
         : ('OPEN' as FulfillmentStatus);
 
-    return json(
+    return data(
       {
         order,
         lineItems,

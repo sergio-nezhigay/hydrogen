@@ -1,5 +1,4 @@
 import type {LoaderFunctionArgs, MetaArgs} from '@shopify/remix-oxygen';
-import {defer} from '@shopify/remix-oxygen';
 import {Await, useLoaderData} from '@remix-run/react';
 import type {Storefront} from '@shopify/hydrogen';
 import {
@@ -54,7 +53,7 @@ export async function loader(args: LoaderFunctionArgs) {
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return defer({...deferredData, ...criticalData});
+  return {...deferredData, ...criticalData};
 }
 
 /**

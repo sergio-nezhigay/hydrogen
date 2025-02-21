@@ -1,8 +1,4 @@
-import {
-  json,
-  type MetaArgs,
-  type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
+import {type MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {useLoaderData} from '@remix-run/react';
 import {useInView} from 'react-intersection-observer';
 import type {
@@ -144,12 +140,12 @@ export async function loader({params, request, context}: LoaderFunctionArgs) {
     })
     .filter((filter): filter is NonNullable<typeof filter> => filter !== null);
 
-  return json({
+  return {
     collection,
     appliedFilters,
     //collections: flattenConnection(collections),
     seo,
-  });
+  };
 }
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
