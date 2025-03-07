@@ -29,6 +29,8 @@
     "@remix-run/node": "^2.15.2",
     "@remix-run/react": "^2.15.2",
     "@remix-run/server-runtime": "^2.15.2",
+    "@sentry/cloudflare": "^9.5.0",
+    "@sentry/remix": "^9.5.0",
     "@shopify/cli": "^3.74.1",
     "@shopify/cli-hydrogen": "^8.1.1",
     "@shopify/hydrogen": "^2025.1.0",

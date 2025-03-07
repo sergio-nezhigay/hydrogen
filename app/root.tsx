@@ -5,6 +5,7 @@ import {
   Analytics,
   getSeoMeta,
 } from '@shopify/hydrogen';
+import {withSentry} from '@sentry/remix/cloudflare';
 import {type MetaArgs, type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Links,
@@ -16,7 +17,10 @@ import {
   isRouteErrorResponse,
   type ShouldRevalidateFunction,
   ScrollRestoration,
+  useLocation,
+  useMatches,
 } from '@remix-run/react';
+import {useEffect} from 'react';
 
 import favicon from '~/assets/favicon.ico';
 import tailwindCss from '~/styles/tailwind.css?url';
@@ -211,9 +215,12 @@ export function Layout({children}: {children?: React.ReactNode}) {
   );
 }
 
-export default function App() {
-  return <Outlet />;
+function App({children}: {children?: React.ReactNode}) {
+  return <>{children}</>;
 }
+
+// Pass `useEffect`, `useLocation` and `useMatches` hooks to `withSentry`
+export default withSentry(App, useEffect, useLocation, useMatches);
 
 export function ErrorBoundary({error}: {error: Error}) {
   const routeError = useRouteError();
