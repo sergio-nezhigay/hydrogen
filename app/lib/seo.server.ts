@@ -403,6 +403,9 @@ function collection({
   collection: CollectionRequiredFields;
   url: Request['url'];
 }): SeoConfig {
+  const origin = new URL(url).origin;
+  const collectionUrl = `${origin}/collections/${collection.handle}`;
+  const alternates = getAlternates(collectionUrl);
   return {
     title: collection?.seo?.title ?? collection?.title ?? '',
     description: truncate(
@@ -417,6 +420,8 @@ function collection({
       altText: collection?.image?.altText,
     },
     jsonLd: collectionJsonLd({collection, url}),
+    url: collectionUrl,
+    alternates,
   };
 }
 
