@@ -210,7 +210,7 @@ export default function Product() {
                 )}
 
                 {sku1 && (
-                  <span className="text-primary/70">КOД:&nbsp;{sku1}--</span>
+                  <span className="text-primary/70">КOД:&nbsp;{sku1}</span>
                 )}
               </div>
             </div>
