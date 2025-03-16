@@ -13,7 +13,7 @@ function ReviewCard({review}: ReviewCardProps) {
   const reviewerName = review.reviewer.name;
   return (
     <>
-      <Text as="h3" className="mr-2 font-semibold mb-2">
+      <Text as="h3" className="mr-2 font-semibold mb-2 ">
         {reviewerName}
       </Text>
 

@@ -15,7 +15,7 @@ export type ReviewSwimlaneProps = {
 export function ReviewSwimlane({
   title = 'Reviews',
   reviews = [],
-  count = 20,
+  count = 16,
   ...props
 }: ReviewSwimlaneProps) {
   const {translation} = useTranslation();
@@ -50,7 +50,7 @@ function ReviewCardWrapper({item, index}: ReviewCardWrapperProps) {
       className="p-4 border rounded-lg shadow h-full items-start flex flex-col justify-between"
     >
       {item.product_handle && item.product_title && (
-        <h3 className="font-medium text-lg h-12">
+        <h3 className="font-medium h-12 line-clamp-2">
           <Link
             to={`${productBaseUrl}${item.product_handle}`}
             className="text-blue-600 hover:underline"
