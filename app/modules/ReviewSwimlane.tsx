@@ -15,7 +15,7 @@ export type ReviewSwimlaneProps = {
 export function ReviewSwimlane({
   title = 'Reviews',
   reviews = [],
-  count = 12,
+  count = 20,
   ...props
 }: ReviewSwimlaneProps) {
   const {translation} = useTranslation();
@@ -26,12 +26,12 @@ export function ReviewSwimlane({
       {...props}
       padding="y"
       display="flex"
-      className="flex flex-col bg-gray-50"
+      className="flex flex-col bg-gray-50 "
     >
       <DynamicGallery
         data={reviews.slice(0, count)}
         presentationComponent={ReviewCardWrapper}
-        itemStyle="pl-4 lg:basis-1/2 xl:basis-1/4"
+        itemStyle="pl-4 lg:basis-1/2 xl:basis-1/4 h-64"
       />
     </Section>
   );
@@ -45,9 +45,12 @@ export type ReviewCardWrapperProps = {
 function ReviewCardWrapper({item, index}: ReviewCardWrapperProps) {
   const productBaseUrl = '/products/';
   return (
-    <div key={index} className="p-4 border rounded-lg shadow h-full">
+    <div
+      key={index}
+      className="p-4 border rounded-lg shadow h-full items-start flex flex-col justify-between"
+    >
       {item.product_handle && item.product_title && (
-        <h3 className="font-medium text-lg">
+        <h3 className="font-medium text-lg h-12">
           <Link
             to={`${productBaseUrl}${item.product_handle}`}
             className="text-blue-600 hover:underline"
