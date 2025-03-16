@@ -31,7 +31,7 @@ export function ReviewSwimlane({
       <DynamicGallery
         data={reviews.slice(0, count)}
         presentationComponent={ReviewCardWrapper}
-        itemStyle="pl-4 lg:basis-1/2 xl:basis-1/4 h-64"
+        itemStyle="pl-4 lg:basis-1/2 xl:basis-1/4 h-68"
       />
     </Section>
   );
