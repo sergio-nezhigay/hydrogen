@@ -11,6 +11,8 @@ type ReviewCardProps = {
 function ReviewCard({review}: ReviewCardProps) {
   const {dateTime, displayDate} = formatDateForTimeTag(review.created_at);
   const reviewerName = review.reviewer.name;
+
+  const isProductTitleNotEqualToBody = review.product_title !== review.body;
   return (
     <>
       <Text as="h3" className="mr-2 font-semibold mb-2 ">
@@ -23,7 +25,9 @@ function ReviewCard({review}: ReviewCardProps) {
       <div className="mt-2 flex items-center">
         <StarRating rating={review.rating} />
       </div>
-      <Text className="mt-1 line-clamp-4">{review.body}</Text>
+      <Text className="mt-1 line-clamp-4">
+        {isProductTitleNotEqualToBody ? review.body : ''}
+      </Text>
     </>
   );
 }
