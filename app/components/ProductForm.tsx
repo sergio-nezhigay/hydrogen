@@ -23,26 +23,6 @@ export function ProductForm({
   const navigate = useNavigate();
   const {translation} = useTranslation();
   const {open} = useAside();
-  console.log('Selected Variant:', selectedVariant);
-  const productId = selectedVariant?.id;
-  //  const productId = selectedVariant?.product?.id;
-  const discountValue = 10; // Example discount value, adjust as needed
-
-  const generateDiscountCode = (
-    productId: string | undefined,
-    discountValue: number,
-  ) => {
-    if (!productId) {
-      return 'No product ID available';
-    }
-    const baseCode = `DISCOUNT-${productId.slice(-5)}-${discountValue}`;
-    // Basic sanitization to remove characters that might cause issues
-    const sanitizedCode = baseCode.replace(/[^a-zA-Z0-9-]/g, '');
-    return sanitizedCode.toUpperCase();
-  };
-
-  const discountCode = generateDiscountCode(productId, discountValue);
-  console.log('Generated Discount Code:', discountCode);
 
   return (
     <div className="product-form">
@@ -141,6 +121,7 @@ export function ProductForm({
                   merchandiseId: selectedVariant.id,
                   quantity: 1,
                   selectedVariant,
+                  attributes: [{key: 'discount-amount', value: '1'}],
 
                   // possibly move delta to these params
                 },
