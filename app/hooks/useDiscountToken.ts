@@ -19,6 +19,8 @@ export const useDiscountToken = (productId: string) => {
   const getToken = useCallback((): string | null => {
     return getTokenFromUrl() ?? getTokenFromLocalStorage();
   }, []);
+  console.log('🚀 ~ discount:', discount);
+  console.log('🚀 ~ productId:', productId);
 
   const getTokenFromUrl = (): string | null => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -100,6 +102,7 @@ export const useDiscountToken = (productId: string) => {
           setDiscount(payload.p);
           saveTokenToLocalStorage(token);
         } else {
+          setDiscount(null);
           console.log('Token is invalid, cannot apply discount');
         }
       } catch (error) {
