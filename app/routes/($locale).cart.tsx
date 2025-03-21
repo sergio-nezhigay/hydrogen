@@ -36,13 +36,6 @@ export async function action({request, context}: ActionFunctionArgs) {
   switch (action) {
     case CartForm.ACTIONS.LinesAdd:
       result = await cart.addLines(inputs.lines);
-      //  const discountCode = inputs.lines[0]?.attributes?.find(
-      //    (attr) => attr.key === 'discountCode',
-      //  )?.value as string;
-      //  if (discountCode) {
-      //    await cart.updateDiscountCodes([discountCode]);
-      //  }
-
       const attributes = [];
       if (inputs.delta) {
         attributes.push({

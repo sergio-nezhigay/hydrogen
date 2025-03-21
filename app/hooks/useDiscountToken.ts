@@ -110,5 +110,5 @@ export const useDiscountToken = (productId: string) => {
     }
   }, [decodeJWT, getToken, productId]);
 
-  return discount?.toString() ?? null;
+  return discount ?? null;
 };

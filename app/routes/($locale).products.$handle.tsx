@@ -145,8 +145,15 @@ export default function Product() {
     price: selectedVariant?.price.amount || '0',
   });
 
-  const discountedPrice = product.title.includes('910-002240') ? 100 : null;
-  //  const discountedPrice = useDiscountToken(product.id);
+  let discountedPrice = useDiscountToken(product.id);
+  if (!discountedPrice && product.title.includes('910-002240')) {
+    discountedPrice = 699;
+  }
+
+  const discount =
+    selectedVariant?.price.amount && discountedPrice
+      ? Number(selectedVariant?.price.amount) - discountedPrice
+      : 0;
 
   const updatedSelectedVariant = discountedPrice
     ? {
@@ -242,6 +249,7 @@ export default function Product() {
                 productOptions={productOptions}
                 selectedVariant={updatedSelectedVariant}
                 delta={delta?.value || '0'}
+                discount={discount}
               />
             </div>
 

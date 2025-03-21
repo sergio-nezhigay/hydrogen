@@ -15,14 +15,20 @@ export function ProductForm({
   productOptions,
   selectedVariant,
   delta,
+  discount,
 }: {
   productOptions: MappedProductOptions[];
   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
   delta: string;
+  discount: number | null;
 }) {
   const navigate = useNavigate();
   const {translation} = useTranslation();
   const {open} = useAside();
+
+  const discountAttributes = discount
+    ? [{key: 'discount-amount', value: discount.toString()}]
+    : [];
 
   return (
     <div className="product-form">
@@ -121,9 +127,7 @@ export function ProductForm({
                   merchandiseId: selectedVariant.id,
                   quantity: 1,
                   selectedVariant,
-                  attributes: [{key: 'discount-amount', value: '1'}],
-
-                  // possibly move delta to these params
+                  attributes: discountAttributes,
                 },
               ]
             : []
