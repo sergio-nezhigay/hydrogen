@@ -121,6 +121,9 @@ export function ProductForm({
                   merchandiseId: selectedVariant.id,
                   quantity: 1,
                   selectedVariant,
+                  attributes: [{key: 'discount-amount', value: '1'}],
+
+                  // possibly move delta to these params
                 },
               ]
             : []

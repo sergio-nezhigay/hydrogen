@@ -27,8 +27,8 @@ import {getJudgemeReviews} from '~/lib/judgeme';
 import {useTranslation} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
 import {ProductImage} from '~/components/ProductImage';
-import {useJwtPayload} from '~/hooks/useJwtPayload';
 import {useVisitedProducts} from '~/hooks/useVisitedProducts';
+import {useDiscountToken} from '~/hooks/useDiscountToken';
 
 interface VisitedProduct {
   id: string;
@@ -145,7 +145,23 @@ export default function Product() {
     price: selectedVariant?.price.amount || '0',
   });
 
-  useJwtPayload();
+  const discountedPrice = product.title.includes('910-002240') ? 100 : null;
+  //  const discountedPrice = useDiscountToken(product.id);
+
+  const updatedSelectedVariant = discountedPrice
+    ? {
+        ...selectedVariant,
+        price: {
+          ...selectedVariant.price,
+          amount: discountedPrice.toString(),
+        },
+      }
+    : selectedVariant;
+
+  const price = updatedSelectedVariant.price;
+  const compareAtPrice = discountedPrice
+    ? selectedVariant.price
+    : selectedVariant.compareAtPrice;
 
   // Sets the search param to the selected variant without navigation
   // only when no search params are set in the url
@@ -216,18 +232,15 @@ export default function Product() {
             </div>
             <div className="md:flex-start gap-8">
               <div className="sm-max:mb-4">
-                {selectedVariant.availableForSale && (
+                {updatedSelectedVariant.availableForSale && (
                   <p className="mb-1">{translation.available}</p>
                 )}
-                <ProductPrice
-                  price={selectedVariant?.price}
-                  compareAtPrice={selectedVariant?.compareAtPrice}
-                />
+                <ProductPrice price={price} compareAtPrice={compareAtPrice} />
               </div>
 
               <ProductForm
                 productOptions={productOptions}
-                selectedVariant={selectedVariant}
+                selectedVariant={updatedSelectedVariant}
                 delta={delta?.value || '0'}
               />
             </div>
