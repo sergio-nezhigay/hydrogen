@@ -27,7 +27,8 @@ export function CartLineItem({
   const {id, merchandise} = line;
   const {product, title, image, selectedOptions} = merchandise;
 
-  if (product.title.includes('910-002240')) console.log('🚀 ~ line:', line);
+  if (product.title.includes('910-002240'))
+    console.log('🚀 ~ line 002240:', line);
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
   const {close} = useAside();
 
