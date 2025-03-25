@@ -13,13 +13,13 @@ interface JwtPayload {
   c: string;
 }
 
-export const useDiscountToken = (productId: string) => {
-  const [discount, setDiscount] = useState<number | null>(null);
+export const useDiscountTokenPrice = (productId: string) => {
+  const [discountedPrice, setDiscountedPrice] = useState<number | null>(null);
 
   const getToken = useCallback((): string | null => {
     return getTokenFromUrl() ?? getTokenFromLocalStorage();
   }, []);
-  console.log('🚀 ~ discount:', discount);
+  console.log('🚀 ~ discountedPrice:', discountedPrice);
   console.log('🚀 ~ productId:', productId);
 
   const getTokenFromUrl = (): string | null => {
@@ -99,10 +99,10 @@ export const useDiscountToken = (productId: string) => {
 
         if (isTokenValid(payload)) {
           console.log('Token is valid, applying discount');
-          setDiscount(payload.p);
+          setDiscountedPrice(parseFloat(payload.p.toFixed(2)));
           saveTokenToLocalStorage(token);
         } else {
-          setDiscount(null);
+          setDiscountedPrice(null);
           console.log('Token is invalid, cannot apply discount');
         }
       } catch (error) {
@@ -113,5 +113,5 @@ export const useDiscountToken = (productId: string) => {
     }
   }, [decodeJWT, getToken, productId]);
 
-  return discount ?? null;
+  return discountedPrice ?? null;
 };

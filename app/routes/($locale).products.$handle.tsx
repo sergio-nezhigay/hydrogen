@@ -28,15 +28,7 @@ import {useTranslation} from '~/lib/utils';
 import {seoPayload} from '~/lib/seo.server';
 import {ProductImage} from '~/components/ProductImage';
 import {useVisitedProducts} from '~/hooks/useVisitedProducts';
-import {useDiscountToken} from '~/hooks/useDiscountToken';
-
-interface VisitedProduct {
-  id: string;
-  handle: string;
-  title: string;
-  imageUrl: string;
-  price: string;
-}
+import {useDiscountTokenPrice} from '~/hooks/useDiscountTokenPrice';
 
 export const meta = ({matches}: MetaArgs<typeof loader>) => {
   return getSeoMeta(...matches.map((match) => (match.data as any).seo));
@@ -145,7 +137,7 @@ export default function Product() {
     price: selectedVariant?.price.amount || '0',
   });
 
-  const discountedPrice = useDiscountToken(product.id);
+  const discountedPrice = useDiscountTokenPrice(product.id);
 
   const discount =
     discountedPrice && selectedVariant?.price.amount
