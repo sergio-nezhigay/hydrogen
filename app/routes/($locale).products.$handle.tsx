@@ -145,13 +145,10 @@ export default function Product() {
     price: selectedVariant?.price.amount || '0',
   });
 
-  let discountedPrice = useDiscountToken(product.id);
-  if (!discountedPrice && product.title.includes('910-002240')) {
-    discountedPrice = 699;
-  }
+  const discountedPrice = useDiscountToken(product.id);
 
   const discount =
-    selectedVariant?.price.amount && discountedPrice
+    discountedPrice && selectedVariant?.price.amount
       ? Number(selectedVariant?.price.amount) - discountedPrice
       : 0;
 
@@ -177,7 +174,7 @@ export default function Product() {
   // Get the product options array
   const productOptions = getProductOptions({
     ...product,
-    selectedOrFirstAvailableVariant: selectedVariant,
+    selectedOrFirstAvailableVariant: updatedSelectedVariant,
   });
 
   const handleScrollToReviews = (event: {preventDefault: () => void}) => {
