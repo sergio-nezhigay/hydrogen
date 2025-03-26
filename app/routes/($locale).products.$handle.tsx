@@ -96,6 +96,7 @@ async function loadCriticalData({
         judgemeReviewsData,
       })
     : null;
+
   return {
     product,
     judgemeReviewsData,

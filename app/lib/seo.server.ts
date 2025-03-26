@@ -37,13 +37,14 @@ function root({
   shop: ShopFragment;
   url: Request['url'];
 }): SeoConfig {
-  const alternates = getAlternates(url);
+  const canonicalUrl = getCanonicalUrl(url);
+  const alternates = getAlternates(canonicalUrl);
   return {
     title: shop?.name,
     titleTemplate: `%s`,
     description: truncate(shop?.description ?? ''),
     handle: '@shopify',
-    url,
+    url: canonicalUrl,
     robots: {
       noIndex: false,
       noFollow: false,
@@ -54,7 +55,7 @@ function root({
       '@type': 'Organization',
       name: shop.name,
       logo: shop.brand?.logo?.image?.url,
-      url,
+      url: canonicalUrl,
       contactPoint: {
         '@type': 'ContactPoint',
         telephone: '+380993815288',
@@ -146,7 +147,7 @@ type ProductRequiredFields = Pick<
     nodes: Array<
       Pick<
         ProductVariant,
-        'sku' | 'price' | 'selectedOptions' | 'availableForSale'
+        'id' | 'sku' | 'price' | 'selectedOptions' | 'availableForSale'
       >
     >;
   };
@@ -170,9 +171,25 @@ function productJsonLd({
   );
   const offers: Offer[] = (variants || []).map((variant) => {
     const variantUrl = new URL(url);
-    for (const option of variant.selectedOptions) {
-      variantUrl.searchParams.set(option.name, option.value);
+    try {
+      if (variant.id && typeof variant.id === 'string') {
+        const variantId = variant.id.substring(variant.id.lastIndexOf('/') + 1);
+        if (variantId) {
+          variantUrl.searchParams.set('variant', variantId);
+        } else {
+          console.warn(`Could not extract variant ID from: ${variant.id}`);
+        }
+      } else {
+        console.warn(
+          `Variant ID is missing or not a string for SKU: ${variant.sku}`,
+        );
+      }
+    } catch (e) {
+      console.error(`Error processing variant ID for SKU ${variant.sku}:`, e);
     }
+    //for (const option of variant.selectedOptions) {
+    //  variantUrl.searchParams.set(option.name, option.value);
+    //}
     const availability = variant.availableForSale
       ? 'https://schema.org/InStock'
       : 'https://schema.org/OutOfStock';
@@ -309,8 +326,8 @@ function product({
   const seoTitle = product.seo.title;
   const seoDescription = product.seo.description;
   const productTitle = product?.seo?.title ?? product?.title;
-
-  const alternates = getAlternates(url);
+  const canonicalUrl = getCanonicalUrl(url);
+  const alternates = getAlternates(canonicalUrl);
 
   const isRussian = url.includes('/ru');
 
@@ -326,9 +343,14 @@ function product({
     title: seoTitle ? seoTitle : truncate(pageTitle, 120),
     description: seoDescription ? seoDescription : truncate(pageDescription),
     media: selectedVariant?.image,
-    jsonLd: productJsonLd({product, selectedVariant, url, judgemeReviewsData}),
+    jsonLd: productJsonLd({
+      product,
+      selectedVariant,
+      url: canonicalUrl,
+      judgemeReviewsData,
+    }),
     alternates,
-    url,
+    url: canonicalUrl,
   };
 }
 
@@ -722,4 +744,9 @@ function truncate(str: string, num = 155): string {
     return str;
   }
   return str.slice(0, num - 3) + '...';
+}
+
+function getCanonicalUrl(requestUrl: string): string {
+  const url = new URL(requestUrl);
+  return `${url.origin}${url.pathname}`;
 }
