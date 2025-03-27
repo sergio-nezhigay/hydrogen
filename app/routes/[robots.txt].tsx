@@ -17,15 +17,18 @@ function robotsTxtData({url}: {url: string}) {
   const sitemapUrl = url ? `${url}/sitemap.xml` : undefined;
 
   const basePaths = [
-    '/admin',
-    '/cart',
-    '/orders',
-    '/checkouts/',
-    '/checkout',
-    '/carts',
-    '/account',
-    '/search',
-    '/search',
+    '/admin/*',
+    '/cart/*',
+    '/orders/*',
+    '/checkouts/*',
+    '/checkout/*',
+    '/carts/*',
+    '/account/*',
+    '/search/*',
+    '/catalogue/*',
+    '/tag/*',
+    '/attrib/*',
+    '/reviews/*',
   ];
 
   const disallowPaths = [
