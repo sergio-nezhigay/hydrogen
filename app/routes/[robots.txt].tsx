@@ -25,7 +25,6 @@ function robotsTxtData({url}: {url: string}) {
     '/carts/*',
     '/account/*',
     '/search/*',
-    '/catalogue/*',
     '/tag/*',
     '/attrib/*',
     '/reviews/*',

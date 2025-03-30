@@ -13,6 +13,7 @@ export default async function handleRequest(
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     scriptSrc: [
+      "'strict-dynamic'",
       "'self'",
       'https://cdn.judge.me/',
       'https://cdn.shopify.com',
