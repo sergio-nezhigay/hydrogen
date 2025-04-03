@@ -55,7 +55,7 @@ export function ProductCard({
       <Link
         onClick={onClick}
         to={`/products/${product.handle}`}
-        prefetch="viewport"
+        prefetch="intent"
       >
         <div className={clsx('grid gap-4', className)}>
           <div className="card-image aspect-square group-hover:shadow-hover transition-shadow duration-300">
