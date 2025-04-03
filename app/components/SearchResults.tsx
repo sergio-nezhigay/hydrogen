@@ -1,9 +1,9 @@
-import {Link} from '@remix-run/react';
 import {Image, Pagination} from '@shopify/hydrogen';
 
 import {urlWithTrackingParams, type RegularSearchReturn} from '~/lib/search';
 import {cn, useTranslation} from '~/lib/utils';
 
+import {Link} from './Link';
 import {navigationMenuTriggerStyle} from './ui/navigation-menu';
 import {HryvniaMoney} from './HryvniaMoney';
 

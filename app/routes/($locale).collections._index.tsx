@@ -9,7 +9,7 @@ import {
 } from '@shopify/hydrogen';
 
 import {Grid} from '~/components/Grid';
-import {Heading, PageHeader, Section} from '~/components/Text';
+import {Heading, Section} from '~/components/Text';
 import {Link} from '~/components/Link';
 import {Button} from '~/components/Button';
 import {getImageLoadingPriority} from '~/lib/const';
@@ -106,7 +106,7 @@ function CollectionCard({
 }) {
   return (
     <Link
-      prefetch="viewport"
+      prefetch="intent"
       to={`/collections/${collection.handle}`}
       className="grid gap-4"
     >

@@ -5,18 +5,16 @@ import {Heading, Section} from '~/components/Text';
 import {Grid} from '~/components/Grid';
 import {Link} from '~/components/Link';
 import {useTranslation} from '~/lib/utils';
-import type {
-  HomepageFeaturedCollectionsQuery,
-  //  Collection,
-} from 'storefrontapi.generated';
-
-type FeaturedCollectionsProps = HomepageFeaturedCollectionsQuery & {
-  title?: string;
-};
 
 // Type guard to check if the node is a Collection
 function isCollection(node: any): node is Collection {
   return node && typeof node.handle === 'string' && node.image;
+}
+
+interface FeaturedCollectionsProps {
+  title?: string;
+  nodes?: any[];
+  [key: string]: any;
 }
 
 export function FeaturedCollections({
@@ -36,7 +34,7 @@ export function FeaturedCollections({
   return (
     <Section {...props} heading={t(title)} padding="y" className="bg-gray-50">
       <Grid items={8}>
-        {collectionsWithImage.map((collection) => (
+        {collectionsWithImage.map((collection: Collection) => (
           <Link
             key={collection.id}
             to={`/collections/${collection.handle}`}

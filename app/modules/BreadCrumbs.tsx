@@ -121,7 +121,7 @@ function BreadCrumbs() {
                         className={clsx(
                           'hover:text-indigo-600 hover:underline whitespace-nowrap md:text-base font-semibold',
                         )}
-                        prefetch="viewport"
+                        prefetch="intent"
                       >
                         {page.name === 'Home' ? (
                           <>

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from '@remix-run/react';
 
+import {Link} from '~/components/Link';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -71,6 +71,7 @@ export function DesktopNavigationMenu() {
                               navigationMenuTriggerStyle(),
                               'font-narrow',
                             )}
+                            prefetch="intent"
                           >
                             {t(subItem.title)}
                           </Link>
@@ -84,6 +85,7 @@ export function DesktopNavigationMenu() {
                   <Link
                     to={langPath + menu.to}
                     className={cn(navigationMenuTriggerStyle(), topMenuStyle)}
+                    prefetch="intent"
                   >
                     {t(menu.title)}
                   </Link>

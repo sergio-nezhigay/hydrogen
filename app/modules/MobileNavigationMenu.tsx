@@ -1,5 +1,4 @@
-import {Link} from '@remix-run/react';
-
+import {Link} from '~/components/Link';
 import {
   Accordion,
   AccordionContent,
@@ -9,8 +8,6 @@ import {
 import {useAside} from '~/components/Aside';
 import {navigationData, topMenuItems} from '~/data/navigationData';
 import {useTranslation} from '~/lib/utils';
-
-import LangSelector from './LangSelector';
 
 export const MobileNavigationMenu = () => {
   const {close} = useAside();
@@ -46,7 +43,7 @@ export const MobileNavigationMenu = () => {
                       <li key={item.title}>
                         <Link
                           to={langPath + item.to}
-                          prefetch="viewport"
+                          prefetch="intent"
                           className="block p-2 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
                           onClick={close}
                         >
@@ -60,7 +57,7 @@ export const MobileNavigationMenu = () => {
             ) : (
               <Link
                 to={langPath + menuGroup.to!}
-                prefetch="viewport"
+                prefetch="intent"
                 className="block p-4 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
                 onClick={close}
               >
