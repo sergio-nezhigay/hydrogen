@@ -18,15 +18,15 @@ import BannerLine from '~/components/BannerLine';
 export const headers = routeHeaders;
 
 export async function loader(args: LoaderFunctionArgs) {
-  const {params, context} = args;
-  const {language} = context.storefront.i18n;
+  //  const {params, context} = args;
+  //  const {language} = context.storefront.i18n;
 
-  if (
-    params.locale &&
-    params.locale.toLowerCase() !== `${language}`.toLowerCase()
-  ) {
-    throw new Response(null, {status: 404});
-  }
+  //  if (
+  //    params.locale &&
+  //    params.locale.toLowerCase() !== `${language}`.toLowerCase()
+  //  ) {
+  //    throw new Response(null, {status: 404});
+  //  }
 
   const deferredData = loadDeferredData(args);
   const criticalData = await loadCriticalData(args);

@@ -25,6 +25,7 @@ function BannerLine() {
               height={200}
               alt="Computer mouse"
               className="h-full w-full object-cover"
+              sizes="30vw"
             />
           </div>
         </Link>
@@ -36,6 +37,7 @@ function BannerLine() {
           <Image
             src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/shop36_home_banner4_1.jpg?v=1731268793"
             className="h-full w-full block absolute object-cover inset-0 -z-10"
+            sizes="60vw"
           />
         </div>
       </div>

@@ -43,7 +43,7 @@ function CollectionCard({item, index}: CollectionCardProps) {
           <Image
             alt={title}
             src={item.imageSrc}
-            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 25vw, 13vw"
+            sizes="(min-width: 1024px) 13vw, (min-width: 768px) 25vw, 50vw"
             aspectRatio="1/1"
             className="group-hover:bg-gray-200 bg-white w-full h-full object-contain"
           />

@@ -50,6 +50,7 @@ function BrandCardWrapper({item}: BrandCardWrapperProps) {
           src={item.src}
           alt={item.alt}
           className="w-full h-full rounded "
+          sizes="(min-width: 1024px) 13vw, (min-width: 768px) 25vw, 50vw"
         />
       </Link>
     </div>

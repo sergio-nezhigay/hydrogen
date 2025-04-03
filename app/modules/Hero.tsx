@@ -29,11 +29,9 @@ export function HeroSection() {
       >
         <CarouselContent>
           {heroProducts.map((product) => (
-            <>
-              <CarouselItem>
-                <ProductSlide product={product} />
-              </CarouselItem>
-            </>
+            <CarouselItem key={product.productPageUrl}>
+              <ProductSlide product={product} />
+            </CarouselItem>
           ))}
         </CarouselContent>
         <CarouselPrevious className="sm-max:hidden" />

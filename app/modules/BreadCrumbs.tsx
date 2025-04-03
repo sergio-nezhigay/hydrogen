@@ -134,11 +134,11 @@ function BreadCrumbs() {
                       </Link>
                     </BreadcrumbLink>
                   ) : (
-                    <span className="font-narrow md:text-base sm-max:whitespace-nowrap sr-only ">
+                    <span className="font-narrow md:text-base sm-max:whitespace-nowrap">
                       {page.name}
                     </span>
                   )}
-                  {idx < pages.length - 2 && <BreadcrumbSeparator />}
+                  {idx < pages.length - 1 && <BreadcrumbSeparator />}
                 </BreadcrumbItem>
               );
             })}
