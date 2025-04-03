@@ -1,5 +1,5 @@
 import {Suspense} from 'react';
-import {Await, NavLink} from '@remix-run/react';
+import {Await} from '@remix-run/react';
 import {type CartViewPayload, useAnalytics} from '@shopify/hydrogen';
 import {Image} from '@shopify/hydrogen';
 import {Phone} from 'lucide-react';
@@ -9,6 +9,7 @@ import {MobileNavigationMenu} from '~/modules/MobileNavigationMenu';
 import LangSelector from '~/modules/LangSelector';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 
+import {Link} from './Link';
 import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
 import {useAside} from './Aside';
 import TopMenu from './TopMenu';
@@ -47,13 +48,13 @@ export function Header({
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
 
         <div className="shrink-0 order-2 lg:order-3 flex-start">
-          <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+          <Link prefetch="intent" to="/">
             <Image
               src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/informatica-white.webp?v=1730375267"
               alt="logo"
               sizes="(min-width: 48em) 233px, (min-width: 32em) 180px,(min-width: 27em) 150px, 130px"
             />
-          </NavLink>
+          </Link>
         </div>
         <div className="order-4 ml-auto">
           <HeaderMenu
@@ -107,10 +108,9 @@ function HeaderCtas({
       </a>
 
       <SearchToggle />
-      <NavLink
+      <Link
         prefetch="intent"
         to="/account"
-        style={activeLinkStyle}
         className="hover:bg-stone-100/20 icon-header sm-max:hidden"
       >
         <Suspense fallback=<IconLogin />>
@@ -118,7 +118,7 @@ function HeaderCtas({
             {(isLoggedIn) => (isLoggedIn ? <IconAccount /> : <IconLogin />)}
           </Await>
         </Suspense>
-      </NavLink>
+      </Link>
       <CartToggle cart={cart} />
       <HeaderMenuMobileToggle />
     </nav>
