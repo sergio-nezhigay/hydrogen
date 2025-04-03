@@ -1,5 +1,5 @@
 import {Suspense} from 'react';
-import {Await, NavLink} from '@remix-run/react';
+import {Await, NavLink, useLocation} from '@remix-run/react';
 import {type CartViewPayload, useAnalytics} from '@shopify/hydrogen';
 import {Image} from '@shopify/hydrogen';
 import {Phone} from 'lucide-react';
@@ -11,6 +11,7 @@ import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
 
 import {IconAccount, IconBag, IconLogin, IconSearch} from './Icon';
 import {useAside} from './Aside';
+import {Link} from './Link';
 import TopMenu from './TopMenu';
 
 const phone = {
@@ -33,7 +34,10 @@ export function Header({
   cart,
   publicStoreDomain,
 }: HeaderProps) {
-  const {shop, menu} = header;
+  const {menu} = header;
+  const location = useLocation();
+  const isRuPage = location.pathname.startsWith('/ru');
+  const homeUrl = isRuPage ? '/ru' : '/';
 
   return (
     <header className="font-narrow flex sticky top-0 z-50  items-center bg-blueAccent opacity-95 text-white  h-16 lg:h-[118px] ">
@@ -47,13 +51,17 @@ export function Header({
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
 
         <div className="shrink-0 order-2 lg:order-3 flex-start">
-          <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+          <Link prefetch="intent" to="\">
             <Image
               src="https://cdn.shopify.com/s/files/1/0868/0462/7772/files/informatica-white.webp?v=1730375267"
               alt="logo"
-              sizes="(min-width: 48em) 233px, (min-width: 32em) 180px,(min-width: 27em) 150px, 130px"
+              sizes="
+                (min-width: 768px) 233px,
+                (min-width: 512px) 180px,
+                (min-width: 432px) 150px,
+                130px"
             />
-          </NavLink>
+          </Link>
         </div>
         <div className="order-4 ml-auto">
           <HeaderMenu

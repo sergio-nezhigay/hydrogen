@@ -53,7 +53,6 @@ function BreadCrumbs() {
   const rootData = useRouteLoaderData<RootLoader>('root');
   const baseUrl = new URL(rootData?.seo?.url ?? '').origin;
   const location = useLocation();
-
   const isRuPage = location.pathname.startsWith('/ru');
 
   if (!deepestRoute?.handle) return null;
@@ -134,11 +133,11 @@ function BreadCrumbs() {
                       </Link>
                     </BreadcrumbLink>
                   ) : (
-                    <span className="font-narrow md:text-base sm-max:whitespace-nowrap sr-only ">
+                    <span className="font-narrow md:text-base sm-max:whitespace-nowrap  ">
                       {page.name}
                     </span>
                   )}
-                  {idx < pages.length - 2 && <BreadcrumbSeparator />}
+                  {idx < pages.length - 1 && <BreadcrumbSeparator />}
                 </BreadcrumbItem>
               );
             })}
