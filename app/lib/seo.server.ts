@@ -332,12 +332,12 @@ function product({
   const isRussian = url.includes('/ru');
 
   const pageTitle = isRussian
-    ? `${productTitle} – фото, отзывы, характеристики | Купить в Украине: Киеве, Днепре, Одессе, Запорожье, Львове`
-    : `${productTitle} – фото, відгуки, характеристики | Купити в Україні: Києві, Дніпрі, Одесі, Запоріжжі, Львові`;
+    ? `${productTitle} – купить`
+    : `${productTitle} – купити`;
 
   const pageDescription = isRussian
-    ? `Купить ${productTitle} | Низкие цены, гарантия, консультации для покупателей`
-    : `Купити ${productTitle} | Низькі ціни, гарантія, консультації для покупців`;
+    ? `Купить ${productTitle} | Низкие цены, гарантия, доставка по Украине`
+    : `Купити ${productTitle} | Низькі ціни, гарантія, доставка по Україні`;
 
   return {
     title: seoTitle ? seoTitle : truncate(pageTitle, 120),
@@ -372,7 +372,6 @@ function collectionJsonLd({
   url: Request['url'];
   collection: CollectionRequiredFields;
 }): SeoConfig['jsonLd'] {
-  //  const siteUrl = new URL(url);
   const origin = new URL(url).origin;
   const itemListElement: CollectionPage['mainEntity'] =
     collection.products.nodes.map((product, index) => {
@@ -425,9 +424,6 @@ function collection({
   collection: CollectionRequiredFields;
   url: Request['url'];
 }): SeoConfig {
-  const origin = new URL(url).origin;
-  const collectionUrl = `${origin}/collections/${collection.handle}`;
-
   const canonicalUrl = getCanonicalUrl(url);
   const alternates = getAlternates(canonicalUrl);
   return {
