@@ -45,10 +45,9 @@ export async function loader({
 
   invariant(data, 'No data returned from Shopify API');
 
-  const seo = seoPayload.noindex({
+  const seo = seoPayload.brand({
+    brandHandle,
     url: request.url,
-    title: 'Каталог ' + brandHandle,
-    description: 'Усі товари' + brandHandle,
   });
 
   return {

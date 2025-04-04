@@ -710,6 +710,41 @@ function policies({
   };
 }
 
+function brand({
+  brandHandle,
+  url,
+}: {
+  brandHandle: string;
+  url: Request['url'];
+}): SeoConfig {
+  const isRussian = url.includes('/ru');
+  const canonicalUrl = getCanonicalUrl(url);
+  const alternates = getAlternates(canonicalUrl);
+
+  const capitalizedBrand =
+    brandHandle.charAt(0).toUpperCase() + brandHandle.slice(1);
+
+  const title = isRussian
+    ? `${capitalizedBrand} - каталог товаров`
+    : `${capitalizedBrand} - каталог товарів`;
+
+  const description = isRussian
+    ? `Официальный каталог товаров ${capitalizedBrand}. Лучшие цены, гарантия, доставка по Украине.`
+    : `Офіційний каталог товарів ${capitalizedBrand}. Найкращі ціни, гарантія, доставка по Україні.`;
+
+  return {
+    title,
+    description,
+    titleTemplate: `%s | Informatica.com.ua`,
+    url: canonicalUrl,
+    alternates,
+    robots: {
+      noIndex: false,
+      noFollow: false,
+    },
+  };
+}
+
 export const seoPayload = {
   article,
   blog,
@@ -724,6 +759,7 @@ export const seoPayload = {
   searchResults,
   allProducts,
   noindex,
+  brand,
 };
 
 /**
