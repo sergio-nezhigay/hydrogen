@@ -427,7 +427,9 @@ function collection({
 }): SeoConfig {
   const origin = new URL(url).origin;
   const collectionUrl = `${origin}/collections/${collection.handle}`;
-  const alternates = getAlternates(collectionUrl);
+
+  const canonicalUrl = getCanonicalUrl(url);
+  const alternates = getAlternates(canonicalUrl);
   return {
     title: collection?.seo?.title ?? collection?.title ?? '',
     description: truncate(
@@ -441,9 +443,9 @@ function collection({
       width: collection?.image?.width,
       altText: collection?.image?.altText,
     },
-    jsonLd: collectionJsonLd({collection, url}),
-    url: collectionUrl,
+    jsonLd: collectionJsonLd({collection, url: canonicalUrl}),
     alternates,
+    url: canonicalUrl,
   };
 }
 
