@@ -38,7 +38,7 @@ function root({
   url: Request['url'];
 }): SeoConfig {
   const canonicalUrl = getCanonicalUrl(url);
-  const alternates = getAlternates(canonicalUrl);
+
   return {
     title: shop?.name,
     titleTemplate: `%s`,
@@ -49,7 +49,6 @@ function root({
       noIndex: false,
       noFollow: false,
     },
-    alternates,
     jsonLd: {
       '@context': 'https://schema.org',
       '@type': 'Organization',
@@ -327,8 +326,6 @@ function product({
   const seoDescription = product.seo.description;
   const productTitle = product?.seo?.title ?? product?.title;
   const canonicalUrl = getCanonicalUrl(url);
-  const alternates = getAlternates(canonicalUrl);
-
   const isRussian = url.includes('/ru');
 
   const pageTitle = isRussian
@@ -349,7 +346,6 @@ function product({
       url: canonicalUrl,
       judgemeReviewsData,
     }),
-    alternates,
     url: canonicalUrl,
   };
 }

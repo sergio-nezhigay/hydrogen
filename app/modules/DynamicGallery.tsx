@@ -73,7 +73,7 @@ function DynamicGallery<T extends {id: string | number}>({
   }
 
   return (
-    <div className="w-full relative">
+    <div className="w-full h-fit md:sticky md:top-32 ">
       <Carousel
         setApi={setCarouselApi}
         opts={{

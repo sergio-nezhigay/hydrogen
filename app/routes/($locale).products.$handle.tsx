@@ -200,7 +200,7 @@ export default function Product() {
             itemStyle="my-gallery-item-style"
             showThumbs={true}
           />
-          <div className="flex flex-col gap-8 md:gap-16 md:top-24 md:sticky ">
+          <div className="flex flex-col gap-8 md:gap-16">
             <div className="grid gap-2 ">
               <Heading as="h1" className=" overflow-hidden whitespace-normal ">
                 {title}

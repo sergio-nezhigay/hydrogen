@@ -166,6 +166,7 @@ export default function Collection() {
       <Section
         padding="y"
         heading={collection.title}
+        useH1
         display="flex"
         className="pt-0"
         headingClassName="!py-1"
