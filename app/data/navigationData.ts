@@ -196,6 +196,10 @@ export const navigationData: MenuGroup[] = [
         to: '/collections/usb-type-c',
       },
       {
+        title: 'Карти відеозахвату',
+        to: '/collections/capture-cards',
+      },
+      {
         title: 'USB-RS232',
         to: '/collections/perehonhik_com_usb',
       },

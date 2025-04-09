@@ -11,9 +11,8 @@ import {useTranslation} from '~/lib/utils';
 
 export const MobileNavigationMenu = () => {
   const {close} = useAside();
-  const {t, language} = useTranslation();
+  const {t} = useTranslation();
 
-  const langPath = language === 'ru' ? 'ru' : '';
   const mobileTopMenuItems = [
     ...topMenuItems,
     {to: '/account/login', label: 'Login'},
@@ -42,7 +41,7 @@ export const MobileNavigationMenu = () => {
                     {menuGroup.items.map((item) => (
                       <li key={item.title}>
                         <Link
-                          to={langPath + item.to}
+                          to={item.to}
                           prefetch="intent"
                           className="block p-2 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
                           onClick={close}
@@ -56,7 +55,7 @@ export const MobileNavigationMenu = () => {
               </>
             ) : (
               <Link
-                to={langPath + menuGroup.to!}
+                to={menuGroup.to!}
                 prefetch="intent"
                 className="block p-4 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
                 onClick={close}
@@ -70,15 +69,14 @@ export const MobileNavigationMenu = () => {
 
       <div className="border-t mt-4 shadow-sm">
         {mobileTopMenuItems.map((item) => (
-          <>
-            <Link
-              to={langPath + item.to}
-              className="block p-4 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
-              onClick={close}
-            >
-              {t(item.label)}
-            </Link>
-          </>
+          <Link
+            key={item.to}
+            to={item.to}
+            className="block p-4 font-narrow text-gray-700 rounded transition-colors duration-200 hover:bg-gray-100"
+            onClick={close}
+          >
+            {t(item.label)}
+          </Link>
         ))}
       </div>
     </>
