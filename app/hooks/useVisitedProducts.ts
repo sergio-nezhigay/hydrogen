@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 
 interface VisitedProduct {
   id: string;
@@ -8,74 +8,67 @@ interface VisitedProduct {
   price: string;
 }
 
+const LOCALSTORAGE_KEY = 'visitedProducts';
+const MAX_VISITED_PRODUCTS = 6;
+
+const getStoredVisitedProducts = (): VisitedProduct[] => {
+  if (typeof window === 'undefined') return [];
+  const storedProducts = localStorage.getItem(LOCALSTORAGE_KEY);
+  return storedProducts ? (JSON.parse(storedProducts) as VisitedProduct[]) : [];
+};
+
+const saveVisitedProductsToStorage = (products: VisitedProduct[]) => {
+  if (typeof window !== 'undefined') {
+    localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(products));
+  }
+};
+
 export function useVisitedProducts(product: VisitedProduct) {
-  const getVisitedProducts = useCallback(() => {
-    if (typeof window === 'undefined') {
-      return [];
-    }
-    const storedProducts = localStorage.getItem('visitedProducts');
-    return storedProducts
-      ? (JSON.parse(storedProducts) as VisitedProduct[])
-      : [];
-  }, []);
-
-  const saveVisitedProducts = useCallback((products: VisitedProduct[]) => {
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('visitedProducts', JSON.stringify(products));
-    }
-  }, []);
-
-  const [visitedProducts, setVisitedProducts] = useState<VisitedProduct[]>(
-    getVisitedProducts(),
-  );
+  const [visitedProducts, setVisitedProducts] = useState<VisitedProduct[]>([]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isProductAlreadyVisited = visitedProducts.some(
-        (visitedProduct: VisitedProduct) => visitedProduct.id === product.id,
+    const currentVisitedProducts = getStoredVisitedProducts();
+    const isProductAlreadyVisited = currentVisitedProducts.some(
+      (p) => p.id === product.id,
+    );
+
+    if (!isProductAlreadyVisited) {
+      const newVisitedProducts = [product, ...currentVisitedProducts].slice(
+        0,
+        MAX_VISITED_PRODUCTS,
       );
-
-      if (!isProductAlreadyVisited) {
-        const newVisitedProducts = [
-          {
-            id: product.id,
-            handle: product.handle,
-            title: product.title,
-            imageUrl: product.imageUrl,
-            price: product.price,
-          },
-          ...visitedProducts,
-        ].slice(0, 6);
-
-        saveVisitedProducts(newVisitedProducts);
-        setVisitedProducts(newVisitedProducts);
+      saveVisitedProductsToStorage(newVisitedProducts);
+      setVisitedProducts(newVisitedProducts);
+    } else {
+      if (visitedProducts.length === 0) {
+        setVisitedProducts(currentVisitedProducts);
       }
     }
-  }, [product, visitedProducts, saveVisitedProducts]);
+  }, [product, visitedProducts.length]);
 
   const filteredVisitedProducts = visitedProducts
     .filter(({id}) => id !== product.id)
-    .map((product) => ({
-      ...product,
+    .map((p) => ({
+      ...p,
       vendor: '',
       publishedAt: '',
       variants: {
         nodes: [
           {
-            id: product.id,
+            id: p.id,
             availableForSale: true,
             image: {
-              url: product.imageUrl || '',
-              altText: product.title,
+              url: p.imageUrl || '',
+              altText: p.title,
             },
             price: {
-              amount: product.price || '0',
+              amount: p.price || '0',
               currencyCode: 'UAH' as const,
             },
             selectedOptions: [],
             product: {
-              handle: product.handle,
-              title: product.title,
+              handle: p.handle,
+              title: p.title,
             },
           },
         ],
