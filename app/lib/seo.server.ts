@@ -140,7 +140,7 @@ type SelectedVariantRequiredFields = Pick<ProductVariant, 'sku'> & {
 
 type ProductRequiredFields = Pick<
   Product,
-  'title' | 'description' | 'vendor' | 'seo'
+  'id' | 'title' | 'description' | 'vendor' | 'seo'
 > & {
   variants: {
     nodes: Array<
@@ -163,6 +163,7 @@ function productJsonLd({
   url: Request['url'];
   judgemeReviewsData: JudgemeReviewsData;
 }): SeoConfig['jsonLd'] {
+  console.log('🚀 ~ product:', JSON.stringify(product));
   const origin = new URL(url).origin;
   const variants = product.variants.nodes;
   const description = truncate(
@@ -198,8 +199,9 @@ function productJsonLd({
       availability,
       price: parseFloat(variant.price.amount),
       priceCurrency: variant.price.currencyCode,
-      priceValidUntil: '2027-12-31',
+      priceValidUntil: '2028-12-31',
       sku: variant?.sku ?? '',
+      '@id': product.id,
       url: variantUrl.toString(),
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
