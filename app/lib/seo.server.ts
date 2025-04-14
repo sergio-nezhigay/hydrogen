@@ -134,7 +134,7 @@ function home({url}: {url: Request['url']}): SeoConfig {
   };
 }
 
-type SelectedVariantRequiredFields = Pick<ProductVariant, 'sku'> & {
+type SelectedVariantRequiredFields = Pick<ProductVariant, 'sku' | 'barcode'> & {
   image?: null | Partial<Image>;
 };
 
@@ -146,7 +146,12 @@ type ProductRequiredFields = Pick<
     nodes: Array<
       Pick<
         ProductVariant,
-        'id' | 'sku' | 'price' | 'selectedOptions' | 'availableForSale'
+        | 'id'
+        | 'sku'
+        | 'price'
+        | 'barcode'
+        | 'selectedOptions'
+        | 'availableForSale'
       >
     >;
   };
@@ -163,7 +168,6 @@ function productJsonLd({
   url: Request['url'];
   judgemeReviewsData: JudgemeReviewsData;
 }): SeoConfig['jsonLd'] {
-  console.log('🚀 ~ product:', JSON.stringify(product));
   const origin = new URL(url).origin;
   const variants = product.variants.nodes;
   const description = truncate(
@@ -187,9 +191,6 @@ function productJsonLd({
     } catch (e) {
       console.error(`Error processing variant ID for SKU ${variant.sku}:`, e);
     }
-    //for (const option of variant.selectedOptions) {
-    //  variantUrl.searchParams.set(option.name, option.value);
-    //}
     const availability = variant.availableForSale
       ? 'https://schema.org/InStock'
       : 'https://schema.org/OutOfStock';
@@ -200,15 +201,13 @@ function productJsonLd({
       price: parseFloat(variant.price.amount),
       priceCurrency: variant.price.currencyCode,
       priceValidUntil: '2028-12-31',
-      sku: variant?.sku ?? '',
-      '@id': product.id,
       url: variantUrl.toString(),
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
         url: `${origin}/policies/refund-policy`,
         applicableCountry: {
           '@type': 'Country',
-          name: 'Ukraine',
+          name: 'UA',
         },
         returnPolicyCategory:
           'https://schema.org/MerchantReturnFiniteReturnWindow',
@@ -290,6 +289,7 @@ function productJsonLd({
     {
       '@context': 'https://schema.org',
       '@type': 'Product',
+      '@id': product.id,
       brand: {
         '@type': 'Brand',
         name: product.vendor,
@@ -299,7 +299,7 @@ function productJsonLd({
       name: product.title,
       offers,
       sku: selectedVariant?.sku ?? '',
-      url,
+      mpn: selectedVariant?.barcode ?? '',
       aggregateRating:
         judgemeReviewsData.reviewNumber > 0
           ? {
