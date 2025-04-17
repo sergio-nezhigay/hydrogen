@@ -265,39 +265,39 @@ export default function Product() {
         </div>
       </Section>
       <Suspense fallback={<div>Loading related products...</div>}>
-        <LazyLoadComponent>
-          <Await
-            errorElement="There was a problem loading related products"
-            resolve={recommended}
-          >
-            {(products) => (
-              <ProductSwimlane
-                title={translation.also_interested}
-                products={products}
-              />
-            )}
-          </Await>
-        </LazyLoadComponent>
+        {/*<LazyLoadComponent>*/}
+        <Await
+          errorElement="There was a problem loading related products"
+          resolve={recommended}
+        >
+          {(products) => (
+            <ProductSwimlane
+              title={translation.also_interested}
+              products={products}
+            />
+          )}
+        </Await>
+        {/*</LazyLoadComponent>*/}
       </Suspense>
 
       <Suspense fallback={<div>Loading complementary products...</div>}>
-        <LazyLoadComponent>
-          <Await
-            errorElement="There was a problem loading complementary products"
-            resolve={recommended}
-          >
-            {(products) => (
-              <>
-                {products.complementaryNodes.length > 0 && (
-                  <ProductSwimlane
-                    title={translation.complementary_products}
-                    products={{nodes: products.complementaryNodes}}
-                  />
-                )}
-              </>
-            )}
-          </Await>
-        </LazyLoadComponent>
+        {/*<LazyLoadComponent>*/}
+        <Await
+          errorElement="There was a problem loading complementary products"
+          resolve={recommended}
+        >
+          {(products) => (
+            <>
+              {products.complementaryNodes.length > 0 && (
+                <ProductSwimlane
+                  title={translation.complementary_products}
+                  products={{nodes: products.complementaryNodes}}
+                />
+              )}
+            </>
+          )}
+        </Await>
+        {/*</LazyLoadComponent>*/}
       </Suspense>
 
       {visitedProducts.length > 0 && (
